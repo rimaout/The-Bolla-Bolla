@@ -38,7 +38,8 @@ public class LevelManager {
     }
 
     private void loadLevelSprites() {
-        BufferedImage levelSprite = LoadSave.getSprite(LoadSave.LEVEL_SPRITE);
+        levelTiles = new BufferedImage[5];
+        BufferedImage levelSprite = LoadSave.getSprite(LoadSave.LEVEL16_SPRITE);
 
         // LOAD SMALL LEVEL TILES
         for (int i=0; i<levelTiles.length; i++) {

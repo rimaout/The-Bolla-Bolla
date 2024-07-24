@@ -10,8 +10,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadSave {
+    // Sprites
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
     public static final String LEVEL_SPRITE = "/sprites/LevelTiles.png";
+    public static final String LEVEL16_SPRITE = "/sprites/tile16.png";
+
+    // Levels
     public static final String LEVEL1_DATA = "/levels/level1.png";
     public static final String LEVEL1_16_DATA = "/levels/level1_16.png";;
 
