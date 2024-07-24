@@ -4,7 +4,7 @@ import main.Game;
 
 import java.awt.geom.Rectangle2D;
 
-public class HelpMethos {
+public class HelpMethods {
     public static boolean CanMoveHere(float x, float y, float width, float height, int[][] levelData) {
 
         return !IsSolid(x, y, levelData) &&
@@ -68,6 +68,32 @@ public class HelpMethos {
 
         return true;
 
+    }
+
+    public static boolean WillCollideRoof(Rectangle2D.Float hitbox, float ySpeed) {
+        // Calculate the vertical index of the tile based on the y coordinate
+        float y = hitbox.y + ySpeed;
+        float verticalTileIndex = y / Game.TILES_SIZE;
+
+        // If the vertical index is less than 1, it is considered a roof tile
+        if (verticalTileIndex < 1)
+            return true;
+
+        return false;
+    }
+
+    public static boolean WillEntityCollideWall(Rectangle2D.Float hitbox, float xSpeed) {
+
+        // Calculate the horizontal index of the tile at the left and right side of the hitbox
+        float newX = hitbox.x + xSpeed ;
+        float horizontalTileLeftIndex = newX / Game.TILES_SIZE;
+        float horizontalTileRightIndex = newX + hitbox.width / Game.TILES_SIZE;
+
+        // Check if the hitbox is touching the leftmost or rightmost tiles in the game grid
+        if (horizontalTileLeftIndex <= 0 || horizontalTileRightIndex >= Game.TILES_IN_WIDTH - 1)
+            return true;
+
+        return false;
     }
 }
 

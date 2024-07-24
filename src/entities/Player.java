@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static Utillz.Constants.PlayerConstants.*;
-import static Utillz.HelpMethos.*;
+import static Utillz.HelpMethods.*;
 
 public class Player extends Entity{
     private BufferedImage[][] animations;
@@ -79,8 +79,11 @@ public class Player extends Entity{
     private void updatePosition() {
         moving = false;
 
-        if (jump)
-            jump();
+        if (jump && !inAir) {
+            inAir = true;
+            airSpeed = jumpSpeed;
+        }
+
         if (!left && !right && !inAir)
             return;
 
@@ -98,12 +101,17 @@ public class Player extends Entity{
         if (inAir) {
             if (airSpeed < 0) {
                 // Jumping
-                hitbox.y += airSpeed; // BUG: you need to check if you are trying to jump on the roof
-                airSpeed += gravity;
-                if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+                if (!WillCollideRoof(hitbox, airSpeed)) {
+                    hitbox.y += airSpeed;
+                    airSpeed += gravity;
+
+                } else {
+                    hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+                    airSpeed = fallSpeedAfterCollision;
+                }
+                if (!WillEntityCollideWall(hitbox, airSpeed)) {
                     hitbox.x += xSpeed;
                 }
-
             } else {
                 // Falling
                 if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
@@ -122,32 +130,6 @@ public class Player extends Entity{
         } else {
             updateXPos(xSpeed);
         }
-
-    }
-//        if (inAir) {
-//            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
-//                hitbox.y += airSpeed;
-//                airSpeed += gravity;
-//                updateXPos(xSpeed);
-//            } else {
-//                hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
-//                if (airSpeed > 0)
-//                    resetInAir();
-//                else
-//                    airSpeed = fallSpeedAfterCollision;
-//                updateXPos(xSpeed);
-//            }
-//        } else {
-//            updateXPos(xSpeed);
-//        }
-//        moving = true;
-//    }
-
-    private void jump() {
-        if (inAir)
-            return;
-        inAir = true;
-        airSpeed = jumpSpeed;
 
     }
 
