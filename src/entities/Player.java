@@ -11,12 +11,12 @@ import static Utillz.HelpMethods.*;
 
 public class Player extends Entity{
     private BufferedImage[][] animations;
-    private int animationTick, animationIndex, animationSpeed = 30;
+    private int animationTick, animationIndex, animationSpeed = 50;
 
     private int playerAnimation = IDLE_ANIMATION;
     private boolean up, down, left, right, jump;
     private boolean moving, attacking;
-    private float playerSpeed = 1.0f * Game.SCALE;
+    private float playerSpeed = 0.7f * Game.SCALE;
 
     private int[][] levelData;
     private float xDrawOffset = 3 * Game.SCALE;
@@ -25,7 +25,7 @@ public class Player extends Entity{
     // Jumping / Gravity
     private float airSpeed = 0.0f;
     private float gravity = 0.05f * Game.SCALE;
-    private float jumpSpeed = -2.4f * Game.SCALE;
+    private float jumpSpeed = -2.23f * Game.SCALE;
     private float fallSpeedAfterCollision = 0.1f * Game.SCALE;
     private boolean inAir = false;
 
@@ -69,6 +69,13 @@ public class Player extends Entity{
 
         if (attacking)
             playerAnimation = ATTACK_AMATION;
+
+        if (inAir) {
+            if (airSpeed < 0)
+                playerAnimation = JUMPING_ANIMATION;
+            else
+                playerAnimation = FALLING_ANIMATION;
+        }
 
         if (startAnimation != playerAnimation){
             animationTick = 0;
@@ -116,7 +123,8 @@ public class Player extends Entity{
                 // Falling
                 if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
                     hitbox.y += airSpeed;
-                    airSpeed += gravity;
+                    //airSpeed += gravity;
+                    airSpeed = 1;
                     updateXPos(xSpeed);
                 } else {
                     hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
@@ -129,6 +137,7 @@ public class Player extends Entity{
             }
         } else {
             updateXPos(xSpeed);
+            moving = true;
         }
 
     }
@@ -160,6 +169,9 @@ public class Player extends Entity{
 
     public void loadLevelData(int[][] levelData) {
         this.levelData = levelData;
+
+        if (!IsEntityOnFloor(hitbox, levelData))
+            inAir = true;
     }
 
     public void resetDirection() {

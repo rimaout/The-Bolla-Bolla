@@ -30,8 +30,8 @@ public class GamePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        Toolkit.getDefaultToolkit().sync();    // Synchronize the graphics state
-        super.paintComponent(g);    // Use the paintComponent method of the JPanel (super) class to paint the panel
+        Toolkit.getDefaultToolkit().sync();     // Synchronize the graphics state
+        super.paintComponent(g);                // Use the paintComponent method of the JPanel (super) class to paint the panel
 
         game.render(g);
     }
