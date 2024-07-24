@@ -13,6 +13,7 @@ public class LoadSave {
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
     public static final String LEVEL_SPRITE = "/sprites/LevelTiles.png";
     public static final String LEVEL1_DATA = "/levels/level1.png";
+    public static final String LEVEL1_16_DATA = "/levels/level1_16.png";;
 
     // this class will only use static methods, so we don't need a constructor
 
@@ -41,7 +42,7 @@ public class LoadSave {
         // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
         int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
-        BufferedImage img = getSprite(LEVEL1_DATA);
+        BufferedImage img = getSprite(LEVEL1_16_DATA);
 
         for(int x=0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {
