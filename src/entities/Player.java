@@ -96,23 +96,52 @@ public class Player extends Entity{
                 inAir = true;
 
         if (inAir) {
-            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
-                hitbox.y += airSpeed;
+            if (airSpeed < 0) {
+                // Jumping
+                hitbox.y += airSpeed; // BUG: you need to check if you are trying to jump on the roof
                 airSpeed += gravity;
-                updateXPos(xSpeed);
-            } else {
-                hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
-                if (airSpeed > 0)
-                    resetInAir();
-                else
-                    airSpeed = fallSpeedAfterCollision;
-                updateXPos(xSpeed);
-            }
+                if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+                    hitbox.x += xSpeed;
+                }
 
-        } else
+            } else {
+                // Falling
+                if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+                    hitbox.y += airSpeed;
+                    airSpeed += gravity;
+                    updateXPos(xSpeed);
+                } else {
+                    hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+                    if (airSpeed > 0)
+                        resetInAir();
+                    else
+                        airSpeed = fallSpeedAfterCollision;
+                    updateXPos(xSpeed);
+                }
+            }
+        } else {
             updateXPos(xSpeed);
-        moving = true;
+        }
+
     }
+//        if (inAir) {
+//            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+//                hitbox.y += airSpeed;
+//                airSpeed += gravity;
+//                updateXPos(xSpeed);
+//            } else {
+//                hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+//                if (airSpeed > 0)
+//                    resetInAir();
+//                else
+//                    airSpeed = fallSpeedAfterCollision;
+//                updateXPos(xSpeed);
+//            }
+//        } else {
+//            updateXPos(xSpeed);
+//        }
+//        moving = true;
+//    }
 
     private void jump() {
         if (inAir)
