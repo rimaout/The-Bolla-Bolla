@@ -109,7 +109,7 @@ public class Player extends Entity{
                     hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
                     airSpeed = fallSpeedAfterCollision;
                 }
-                if (!WillEntityCollideWall(hitbox, airSpeed)) {
+                if (!WillEntityCollideWall(hitbox, xSpeed)){
                     hitbox.x += xSpeed;
                 }
             } else {

@@ -87,10 +87,10 @@ public class HelpMethods {
         // Calculate the horizontal index of the tile at the left and right side of the hitbox
         float newX = hitbox.x + xSpeed ;
         float horizontalTileLeftIndex = newX / Game.TILES_SIZE;
-        float horizontalTileRightIndex = newX + hitbox.width / Game.TILES_SIZE;
+        float horizontalTileRightIndex = (newX + hitbox.width) / Game.TILES_SIZE;
 
         // Check if the hitbox is touching the leftmost or rightmost tiles in the game grid
-        if (horizontalTileLeftIndex <= 0 || horizontalTileRightIndex >= Game.TILES_IN_WIDTH - 1)
+        if (horizontalTileLeftIndex <= 1 || horizontalTileRightIndex >= Game.TILES_IN_WIDTH - 1)
             return true;
 
         return false;
