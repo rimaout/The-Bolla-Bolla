@@ -14,18 +14,18 @@ public class Player extends Entity{
     private int animationTick, animationIndex, animationSpeed = 50;
 
     private int playerAnimation = IDLE_ANIMATION;
-    private boolean up, down, left, right, jump;
+    private boolean left, right, jump;
     private boolean moving, attacking;
     private float playerSpeed = 0.7f * Game.SCALE;
 
     private int[][] levelData;
     private float xDrawOffset = 3 * Game.SCALE;
-    private float yDrawOffset = 3 * Game.SCALE;
+    private float yDrawOffset = 1 * Game.SCALE;
 
     // Jumping / Gravity
     private float airSpeed = 0.0f;
     private float gravity = 0.05f * Game.SCALE;
-    private float jumpSpeed = -2.23f * Game.SCALE;
+    private float jumpSpeed = -2.24f * Game.SCALE;
     private float fallSpeedAfterCollision = 0.1f * Game.SCALE;
     private boolean inAir = false;
 
@@ -175,22 +175,12 @@ public class Player extends Entity{
     }
 
     public void resetDirection() {
-        up = false;
-        down = false;
         left = false;
         right = false;
     }
 
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
     }
 
     public void setLeft(boolean left) {

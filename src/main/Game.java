@@ -1,7 +1,8 @@
 package main;
 
-import entities.Player;
-import levels.LevelManager;
+import gameStates.Gamestate;
+import gameStates.Playing;
+import gameStates.Menu;
 
 import java.awt.*;
 
@@ -11,8 +12,8 @@ public class Game implements Runnable {
     private GamePanel gamePanel;
     private Thread gameThread;
 
-    private Player player;
-    private LevelManager levelManager;
+    private Playing playing;
+    private Menu menu;
 
     private final int FPS_SET = 60;
     private final int UPS_SET = 180;
@@ -21,12 +22,13 @@ public class Game implements Runnable {
     public final static int SCALE = 3;
     public final static int TILES_IN_WIDTH = 16;
     public final static int TILES_IN_HEIGHT = 14;
-    public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
+    public final static int TILES_SIZE = TILES_DEFAULT_SIZE * SCALE;
     public final static int GAME_WIDTH = TILES_IN_WIDTH * TILES_SIZE;
     public final static int GAME_HEIGHT = TILES_IN_HEIGHT * TILES_SIZE;
 
     public Game() {
         initClasses();
+
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.requestFocus();  // Requests focus for the game panel, This ensures that the game panel is the component that receives keyboard input.
@@ -35,27 +37,38 @@ public class Game implements Runnable {
     }
 
     public void startGameLoop() {
-
         gameThread = new Thread(this);
         gameThread.start();
     }
 
     private void initClasses() {
-
-        levelManager = new LevelManager(this);
-        player = new Player(100, 100, 18*SCALE, 18*SCALE);
-        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+        playing = new Playing(this);
+        menu = new Menu(this);
     }
 
 
     public void update() {
-        player.update();
-        levelManager.update();
+
+        switch (Gamestate.state){
+            case MENU:
+                menu.update();
+                break;
+            case PLAYING:
+                playing.update();
+                break;
+        }
     }
 
     public void render(Graphics g) {
-        levelManager.draw(g);
-        player.render(g);
+
+        switch (Gamestate.state) {
+            case MENU:
+                menu.draw(g);
+                break;
+            case PLAYING:
+                playing.draw(g);
+                break;
+        }
     }
 
     @Override
@@ -103,10 +116,18 @@ public class Game implements Runnable {
     }
 
     public void windowFocusLost() {
-       player.resetDirection();
+        // If the game is in the playing state, call the windowFocusLost method in the playing class.
+        // If in the menu state, do nothing.
+        if (Gamestate.state == Gamestate.PLAYING) {
+            playing.windowFocusLost();
+        }
     }
 
-    public Player getPlayer() {
-        return player;
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
     }
 }
