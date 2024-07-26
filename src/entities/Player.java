@@ -20,7 +20,7 @@ public class Player extends Entity{
 
     private int[][] levelData;
     private float xDrawOffset = 3 * Game.SCALE;
-    private float yDrawOffset = 1 * Game.SCALE;
+    private float yDrawOffset = 2 * Game.SCALE;
 
     // Jumping / Gravity
     private float airSpeed = 0.0f;
@@ -29,11 +29,10 @@ public class Player extends Entity{
     private float fallSpeedAfterCollision = 0.1f * Game.SCALE;
     private boolean inAir = false;
 
-
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimation();
-        initHitbox(x, y, 13*Game.SCALE, 14*Game.SCALE);
+        initHitbox(x, y, 11*Game.SCALE, 13*Game.SCALE);
     }
 
     public void update() {
