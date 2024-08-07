@@ -12,15 +12,16 @@ public class GameWindow extends JFrame {
         setTitle("BubleBubble"); // Set the title of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the window and exit the application when the window is closed// }
         add(gamePanel);
-        setLocationRelativeTo(null); // Center the window on the screen
+
         setResizable(false);
         pack(); // Adjust the size of the window to fit the preferred size of the panel (set in the setPanelSize() method of the GamePanel class)
+        setLocationRelativeTo(null); // Center the window on the screen
         setVisible(true);
 
         addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
-
+                // TO-DO Auto-generated method stub
             }
 
             @Override

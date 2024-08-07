@@ -1,5 +1,6 @@
 package gameStates;
 
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -13,6 +14,7 @@ public class Playing extends State implements StateMethods {
 
     private Player player;
     private LevelManager levelManager;
+    private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private boolean paused;
 
@@ -23,7 +25,8 @@ public class Playing extends State implements StateMethods {
 
     public void initClasses() {
         levelManager = new LevelManager(game);
-        player = new Player(100, 100, 16 * Game.SCALE, 16 * Game.SCALE);
+        enemyManager = new EnemyManager(this);
+        player = new Player(100, 100, 18 * Game.SCALE, 18 * Game.SCALE);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
     }
@@ -33,6 +36,7 @@ public class Playing extends State implements StateMethods {
         if (!paused) {
             levelManager.update();
             player.update();
+            enemyManager.update();
         } else {
             pauseOverlay.update();
         }
@@ -42,6 +46,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         levelManager.draw(g);
         player.render(g);
+        enemyManager.draw(g);
 
         if (paused)
             pauseOverlay.draw(g);

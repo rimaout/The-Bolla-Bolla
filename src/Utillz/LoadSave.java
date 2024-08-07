@@ -1,16 +1,20 @@
 package Utillz;
 
 import main.Game;
+import entities.ZenChan;
+import static Utillz.Constants.EnemyConstants.ZEN_CHAN;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class LoadSave {
     // Sprites
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
+    public static final String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
     public static final String LEVEL_SPRITE = "/sprites/levelTiles.png";
     public static final String LEVEL16_SPRITE = "/sprites/tile16.png";
     public static final String MENU_BUTTONS_SPRITE = "/sprites/menu_buttons.png";
@@ -48,14 +52,34 @@ public class LoadSave {
         return img;
     }
 
+    public static ArrayList<ZenChan> getZenChans() {
+
+        // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+
+        BufferedImage img = GetSprite(LEVEL1_16_DATA);
+        ArrayList<ZenChan> list = new ArrayList<>();
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int green = color.getGreen();
+                if (green == ZEN_CHAN) {
+                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
+                }
+            }
+
+        return list;
+    }
+
     public static int[][] GetLevelData() {
 
         // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
-        int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
         BufferedImage img = GetSprite(LEVEL1_16_DATA);
+        int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 
-        for(int x=0; x < img.getHeight(); x++)
+        for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {
 
                 Color color = new Color(img.getRGB(y, x));
