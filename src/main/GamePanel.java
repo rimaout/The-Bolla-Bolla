@@ -11,6 +11,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game) {
         this.game = game;
+        setBackground(Color.BLACK);
         setPanelSize();
         addKeyListener(new KeyBoardInputs(this));
         addMouseListener(new MouseKeyInputs(this));
@@ -22,10 +23,6 @@ public class GamePanel extends JPanel {
         setPreferredSize(size);
 
         System.out.println("Size: " + GAME_WIDTH + " | " + GAME_HEIGHT);
-
-    }
-
-    public void update() {
 
     }
 

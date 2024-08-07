@@ -3,6 +3,7 @@ package gameStates;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import ui.PauseOverlay;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,8 @@ public class Playing extends State implements StateMethods {
 
     private Player player;
     private LevelManager levelManager;
+    private PauseOverlay pauseOverlay;
+    private boolean paused;
 
     public Playing(Game game) {
         super(game);
@@ -22,41 +25,54 @@ public class Playing extends State implements StateMethods {
         levelManager = new LevelManager(game);
         player = new Player(100, 100, 16 * Game.SCALE, 16 * Game.SCALE);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+        pauseOverlay = new PauseOverlay(this);
     }
 
     @Override
     public void update() {
-        levelManager.update();
-        player.update();
+        if (!paused) {
+            levelManager.update();
+            player.update();
+        } else {
+            pauseOverlay.update();
+        }
     }
 
     @Override
     public void draw(Graphics g) {
         levelManager.draw(g);
         player.render(g);
+
+        if (paused)
+            pauseOverlay.draw(g);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            player.setAttacking(true);
-        }
 
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        if (paused)
+            pauseOverlay.mouseDragged(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mouseReleased(e);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mouseMoved(e);
     }
 
     @Override
@@ -70,6 +86,12 @@ public class Playing extends State implements StateMethods {
                 break;
             case KeyEvent.VK_SPACE:
                 player.setJump(true);
+                break;
+            case KeyEvent.VK_ENTER:
+                player.setAttacking(true);
+                break;
+            case KeyEvent.VK_ESCAPE:
+                paused = !paused;
                 break;
         }
     }
@@ -86,8 +108,15 @@ public class Playing extends State implements StateMethods {
             case KeyEvent.VK_SPACE:
                 player.setJump(false);
                 break;
+            case KeyEvent.VK_ENTER:
+                player.setAttacking(false);
+                break;
         }
 
+    }
+
+    public void unpauseGame() {
+        paused = false;
     }
 
     public void windowFocusLost() {

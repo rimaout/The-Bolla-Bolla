@@ -26,9 +26,8 @@ public class HelpMethods {
 
         int value = levelData[(int) yIndex][(int) xIndex];
 
-        if (value > 115 || value < 0 || value != 0) {
-            // 115 is the last tile in the tileset
-            // 0 is the empty tile in the tileset
+        if (value != 0) {
+            // tile 0 is the only non-solid tile
             return true;
         }
 
@@ -70,10 +69,10 @@ public class HelpMethods {
 
     }
 
-    public static boolean WillCollideRoof(Rectangle2D.Float hitbox, float ySpeed) {
+    public static boolean WillEntityCollideRoof(Rectangle2D.Float hitbox, float ySpeed) {
         // Calculate the vertical index of the tile based on the y coordinate
-        float y = hitbox.y + ySpeed;
-        float verticalTileIndex = y / Game.TILES_SIZE;
+        float newY = hitbox.y + ySpeed;
+        float verticalTileIndex = newY / Game.TILES_SIZE;
 
         // If the vertical index is less than 1, it is considered a roof tile
         if (verticalTileIndex < 1)

@@ -56,6 +56,10 @@ public class Game implements Runnable {
             case PLAYING:
                 playing.update();
                 break;
+            case OPTIONS:
+                case QUIT:
+                    System.exit(0);
+                    break;
         }
     }
 
@@ -83,6 +87,7 @@ public class Game implements Runnable {
         long lastUpdateTime = System.nanoTime();
         int updates = 0;
         double deltaU = 0; // Delta Update
+
 
         // Game Loop
         while (true) {

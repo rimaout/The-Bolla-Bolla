@@ -15,7 +15,7 @@ public class LevelManager {
     public LevelManager(Game game) {
         this.game = game;
         loadLevelSprites();
-        levelOne = new Level(LoadSave.getLevelData());
+        levelOne = new Level(LoadSave.GetLevelData());
     }
 
     public void draw(Graphics g) {
@@ -39,7 +39,7 @@ public class LevelManager {
 
     private void loadLevelSprites() {
         levelTiles = new BufferedImage[5];
-        BufferedImage levelSprite = LoadSave.getSprite(LoadSave.LEVEL16_SPRITE);
+        BufferedImage levelSprite = LoadSave.GetSprite(LoadSave.LEVEL16_SPRITE);
 
         // LOAD SMALL LEVEL TILES
         for (int i=0; i<levelTiles.length; i++) {

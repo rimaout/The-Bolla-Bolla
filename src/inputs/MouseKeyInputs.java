@@ -26,12 +26,26 @@ public class MouseKeyInputs implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        switch (Gamestate.state) {
+            case MENU:
+                gamePanel.getGame().getMenu().mousePressed(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mousePressed(e);
+                break;
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        switch (Gamestate.state) {
+            case MENU:
+                gamePanel.getGame().getMenu().mouseReleased(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mouseReleased(e);
+                break;
+        }
     }
 
     @Override

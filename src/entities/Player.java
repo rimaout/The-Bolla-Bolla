@@ -1,5 +1,6 @@
 package entities;
 
+import Utillz.Constants;
 import Utillz.LoadSave;
 import main.Game;
 
@@ -11,7 +12,7 @@ import static Utillz.HelpMethods.*;
 
 public class Player extends Entity{
     private BufferedImage[][] animations;
-    private int animationTick, animationIndex, animationSpeed = 50;
+    private int animationTick, animationIndex;
 
     private int playerAnimation = IDLE_ANIMATION;
     private boolean left, right, jump;
@@ -48,7 +49,7 @@ public class Player extends Entity{
 
     private void updateAnimationTick() {
         animationTick++;
-        if (animationTick > animationSpeed) {
+        if (animationTick > ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
@@ -107,7 +108,7 @@ public class Player extends Entity{
         if (inAir) {
             if (airSpeed < 0) {
                 // Jumping
-                if (!WillCollideRoof(hitbox, airSpeed)) {
+                if (!WillEntityCollideRoof(hitbox, airSpeed)) {
                     hitbox.y += airSpeed;
                     airSpeed += gravity;
 
@@ -122,8 +123,7 @@ public class Player extends Entity{
                 // Falling
                 if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
                     hitbox.y += airSpeed;
-                    //airSpeed += gravity;
-                    airSpeed = 1;
+                    airSpeed = (int) (0.6 * Game.SCALE);
                     updateXPos(xSpeed);
                 } else {
                     hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
@@ -138,7 +138,6 @@ public class Player extends Entity{
             updateXPos(xSpeed);
             moving = true;
         }
-
     }
 
     private void resetInAir() {
@@ -156,7 +155,7 @@ public class Player extends Entity{
     }
 
     private void loadAnimation() {
-        BufferedImage img = LoadSave.getSprite(LoadSave.PLAYER_SPRITE);
+        BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
 
         animations = new BufferedImage[6][4];
         for (int j = 0; j < animations.length; j++) {
