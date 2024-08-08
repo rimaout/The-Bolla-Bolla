@@ -38,12 +38,16 @@ public class LevelManager {
     }
 
     private void loadLevelSprites() {
-        levelTiles = new BufferedImage[5];
-        BufferedImage levelSprite = LoadSave.GetSprite(LoadSave.LEVEL16_SPRITE);
+        int xSmall, ySmall;
+        levelTiles = new BufferedImage[116];
 
-        // LOAD SMALL LEVEL TILES
-        for (int i=0; i<levelTiles.length; i++) {
-            levelTiles[i] = levelSprite.getSubimage(i*16, 0, 16, 16);
+        BufferedImage levelSprite = LoadSave.GetSprite(LoadSave.LEVEL_SPRITE);
+
+        levelTiles[0] = levelSprite.getSubimage(0, 0, 8, 8); // background tile
+        for (int i = 0; i < levelTiles.length-1; i++) {
+            xSmall = 12 + (i / 25) * 48;
+            ySmall = 26 + (i % 25) * 19;
+            levelTiles[i+1] = levelSprite.getSubimage(xSmall, ySmall, 8, 8);
         }
     }
 }
