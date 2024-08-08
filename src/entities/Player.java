@@ -25,6 +25,7 @@ public class Player extends Entity{
 
     // Jumping / Gravity
     private float airSpeed = 0.0f;
+    private float fallSpeed = 0.6f * Game.SCALE;
     private float gravity = 0.05f * Game.SCALE;
     private float jumpSpeed = -2.24f * Game.SCALE;
     private float fallSpeedAfterCollision = 0.1f * Game.SCALE;
@@ -123,7 +124,7 @@ public class Player extends Entity{
                 // Falling
                 if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
                     hitbox.y += airSpeed;
-                    airSpeed = (int) (0.6 * Game.SCALE);
+                    airSpeed = fallSpeed;
                     updateXPos(xSpeed);
                 } else {
                     hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);

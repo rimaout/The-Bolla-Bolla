@@ -40,6 +40,13 @@ public class Constants {
         }
     }
 
+    public static class Directions {
+        public static final int LEFT = 0;
+        public static final int UP = 1;
+        public static final int RIGHT = 2;
+        public static final int DOWN = 3;
+    }
+
     public static class PlayerConstants {
 
         // Animation Constants
@@ -73,8 +80,12 @@ public class Constants {
 
     public static class EnemyConstants {
 
-        // Enemy Types
+        // Zen Chan Constants
         public static final int ZEN_CHAN = 1;
+        public static final int ZEN_CHAN_HITBOX_WIDTH = (int) (14 * Game.SCALE);
+        public static final int ZEN_CHAN_HITBOX_HEIGHT = (int) (15 * Game.SCALE);
+        public static final int ZEN_CHAN_DRAWOFFSET_X = (int) (2 * Game.SCALE);
+        public static final int ZEN_CHAN_DRAWOFFSET_Y = (int) (2 * Game.SCALE);
 
         // General Animation Constants
         public static final int WALKING = 0;

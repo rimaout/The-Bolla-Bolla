@@ -66,6 +66,13 @@ public class HelpMethods {
                 return false;
 
         return true;
+    }
+
+    public static boolean WillEntityBeOnFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
+
+        // Calculate if the entity will be on the floor after the move (check only x-axis)
+       return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData) &&
+                IsSolid(hitbox.x + hitbox.width + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 
     }
 
