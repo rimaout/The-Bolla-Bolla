@@ -25,8 +25,9 @@ public class ZenChan extends Enemy {
         if (inAir)
             updateInAir(levelData);
 
-        else
+        else {
             nextMove(levelData, player);
+        }
     }
 
     private void nextMove(int[][] levelData, Player player) {
@@ -35,15 +36,12 @@ public class ZenChan extends Enemy {
 
                 // qualcosa non funziona
 
-                if (canSeePlayer(levelData, player))
+                if (canSeePlayer(levelData, player)) {
                     turnTowardsPlayer(player);
-
-                if (isPlayerInAttackRange(player))
+                    if (isPlayerInAttackRange(player))
                         attack(player);
-
+                }
                 move(levelData);
-
-                break;
         }
     }
 
@@ -56,7 +54,6 @@ public class ZenChan extends Enemy {
             xSpeed = walkingSpeed;
 
         if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-            // Test: this might not work
             if (WillEntityBeOnFloor(hitbox, xSpeed, levelData)) {
                 hitbox.x += xSpeed;
                 return;

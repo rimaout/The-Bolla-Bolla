@@ -13,18 +13,39 @@ public class HelpMethods {
                 !IsSolid(x + width, y + height, levelData);
     }
 
-    private static boolean IsSolid(float x, float y, int[][] levelData) {
+//    private static boolean IsSolid(float x, float y, int[][] levelData) {
+//
+//        float xIndex = x / Game.TILES_SIZE;
+//        float yIndex = y / Game.TILES_SIZE;
+//
+//        int value = levelData[(int) yIndex][(int) xIndex];
+//
+//        if (value != 0) {
+//            // tile 0 is the only non-solid tile
+//            return true;
+//        }
+//
+//        return false;
+//    }
+
+    private static boolean IsSolid(float x, float y, int[][] lvlData) {
+        int maxWidth = lvlData[0].length * Game.TILES_SIZE;
+        if (x < 0 || x >= maxWidth)
+            return true;
+        if (y < 0 || y >= Game.GAME_HEIGHT)
+            return true;
 
         float xIndex = x / Game.TILES_SIZE;
         float yIndex = y / Game.TILES_SIZE;
 
-        int value = levelData[(int) yIndex][(int) xIndex];
+        return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
+    }
 
-        if (value != 0) {
-            // tile 0 is the only non-solid tile
+    public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
+        int value = lvlData[yTile][xTile];
+
+        if (value >= 10 || value < 0 || value != 0)
             return true;
-        }
-
         return false;
     }
 
@@ -98,22 +119,23 @@ public class HelpMethods {
 
     public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
         for (int i = 0; i < xEnd - xStart; i++) {
-            if (IsSolid(xStart + i, y, lvlData))
+            if (IsTileSolid(xStart + i, y, lvlData))
                 return false;
-            if (!IsSolid(xStart + i, y + 1, lvlData))
+            if (!IsTileSolid(xStart + i, y + 1, lvlData))
                 return false;
         }
-
         return true;
     }
 
-    public static boolean IsSightClear(int[][] levelData, Rectangle2D.Float hitBox1, Rectangle2D.Float hitBox2, int Ytile){
-        int tileX1 = (int) (hitBox1.x / Game.TILES_SIZE);
-        int tileX2 = (int) (hitBox2.x / Game.TILES_SIZE);
+    public static boolean IsSightClear(int[][] levelData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
+        int tileX1 = (int) (firstHitbox.x / Game.TILES_SIZE);
+        int tileX2 = (int) (secondHitbox.x / Game.TILES_SIZE);
 
         if (tileX1 > tileX2)
-            return IsAllTilesWalkable(tileX2, tileX1, Ytile, levelData);
+            return IsAllTilesWalkable(tileX2, tileX1, yTile, levelData);
         else
-            return IsAllTilesWalkable(tileX1, tileX2, Ytile, levelData);
+            return IsAllTilesWalkable(tileX1, tileX2, yTile, levelData);
+
     }
+
 }

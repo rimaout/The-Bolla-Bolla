@@ -10,13 +10,14 @@ public abstract class Enemy extends Entity {
     protected int enemyState, enemyType;
     protected int aniIndex, aniTick, aniSpeed = 50;
     protected boolean inAir, firstUpdate = true;
-    protected int tileX, tileY;
+    protected int tileY;
 
     protected float fallSpeed = 0.6f * Game.SCALE;
     protected float walkingSpeed = 0.5f * Game.SCALE;
     protected int walkingDir = LEFT;
 
     protected float attackRange = Game.TILES_SIZE;
+    protected float viewingRange = Game.TILES_SIZE * 5;
 
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
@@ -62,7 +63,7 @@ public abstract class Enemy extends Entity {
     }
 
     protected boolean isPlayerInViewingRange(Player player) {
-        return Math.abs(player.getHitbox().x - hitbox.x) <= attackRange * 5;
+        return Math.abs(player.getHitbox().x - hitbox.x) <= viewingRange;
     }
 
     protected boolean isPlayerInAttackRange(Player player) {
