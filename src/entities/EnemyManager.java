@@ -25,9 +25,9 @@ public class EnemyManager {
         System.out.println("Number of crabs: " + zenChans.size());
     }
 
-    public void update(int [][] lvlData) {
+    public void update(int [][] lvlData, Player player) {
         for (ZenChan z : zenChans) {
-            z.update(lvlData);
+            z.update(lvlData, player);
         }
     }
 
@@ -37,7 +37,7 @@ public class EnemyManager {
 
     private void drawZenChans(Graphics g) {
         for (ZenChan z : zenChans) {
-            g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH, ENEMY_HEIGHT, null);
+            g.drawImage(zenChanSprites[z.getEnemyState()][z.getAniIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH, ENEMY_HEIGHT, null);
             z.drawHitbox(g);
         }
     }
