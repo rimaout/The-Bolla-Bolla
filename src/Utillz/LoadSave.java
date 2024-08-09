@@ -15,8 +15,8 @@ public class LoadSave {
     // Sprites
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
     public static final String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
-    public static final String LEVEL_SPRITE = "/sprites/levelTiles.png";
-    public static final String LEVEL16_SPRITE = "/sprites/tile16.png";
+    public static final String LEVEL_TILES_SPRITE = "/sprites/level_tiles.png";
+    public static final String NUMBERS_TILES_SPRITE = "/sprites/numbers_tiles.png";
     public static final String MENU_BUTTONS_SPRITE = "/sprites/menu_buttons.png";
     public static final String SOUND_BUTTONS_SPRITE = "/sprites/sound_buttons.png";
     public static final String URM_BUTTONS_SPRITE = "/sprites/urm_buttons.png";
@@ -24,7 +24,11 @@ public class LoadSave {
 
     // Levels
     public static final String LEVEL1_DATA = "/levels/level1.png";
-    public static final String LEVEL1_16_DATA = "/levels/level1_16.png";;
+    public static final String LEVEL2_DATA = "/levels/level2.png";
+    public static final String LEVEL3_DATA = "/levels/level3.png";
+    public static final String LEVEL4_DATA = "/levels/level4.png";
+    public static final String LEVEL5_DATA = "/levels/level5.png";
+    public static final String LEVEL6_DATA = "/levels/level6.png";
 
     // IMAGES
     public static final String GAME_LOGO = "/images/bubbleBobble_Logo.png";
@@ -56,7 +60,7 @@ public class LoadSave {
 
         // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
-        BufferedImage img = GetSprite(LEVEL1_16_DATA);
+        BufferedImage img = GetSprite(LEVEL1_DATA);
         ArrayList<ZenChan> list = new ArrayList<>();
 
         for(int x = 0; x < img.getHeight(); x++)
@@ -64,6 +68,10 @@ public class LoadSave {
 
                 Color color = new Color(img.getRGB(y, x));
                 int green = color.getGreen();
+                if (green > 125) {
+                    green = 0;
+                }
+
                 if (green == ZEN_CHAN) {
                     list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
                 }
@@ -84,9 +92,6 @@ public class LoadSave {
 
                 Color color = new Color(img.getRGB(y, x));
                 int red = color.getRed();
-                if (red > 125) {
-                    red = 0;
-                }
                 levelData[x][y] = red;
             }
         return levelData;
