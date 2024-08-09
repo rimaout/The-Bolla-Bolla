@@ -20,7 +20,6 @@ public class LevelManager {
     }
 
     public void draw(Graphics g) {
-        int i = 0;
         int index;
         BufferedImage tile;
 

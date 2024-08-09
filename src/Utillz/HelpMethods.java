@@ -6,17 +6,58 @@ import java.awt.geom.Rectangle2D;
 
 public class HelpMethods {
 
-    private static boolean IsSolid(float x, float y, int[][] lvlData) {
-        int maxWidth = lvlData[0].length * Game.TILES_SIZE;
-        if (x < 0 || x >= maxWidth)
-            return true;
-        if (y < 0 || y >= Game.GAME_HEIGHT)
-            return true;
+    public static boolean isTileRoof(int yTile) {
+        return yTile < 3;
+    }
+
+    public static boolean isTileWall(int xTile) {
+        return xTile < 2 || xTile > Game.TILES_IN_WIDTH - 3;
+    }
+
+    public static boolean isTileInsideMap(int xTile, int yTile) {
+        return xTile >= 0 && xTile < Game.TILES_IN_WIDTH && yTile >= 0 && yTile < Game.TILES_IN_HEIGHT;
+    }
+
+    public static boolean IsTileSolid(int xTile, int yTile, int[][] levelData) {
+
+        // Check if roof (roof is not solid if the tile is not a wall)
+        if (isTileRoof(yTile)) {
+            if (isTileWall(xTile))
+                return true;
+            return false;
+        }
+
+        if (isTileInsideMap(xTile, yTile)) {
+            // Check tile type
+            int value = levelData[yTile][xTile];
+            if (value != 0)
+                return true;
+        }
+        return false;
+    }
+
+
+    public static boolean IsSolid(float x, float y, int[][] lvlData) {
 
         float xIndex = x / Game.TILES_SIZE;
         float yIndex = y / Game.TILES_SIZE;
-
         return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
+    }
+
+    public static boolean IsEntityInsideMap(Rectangle2D.Float hitbox) {
+        return hitbox.x >= 0 && hitbox.x + hitbox.width < Game.TILES_IN_WIDTH * Game.TILES_SIZE &&
+                hitbox.y >= 0 && hitbox.y + hitbox.height < Game.TILES_IN_HEIGHT * Game.TILES_SIZE;
+    }
+
+
+    public static boolean IsEntityInsideSolid(Rectangle2D.Float hitbox, int[][] levelData) {
+        // Check if the hitbox is inside a solid tile
+        for (int i = 0; i < hitbox.width; i++)
+            for (int j = 0; j < hitbox.height; j++)
+                if (IsSolid(hitbox.x + i, hitbox.y + j, levelData))
+                    return true;
+
+        return false;
     }
 
     // DOVREBBE FUNZIONARE
@@ -36,31 +77,7 @@ public class HelpMethods {
         return cornersPoints && centerPoints;
     }
 
-    public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 
-        // Check if roof (roof is not solid)
-        if (yTile < 3)
-            return false;
-
-        // Check tile type
-        int value = lvlData[yTile][xTile];
-        if (value >= 10 || value < 0 || value != 0)
-            return true;
-
-        return false;
-    }
-
-//    public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
-//        int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
-//        if (xSpeed > 0) {
-//            // Right
-//            int tileXPos = currentTile * Game.TILES_SIZE;
-//            int xOffset = (int) (Game.TILES_SIZE - hitbox.width);
-//            return tileXPos + xOffset - 1;
-//        } else
-//            // Left
-//            return currentTile * Game.TILES_SIZE;
-//    }
 
     public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed, int[][] levelData) {
         {
@@ -91,18 +108,7 @@ public class HelpMethods {
         return distance;
     }
 
-//    public static float GetEntityYPosUnderRoofOrAboveFloor(Rectangle2D.Float hitbox, float airSpeed) {
-//        int currentTile = (int) (hitbox.y / Game.TILES_SIZE);
-//        if (airSpeed > 0) {
-//            // Falling - touching floor
-//            int tileYPos = currentTile * Game.TILES_SIZE;
-//            int yOffset = (int) (Game.TILES_SIZE - hitbox.height);
-//            return tileYPos + yOffset - 1;
-//        } else
-//            // Jumping
-//            return currentTile * Game.TILES_SIZE;
-//
-//    }
+
 
     public static float GetEntityYPosUnderRoofOrAboveFloor(Rectangle2D.Float hitbox, float airSpeed, int[][] levelData) {
         if (airSpeed > 0) {
@@ -166,6 +172,8 @@ public class HelpMethods {
 
         return false;
     }
+
+
 
     public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
         for (int i = 0; i < xEnd - xStart; i++) {

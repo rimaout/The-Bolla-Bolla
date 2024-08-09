@@ -60,7 +60,7 @@ public class LoadSave {
 
         // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
-        BufferedImage img = GetSprite(LEVEL1_DATA);
+        BufferedImage img = GetSprite(LEVEL6_DATA);
         ArrayList<ZenChan> list = new ArrayList<>();
 
         for(int x = 0; x < img.getHeight(); x++)
@@ -84,7 +84,7 @@ public class LoadSave {
 
         // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
-        BufferedImage img = GetSprite(LEVEL1_DATA);
+        BufferedImage img = GetSprite(LEVEL3_DATA);
         int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 
         for(int x = 0; x < img.getHeight(); x++)
