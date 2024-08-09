@@ -109,14 +109,10 @@ public class Player extends Entity{
         if (inAir) {
             if (airSpeed < 0) {
                 // Jumping
-                if (!WillEntityCollideRoof(hitbox, airSpeed)) {
-                    hitbox.y += airSpeed;
-                    airSpeed += gravity;
 
-                } else {
-                    hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
-                    airSpeed = fallSpeedAfterCollision;
-                }
+                hitbox.y += airSpeed;
+                airSpeed += gravity;
+
                 if (!WillEntityCollideWall(hitbox, xSpeed)){
                     hitbox.x += xSpeed;
                 }
@@ -127,7 +123,7 @@ public class Player extends Entity{
                     airSpeed = fallSpeed;
                     updateXPos(xSpeed);
                 } else {
-                    hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+                    hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed, levelData);
                     if (airSpeed > 0)
                         resetInAir();
                     else
@@ -144,14 +140,13 @@ public class Player extends Entity{
     private void resetInAir() {
         inAir = false;
         airSpeed = 0;
-
     }
 
     private void updateXPos(float xSpeed) {
         if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
             hitbox.x += xSpeed;
         } else {
-            hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
+            hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed, levelData);
         }
     }
 

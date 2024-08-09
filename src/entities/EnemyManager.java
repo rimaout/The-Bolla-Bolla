@@ -22,7 +22,6 @@ public class EnemyManager {
 
     private void addEnemies() {
         zenChans = LoadSave.getZenChans();
-        System.out.println("Number of crabs: " + zenChans.size());
     }
 
     public void update(int [][] lvlData, Player player) {
