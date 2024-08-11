@@ -16,7 +16,7 @@ public class Player extends Entity{
     private BufferedImage[][] animations;
     private int animationTick, animationIndex;
     private int playerAnimation = IDLE_ANIMATION;
-    private boolean left, right, jump;
+    private boolean left, right, jump, isJumping;
     private boolean moving, attacking;
 
     // Hitbox values and variables
@@ -98,9 +98,9 @@ public class Player extends Entity{
 
         if (inAir){
             if (IsEntityInsideSolid(hitbox, levelData))
-               airMovementInsideSolid(xSpeed);
+               airMovementInsideSolid();
             else
-                airMovement(xSpeed);
+                airMovement();
         }
 
         if (!inAir) {
@@ -114,6 +114,7 @@ public class Player extends Entity{
 
         if (jump && !inAir) {
             inAir = true;
+            isJumping = true;
             airSpeed = JUMP_SPEED;
         }
 
@@ -130,34 +131,16 @@ public class Player extends Entity{
         if (!inAir)
             if (!IsEntityOnFloor(hitbox, levelData))
                 inAir = true;
-
     }
 
-    private void airMovement(float xSpeed) {
-        if (airSpeed < 0) {
-            // Jumping
-            hitbox.y += airSpeed;
-            airSpeed += GRAVITY;
-            updateXPos(xSpeed);
-
-        } else {
-            // Falling
-            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
-                hitbox.y += airSpeed;
-                airSpeed = FALL_SPEED;
-                updateXPos(xSpeed / 3);
-            } else {
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
-                if (airSpeed > 0)
-                    resetInAir();
-                else
-                    airSpeed = fallSpeedAfterCollision;
-                updateXPos(xSpeed / 3);
-            }
-        }
+    private void airMovement(){
+        if (isJumping)
+            jumping();
+        else
+            falling();
     }
 
-    private void airMovementInsideSolid(float xSpeed) {
+    private void airMovementInsideSolid() {
         // JUMPING
         if (airSpeed < 0) {
             hitbox.y += airSpeed;
@@ -171,10 +154,50 @@ public class Player extends Entity{
         else {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
+            isJumping = false;
 
             if (!WillEntityCollideWall(hitbox, xSpeed)) {
                 hitbox.x += xSpeed;
             }
+        }
+    }
+
+    private void jumping(){
+
+        // Going up
+        if (airSpeed < 0){
+            hitbox.y += airSpeed;
+            airSpeed += GRAVITY;
+            updateXPos(xSpeed);
+        }
+
+        // Going down
+        else if (airSpeed <= -JUMP_SPEED){
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+                hitbox.y += airSpeed;
+                airSpeed += GRAVITY;
+                updateXPos(xSpeed);
+            } else {
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
+                resetInAir();
+                updateXPos(xSpeed);
+            }
+        }
+        else {
+            isJumping = false;
+            updateXPos(xSpeed);
+        }
+    }
+
+    private void falling(){
+        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+                hitbox.y += airSpeed;
+                airSpeed = FALL_SPEED;
+                updateXPos(xSpeed / 3);
+        } else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
+            updateXPos(xSpeed / 3);
+            resetInAir();
         }
     }
 
@@ -183,14 +206,9 @@ public class Player extends Entity{
             hitbox.y = -2 * Game.TILES_SIZE;
     }
 
-    private void resetInAir() {
-        inAir = false;
-        airSpeed = 0;
-    }
-
-    private void updateXPos(float xSpeed) {
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-            hitbox.x += xSpeed;
+    private void updateXPos(float xMovement) {
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+            hitbox.x += xMovement;
         }
     }
 
@@ -210,6 +228,12 @@ public class Player extends Entity{
 
         if (!IsEntityOnFloor(hitbox, levelData))
             inAir = true;
+    }
+
+    private void resetInAir() {
+        inAir = false;
+        isJumping = false;
+        airSpeed = 0;
     }
 
     public void resetDirection() {

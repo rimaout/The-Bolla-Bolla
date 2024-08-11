@@ -149,10 +149,7 @@ public class HelpMethods {
         float horizontalTileRightIndex = (newX + hitbox.width) / Game.TILES_SIZE;
 
         // Check if the hitbox is touching the leftmost or rightmost tiles in the game grid
-        if (horizontalTileLeftIndex <= 2 || horizontalTileRightIndex >= Game.TILES_IN_WIDTH - 2)
-            return true;
-
-        return false;
+        return horizontalTileLeftIndex < 2 || horizontalTileRightIndex > Game.TILES_IN_WIDTH - 2;
     }
 
     public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
