@@ -24,11 +24,10 @@ public class Player extends Entity{
     private final float Y_DRAW_OFFSET = 3 * Game.SCALE;
 
     // Movement values and variables
-    private final float PLAYER_SPEED = 0.4f * Game.SCALE;
+    private final float PLAYER_SPEED = 0.33f * Game.SCALE;
     private final float FALL_SPEED = 0.35f * Game.SCALE;
-    private final float GRAVITY = 0.01f * Game.SCALE;
-    private final float JUMP_SPEED = -1f * Game.SCALE;
-    private final float fallSpeedAfterCollision = 0.1f * Game.SCALE;
+    private final float GRAVITY = 0.0075f * Game.SCALE;
+    private final float JUMP_SPEED = -0.785f * Game.SCALE;
 
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
@@ -146,9 +145,22 @@ public class Player extends Entity{
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
 
-            if (!WillEntityCollideWall(hitbox, xSpeed)) {
-                hitbox.x += xSpeed;
+            if (xSpeed > 0) {
+                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
+            } else {
+                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
             }
+
         }
         // FALLING
         else {
@@ -156,8 +168,20 @@ public class Player extends Entity{
             airSpeed = FALL_SPEED;
             isJumping = false;
 
-            if (!WillEntityCollideWall(hitbox, xSpeed)) {
-                hitbox.x += xSpeed;
+            if (xSpeed > 0) {
+                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
+            } else {
+                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
             }
         }
     }
@@ -168,7 +192,21 @@ public class Player extends Entity{
         if (airSpeed < 0){
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            updateXPos(xSpeed);
+            if (xSpeed > 0) {
+                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
+            } else {
+                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
+                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+                if (!IsWall(xTile, yTile, levelData)) {
+                    hitbox.x += xSpeed;
+                }
+            }
         }
 
         // Going down

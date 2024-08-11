@@ -10,7 +10,17 @@ public class HelpMethods {
         return yTile < 3;
     }
 
-    public static boolean IsTileWall(int xTile) {
+    public static boolean IsWall(int xTile, int yTile, int[][] levelData) {
+        // Check 3 tiles (top, center, bottom) if at least 2 adjacent are solid, then it's a wall
+
+        boolean top = IsTileSolid(xTile, yTile - 1, levelData);
+        boolean center = IsTileSolid(xTile, yTile, levelData);
+        boolean bottom = IsTileSolid(xTile, yTile +1 , levelData);
+
+        return top && center || center && bottom;
+    }
+
+    public static boolean IsTilePerimeterWall(int xTile) {
         return xTile < 2 || xTile > Game.TILES_IN_WIDTH - 3;
     }
 
@@ -22,7 +32,7 @@ public class HelpMethods {
 
         // Check if roof (roof is not solid if the tile is not a wall)
         if (IsTileRoof(yTile)) {
-            if (IsTileWall(xTile))
+            if (IsTilePerimeterWall(xTile))
                 return true;
             return false;
         }
