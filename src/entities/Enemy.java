@@ -49,7 +49,7 @@ public abstract class Enemy extends Entity {
 
         } else {
             inAir = false;
-            hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, fallSpeed, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
             tileY = (int) (hitbox.y / Game.TILES_SIZE);
         }
     }

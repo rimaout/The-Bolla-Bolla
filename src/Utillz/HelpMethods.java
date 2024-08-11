@@ -6,28 +6,28 @@ import java.awt.geom.Rectangle2D;
 
 public class HelpMethods {
 
-    public static boolean isTileRoof(int yTile) {
+    public static boolean IsTileRoof(int yTile) {
         return yTile < 3;
     }
 
-    public static boolean isTileWall(int xTile) {
+    public static boolean IsTileWall(int xTile) {
         return xTile < 2 || xTile > Game.TILES_IN_WIDTH - 3;
     }
 
-    public static boolean isTileInsideMap(int xTile, int yTile) {
+    public static boolean IsTileInsideMap(int xTile, int yTile) {
         return xTile >= 0 && xTile < Game.TILES_IN_WIDTH && yTile >= 0 && yTile < Game.TILES_IN_HEIGHT;
     }
 
     public static boolean IsTileSolid(int xTile, int yTile, int[][] levelData) {
 
         // Check if roof (roof is not solid if the tile is not a wall)
-        if (isTileRoof(yTile)) {
-            if (isTileWall(xTile))
+        if (IsTileRoof(yTile)) {
+            if (IsTileWall(xTile))
                 return true;
             return false;
         }
 
-        if (isTileInsideMap(xTile, yTile)) {
+        if (IsTileInsideMap(xTile, yTile)) {
             // Check tile type
             int value = levelData[yTile][xTile];
             if (value != 0)
@@ -35,7 +35,6 @@ public class HelpMethods {
         }
         return false;
     }
-
 
     public static boolean IsSolid(float x, float y, int[][] lvlData) {
 
@@ -49,7 +48,6 @@ public class HelpMethods {
                 hitbox.y >= 0 && hitbox.y + hitbox.height < Game.TILES_IN_HEIGHT * Game.TILES_SIZE;
     }
 
-
     public static boolean IsEntityInsideSolid(Rectangle2D.Float hitbox, int[][] levelData) {
         // Check if the hitbox is inside a solid tile
         for (int i = 0; i < hitbox.width; i++)
@@ -60,10 +58,9 @@ public class HelpMethods {
         return false;
     }
 
-    // DOVREBBE FUNZIONARE
     public static boolean CanMoveHere(float x, float y, float width, float height, int[][] levelData) {
-
         // Check top-left, top-right, bottom-left, bottom-right corners of the hitbox and center-left, center-right center-top and center-bottom
+
         boolean cornersPoints = !IsSolid(x, y, levelData) &&
                 !IsSolid(x + width, y, levelData) &&
                 !IsSolid(x, y + height, levelData) &&
@@ -76,8 +73,6 @@ public class HelpMethods {
 
         return cornersPoints && centerPoints;
     }
-
-
 
     public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed, int[][] levelData) {
         {
@@ -108,19 +103,10 @@ public class HelpMethods {
         return distance;
     }
 
-
-
-    public static float GetEntityYPosUnderRoofOrAboveFloor(Rectangle2D.Float hitbox, float airSpeed, int[][] levelData) {
-        if (airSpeed > 0) {
-            // Falling (check touching floor)
-            float distance = YAxisDistanceToFirstSolid((int) (hitbox.y + hitbox.height + airSpeed), (int) (hitbox.y + hitbox.height), (int) hitbox.x, levelData);
-            return hitbox.y + distance;
-
-        } else {
-            // Jumping (check touching roof)
-            float distance = YAxisDistanceToFirstSolid((int) hitbox.y, (int) (hitbox.y + airSpeed), (int) hitbox.x, levelData);
-            return hitbox.y - distance;
-        }
+    public static float GetEntityYPosAboveFloor(Rectangle2D.Float hitbox, float airSpeed, int[][] levelData) {
+        // Falling (check touching floor)
+        float distance = YAxisDistanceToFirstSolid((int) (hitbox.y + hitbox.height + airSpeed), (int) (hitbox.y + hitbox.height), (int) hitbox.x, levelData);
+        return hitbox.y + distance;
     }
 
     public static float YAxisDistanceToFirstSolid(int yStart, int yEnd, int x, int[][] lvlData) {
@@ -137,7 +123,6 @@ public class HelpMethods {
         return distance;
     }
 
-    // DOVREBBE FUNZIONARE
     public static boolean IsEntityOnFloor(Rectangle2D.Float hitbox, int[][] lvlData) {
         // Check the pixel below bottom-left and bottom-right and bottom-center of the hitbox
         if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + 1, lvlData))
@@ -148,17 +133,14 @@ public class HelpMethods {
         return true;
     }
 
-    // DOVREBBE FUNZIONARE
     public static boolean WillEntityBeOnFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
         // Calculate if the entity will be on the floor after the move (check only x-axis)
         // Check the pixel below bottom-left and bottom-right and bottom-center of the hitbox
         return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData) ||
                 IsSolid(hitbox.x + hitbox.width + xSpeed, hitbox.y + hitbox.height + 1, lvlData) ||
                 IsSolid(hitbox.x + hitbox.width / 2 + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
-
     }
 
-    // DOVREBBE FUNZIONARE
     public static boolean WillEntityCollideWall(Rectangle2D.Float hitbox, float xSpeed) {
 
         // Calculate the horizontal index of the tile at the left and right side of the hitbox
@@ -172,8 +154,6 @@ public class HelpMethods {
 
         return false;
     }
-
-
 
     public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
         for (int i = 0; i < xEnd - xStart; i++) {
@@ -195,5 +175,4 @@ public class HelpMethods {
             return IsAllTilesWalkable(tileX1, tileX2, yTile, levelData);
 
     }
-
 }
