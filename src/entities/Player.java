@@ -95,17 +95,16 @@ public class Player extends Entity{
         if(!IsEntityInsideMap(hitbox))
             pacManEffect();
 
-        if (inAir){
-            if (IsEntityInsideSolid(hitbox, levelData))
-               airMovementInsideSolid();
-            else
-                airMovement();
-        }
+        // MOVE
 
-        if (!inAir) {
-            updateXPos(xSpeed);
-            moving = true;
-        }
+        if (IsEntityInsideSolid(hitbox, levelData))
+            handleMovementInsideSolid();
+
+        else if (inAir)
+            handleInAirMovement();
+
+        else
+           handleOnFloorMovement();
     }
 
     private void updateMovementValues() {
@@ -114,7 +113,9 @@ public class Player extends Entity{
         if (jump && !inAir) {
             inAir = true;
             isJumping = true;
-            airSpeed = JUMP_SPEED;
+            
+            if(!IsEntityInsideSolid(hitbox, levelData))    // can't jump if is inside solid
+                airSpeed = JUMP_SPEED;
         }
 
         if (!left && !right && !inAir)
@@ -132,59 +133,35 @@ public class Player extends Entity{
                 inAir = true;
     }
 
-    private void airMovement(){
+    private void handleInAirMovement(){
         if (isJumping)
             jumping();
         else
             falling();
     }
 
-    private void airMovementInsideSolid() {
+    private void handleOnFloorMovement(){
+        updateXPos(xSpeed);
+        moving = true; // Activate running animation
+    }
+
+    private void handleMovementInsideSolid() {
         // JUMPING
         if (airSpeed < 0) {
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-
-            if (xSpeed > 0) {
-                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            } else {
-                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            }
-
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
         // FALLING
         else {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
             isJumping = false;
-
-            if (xSpeed > 0) {
-                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            } else {
-                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            }
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
     }
+
+
 
     private void jumping(){
 
@@ -192,21 +169,7 @@ public class Player extends Entity{
         if (airSpeed < 0){
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            if (xSpeed > 0) {
-                int xTile = (int) ((hitbox.x + hitbox.width + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            } else {
-                int xTile = (int) ((hitbox.x + xSpeed) / Game.TILES_SIZE);
-                int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-                if (!IsWall(xTile, yTile, levelData)) {
-                    hitbox.x += xSpeed;
-                }
-            }
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
 
         // Going down
@@ -220,8 +183,7 @@ public class Player extends Entity{
                 resetInAir();
                 updateXPos(xSpeed);
             }
-        }
-        else {
+        } else {
             isJumping = false;
             updateXPos(xSpeed);
         }
@@ -245,8 +207,27 @@ public class Player extends Entity{
     }
 
     private void updateXPos(float xMovement) {
-        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData))
             hitbox.x += xMovement;
+    }
+
+    private void conpenetrationSafeUpdateXPos(float xMovement) {
+
+        // Moving right
+        if (xMovement > 0) {
+            int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Game.TILES_SIZE);
+            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+            if (!IsWall(xTile, yTile, levelData))
+                hitbox.x += xMovement;
+        }
+       // Moving left
+        else {
+            int xTile = (int) ((hitbox.x + xMovement) / Game.TILES_SIZE);
+            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+
+            if (!IsWall(xTile, yTile, levelData))
+                hitbox.x += xMovement;
         }
     }
 
