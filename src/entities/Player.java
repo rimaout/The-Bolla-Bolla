@@ -32,6 +32,8 @@ public class Player extends Entity{
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
     private boolean inAir = false;
+    private int flipX = 0;
+    private int flipW = 1;
 
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
@@ -46,8 +48,8 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - X_DRAW_OFFSET), (int) (hitbox.y - Y_DRAW_OFFSET), width, height, null);
-        drawHitbox(g);
+        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - X_DRAW_OFFSET) + flipX, (int) (hitbox.y - Y_DRAW_OFFSET), width * flipW, height, null);
+        //drawHitbox(g);
     }
 
     private void updateAnimationTick() {
@@ -122,10 +124,16 @@ public class Player extends Entity{
 
         xSpeed = 0;
 
-        if (left)
+        if (left) {
             xSpeed -= PLAYER_SPEED;
-        if (right)
+            flipX = width;
+            flipW = -1;
+        }
+        if (right) {
             xSpeed += PLAYER_SPEED;
+            flipX = 0;
+            flipW = 1;
+        }
 
         if (!inAir)
             if (!IsEntityOnFloor(hitbox, levelData))

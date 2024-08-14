@@ -8,20 +8,20 @@ import static Utillz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
 
-    public boolean goUp = false;
-    public boolean goDown = false;
+    private boolean goUp = false;
+    private boolean goDown = false;
 
-    public boolean isFalling = false;
-    public boolean isJumping = false;
+    private boolean isFalling = false;
+    private boolean isJumping = false;
 
-    public boolean isFallingFirstUpdate = true;
-    public boolean isFlyingFirstUpdate = true;
-    public boolean didFlyInsideSolid = false;
-
-
+    private int flyDirectionChangeCounter = 0;
+    private boolean isFlyingFirstUpdate = true;
+    private double flyStartTime = 0;
+    private boolean didFlyInsideSolid = false;
 
     // Player Info Update Interval
-    private final int GENELAR_UPDATE_INTERVAL = 5000; // 3 seconds
+    private final int GENELAR_UPDATE_INTERVAL = 8000; // 8 seconds
+    private int nextUpdateInterval;
     private double latsUpdateTime = System.currentTimeMillis();
 
     public ZenChan(float x, float y) {
@@ -39,7 +39,7 @@ public class ZenChan extends Enemy {
         updateAnimationTick();
     }
 
-    protected void firstUpdate(int[][] levelData) {
+    private void firstUpdate(int[][] levelData) {
         if (!IsEntityOnFloor(hitbox, levelData))
             goDown = true;
         firstUpdate = false;
@@ -123,15 +123,37 @@ public class ZenChan extends Enemy {
 
     private void fly(int[][] levelData) {
 
+        if(isFlyingFirstUpdate){
+            // wait half a second before flying
+            flyStartTime = System.currentTimeMillis();
+            isFlyingFirstUpdate = false;
+            changeWalkingDir();
+            flyDirectionChangeCounter++;
+        }
+
+        if(System.currentTimeMillis() - flyStartTime < 800)
+            return;
+
+        if (flyDirectionChangeCounter == 1) {
+            changeWalkingDir();
+            flyDirectionChangeCounter++;
+        }
+
+        if(System.currentTimeMillis() - flyStartTime < 1000)
+            return;
+
         if(IsEntityInsideSolid(hitbox, levelData)){
             didFlyInsideSolid = true;
             hitbox.y -= FLY_SPEED;
         }
         else if(didFlyInsideSolid){
             hitbox.y = GetEntityYPosAboveFloor(hitbox, FLY_SPEED, levelData) - 1;
+
+            // Reset fly variables
             goUp = false;
             isFlyingFirstUpdate = true;
             didFlyInsideSolid = false;
+            flyDirectionChangeCounter = 0;
         }
         else{
             hitbox.y -= FLY_SPEED;
@@ -139,7 +161,7 @@ public class ZenChan extends Enemy {
     }
 
     private void jump(int[][] levelData) {
-        float jumpXSpeed = xSpeed * 1.2f;
+        float jumpXSpeed = xSpeed * 1.4f;
 
         // Going up
         if (ySpeed < 0){
@@ -212,13 +234,17 @@ public class ZenChan extends Enemy {
 
     private void updatePlayerInfo(Player player){
 
-        // Update player info every 3 seconds
-        if (System.currentTimeMillis() - latsUpdateTime > GENELAR_UPDATE_INTERVAL){
+        // update player info in a random interval between 0-8 seconds
+
+        if (System.currentTimeMillis() - latsUpdateTime > nextUpdateInterval){
             getPlayersPos(player);
             latsUpdateTime = System.currentTimeMillis();
+            nextUpdateInterval = (int) (Math.random() * GENELAR_UPDATE_INTERVAL);
+            System.out.println("Next Update Interval: " + nextUpdateInterval);
 
             if(playerTileX < tileX)
                 walkingDir = LEFT;
+
             else
                 walkingDir = RIGHT;
         }

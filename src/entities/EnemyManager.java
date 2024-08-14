@@ -36,7 +36,7 @@ public class EnemyManager {
 
     private void drawZenChans(Graphics g) {
         for (ZenChan z : zenChans) {
-            g.drawImage(zenChanSprites[z.getEnemyState()][z.getAniIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH, ENEMY_HEIGHT, null);
+            g.drawImage(zenChanSprites[z.getEnemyState()][z.getAniIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH * z.flipW(), ENEMY_HEIGHT, null);
             z.drawHitbox(g);
         }
     }

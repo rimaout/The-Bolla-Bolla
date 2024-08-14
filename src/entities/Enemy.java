@@ -14,11 +14,11 @@ public abstract class Enemy extends Entity {
 
     protected float xSpeed = 0;
     protected float ySpeed = 0;
-    protected  int walkingDir = LEFT;
+    protected int walkingDir = LEFT;
 
-    protected final float FALL_SPEED = 0.25f * Game.SCALE;
+    protected final float FALL_SPEED = 0.3f * Game.SCALE;
     protected final float FLY_SPEED = 0.25f * Game.SCALE;
-    protected final float JUMP_SPEED = - 0.5f * Game.SCALE;
+    protected final float JUMP_SPEED = - 0.42f * Game.SCALE;
     protected final float WALK_SPEED = 0.3f * Game.SCALE;
     protected final float ATTACK_RANGE = Game.TILES_SIZE;
     protected final float VIEWING_RANGE = Game.TILES_SIZE * 5;
@@ -66,10 +66,24 @@ public abstract class Enemy extends Entity {
     }
 
     protected void changeWalkingDir() {
-        if(walkingDir == LEFT)
+        if (walkingDir == LEFT)
             walkingDir = RIGHT;
         else
             walkingDir = LEFT;
+    }
+
+    protected int flipX() {
+        if (walkingDir == RIGHT)
+            return width;
+        else
+            return 0;
+    }
+
+    protected int flipW() {
+        if (walkingDir == RIGHT)
+            return -1;
+        else
+            return 1;
     }
 
     public int getAniIndex() {
