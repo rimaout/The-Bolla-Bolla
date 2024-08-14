@@ -28,6 +28,8 @@ public class EnemyManager {
         for (ZenChan z : zenChans) {
             z.update(lvlData, player);
         }
+
+        checkEnemyHit(player);
     }
 
     public void draw(Graphics g) {
@@ -35,9 +37,17 @@ public class EnemyManager {
     }
 
     private void drawZenChans(Graphics g) {
+        for (ZenChan z : zenChans)
+            if(z.isActive())
+                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAniIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH * z.flipW(), ENEMY_HEIGHT, null);
+    }
+
+    public void checkEnemyHit(Player player) {
         for (ZenChan z : zenChans) {
-            g.drawImage(zenChanSprites[z.getEnemyState()][z.getAniIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH * z.flipW(), ENEMY_HEIGHT, null);
-            z.drawHitbox(g);
+            if (z.getHitbox().intersects(player.getHitbox())) {
+                if (z.isActive())
+                    player.death();
+            }
         }
     }
 
@@ -49,6 +59,13 @@ public class EnemyManager {
             for (int i = 0; i < zenChanSprites[j].length; i++) {
                 zenChanSprites[j][i] = temp.getSubimage(i * ENEMY_WIDTH_DEFAULT, j * ENEMY_HEIGHT_DEFAULT, ENEMY_WIDTH_DEFAULT, ENEMY_HEIGHT_DEFAULT);
             }
+        }
+
+    }
+
+    public void resetAll() {
+        for (ZenChan z : zenChans) {
+            z.resetEnemy();
         }
 
     }

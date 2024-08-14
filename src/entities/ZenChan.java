@@ -85,11 +85,11 @@ public class ZenChan extends Enemy {
         float hitboxX = 0;
 
         if (walkingDir == LEFT) {
-            xSpeed = -WALK_SPEED;
+            xSpeed = -walkSpeed;
             hitboxX = hitbox.x;
         }
         else {
-            xSpeed = WALK_SPEED;
+            xSpeed = walkSpeed;
             hitboxX = hitbox.x + hitbox.width;
         }
 
@@ -98,7 +98,6 @@ public class ZenChan extends Enemy {
             if (!IsSolid(hitboxX + xSpeed, hitbox.y + hitbox.height + 1, levelData)){
 
                 if(goDown){
-                    System.out.println("goDown");
                     hitbox.x += xSpeed;
                     isFalling = true;
                     goDown = false;
@@ -108,7 +107,7 @@ public class ZenChan extends Enemy {
 
                 if(canJump(levelData)) {
                     isJumping = true;
-                    ySpeed = JUMP_SPEED;
+                    ySpeed = jumpSpeed;
                     jump(levelData);
                     return;
                 }
@@ -144,10 +143,10 @@ public class ZenChan extends Enemy {
 
         if(IsEntityInsideSolid(hitbox, levelData)){
             didFlyInsideSolid = true;
-            hitbox.y -= FLY_SPEED;
+            hitbox.y -= flySpeed;
         }
         else if(didFlyInsideSolid){
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, FLY_SPEED, levelData) - 1;
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelData) - 1;
 
             // Reset fly variables
             goUp = false;
@@ -156,7 +155,7 @@ public class ZenChan extends Enemy {
             flyDirectionChangeCounter = 0;
         }
         else{
-            hitbox.y -= FLY_SPEED;
+            hitbox.y -= flySpeed;
         }
     }
 
@@ -171,7 +170,7 @@ public class ZenChan extends Enemy {
         }
 
         // Going down
-        else if (ySpeed <= -JUMP_SPEED){
+        else if (ySpeed <= -jumpSpeed){
             if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
                 hitbox.y += ySpeed;
                 ySpeed += GRAVITY;
@@ -188,10 +187,10 @@ public class ZenChan extends Enemy {
     }
 
     private void fall(int [][] levelData) {
-        if (CanMoveHere(hitbox.x, hitbox.y + FALL_SPEED, hitbox.width, hitbox.height, levelData))
-            hitbox.y += FALL_SPEED;
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
+            hitbox.y += fallSpeed;
          else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, FALL_SPEED, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
             isFalling = false;
          }
     }
@@ -240,7 +239,6 @@ public class ZenChan extends Enemy {
             getPlayersPos(player);
             latsUpdateTime = System.currentTimeMillis();
             nextUpdateInterval = (int) (Math.random() * GENELAR_UPDATE_INTERVAL);
-            System.out.println("Next Update Interval: " + nextUpdateInterval);
 
             if(playerTileX < tileX)
                 walkingDir = LEFT;
@@ -251,10 +249,10 @@ public class ZenChan extends Enemy {
     }
 
     private void goOnFloor(int[][] levelData) {
-        if (CanMoveHere(hitbox.x, hitbox.y + FALL_SPEED, hitbox.width, hitbox.height, levelData))
-            hitbox.y += FALL_SPEED;
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
+            hitbox.y += fallSpeed;
         else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, FALL_SPEED, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
             goDown = false;
         }
     }

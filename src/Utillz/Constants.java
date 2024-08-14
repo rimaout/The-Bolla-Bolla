@@ -71,7 +71,7 @@ public class Constants {
                 case ATTACK_AMATION:
                     return 1;
                 case DEAD_ANIMATION:
-                    return 4;
+                    return 6;
                 default:
                     return 0;
             }
@@ -87,15 +87,18 @@ public class Constants {
         public static final int ZEN_CHAN_DRAWOFFSET_X = (int) (2 * Game.SCALE);
         public static final int ZEN_CHAN_DRAWOFFSET_Y = (int) (2 * Game.SCALE);
 
+        // Enemy States
+        public static final int NORMAL_STATE = 0;
+        public static final int HUNGRY_STATE = 1;
+        public static final int BOBBLE_STATE = 2;
+        public static final int DEAD_STATE = 3;
+
         // General Animation Constants
-        public static final int WALKING = 0;
-        public static final int WALKING_RED = 1;
-        public static final int WALKING_BLUE = 2;
-        public static final int BOBBLE = 3;
-        public static final int BOOBLE_RED = 4;
-        public static final int BOOBLE_BLUE = 5;
-        public static final int DEAD = 6;
-        public static final int ATTACK = 7;
+        public static final int WALKING_ANIMATION_NORMAL = 0;
+        public static final int WALKING_ANIMATION_HUNGRY = 1;
+        public static final int BOBBLE_GREEN_ANIMATION = 3;
+        public static final int BOOBLE_RED_ANIMATION = 4;
+        public static final int DEAD_ANIMATION = 6;
 
         // General Enemy Sprite Sizes
         public static final int ENEMY_WIDTH_DEFAULT = 18;
@@ -107,19 +110,15 @@ public class Constants {
             switch (enemyType) {
                 case EnemyConstants.ZEN_CHAN:
                     switch (enemyState) {
-                        case EnemyConstants.WALKING:
+                        case EnemyConstants.WALKING_ANIMATION_NORMAL:
                             return 2;
-                        case EnemyConstants.WALKING_RED:
+                        case EnemyConstants.WALKING_ANIMATION_HUNGRY:
                             return 2;
-                        case EnemyConstants.WALKING_BLUE:
+                        case EnemyConstants.BOBBLE_GREEN_ANIMATION:
                             return 2;
-                        case EnemyConstants.BOBBLE:
+                        case EnemyConstants.BOOBLE_RED_ANIMATION:
                             return 2;
-                        case EnemyConstants.BOOBLE_RED:
-                            return 2;
-                        case EnemyConstants.BOOBLE_BLUE:
-                            return 2;
-                        case EnemyConstants.DEAD:
+                        case EnemyConstants.DEAD_ANIMATION:
                             return 4;
                         default:
                             return 0;
