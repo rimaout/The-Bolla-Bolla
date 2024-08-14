@@ -3,6 +3,8 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+import static Utillz.HelpMethods.CanMoveHere;
+
 public abstract class Entity {
     protected float x, y; // Used protected access modifier so that the subclasses can access the x and y variables, with the private access modifier, the subclasses won't be able to access the x and y variables.
     protected int width, height;
@@ -28,5 +30,10 @@ public abstract class Entity {
 
     public Rectangle2D.Float getHitbox() {
         return hitbox;
+    }
+
+    protected void updateXPos(float xMovement, int[][] levelData) {
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData))
+            hitbox.x += xMovement;
     }
 }

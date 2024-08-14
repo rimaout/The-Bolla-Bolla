@@ -1,77 +1,235 @@
 package entities;
 
-import Utillz.Constants;
 import main.Game;
 
-import static Utillz.Constants.Directions.LEFT;
+import static Utillz.Constants.Directions.*;
 import static Utillz.Constants.EnemyConstants.*;
 import static Utillz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
+
+    public boolean goUp = false;
+    public boolean goDown = false;
+
+    public boolean isFalling = false;
+    public boolean isJumping = false;
+
+    public boolean isFallingFirstUpdate = true;
+    public boolean isFlyingFirstUpdate = true;
+    public boolean didFlyInsideSolid = false;
+
+
+
+    // Player Info Update Interval
+    private final int GENELAR_UPDATE_INTERVAL = 5000; // 3 seconds
+    private double latsUpdateTime = System.currentTimeMillis();
+
     public ZenChan(float x, float y) {
         super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ZEN_CHAN);
         initHitbox(x, y, ZEN_CHAN_HITBOX_WIDTH, ZEN_CHAN_HITBOX_HEIGHT);
     }
 
     public void update(int[][] lvlData, Player player) {
-        updateMove(lvlData, player);
+
+        if (firstUpdate)
+            firstUpdate(lvlData);
+
+        updatePlayerInfo(player);
+        updateMove(lvlData);
         updateAnimationTick();
     }
 
-    private void updateMove(int[][] levelData, Player player) {
-        if (firstUpdate)
-            firstUpdate(levelData);
+    protected void firstUpdate(int[][] levelData) {
+        if (!IsEntityOnFloor(hitbox, levelData))
+            goDown = true;
+        firstUpdate = false;
+    }
 
-        if (inAir)
-            updateInAir(levelData);
+    private void updateMove(int[][] levelData) {
+        tileX = (int) (hitbox.x / Game.TILES_SIZE);
+        tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
+        if(!IsEntityOnFloor(hitbox, levelData) && !isJumping && !goUp && !goDown)
+            goOnFloor(levelData);
+
+        if (isFalling) {
+            fall(levelData);
+            return;
+        }
+        if(goUp){
+            fly(levelData);
+            return;
+        }
+        if(isJumping){
+            jump(levelData);
+            return;
+        }
+
+        moveOnGround(levelData);
+
+        //Go up
+        if (playerTileY < tileY && canFly(levelData)) {
+            goUp = true;
+            goDown = false;
+        }
+
+        //Go down
+        if (playerTileY > tileY) {
+            goDown = true;
+            goUp = false;
+        }
+    }
+
+    private void moveOnGround(int[][] levelData) {
+        xSpeed = 0;
+        float hitboxX = 0;
+
+        if (walkingDir == LEFT) {
+            xSpeed = -WALK_SPEED;
+            hitboxX = hitbox.x;
+        }
         else {
-            nextMove(levelData, player);
+            xSpeed = WALK_SPEED;
+            hitboxX = hitbox.x + hitbox.width;
         }
-    }
 
-    private void nextMove(int[][] levelData, Player player) {
-        switch (enemyState) {
-            case WALKING:
+        if (CanMoveHere(hitboxX + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
 
-                // qualcosa non funziona
+            if (!IsSolid(hitboxX + xSpeed, hitbox.y + hitbox.height + 1, levelData)){
 
-                if (canSeePlayer(levelData, player)) {
-                    turnTowardsPlayer(player);
-                    if (isPlayerInAttackRange(player))
-                        attack(player);
+                if(goDown){
+                    System.out.println("goDown");
+                    hitbox.x += xSpeed;
+                    isFalling = true;
+                    goDown = false;
+                    fall(levelData);
+                    return;
                 }
-                move(levelData);
-        }
-    }
 
-    private void move(int[][] levelData) {
-        float xSpeed = 0;
-
-        if (walkingDir == LEFT)
-            xSpeed = -walkingSpeed;
-        else
-            xSpeed = walkingSpeed;
-
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-            if (WillEntityBeOnFloor(hitbox, xSpeed, levelData)) {
-                hitbox.x += xSpeed;
-                return;
+                if(canJump(levelData)) {
+                    isJumping = true;
+                    ySpeed = JUMP_SPEED;
+                    jump(levelData);
+                    return;
+                }
+                changeWalkingDir();
             }
+
+            hitbox.x += xSpeed;
         }
-        changeWalkingDir();
+        else
+            changeWalkingDir();
     }
 
-    private void attack(Player player) {
-        // Zen Chan attacks and player dies
-        System.out.println("Zen Chan attacks player");
+    private void fly(int[][] levelData) {
+
+        if(IsEntityInsideSolid(hitbox, levelData)){
+            didFlyInsideSolid = true;
+            hitbox.y -= FLY_SPEED;
+        }
+        else if(didFlyInsideSolid){
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, FLY_SPEED, levelData) - 1;
+            goUp = false;
+            isFlyingFirstUpdate = true;
+            didFlyInsideSolid = false;
+        }
+        else{
+            hitbox.y -= FLY_SPEED;
+        }
     }
 
-    private void fly() {
-        // Zen Chan flies
+    private void jump(int[][] levelData) {
+        float jumpXSpeed = xSpeed * 1.2f;
+
+        // Going up
+        if (ySpeed < 0){
+            hitbox.y += ySpeed;
+            ySpeed += GRAVITY;
+            updateXPos(jumpXSpeed, levelData);
+        }
+
+        // Going down
+        else if (ySpeed <= -JUMP_SPEED){
+            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
+                hitbox.y += ySpeed;
+                ySpeed += GRAVITY;
+                updateXPos(jumpXSpeed, levelData);
+            } else {
+                isJumping = false;
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
+                updateXPos(jumpXSpeed, levelData);
+            }
+        } else {
+            isJumping = false;
+            updateXPos(jumpXSpeed, levelData);
+        }
     }
 
-    private void jump() {
-        // Zen Chan walks
+    private void fall(int [][] levelData) {
+        if (CanMoveHere(hitbox.x, hitbox.y + FALL_SPEED, hitbox.width, hitbox.height, levelData))
+            hitbox.y += FALL_SPEED;
+         else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, FALL_SPEED, levelData);
+            isFalling = false;
+         }
+    }
+
+    private boolean canJump(int[][] levelData) {
+        // check if after 3 tiles there is a floor
+        int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
+
+        if (walkingDir == LEFT) {
+
+            if(IsTilePerimeterWall(tileX - 4))
+                return false;
+
+            if (IsTileSolid(tileX - 4, yFlorTile , levelData))
+                return true;
+        }
+
+        else if (walkingDir == RIGHT)
+
+           if(IsTilePerimeterWall(tileX + 5))
+                return false;
+
+            if (IsTileSolid(tileX + 5, yFlorTile, levelData))
+                return true;
+
+        return false;
+    }
+
+    private boolean canFly(int[][] levelData){
+        // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
+
+        int OneTileAbove = tileY-1;
+        int TwoTilesAbove = tileY-2;
+        int ThreeTilesAbove = tileY-3;
+
+        return (IsTileSolid(tileX, OneTileAbove, levelData) &&  IsTileSolid(tileX+1, OneTileAbove, levelData))||
+                (IsTileSolid(tileX, TwoTilesAbove, levelData) &&  IsTileSolid(tileX+1, TwoTilesAbove, levelData))||
+                (IsTileSolid(tileX, ThreeTilesAbove, levelData) && IsTileSolid(tileX+1, ThreeTilesAbove, levelData));
+    }
+
+    private void updatePlayerInfo(Player player){
+
+        // Update player info every 3 seconds
+        if (System.currentTimeMillis() - latsUpdateTime > GENELAR_UPDATE_INTERVAL){
+            getPlayersPos(player);
+            latsUpdateTime = System.currentTimeMillis();
+
+            if(playerTileX < tileX)
+                walkingDir = LEFT;
+            else
+                walkingDir = RIGHT;
+        }
+    }
+
+    private void goOnFloor(int[][] levelData) {
+        if (CanMoveHere(hitbox.x, hitbox.y + FALL_SPEED, hitbox.width, hitbox.height, levelData))
+            hitbox.y += FALL_SPEED;
+        else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, FALL_SPEED, levelData);
+            goDown = false;
+        }
     }
 }

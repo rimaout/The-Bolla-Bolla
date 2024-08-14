@@ -126,6 +126,7 @@ public class Playing extends State implements StateMethods {
 
     public void windowFocusLost() {
         player.resetDirection();
+        paused = true;
     }
 
     public Player getPlayer() {

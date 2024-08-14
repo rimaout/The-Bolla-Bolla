@@ -26,8 +26,8 @@ public class Player extends Entity{
     // Movement values and variables
     private final float PLAYER_SPEED = 0.33f * Game.SCALE;
     private final float FALL_SPEED = 0.35f * Game.SCALE;
-    private final float GRAVITY = 0.0075f * Game.SCALE;
-    private final float JUMP_SPEED = -0.785f * Game.SCALE;
+    private final float GRAVITY = 0.0078f * Game.SCALE;
+    private final float JUMP_SPEED = -0.79f * Game.SCALE;
 
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
@@ -96,7 +96,6 @@ public class Player extends Entity{
             pacManEffect();
 
         // MOVE
-
         if (IsEntityInsideSolid(hitbox, levelData))
             handleMovementInsideSolid();
 
@@ -141,7 +140,7 @@ public class Player extends Entity{
     }
 
     private void handleOnFloorMovement(){
-        updateXPos(xSpeed);
+        updateXPos(xSpeed, levelData);
         moving = true; // Activate running animation
     }
 
@@ -160,9 +159,6 @@ public class Player extends Entity{
             conpenetrationSafeUpdateXPos(xSpeed);
         }
     }
-
-
-
     private void jumping(){
 
         // Going up
@@ -177,15 +173,15 @@ public class Player extends Entity{
             if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
-                updateXPos(xSpeed);
+                updateXPos(xSpeed, levelData);
             } else {
                 hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
                 resetInAir();
-                updateXPos(xSpeed);
+                updateXPos(xSpeed, levelData);
             }
         } else {
             isJumping = false;
-            updateXPos(xSpeed);
+            updateXPos(xSpeed, levelData);
         }
     }
 
@@ -193,10 +189,10 @@ public class Player extends Entity{
         if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
                 hitbox.y += airSpeed;
                 airSpeed = FALL_SPEED;
-                updateXPos(xSpeed / 3);
+                updateXPos(xSpeed / 3, levelData);
         } else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
-            updateXPos(xSpeed / 3);
+            updateXPos(xSpeed / 3, levelData);
             resetInAir();
         }
     }
@@ -204,11 +200,6 @@ public class Player extends Entity{
     private void pacManEffect() {
         if (hitbox.y > Game.TILES_SIZE * Game.TILES_IN_HEIGHT)
             hitbox.y = -2 * Game.TILES_SIZE;
-    }
-
-    private void updateXPos(float xMovement) {
-        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData))
-            hitbox.x += xMovement;
     }
 
     private void conpenetrationSafeUpdateXPos(float xMovement) {
