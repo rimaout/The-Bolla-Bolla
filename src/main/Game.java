@@ -31,6 +31,7 @@ public class Game implements Runnable {
 
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
+        gamePanel.setFocusable(true);
         gamePanel.requestFocus();  // Requests focus for the game panel, This ensures that the game panel is the component that receives keyboard input.
 
         startGameLoop();
