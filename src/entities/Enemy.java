@@ -2,6 +2,7 @@ package entities;
 
 import main.Game;
 
+import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.Directions.*;
@@ -10,35 +11,17 @@ public abstract class Enemy extends Entity {
     protected boolean active = true;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
     protected int enemyState, enemyType;
-    protected int aniIndex, aniTick, aniSpeed = 50;
     protected boolean firstUpdate = true;
+
+    // Enemy Movement Variables
+    protected float xSpeed;
+    protected float ySpeed;
+    protected float fallSpeed;
+    protected float flySpeed;
+    protected float jumpSpeed;
+    protected float walkSpeed;
     protected int tileX, tileY;
-
-    protected float xSpeed = 0;
-    protected float ySpeed = 0;
     protected int walkingDir = LEFT;
-
-    protected float fallSpeed = 0.3f * Game.SCALE;
-    protected float flySpeed = 0.25f * Game.SCALE;
-    protected float jumpSpeed = - 0.42f * Game.SCALE;
-    protected float walkSpeed = 0.3f * Game.SCALE;
-
-    protected float NORMAL_FALL_SPEED = 0.3f * Game.SCALE;
-    protected float NORMAL_FLY_SPEED = 0.25f * Game.SCALE;
-    protected float NORMAL_JUMP_SPEED = - 0.42f * Game.SCALE;
-    protected float NORMAL_WALK_SPEED = 0.3f * Game.SCALE;
-
-    protected float HUNGRY_FALL_SPEED = 0.3f * Game.SCALE;
-    protected float HUNGRY_FLY_SPEED = 0.25f * Game.SCALE;
-    protected float HUNGRY_JUMP_SPEED = - 0.42f * Game.SCALE;
-    protected float HUNGRY_WALK_SPEED = 0.3f * Game.SCALE;
-
-    protected float BOBBLE_X_SPEED = 0.15f * Game.SCALE;
-    protected float BOBBLE_Y_SPEED = 0.15f * Game.SCALE;
-
-    protected final float ATTACK_RANGE = Game.TILES_SIZE;
-    protected final float VIEWING_RANGE = Game.TILES_SIZE * 5;
-    protected final float GRAVITY = 0.0078f * Game.SCALE;
 
     // Player info
     protected int playerTileX, playerTileY;
@@ -46,16 +29,15 @@ public abstract class Enemy extends Entity {
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
         this.enemyType = enemyType;
-        initHitbox(x, y, width, height);
     }
 
     protected void updateAnimationTick() {
-        aniTick++;
-        if (aniTick >= aniSpeed) {
-            aniTick = 0;
-            aniIndex++;
-            if (aniIndex >= getSpriteAmount(enemyType, enemyState)) {
-                aniIndex = 0;
+        animationTick++;
+        if (animationTick >= ANIMATION_SPEED) {
+            animationTick = 0;
+            animationIndex++;
+            if (animationIndex >= getSpriteAmount(enemyType, enemyState)) {
+                animationIndex = 0;
 
                 switch (enemyState) {
                     case NORMAL_STATE:
@@ -103,7 +85,7 @@ public abstract class Enemy extends Entity {
         return Math.abs(player.getHitbox().x - hitbox.x) <= ATTACK_RANGE;
     }
 
-    protected void getPlayersPos(Player player) {
+    protected void calculatePlayersPos(Player player) {
         playerTileX = (int) (player.getHitbox().x / Game.TILES_SIZE);
         playerTileY = (int)(player.getHitbox().y / Game.TILES_SIZE);
     }
@@ -132,16 +114,12 @@ public abstract class Enemy extends Entity {
     protected void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
-        aniIndex = 0;
-        aniTick = 0;
+        animationIndex = 0;
+        animationTick = 0;
         firstUpdate = true;
         active = true;
         enemyState = NORMAL_STATE;
         walkingDir = LEFT;
-    }
-
-    public int getAniIndex() {
-        return aniIndex;
     }
 
     public int getEnemyState() {

@@ -50,7 +50,7 @@ public class Playing extends State implements StateMethods {
     public void initClasses() {
         levelManager = new LevelManager(this);
         enemyManager = new EnemyManager(this);
-        player = new Player(3, 24, 18 * Game.SCALE, 18 * Game.SCALE, this);
+        player = new Player(this);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
@@ -122,6 +122,7 @@ public class Playing extends State implements StateMethods {
                 player.setAttacking(true);
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         if (!gameOver || !gameCompleted)
             if (paused)

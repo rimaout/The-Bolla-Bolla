@@ -2,7 +2,11 @@ package main;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import inputs.*;
+
+import inputs.KeyBoardInputs;
+import inputs.MouseKeyInputs;
+import inputs.MouseMotionInputs;
+
 import static main.Game.GAME_WIDTH;
 import static main.Game.GAME_HEIGHT;
 

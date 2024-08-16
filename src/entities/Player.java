@@ -7,6 +7,8 @@ import main.Game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static utilz.Constants.ANIMATION_SPEED;
+import static utilz.Constants.GRAVITY;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
@@ -16,47 +18,28 @@ public class Player extends Entity{
 
     // Animation values and variables
     private BufferedImage[][] animations;
-    private int animationTick, animationIndex;
     private int playerAnimation = IDLE_ANIMATION;
-    private boolean left, right, jump, isJumping;
-    private boolean moving, attacking, respawning;
-
-    // Hitbox values and variables
-    private final float X_DRAW_OFFSET = 3 * Game.SCALE;
-    private final float Y_DRAW_OFFSET = 3 * Game.SCALE;
 
     // Movement values and variables
-    private final float PLAYER_SPEED = 0.33f * Game.SCALE;
-    private final float FALL_SPEED = 0.35f * Game.SCALE;
-    private final float GRAVITY = 0.0078f * Game.SCALE;
-    private final float JUMP_SPEED = -0.79f * Game.SCALE;
-
-    // Starting Position
-    private final float START_X;
-    private final float START_Y;
-
-    // General Variables
-    private boolean isImmune = false;
-    private final int IMMUNE_TIME = 2000; // 2 seconds
-    private long immuneStartTime = 0;
-    private int lives = 3;
+    private boolean left, right, jump, isJumping;
+    private boolean moving, attacking, respawning;
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
     private boolean inAir = false;
-    private int flipX = 0;
+
+    // General Variables
+    private int lives = 3;
+    private boolean isImmune = false;
+    private long immuneStartTime = 0;
+    private  int flipX = 0;
     private int flipW = 1;
 
-    public Player(float xTile, float yTile, int width, int height, Playing playing) {
-        float startX = xTile * Game.TILES_SIZE;
-        float startY = yTile * Game.TILES_SIZE + 6;
-
-        super(startX, startY, width, height);
+    public Player(Playing playing) {
+        super(SPAWN_X, SPAWN_Y, IMMAGE_WIDTH, IMMAGE_HEIGHT);
         this.playing = playing;
-        this.START_X = startX;
-        this.START_Y = startY;
 
         loadAnimation();
-        initHitbox(x, y, 13*Game.SCALE, 13*Game.SCALE);
+        initHitbox(HITBOX_WIDTH, HITBOX_HEIGHT);
     }
 
     public void update() {
@@ -72,21 +55,8 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - X_DRAW_OFFSET) + flipX, (int) (hitbox.y - Y_DRAW_OFFSET), width * flipW, height, null);
+        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - DRAWOFFSET_X) + flipX, (int) (hitbox.y - DRAWOFFSET_Y), width * flipW, height, null);
         //drawHitbox(g);
-    }
-
-    private void updateAnimationTick() {
-        animationTick++;
-        if (animationTick > ANIMATION_SPEED) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= getSpriteAmount(playerAnimation)) {
-                animationIndex = 0;
-                attacking = false;
-                respawning = false;
-            }
-        }
     }
 
     private void setAnimation() {
@@ -116,9 +86,22 @@ public class Player extends Entity{
         }
     }
 
+    private void updateAnimationTick() {
+        animationTick++;
+        if (animationTick > ANIMATION_SPEED) {
+            animationTick = 0;
+            animationIndex++;
+            if (animationIndex >= getSpriteAmount(playerAnimation)) {
+                animationIndex = 0;
+                attacking = false;
+                respawning = false;
+            }
+        }
+    }
+
     private void updateImmunity() {
         if (isImmune) {
-            if (immuneStartTime <= System.currentTimeMillis() - IMMUNE_TIME)
+            if (immuneStartTime <= System.currentTimeMillis() - IMMUNE_TIME_AFTER_RESPAWN)
                 isImmune = false;
         }
     }
@@ -166,12 +149,12 @@ public class Player extends Entity{
         xSpeed = 0;
 
         if (left) {
-            xSpeed -= PLAYER_SPEED;
+            xSpeed -= WALK_SPEED;
             flipX = width;
             flipW = -1;
         }
         if (right) {
-            xSpeed += PLAYER_SPEED;
+            xSpeed += WALK_SPEED;
             flipX = 0;
             flipW = 1;
         }
@@ -198,14 +181,14 @@ public class Player extends Entity{
         if (airSpeed < 0) {
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed);
+            conpenetrationSafeUpdateXPos(xSpeed, levelData);
         }
         // FALLING
         else {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
             isJumping = false;
-            conpenetrationSafeUpdateXPos(xSpeed);
+            conpenetrationSafeUpdateXPos(xSpeed, levelData);
         }
     }
     private void jumping(){
@@ -214,7 +197,7 @@ public class Player extends Entity{
         if (airSpeed < 0){
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed);
+            conpenetrationSafeUpdateXPos(xSpeed, levelData);
         }
 
         // Going down
@@ -251,23 +234,26 @@ public class Player extends Entity{
             hitbox.y = -2 * Game.TILES_SIZE;
     }
 
-    private void conpenetrationSafeUpdateXPos(float xMovement) {
+    public void death() {
 
-        // Moving right
-        if (xMovement > 0) {
-            int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Game.TILES_SIZE);
-            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
-
-            if (!IsWall(xTile, yTile, levelData))
-                hitbox.x += xMovement;
+        if (!isImmune) {
+            isImmune = true;
+            immuneStartTime = System.currentTimeMillis();
+            respawning = true;
+            resetDirection();
+            resetInAir();
         }
-       // Moving left
-        else {
-            int xTile = (int) ((hitbox.x + xMovement) / Game.TILES_SIZE);
-            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+    }
 
-            if (!IsWall(xTile, yTile, levelData))
-                hitbox.x += xMovement;
+    private void respawn() {
+
+        if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1) { // Last frame of the dying animation
+            respawning = false;
+            playerAnimation = IDLE_ANIMATION;
+            immuneStartTime = System.currentTimeMillis();
+            hitbox.x = SPAWN_X;
+            hitbox.y = SPAWN_Y;
+            lives--;
         }
     }
 
@@ -287,6 +273,7 @@ public class Player extends Entity{
             inAir = true;
     }
 
+
     private void resetInAir() {
         inAir = false;
         isJumping = false;
@@ -298,15 +285,21 @@ public class Player extends Entity{
         right = false;
     }
 
-    public void death() {
+    public void resetAll() {
+        resetDirection();
+        resetInAir();
+        isImmune = false;
+        hitbox.x = SPAWN_X;
+        hitbox.y = SPAWN_Y;
+        lives = 3;
+        xSpeed = 0;
+        airSpeed = 0.0f;
+        flipX = 0;
+        flipW = 1;
+        playerAnimation = IDLE_ANIMATION;
 
-        if (!isImmune) {
-            isImmune = true;
-            immuneStartTime = System.currentTimeMillis();
-            respawning = true;
-            resetDirection();
-            resetInAir();
-        }
+        if (!IsEntityOnFloor(hitbox, levelData))
+            inAir = true;
     }
 
     public void setAttacking(boolean attacking) {
@@ -331,37 +324,5 @@ public class Player extends Entity{
 
     public int getLives() {
         return lives;
-    }
-
-    private void respawn() {
-
-        if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1) { // Last frame of the dying animation
-            respawning = false;
-            playerAnimation = IDLE_ANIMATION;
-            immuneStartTime = System.currentTimeMillis();
-            hitbox.x = START_X;
-            hitbox.y = START_Y;
-            lives--;
-        }
-    }
-
-    public void resetAll() {
-        resetDirection();
-        isImmune = false;
-        inAir = false;
-        isJumping = false;
-        airSpeed = 0;
-        xSpeed = 0;
-        hitbox.x = START_X;
-        hitbox.y = START_Y;
-        lives = 3;
-        xSpeed = 0;
-        airSpeed = 0.0f;
-        flipX = 0;
-        flipW = 1;
-        playerAnimation = IDLE_ANIMATION;
-
-        if (!IsEntityOnFloor(hitbox, levelData))
-            inAir = true;
     }
 }

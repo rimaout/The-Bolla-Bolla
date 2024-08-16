@@ -4,6 +4,9 @@ import main.Game;
 
 public class Constants {
 
+    public static final float GRAVITY = 0.0078f * Game.SCALE;
+    public static final int ANIMATION_SPEED = 50;
+
     public static class UI {
 
         public static class MenuButtons {
@@ -49,14 +52,33 @@ public class Constants {
 
     public static class PlayerConstants {
 
+        //Spawning Position
+        public static final float SPAWN_X = 3 * Game.TILES_SIZE;
+        public static final float SPAWN_Y = 24 * Game.TILES_SIZE + 2 * Game.SCALE;
+
+        // Player Image and Hitbox Constants
+        public static final int IMMAGE_WIDTH = (int) (18 * Game.SCALE);
+        public static final int IMMAGE_HEIGHT = (int) (18 * Game.SCALE);
+        public static final int HITBOX_WIDTH = (int) (13 * Game.SCALE);
+        public static final int HITBOX_HEIGHT = (int) (13 * Game.SCALE);
+        public static final int DRAWOFFSET_X = (int) (3 * Game.SCALE);
+        public static final int DRAWOFFSET_Y = (int) (3 * Game.SCALE);
+
+        // Movement values and variables
+        public static final float WALK_SPEED = 0.33f * Game.SCALE;
+        public static final float FALL_SPEED = 0.35f * Game.SCALE;
+        public static final float JUMP_SPEED = -0.79f * Game.SCALE;
+
         // Animation Constants
-        public static final int ANIMATION_SPEED = 50;
         public static final int IDLE_ANIMATION = 0;
         public static final int RUNNING_ANIMATION = 1;
         public static final int JUMPING_ANIMATION = 2;
         public static final int FALLING_ANIMATION = 3;
         public static final int ATTACK_AMATION = 4;
         public static final int DEAD_ANIMATION = 5;
+
+        public static final int IMMUNE_TIME_AFTER_RESPAWN = 2000; // 2 seconds
+
 
         public static int getSpriteAmount(int playerAnimation) {
             switch (playerAnimation) {
@@ -87,11 +109,11 @@ public class Constants {
         public static final int ZEN_CHAN_DRAWOFFSET_X = (int) (2 * Game.SCALE);
         public static final int ZEN_CHAN_DRAWOFFSET_Y = (int) (2 * Game.SCALE);
 
-        // Enemy States
-        public static final int NORMAL_STATE = 0;
-        public static final int HUNGRY_STATE = 1;
-        public static final int BOBBLE_STATE = 2;
-        public static final int DEAD_STATE = 3;
+        // General Enemy Sprite Sizes
+        public static final int ENEMY_WIDTH_DEFAULT = 18;
+        public static final int ENEMY_HEIGHT_DEFAULT = 18;
+        public static final int ENEMY_WIDTH = (int) (ENEMY_WIDTH_DEFAULT * Game.SCALE);
+        public static final int ENEMY_HEIGHT = (int) (ENEMY_HEIGHT_DEFAULT * Game.SCALE);
 
         // General Animation Constants
         public static final int WALKING_ANIMATION_NORMAL = 0;
@@ -100,11 +122,25 @@ public class Constants {
         public static final int BOOBLE_RED_ANIMATION = 4;
         public static final int DEAD_ANIMATION = 6;
 
-        // General Enemy Sprite Sizes
-        public static final int ENEMY_WIDTH_DEFAULT = 18;
-        public static final int ENEMY_HEIGHT_DEFAULT = 18;
-        public static final int ENEMY_WIDTH = (int) (ENEMY_WIDTH_DEFAULT * Game.SCALE);
-        public static final int ENEMY_HEIGHT = (int) (ENEMY_HEIGHT_DEFAULT * Game.SCALE);
+        // Enemy States
+        public static final int NORMAL_STATE = 0;
+        public static final int HUNGRY_STATE = 1;
+        public static final int BOBBLE_STATE = 2;
+        public static final int DEAD_STATE = 3;
+
+        // Enemy Action Constants
+        public static final float NORMAL_FALL_SPEED = 0.3f * Game.SCALE;
+        public static final float NORMAL_FLY_SPEED = 0.25f * Game.SCALE;
+        public static final float NORMAL_JUMP_SPEED = - 0.42f * Game.SCALE;
+        public static final float NORMAL_WALK_SPEED = 0.3f * Game.SCALE;
+        public static final float HUNGRY_FALL_SPEED = 0.3f * Game.SCALE;
+        public static final float HUNGRY_FLY_SPEED = 0.25f * Game.SCALE;
+        public static final float HUNGRY_JUMP_SPEED = - 0.42f * Game.SCALE;
+        public static final float HUNGRY_WALK_SPEED = 0.3f * Game.SCALE;
+        public static final float ATTACK_RANGE = Game.TILES_SIZE;
+        public static final float VIEWING_RANGE = Game.TILES_SIZE * 5;
+
+        public static final int PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
 
         public static int getSpriteAmount(int enemyType, int enemyState) {
             switch (enemyType) {

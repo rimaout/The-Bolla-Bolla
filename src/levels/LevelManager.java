@@ -30,7 +30,6 @@ public class LevelManager {
             playing.setGameCompleted(true);
         }
 
-        // load new level
         Level newLevel = levels.get(levelIndex);
         playing.getEnemyManager().loadEnemies(newLevel);
         playing.getPlayer().loadLevelData(newLevel.getLevelData());
@@ -91,7 +90,7 @@ public class LevelManager {
         }
     }
 
-    public int getLevelsAmmount() {
+    public int getLevelsAmount() {
         return levels.size();
     }
 }

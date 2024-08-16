@@ -4,29 +4,30 @@ import main.Game;
 
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
 
+    // Movement Variables
     private boolean goUp = false;
     private boolean goDown = false;
-
     private boolean isFalling = false;
     private boolean isJumping = false;
 
+    // Fly Variables
     private int flyDirectionChangeCounter = 0;
     private boolean isFlyingFirstUpdate = true;
     private double flyStartTime = 0;
     private boolean didFlyInsideSolid = false;
 
-    // Player Info Update Interval
-    private final int GENELAR_UPDATE_INTERVAL = 8000; // 8 seconds
+    // Player Info Update Interval variables
     private int nextUpdateInterval;
     private double latsUpdateTime = System.currentTimeMillis();
 
     public ZenChan(float x, float y) {
         super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ZEN_CHAN);
-        initHitbox(x, y, ZEN_CHAN_HITBOX_WIDTH, ZEN_CHAN_HITBOX_HEIGHT);
+        initHitbox(ZEN_CHAN_HITBOX_WIDTH, ZEN_CHAN_HITBOX_HEIGHT);
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -195,6 +196,15 @@ public class ZenChan extends Enemy {
          }
     }
 
+    private void goOnFloor(int[][] levelData) {
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
+            hitbox.y += fallSpeed;
+        else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
+            goDown = false;
+        }
+    }
+
     private boolean canJump(int[][] levelData) {
         // check if after 3 tiles there is a floor
         int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
@@ -236,24 +246,15 @@ public class ZenChan extends Enemy {
         // update player info in a random interval between 0-8 seconds
 
         if (System.currentTimeMillis() - latsUpdateTime > nextUpdateInterval){
-            getPlayersPos(player);
+            calculatePlayersPos(player);
             latsUpdateTime = System.currentTimeMillis();
-            nextUpdateInterval = (int) (Math.random() * GENELAR_UPDATE_INTERVAL);
+            nextUpdateInterval = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
 
             if(playerTileX < tileX)
                 walkingDir = LEFT;
 
             else
                 walkingDir = RIGHT;
-        }
-    }
-
-    private void goOnFloor(int[][] levelData) {
-        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
-            hitbox.y += fallSpeed;
-        else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
-            goDown = false;
         }
     }
 }

@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static utilz.Constants.EnemyConstants.ZEN_CHAN;
-import static utilz.LoadSave.GetSprite;
-import static utilz.LoadSave.*;
 
 public class HelpMethods {
 

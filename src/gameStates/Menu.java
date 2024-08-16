@@ -57,7 +57,7 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // Not used
     }
 
     @Override
@@ -82,11 +82,6 @@ public class Menu extends State implements StateMethods {
         resetButtons();
     }
 
-    private void resetButtons() {
-        for (MenuButton button : buttons)
-            button.resetBools();
-    }
-
     @Override
     public void mouseMoved(MouseEvent e) {
         for (MenuButton button : buttons) {
@@ -102,6 +97,11 @@ public class Menu extends State implements StateMethods {
     }
 
     @Override
+    public void mouseDragged(MouseEvent e) {
+        // Not used
+    }
+
+    @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             Gamestate.state = Gamestate.PLAYING;
@@ -111,6 +111,11 @@ public class Menu extends State implements StateMethods {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    private void resetButtons() {
+        for (MenuButton button : buttons)
+            button.resetBools();
     }
 
 }
