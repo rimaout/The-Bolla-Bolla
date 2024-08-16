@@ -1,15 +1,14 @@
 package entities;
 
-import Utillz.Constants;
-import Utillz.LoadSave;
+import utilz.LoadSave;
 import gameStates.Playing;
 import main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static Utillz.Constants.PlayerConstants.*;
-import static Utillz.HelpMethods.*;
+import static utilz.Constants.PlayerConstants.*;
+import static utilz.HelpMethods.*;
 
 public class Player extends Entity{
     private int[][] levelData;

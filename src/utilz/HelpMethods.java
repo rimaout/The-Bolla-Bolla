@@ -1,8 +1,16 @@
-package Utillz;
+package utilz;
 
+import entities.ZenChan;
 import main.Game;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static utilz.Constants.EnemyConstants.ZEN_CHAN;
+import static utilz.LoadSave.GetSprite;
+import static utilz.LoadSave.*;
 
 public class HelpMethods {
 
@@ -181,5 +189,43 @@ public class HelpMethods {
         else
             return IsAllTilesWalkable(tileX1, tileX2, yTile, levelData);
 
+    }
+    public static int[][] GetLevelData(BufferedImage img) {
+
+        // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+
+        int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int red = color.getRed();
+                levelData[x][y] = red;
+            }
+        return levelData;
+    }
+
+    public static ArrayList<ZenChan> getZenChans(BufferedImage img) {
+
+        // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+
+        ArrayList<ZenChan> list = new ArrayList<>();
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int green = color.getGreen();
+                if (green > 125) {
+                    green = 0;
+                }
+
+                if (green == ZEN_CHAN) {
+                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
+                }
+            }
+
+        return list;
     }
 }

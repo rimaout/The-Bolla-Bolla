@@ -1,4 +1,4 @@
-package Utillz;
+package utilz;
 
 import main.Game;
 

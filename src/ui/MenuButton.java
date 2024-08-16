@@ -1,9 +1,9 @@
 package ui;
 
-import Utillz.LoadSave;
+import utilz.LoadSave;
 import gameStates.Gamestate;
 
-import static Utillz.Constants.UI.MenuButtons.*;
+import static utilz.Constants.UI.MenuButtons.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

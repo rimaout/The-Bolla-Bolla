@@ -1,8 +1,10 @@
 package entities;
 
-import Utillz.LoadSave;
+import levels.Level;
+import utilz.HelpMethods;
+import utilz.LoadSave;
 import gameStates.Playing;
-import static Utillz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,17 +19,22 @@ public class EnemyManager {
         this.playing = playing;
 
         loadEnemiesSprites();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        zenChans = LoadSave.getZenChans();
+    public void loadEnemies(Level level) {
+        zenChans = level.getZenChans();
     }
 
     public void update(int [][] lvlData, Player player) {
+        boolean allDead = true;
+
         for (ZenChan z : zenChans) {
             z.update(lvlData, player);
+            allDead = false;
         }
+
+        if(allDead)
+            playing.setLevelCompleted(true);
 
         checkEnemyHit(player);
     }

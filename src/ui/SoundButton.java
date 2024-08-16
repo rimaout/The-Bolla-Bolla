@@ -1,7 +1,7 @@
 package ui;
 
-import Utillz.LoadSave;
-import static Utillz.Constants.UI.PauseButtons.*;
+import utilz.LoadSave;
+import static utilz.Constants.UI.PauseButtons.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

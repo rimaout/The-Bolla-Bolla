@@ -1,10 +1,10 @@
 package ui;
 
-import static Utillz.Constants.UI.PauseButtons.*;
-import static Utillz.Constants.UI.UrmButtons.*;
-import static Utillz.Constants.UI.VolumeButton.*;
+import static utilz.Constants.UI.PauseButtons.*;
+import static utilz.Constants.UI.UrmButtons.*;
+import static utilz.Constants.UI.VolumeButton.*;
 
-import Utillz.LoadSave;
+import utilz.LoadSave;
 import gameStates.Gamestate;
 import gameStates.Playing;
 import main.Game;

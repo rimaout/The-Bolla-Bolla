@@ -2,9 +2,9 @@ package entities;
 
 import main.Game;
 
-import static Utillz.Constants.Directions.*;
-import static Utillz.Constants.EnemyConstants.*;
-import static Utillz.HelpMethods.*;
+import static utilz.Constants.Directions.*;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
 

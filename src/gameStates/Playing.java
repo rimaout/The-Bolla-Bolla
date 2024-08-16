@@ -1,6 +1,8 @@
 package gameStates;
 
-import Utillz.LoadSave;
+import ui.GameCompletedOverlay;
+import ui.LevelCompletedOverlay;
+import utilz.LoadSave;
 import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
@@ -20,24 +22,40 @@ public class Playing extends State implements StateMethods {
     private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
+    private GameCompletedOverlay gameCompletedOverlay;
+    private LevelCompletedOverlay levelCompletedOverlay;
     private BufferedImage[] numbersTiles = new BufferedImage[10];
 
     private boolean paused;
     private boolean gameOver;
+    private boolean gameCompleted;
+    private boolean levelCompleted;
 
     public Playing(Game game) {
         super(game);
         initClasses();
         loadNumberTiles();
+        loadStartLevel();
+    }
+
+    public void loadNextLevel() {
+       resetAll();
+       levelManager.loadNextLevel();
+    }
+
+    private void loadStartLevel() {
+        enemyManager.loadEnemies(levelManager.getCurrentLevel());
     }
 
     public void initClasses() {
-        levelManager = new LevelManager(game);
+        levelManager = new LevelManager(this);
         enemyManager = new EnemyManager(this);
         player = new Player(3, 24, 18 * Game.SCALE, 18 * Game.SCALE, this);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
+        gameCompletedOverlay = new GameCompletedOverlay(this);
     }
 
     private void loadNumberTiles() {
@@ -52,12 +70,14 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void update() {
-        if (!paused && !gameOver) {
+        if (paused)
+            pauseOverlay.update();
+        else if (levelCompleted)
+            levelCompletedOverlay.update();
+        else if(!gameOver && !gameCompleted) {
             levelManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
-        } else {
-            pauseOverlay.update();
         }
     }
 
@@ -72,6 +92,10 @@ public class Playing extends State implements StateMethods {
             pauseOverlay.draw(g);
         else if (gameOver)
             gameOverOverlay.draw(g);
+        else if (gameCompleted)
+            gameCompletedOverlay.draw(g);
+        else if (levelCompleted)
+            levelCompletedOverlay.draw(g);
     }
 
     private void drawUI(Graphics g) {
@@ -83,50 +107,62 @@ public class Playing extends State implements StateMethods {
     }
 
     public void resetAll() {
-        gameOver = false;
         paused = false;
+        levelCompleted = false;
+        gameOver = false;
+        gameCompleted = false;
         player.resetAll();
         enemyManager.resetAll();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (!gameOver || !paused)
+        if (!gameOver || !paused || !levelCompleted)
             if (e.getButton() == MouseEvent.BUTTON1)
                 player.setAttacking(true);
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (!gameOver)
+        if (!gameOver || !gameCompleted)
             if (paused)
                 pauseOverlay.mouseDragged(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (!gameOver)
+        if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mousePressed(e);
+            else if (levelCompleted)
+                levelCompletedOverlay.mousePressed(e);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (!gameOver)
+        if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mouseReleased(e);
+            else if (levelCompleted)
+                levelCompletedOverlay.mouseReleased(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (!gameOver)
+        if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mouseMoved(e);
+            else if (levelCompleted)
+                levelCompletedOverlay.mouseMoved(e);
+        }
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         if (gameOver)
             gameOverOverlay.keyPressed(e);
+        else if (gameCompleted)
+            gameCompletedOverlay.keyPressed(e);
         else {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_A:
@@ -150,7 +186,7 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (!gameOver) {
+        if (!gameOver || !gameCompleted) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_A:
                     player.setLeft(false);
@@ -181,7 +217,19 @@ public class Playing extends State implements StateMethods {
         return player;
     }
 
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
+
+    public void setLevelCompleted(boolean levelCompleted) {
+        this.levelCompleted = levelCompleted;
+    }
+
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
+    }
+
+    public void setGameCompleted(boolean gameCompleted) {
+        this.gameCompleted = gameCompleted;
     }
 }

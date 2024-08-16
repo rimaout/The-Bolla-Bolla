@@ -1,7 +1,7 @@
 package ui;
 
-import Utillz.LoadSave;
-import static Utillz.Constants.UI.UrmButtons.*;
+import utilz.LoadSave;
+import static utilz.Constants.UI.UrmButtons.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

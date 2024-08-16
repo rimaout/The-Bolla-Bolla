@@ -2,9 +2,9 @@ package entities;
 
 import main.Game;
 
-import static Utillz.HelpMethods.*;
-import static Utillz.Constants.EnemyConstants.*;
-import static Utillz.Constants.Directions.*;
+import static utilz.HelpMethods.*;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.Directions.*;
 
 public abstract class Enemy extends Entity {
     protected boolean active = true;

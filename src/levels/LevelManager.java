@@ -1,22 +1,46 @@
 package levels;
 
-import Utillz.LoadSave;
+import gameStates.Playing;
+import utilz.LoadSave;
 import main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class LevelManager {
 
-    private Game game;
+    private Playing playing;
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
-    private Level levelOne;
+    private ArrayList<Level> levels;
+    private int levelIndex = 0;
 
-    public LevelManager(Game game) {
-        this.game = game;
+    public LevelManager(Playing playing) {
+        this.playing = playing;
         loadSprites();
-        levelOne = new Level(LoadSave.GetLevelData());
+        levels = new ArrayList<>();
+        buildAllLevels();
+    }
+
+    public void loadNextLevel() {
+        levelIndex++;
+        if (levelIndex >= levels.size()) {
+            levelIndex = 0;
+            playing.setGameCompleted(true);
+        }
+
+        // load new level
+        Level newLevel = levels.get(levelIndex);
+        playing.getEnemyManager().loadEnemies(newLevel);
+        playing.getPlayer().loadLevelData(newLevel.getLevelData());
+    }
+
+    private void buildAllLevels() {
+        BufferedImage[] allLevels = LoadSave.GetAllLevels();
+
+        for (BufferedImage level : allLevels)
+            levels.add(new Level(level));
     }
 
     public void draw(Graphics g) {
@@ -25,7 +49,7 @@ public class LevelManager {
 
         for (int y = 0; y < Game.TILES_IN_HEIGHT; y++) {
             for (int x = 0; x < Game.TILES_IN_WIDTH; x++) {
-                index = levelOne.getSpriteIndex(x, y);
+                index = levels.get(levelIndex).getSpriteIndex(x, y);
 
                 if (index >= 120)
                     tile = numbersTiles[index - 120];
@@ -42,7 +66,7 @@ public class LevelManager {
     }
 
     public Level getCurrentLevel() {
-        return levelOne;
+        return levels.get(levelIndex);
     }
 
     private void loadSprites() {
@@ -65,6 +89,10 @@ public class LevelManager {
             y = 26 + (i % 25) * 19;
             levelTiles[i+1] = levelSprite.getSubimage(x, y, 8, 8);
         }
+    }
+
+    public int getLevelsAmmount() {
+        return levels.size();
     }
 }
 

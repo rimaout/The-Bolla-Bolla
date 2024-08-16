@@ -1,6 +1,6 @@
 package gameStates;
 
-import Utillz.LoadSave;
+import utilz.LoadSave;
 import main.Game;
 import ui.MenuButton;
 
