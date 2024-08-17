@@ -23,7 +23,7 @@ public class UrmButton extends PauseButton implements Button{
         buttonsImages = new BufferedImage[3];
 
         for (int i = 0; i < buttonsImages.length; i++) {
-            buttonsImages[i] = temp.getSubimage(i * URM_BT_WIDTH_DEFAULT, spriteRowIndex * URM_BT_HEIGHT_DEFAULT, URM_BT_WIDTH_DEFAULT, URM_BT_HEIGHT_DEFAULT);
+            buttonsImages[i] = temp.getSubimage(i * URM_BT_DEFAULT_W, spriteRowIndex * URM_BT_DEFAULT_H, URM_BT_DEFAULT_W, URM_BT_DEFAULT_H);
         }
     }
 

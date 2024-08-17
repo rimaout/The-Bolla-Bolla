@@ -24,7 +24,7 @@ public class SoundButton extends PauseButton implements Button {
 
         for (int i = 0; i < buttonsImages.length; i++) {
             for (int j = 0; j < buttonsImages[0].length; j++) {
-                buttonsImages[i][j] = temp.getSubimage(j * SOUND_BT_WIDTH_DEFAULT, i * SOUND_BT_HEIGHT_DEFAULT, SOUND_BT_WIDTH_DEFAULT, SOUND_BT_HEIGHT_DEFAULT);
+                buttonsImages[i][j] = temp.getSubimage(j * SOUND_BT_DEFAULT_W, i * SOUND_BT_DEFAULT_H, SOUND_BT_DEFAULT_W, SOUND_BT_DEFAULT_H);
             }
         }
     }

@@ -1,14 +1,21 @@
 package utilz;
 
+import entities.ZenChan;
+import main.Game;
+
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import static utilz.Constants.EnemyConstants.ZEN_CHAN;
 
 public class LoadSave {
     // Sprites
@@ -20,6 +27,7 @@ public class LoadSave {
     public static final String SOUND_BUTTONS_SPRITE = "/sprites/sound_buttons.png";
     public static final String URM_BUTTONS_SPRITE = "/sprites/urm_buttons.png";
     public static final String VOLUME_BUTTON_SPRITE = "/sprites/volume_button.png";
+    public static final String BUBBLE_BUD_SPRITE = "/sprites/bud_bubble.png";
 
     // Levels
     public static final String LEVEL1_DATA = "/levelMaps/level1.png";
@@ -82,5 +90,58 @@ public class LoadSave {
         }
 
         return levelImages;
+    }
+
+    public static int[][] GetLevelData(BufferedImage img) {
+
+        // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+
+        int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int red = color.getRed();
+                levelData[x][y] = red;
+            }
+        return levelData;
+    }
+
+    public static ArrayList<ZenChan> GetZenChans(BufferedImage img) {
+
+        // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+
+        ArrayList<ZenChan> list = new ArrayList<>();
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int green = color.getGreen();
+                if (green > 125) {
+                    green = 0;
+                }
+
+                if (green == ZEN_CHAN) {
+                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
+                }
+            }
+
+        return list;
+    }
+
+    public static int[][] GetWindsCurrent(BufferedImage img) {
+        int[][] windCurrentData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+
+        for(int x = 0; x < img.getHeight(); x++)
+            for (int y = 0; y < img.getWidth(); y++) {
+
+                Color color = new Color(img.getRGB(y, x));
+                int blue = color.getBlue();
+                windCurrentData[x][y] = blue;
+            }
+
+        return windCurrentData;
     }
 }

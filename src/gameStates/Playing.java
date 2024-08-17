@@ -85,7 +85,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         levelManager.draw(g);
         enemyManager.draw(g);
-        player.render(g);
+        player.draw(g);
         drawUI(g);
 
         if (paused)

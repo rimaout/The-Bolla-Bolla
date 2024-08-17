@@ -26,7 +26,7 @@ public class MenuButton {
     }
 
     private void initButtonBounds() {
-        buttonBounds = new Rectangle(xPos, yPos, BUTTON_WIDTH, BUTTON_HEIGHT);
+        buttonBounds = new Rectangle(xPos, yPos, BUTTON_W, BUTTON_H);
     }
 
     private void loadButtonImages() {
@@ -34,12 +34,12 @@ public class MenuButton {
         BufferedImage tempImage = LoadSave.GetSprite(LoadSave.MENU_BUTTONS_SPRITE);
 
         for(int i=0; i<buttonImages.length; i++) {
-            buttonImages[i] = tempImage.getSubimage(i*BUTTON_WIDTH_DEFAULT , spriteRowIndex *BUTTON_HEIGHT_DEFAULT, BUTTON_WIDTH_DEFAULT, BUTTON_HEIGHT_DEFAULT);
+            buttonImages[i] = tempImage.getSubimage(i* BUTTON_DEFAULT_W, spriteRowIndex * BUTTON_DEFAULT_H, BUTTON_DEFAULT_W, BUTTON_DEFAULT_H);
         }
     }
 
     public void draw(Graphics g) {
-       g.drawImage(buttonImages[index], xPos, yPos, BUTTON_WIDTH, BUTTON_HEIGHT, null);
+       g.drawImage(buttonImages[index], xPos, yPos, BUTTON_W, BUTTON_H, null);
     }
 
     public void update(){

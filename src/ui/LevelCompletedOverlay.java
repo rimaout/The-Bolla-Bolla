@@ -36,8 +36,8 @@ public class LevelCompletedOverlay {
         int menuX = (int) (95 * Game.SCALE);
         int nextX = (int) (138 * Game.SCALE);
         int y = (int) (118 * Game.SCALE);
-        int ButtonsWidth = (int) (URM_BT_WIDTH * Game.SCALE / 3.6);
-        int ButtonsHeight = (int) (URM_BT_HEIGHT * Game.SCALE / 3.6);
+        int ButtonsWidth = (int) (URM_BT_W * Game.SCALE / 3.6);
+        int ButtonsHeight = (int) (URM_BT_H * Game.SCALE / 3.6);
         nextButton = new UrmButton(nextX, y, ButtonsWidth, ButtonsHeight, 0);
         menuButton = new UrmButton(menuX, y, ButtonsWidth, ButtonsHeight, 2);
 

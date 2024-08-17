@@ -26,8 +26,8 @@ public class ZenChan extends Enemy {
     private double latsUpdateTime = System.currentTimeMillis();
 
     public ZenChan(float x, float y) {
-        super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ZEN_CHAN);
-        initHitbox(ZEN_CHAN_HITBOX_WIDTH, ZEN_CHAN_HITBOX_HEIGHT);
+        super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN);
+        initHitbox(ZEN_CHAN_HITBOX_W, ZEN_CHAN_HITBOX_H);
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -38,6 +38,7 @@ public class ZenChan extends Enemy {
         updatePlayerInfo(player);
         updateMove(lvlData);
         updateAnimationTick();
+        updateMovementVariables();
     }
 
     private void firstUpdate(int[][] levelData) {

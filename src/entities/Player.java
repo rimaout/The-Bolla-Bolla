@@ -35,11 +35,11 @@ public class Player extends Entity{
     private int flipW = 1;
 
     public Player(Playing playing) {
-        super(SPAWN_X, SPAWN_Y, IMMAGE_WIDTH, IMMAGE_HEIGHT);
+        super(SPAWN_X, SPAWN_Y, IMMAGE_W, IMMAGE_H);
         this.playing = playing;
 
         loadAnimation();
-        initHitbox(HITBOX_WIDTH, HITBOX_HEIGHT);
+        initHitbox(HITBOX_W, HITBOX_H);
     }
 
     public void update() {
@@ -54,7 +54,7 @@ public class Player extends Entity{
         setAnimation();
     }
 
-    public void render(Graphics g) {
+    public void draw(Graphics g) {
         g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - DRAWOFFSET_X) + flipX, (int) (hitbox.y - DRAWOFFSET_Y), width * flipW, height, null);
         //drawHitbox(g);
     }
@@ -67,15 +67,15 @@ public class Player extends Entity{
         else
             playerAnimation = IDLE_ANIMATION;
 
-        if (attacking)
-            playerAnimation = ATTACK_AMATION;
-
         if (inAir) {
             if (airSpeed < 0)
                 playerAnimation = JUMPING_ANIMATION;
             else
                 playerAnimation = FALLING_ANIMATION;
         }
+
+        if (attacking)
+            playerAnimation = ATTACK_AMATION;
 
         if (respawning)
             playerAnimation = DEAD_ANIMATION;
@@ -263,7 +263,7 @@ public class Player extends Entity{
         animations = new BufferedImage[6][6];
         for (int j = 0; j < animations.length; j++)
             for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img.getSubimage(i * 18, j*18, 18, 18);
+                animations[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
     public void loadLevelData(int[][] levelData) {

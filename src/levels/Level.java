@@ -25,7 +25,7 @@ public class Level {
     }
 
     private void createEnemies() {
-        zenChans = HelpMethods.getZenChans(levelImage);
+        zenChans = HelpMethods.GetZenChans(levelImage);
     }
 
     public int getSpriteIndex(int x, int y) {

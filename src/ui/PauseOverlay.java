@@ -34,7 +34,7 @@ public class PauseOverlay {
     private void createVolumeButton() {
         int volumeX = (int) (92 * Game.SCALE);  // volume buttons have the same x position
         int musicY = (int) (130 * Game.SCALE);
-        volumeButton = new VolumeButton(volumeX, musicY, VOLUME_SLIDER_WIDTH, VOLUME_SLIDER_HEIGHT);
+        volumeButton = new VolumeButton(volumeX, musicY, VOLUME_SLIDER_W, VOLUME_SLIDER_H);
     }
 
     private void createUrmButtons() {
@@ -42,8 +42,8 @@ public class PauseOverlay {
         int menuX = (int) (88 * Game.SCALE);
         int resumeX = (int) (116.5 * Game.SCALE);
         int restartX = (int) (144.7 * Game.SCALE);
-        int ButtonsWidth = (int) (URM_BT_WIDTH * Game.SCALE / 3.6);
-        int ButtonsHeight = (int) (URM_BT_HEIGHT * Game.SCALE / 3.6);
+        int ButtonsWidth = (int) (URM_BT_W * Game.SCALE / 3.6);
+        int ButtonsHeight = (int) (URM_BT_H * Game.SCALE / 3.6);
 
         menuButton = new UrmButton(menuX, urmY, ButtonsWidth, ButtonsHeight, 2);
         replayButton = new UrmButton(resumeX, urmY, ButtonsWidth, ButtonsHeight, 1);
@@ -54,8 +54,8 @@ public class PauseOverlay {
         int soundX = (int) (141 * Game.SCALE);  // sound buttons have the same x position
         int musicY = (int) (77 * Game.SCALE);
         int sfY = (int) (95 * Game.SCALE);
-        int ButtonsWidth = (int) (SOUND_BT_WIDTH * Game.SCALE / 4);
-        int ButtonsHeight = (int) (SOUND_BT_HEIGHT * Game.SCALE / 4);
+        int ButtonsWidth = (int) (SOUND_BT_W * Game.SCALE / 4);
+        int ButtonsHeight = (int) (SOUND_BT_H * Game.SCALE / 4);
 
         musicButton = new SoundButton(soundX, musicY, ButtonsWidth, ButtonsHeight);
         sfxButton = new SoundButton(soundX, sfY, ButtonsWidth, ButtonsHeight);

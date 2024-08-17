@@ -44,7 +44,7 @@ public class EnemyManager {
     private void drawZenChans(Graphics g) {
         for (ZenChan z : zenChans)
             if(z.isActive())
-                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_WIDTH * z.flipW(), ENEMY_HEIGHT, null);
+                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_W * z.flipW(), ENEMY_H, null);
     }
 
     public void checkEnemyHit(Player player) {
@@ -59,7 +59,7 @@ public class EnemyManager {
 
         for (int j = 0; j < zenChanSprites.length; j++)
             for (int i = 0; i < zenChanSprites[j].length; i++)
-                zenChanSprites[j][i] = temp.getSubimage(i * ENEMY_WIDTH_DEFAULT, j * ENEMY_HEIGHT_DEFAULT, ENEMY_WIDTH_DEFAULT, ENEMY_HEIGHT_DEFAULT);
+                zenChanSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
     }
 
     public void resetAll() {

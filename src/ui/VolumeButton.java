@@ -15,13 +15,13 @@ public class VolumeButton extends PauseButton implements Button {
     private boolean mouseOver, mousePressed;
 
     public VolumeButton(int x, int y, int width, int height) {
-        super(x + width / 2, y, VOLUME_BT_WIDTH, height);
-        bounds.x -= VOLUME_BT_WIDTH / 2;
+        super(x + width / 2, y, VOLUME_BT_W, height);
+        bounds.x -= VOLUME_BT_W / 2;
         buttonX = x + width / 2;
         this.x = x;
         this.width = width;
-        minX = x + VOLUME_BT_WIDTH / 2;
-        maxX = x + width - VOLUME_BT_WIDTH / 2;
+        minX = x + VOLUME_BT_W / 2;
+        maxX = x + width - VOLUME_BT_W / 2;
         loadSprites();
     }
 
@@ -31,16 +31,16 @@ public class VolumeButton extends PauseButton implements Button {
 
         buttonsImages = new BufferedImage[3];
         for (int i = 0; i < buttonsImages.length; i++) {
-            buttonsImages[i] = temp.getSubimage(i * VOLUME_BT_WIDTH_DEFAULT, 0, VOLUME_BT_WIDTH_DEFAULT, VOLUME_BT_HEIGHT_DEFAULT);
+            buttonsImages[i] = temp.getSubimage(i * VOLUME_BT_DEFAULT_W, 0, VOLUME_BT_DEFAULT_W, VOLUME_BT_DEFAULT_H);
         }
 
-        sliderImage = temp.getSubimage(3*VOLUME_BT_WIDTH_DEFAULT, 0, VOLUME_SLIDER_WIDTH_DEFAULT, VOLUME_SLIDER_HEIGHT_DEFAULT);
+        sliderImage = temp.getSubimage(3* VOLUME_BT_DEFAULT_W, 0, VOLUME_SLIDER_DEFAULT_W, VOLUME_SLIDER_DEFAULT_H);
     }
 
     @Override
     public void draw(Graphics g) {
         g.drawImage(sliderImage, x, y, width, height , null);
-        g.drawImage(buttonsImages[index], buttonX - VOLUME_BT_WIDTH/2, y, VOLUME_BT_WIDTH, height, null);
+        g.drawImage(buttonsImages[index], buttonX - VOLUME_BT_W /2, y, VOLUME_BT_W, height, null);
     }
 
     public void changeX(int x) {
@@ -52,7 +52,7 @@ public class VolumeButton extends PauseButton implements Button {
             buttonX = maxX;
         }
 
-        bounds.x = buttonX - VOLUME_BT_WIDTH / 2;
+        bounds.x = buttonX - VOLUME_BT_W / 2;
     }
 
     @Override

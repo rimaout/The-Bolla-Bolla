@@ -38,34 +38,36 @@ public abstract class Enemy extends Entity {
             animationIndex++;
             if (animationIndex >= getSpriteAmount(enemyType, enemyState)) {
                 animationIndex = 0;
-
-                switch (enemyState) {
-                    case NORMAL_STATE:
-                        fallSpeed = NORMAL_FALL_SPEED;
-                        flySpeed = NORMAL_FLY_SPEED;
-                        jumpSpeed = NORMAL_JUMP_SPEED;
-                        walkSpeed = NORMAL_WALK_SPEED;
-                        animationAction = WALKING_ANIMATION_NORMAL;
-                        break;
-
-                    case HUNGRY_STATE:
-                        fallSpeed = HUNGRY_FALL_SPEED;
-                        flySpeed = HUNGRY_FLY_SPEED;
-                        jumpSpeed = HUNGRY_JUMP_SPEED;
-                        walkSpeed = HUNGRY_WALK_SPEED;
-                        animationAction = WALKING_ANIMATION_HUNGRY;
-                        break;
-
-                    case BOBBLE_STATE:
-                        animationAction = BOBBLE_GREEN_ANIMATION;
-                        break;
-
-                    case DEAD_STATE:
-                        active = false;
-                        animationAction = DEAD_ANIMATION;
-                        break;
-                }
             }
+        }
+    }
+
+    protected void updateMovementVariables() {
+        switch (enemyState) {
+            case NORMAL_STATE:
+                fallSpeed = NORMAL_FALL_SPEED;
+                flySpeed = NORMAL_FLY_SPEED;
+                jumpSpeed = NORMAL_JUMP_SPEED;
+                walkSpeed = NORMAL_WALK_SPEED;
+                animationAction = WALKING_ANIMATION_NORMAL;
+                break;
+
+            case HUNGRY_STATE:
+                fallSpeed = HUNGRY_FALL_SPEED;
+                flySpeed = HUNGRY_FLY_SPEED;
+                jumpSpeed = HUNGRY_JUMP_SPEED;
+                walkSpeed = HUNGRY_WALK_SPEED;
+                animationAction = WALKING_ANIMATION_HUNGRY;
+                break;
+
+            case BOBBLE_STATE:
+                animationAction = BOBBLE_GREEN_ANIMATION;
+                break;
+
+            case DEAD_STATE:
+                active = false;
+                animationAction = DEAD_ANIMATION;
+                break;
         }
     }
 
