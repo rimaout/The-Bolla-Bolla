@@ -42,8 +42,8 @@ public class Constants {
                 case NORMAL -> 1;
                 case RED -> 1;
                 case BLINKING -> 2;
-                case POP -> 2;
-                default -> 0;
+                case POP -> 3;
+                default -> 4;
             };
         }
     }
@@ -121,7 +121,7 @@ public class Constants {
         public static final int DEAD_ANIMATION = 5;
 
         public static final int IMMUNE_TIME_AFTER_RESPAWN = 2000; // 2 seconds
-
+        public static final int ATTACK_TIMER = 500; // 0.2 seconds
 
         public static int getSpriteAmount(int playerAnimation) {
             return switch (playerAnimation) {
@@ -130,7 +130,7 @@ public class Constants {
                 case JUMPING_ANIMATION -> 2;
                 case FALLING_ANIMATION -> 2;
                 case ATTACK_AMATION -> 1;
-                case DEAD_ANIMATION -> 6;
+                case DEAD_ANIMATION -> 7;
                 default -> 0;
             };
         }

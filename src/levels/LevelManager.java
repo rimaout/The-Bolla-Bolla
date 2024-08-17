@@ -31,8 +31,11 @@ public class LevelManager {
         }
 
         Level newLevel = levels.get(levelIndex);
+
         playing.getEnemyManager().loadEnemies(newLevel);
         playing.getPlayer().loadLevelData(newLevel.getLevelData());
+        playing.getBubbleManager().loadLevelData(newLevel.getLevelData());
+        playing.getBubbleManager().loadWindData(newLevel.getWindCurrentData());
     }
 
     private void buildAllLevels() {

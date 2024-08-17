@@ -12,16 +12,13 @@ import java.util.ArrayList;
 public class EnemyManager {
     private Playing playing;
     private BufferedImage[][] zenChanSprites;
-    private ArrayList<ZenChan> zenChans = new ArrayList<>();
+    private ArrayList<ZenChan> zenChans;
 
     public EnemyManager(Playing playing) {
         this.playing = playing;
         loadEnemiesSprites();
     }
 
-    public void loadEnemies(Level level) {
-        zenChans = level.getZenChans();
-    }
 
     public void update(int [][] lvlData, Player player) {
         boolean allDead = true;
@@ -38,10 +35,7 @@ public class EnemyManager {
     }
 
     public void draw(Graphics g) {
-        drawZenChans(g);
-    }
 
-    private void drawZenChans(Graphics g) {
         for (ZenChan z : zenChans)
             if(z.isActive())
                 g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_W * z.flipW(), ENEMY_H, null);
@@ -51,6 +45,10 @@ public class EnemyManager {
         for (ZenChan z : zenChans)
             if (z.getHitbox().intersects(player.getHitbox()) && z.isActive())
                     player.death();
+    }
+
+    public void loadEnemies(Level level) {
+        zenChans = level.getZenChans();
     }
 
     private void loadEnemiesSprites() {

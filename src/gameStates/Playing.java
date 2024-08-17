@@ -1,5 +1,6 @@
 package gameStates;
 
+import bubbles.BubbleManager;
 import ui.GameCompletedOverlay;
 import ui.LevelCompletedOverlay;
 import utilz.LoadSave;
@@ -20,6 +21,7 @@ public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
+    private BubbleManager bubbleManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
@@ -50,7 +52,8 @@ public class Playing extends State implements StateMethods {
     public void initClasses() {
         levelManager = new LevelManager(this);
         enemyManager = new EnemyManager(this);
-        player = new Player(this);
+        bubbleManager = new BubbleManager();
+        player = new Player(this, bubbleManager);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
@@ -77,6 +80,7 @@ public class Playing extends State implements StateMethods {
         else if(!gameOver && !gameCompleted) {
             levelManager.update();
             player.update();
+            bubbleManager.update();
             enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
         }
     }
@@ -86,6 +90,7 @@ public class Playing extends State implements StateMethods {
         levelManager.draw(g);
         enemyManager.draw(g);
         player.draw(g);
+        bubbleManager.draw(g);
         drawUI(g);
 
         if (paused)
@@ -113,6 +118,7 @@ public class Playing extends State implements StateMethods {
         gameCompleted = false;
         player.resetAll();
         enemyManager.resetAll();
+        bubbleManager.resetAll();
     }
 
     @Override
@@ -217,6 +223,12 @@ public class Playing extends State implements StateMethods {
     public Player getPlayer() {
         return player;
     }
+
+    public BubbleManager getBubbleManager() {
+        return bubbleManager;
+    }
+
+
 
     public EnemyManager getEnemyManager() {
         return enemyManager;

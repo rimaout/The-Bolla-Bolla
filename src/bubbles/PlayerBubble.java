@@ -13,12 +13,13 @@ import static utilz.Constants.Directions.*;
 
 public class PlayerBubble extends Entity {
     private int[][] levelData;
+    private int[][] windLevelData;
 
     private boolean isFirstUpdate = true;
-    private boolean active;
-    private int state;
+    private boolean active = true;
+    private int state = PROJECTILE;
 
-    private int normalTimer, redTimer, blinkingTimer;
+    private int normalTimer, redTimer, blinkingTimer, deactivationTimer;
     private long lastTimerUpdate;
 
     // Movement variables
@@ -26,23 +27,16 @@ public class PlayerBubble extends Entity {
     private int direction;
     private float xSpeed, ySpeed;
 
-    private BufferedImage[][] animations; // TODO: Move to Bubble manager
-
-    public PlayerBubble(float x, float y, int direction) {
+    public PlayerBubble(float x, float y, int direction, int[][] levelData, int[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
+        this.levelData = levelData;
+        this.windLevelData = windLevelData;
 
-        loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(animations[state][animationIndex],  (int) (hitbox.x - DRAWOFFSET_X), (int) (hitbox.y - DRAWOFFSET_Y), width, height, null);
-        drawHitbox(g);
-    }
-
     public void update() {
-
         if (isFirstUpdate)
             firstUpdate();
 
@@ -58,11 +52,10 @@ public class PlayerBubble extends Entity {
         isFirstUpdate = false;
 
         isMoving = true;
-        state = NORMAL;
-        active = true;
         normalTimer = NORMAL_TIMER;
         redTimer = RED_TIMER;
         blinkingTimer = BLINKING_TIMER;
+        //deactivationTimer = DEACTIVATION_TIMER;
         lastTimerUpdate = System.currentTimeMillis();
     }
 
@@ -82,25 +75,20 @@ public class PlayerBubble extends Entity {
 
         if (state == NORMAL)
             normalTimer -= timeDelta;
-        else
-            normalTimer = NORMAL_TIMER;
 
         if (state == RED)
             redTimer -= timeDelta;
-        else
-            redTimer = RED_TIMER;
 
         if (state == BLINKING)
             blinkingTimer -= timeDelta;
-        else
-            blinkingTimer = BLINKING_TIMER;
     }
 
     private void setState() {
         int startAnimation = state;
 
-        if (state == PROJECTILE && animationIndex == 5)
+        if (state == PROJECTILE && animationIndex == 3) {
             state = NORMAL;
+        }
 
         if (state == NORMAL && normalTimer <= 0)
             state = RED;
@@ -143,35 +131,28 @@ public class PlayerBubble extends Entity {
     }
 
     private void updatePosition() {
-        if (state == PROJECTILE) {
-            if (direction == RIGHT)
-                updateXPos(xSpeed, levelData );
-            else
-                updateXPos(-xSpeed, levelData);
-        }
+//        if (state == PROJECTILE) {
+//            if (direction == RIGHT)
+//                updateXPos(xSpeed, levelData );
+//            else
+//                updateXPos(-xSpeed, levelData);
+//        }
 
-    }
-
-    private void loadAnimation() {
-        // TODO: Move to Bubble manager
-
-        BufferedImage img = LoadSave.GetSprite(LoadSave.BUBBLE_BUD_SPRITE);
-
-        animations = new BufferedImage[5][4];
-        for (int j = 0; j < animations.length; j++)
-            for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img.getSubimage(i * DEFAULT_W, j*DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
     public void loadLevelData(int[][] levelData) {
         this.levelData = levelData;
     }
 
+    public void loadWindLevelData(int[][] windLevelData) {
+        this.windLevelData = windLevelData;
+    }
+
     public boolean isActive() {
         return active;
     }
 
-    public void setInactive(boolean active) {
-        this.active = active;
+    public int getState() {
+        return state;
     }
 }

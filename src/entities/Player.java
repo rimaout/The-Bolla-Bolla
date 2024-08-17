@@ -1,5 +1,6 @@
 package entities;
 
+import bubbles.BubbleManager;
 import utilz.LoadSave;
 import gameStates.Playing;
 import main.Game;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.ANIMATION_SPEED;
+import static utilz.Constants.Directions.*;
 import static utilz.Constants.GRAVITY;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
@@ -15,28 +17,34 @@ import static utilz.HelpMethods.*;
 public class Player extends Entity{
     private int[][] levelData;
     private Playing playing;
+    private BubbleManager bubbleManager;
+    private boolean isFirstUpdate = true;
 
     // Animation values and variables
     private BufferedImage[][] animations;
     private int playerAnimation = IDLE_ANIMATION;
 
     // Movement values and variables
-    private boolean left, right, jump, isJumping;
-    private boolean moving, attacking, respawning;
+    private boolean left, right, jump, isJumping, inAir;
+    private boolean moving, attacking, attackingAnimation, respawning;
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
-    private boolean inAir = false;
 
     // General Variables
     private int lives = 3;
-    private boolean isImmune = false;
-    private long immuneStartTime = 0;
+    private boolean isImmune;
     private  int flipX = 0;
     private int flipW = 1;
 
-    public Player(Playing playing) {
+    // Timers
+    private long lastTimerUpdate;
+    private int immuneTimer;
+    private int attackTimer = ATTACK_TIMER;
+
+    public Player(Playing playing, BubbleManager bubbleManager) {
         super(SPAWN_X, SPAWN_Y, IMMAGE_W, IMMAGE_H);
         this.playing = playing;
+        this.bubbleManager = bubbleManager;
 
         loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
@@ -48,15 +56,35 @@ public class Player extends Entity{
             return;
         }
 
-        updateImmunity();
+        updateTimers();
+        setAnimation();
         updatePosition();
         updateAnimationTick();
-        setAnimation();
+
+
+        if (attacking)
+            attack();
     }
 
     public void draw(Graphics g) {
         g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - DRAWOFFSET_X) + flipX, (int) (hitbox.y - DRAWOFFSET_Y), width * flipW, height, null);
-        //drawHitbox(g);
+    }
+
+    private void attack() {
+        int direction;
+
+        switch (flipW) {
+            case -1 -> direction = LEFT;
+            default -> direction = RIGHT;
+        }
+
+        if (direction == LEFT)
+            bubbleManager.addBubble(hitbox.x - hitbox.width, hitbox.y, direction);
+        else
+            bubbleManager.addBubble(hitbox.x + hitbox.width, hitbox.y, direction);
+
+        attackTimer = ATTACK_TIMER;
+        attackingAnimation = true;
     }
 
     private void setAnimation() {
@@ -74,7 +102,7 @@ public class Player extends Entity{
                 playerAnimation = FALLING_ANIMATION;
         }
 
-        if (attacking)
+        if (attackingAnimation)
             playerAnimation = ATTACK_AMATION;
 
         if (respawning)
@@ -93,17 +121,30 @@ public class Player extends Entity{
             animationIndex++;
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
                 animationIndex = 0;
-                attacking = false;
+                attackingAnimation = false;
                 respawning = false;
             }
         }
     }
 
-    private void updateImmunity() {
+    private void updateTimers() {
+        if (isFirstUpdate) {
+            isFirstUpdate = false;
+            lastTimerUpdate = System.currentTimeMillis();
+        }
+
+        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        lastTimerUpdate = System.currentTimeMillis();
+
         if (isImmune) {
-            if (immuneStartTime <= System.currentTimeMillis() - IMMUNE_TIME_AFTER_RESPAWN)
+            immuneTimer -= timeDelta;
+            if (immuneTimer <= 0)
                 isImmune = false;
         }
+
+        attackTimer -= timeDelta;
+        if (attackTimer > 0)
+                attacking = false;
     }
 
     private void updatePosition() {
@@ -238,7 +279,7 @@ public class Player extends Entity{
 
         if (!isImmune) {
             isImmune = true;
-            immuneStartTime = System.currentTimeMillis();
+            immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             respawning = true;
             resetDirection();
             resetInAir();
@@ -250,7 +291,7 @@ public class Player extends Entity{
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1) { // Last frame of the dying animation
             respawning = false;
             playerAnimation = IDLE_ANIMATION;
-            immuneStartTime = System.currentTimeMillis();
+            immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             hitbox.x = SPAWN_X;
             hitbox.y = SPAWN_Y;
             lives--;
@@ -260,7 +301,7 @@ public class Player extends Entity{
     private void loadAnimation() {
         BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
 
-        animations = new BufferedImage[6][6];
+        animations = new BufferedImage[6][7];
         for (int j = 0; j < animations.length; j++)
             for (int i = 0; i < animations[j].length; i++)
                 animations[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
