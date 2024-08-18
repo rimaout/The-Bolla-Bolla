@@ -4,6 +4,7 @@ import main.Game;
 
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
 import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
 
@@ -21,20 +22,23 @@ public class ZenChan extends Enemy {
     private double flyStartTime = 0;
     private boolean didFlyInsideSolid = false;
 
-    // Player Info Update Interval variables
-    private int nextUpdateInterval;
-    private double latsUpdateTime = System.currentTimeMillis();
+    // Player Info Update variables
+    private int playerUpdateTimer;
+    private long lastTimerUpdate;
 
-    public ZenChan(float x, float y) {
-        super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN);
+    public ZenChan(float x, float y, int startWalkingDir) {
+        super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
         initHitbox(ZEN_CHAN_HITBOX_W, ZEN_CHAN_HITBOX_H);
     }
 
     public void update(int[][] lvlData, Player player) {
+        tileX = (int) (hitbox.x / Game.TILES_SIZE);
+        tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
         if (firstUpdate)
             firstUpdate(lvlData);
 
+        updateTimers();
         updatePlayerInfo(player);
         updateMove(lvlData);
         updateAnimationTick();
@@ -44,13 +48,20 @@ public class ZenChan extends Enemy {
     private void firstUpdate(int[][] levelData) {
         if (!IsEntityOnFloor(hitbox, levelData))
             goDown = true;
+
+        lastTimerUpdate = System.currentTimeMillis();
         firstUpdate = false;
     }
 
-    private void updateMove(int[][] levelData) {
-        tileX = (int) (hitbox.x / Game.TILES_SIZE);
-        tileY = (int) (hitbox.y / Game.TILES_SIZE);
+    private void updateTimers() {
+        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        lastTimerUpdate = System.currentTimeMillis();
 
+        playerUpdateTimer -= timeDelta;
+
+    }
+
+    private void updateMove(int[][] levelData) {
         if(!IsEntityOnFloor(hitbox, levelData) && !isJumping && !goUp && !goDown)
             goOnFloor(levelData);
 
@@ -148,7 +159,10 @@ public class ZenChan extends Enemy {
             hitbox.y -= flySpeed;
         }
         else if(didFlyInsideSolid){
+
+            // fly ended
             hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelData) - 1;
+            updateWalkingDir();
 
             // Reset fly variables
             goUp = false;
@@ -191,7 +205,8 @@ public class ZenChan extends Enemy {
     private void fall(int [][] levelData) {
         if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
             hitbox.y += fallSpeed;
-         else {
+        else {
+            // fall ended
             hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
             isFalling = false;
          }
@@ -242,20 +257,20 @@ public class ZenChan extends Enemy {
                 (IsTileSolid(tileX, ThreeTilesAbove, levelData) && IsTileSolid(tileX+1, ThreeTilesAbove, levelData));
     }
 
+    private void updateWalkingDir() {
+        if (playerTileX < tileX)
+            walkingDir = LEFT;
+        else if (playerTileX > tileX)
+            walkingDir = RIGHT;
+    }
+
     private void updatePlayerInfo(Player player){
 
         // update player info in a random interval between 0-8 seconds
 
-        if (System.currentTimeMillis() - latsUpdateTime > nextUpdateInterval){
+        if (playerUpdateTimer <= 0) {
             calculatePlayersPos(player);
-            latsUpdateTime = System.currentTimeMillis();
-            nextUpdateInterval = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
-
-            if(playerTileX < tileX)
-                walkingDir = LEFT;
-
-            else
-                walkingDir = RIGHT;
+            playerUpdateTimer = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
         }
     }
 }

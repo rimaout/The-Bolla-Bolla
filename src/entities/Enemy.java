@@ -5,12 +5,14 @@ import main.Game;
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.EnemyType.*;
 import static utilz.Constants.Directions.*;
 
 public abstract class Enemy extends Entity {
     protected boolean active = true;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
-    protected int enemyState, enemyType;
+    protected int enemyState;
+    protected EnemyType enemyType;
     protected boolean firstUpdate = true;
 
     // Enemy Movement Variables
@@ -21,14 +23,15 @@ public abstract class Enemy extends Entity {
     protected float jumpSpeed;
     protected float walkSpeed;
     protected int tileX, tileY;
-    protected int walkingDir = LEFT;
+    protected int walkingDir;
 
     // Player info
     protected int playerTileX, playerTileY;
 
-    public Enemy(float x, float y, int width, int height, int enemyType) {
+    public Enemy(float x, float y, int width, int height, EnemyType  enemyType, int startWalkingDir) {
         super(x, y, width, height);
         this.enemyType = enemyType;
+        this.walkingDir = startWalkingDir;
     }
 
     protected void updateAnimationTick() {

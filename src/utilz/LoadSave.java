@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static utilz.Constants.EnemyConstants.ZEN_CHAN;
+import static utilz.Constants.Directions.*;
+import static utilz.Constants.EnemyConstants.ZEN_CHAN_LEFT;
+import static utilz.Constants.EnemyConstants.ZEN_CHAN_RIGHT;
 
 public class LoadSave {
     // Sprites
@@ -130,11 +132,11 @@ public class LoadSave {
                 if(green >= 10)
                     green = 0;
 
-                if (green == ZEN_CHAN) {
-                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
-                }
+                if (green == ZEN_CHAN_LEFT)
+                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
+                else if (green == ZEN_CHAN_RIGHT)
+                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
             }
-
         return list;
     }
 

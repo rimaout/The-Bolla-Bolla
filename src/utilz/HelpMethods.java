@@ -1,14 +1,8 @@
 package utilz;
 
-import entities.ZenChan;
 import main.Game;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import static utilz.Constants.EnemyConstants.ZEN_CHAN;
 
 public class HelpMethods {
 

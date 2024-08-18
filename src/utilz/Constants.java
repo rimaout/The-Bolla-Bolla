@@ -142,8 +142,14 @@ public class Constants {
 
     public static class EnemyConstants {
 
+        // Enemy Types
+        public enum EnemyType {
+            ZEN_CHAN
+        }
+
         // Zen Chan Constants
-        public static final int ZEN_CHAN = 1;
+        public static final int ZEN_CHAN_LEFT = 1;
+        public static final int ZEN_CHAN_RIGHT = 2;
         public static final int ZEN_CHAN_HITBOX_W = (int) (14 * Game.SCALE);
         public static final int ZEN_CHAN_HITBOX_H = (int) (15 * Game.SCALE);
         public static final int ZEN_CHAN_DRAWOFFSET_X = (int) (2 * Game.SCALE);
@@ -182,8 +188,8 @@ public class Constants {
 
         public static final int PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
 
-        public static int getSpriteAmount(int enemyType, int enemyState) {
-            if (enemyType == EnemyConstants.ZEN_CHAN) {
+        public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
+            if (enemyType == EnemyType.ZEN_CHAN ) {
                 return switch (enemyState) {
                     case EnemyConstants.WALKING_ANIMATION_NORMAL -> 2;
                     case EnemyConstants.WALKING_ANIMATION_HUNGRY -> 2;
