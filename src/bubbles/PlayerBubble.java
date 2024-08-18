@@ -21,10 +21,12 @@ public class PlayerBubble extends Entity {
 
     // Movement variables
     private Direction direction;
+    private Direction previousDirection;
 
     public PlayerBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
+        this.previousDirection = direction;
         this.levelData = levelData;
         this.windLevelData = windLevelData;
 
@@ -109,6 +111,9 @@ public class PlayerBubble extends Entity {
         int tileX = (int) (hitbox.x / Game.TILES_SIZE);
         int tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
+        if (direction != NONE)
+            previousDirection = direction;
+
         direction = windLevelData[tileY][tileX];
     }
 
@@ -127,11 +132,42 @@ public class PlayerBubble extends Entity {
                 case RIGHT -> hitbox.x += BUBBLE_SPEED;
                 case UP -> hitbox.y -= BUBBLE_SPEED;
                 case DOWN -> hitbox.y += BUBBLE_SPEED;
+                case NONE -> bubbleShaking();
             }
         }
 
     }
 
+    private void bubbleShaking() {
+
+        if (previousDirection == UP) {
+            if (animationIndex % 2 == 0)
+                hitbox.y -= SHAKING_SPEED;
+            else
+                hitbox.y += SHAKING_SPEED;
+        }
+
+        if (previousDirection == DOWN) {
+            if (animationIndex % 2 == 0)
+                hitbox.y += SHAKING_SPEED;
+            else
+                hitbox.y -= SHAKING_SPEED;
+        }
+
+        if (previousDirection == LEFT) {
+            if (animationIndex % 2 == 0)
+                hitbox.x -= SHAKING_SPEED;
+            else
+                hitbox.x += SHAKING_SPEED;
+        }
+
+        if (previousDirection == RIGHT) {
+            if (animationIndex % 2 == 0)
+                hitbox.x += SHAKING_SPEED;
+            else
+                hitbox.x -= SHAKING_SPEED;
+        }
+    }
     public boolean isActive() {
         return active;
     }

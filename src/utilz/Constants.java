@@ -37,13 +37,14 @@ public class Constants {
         // Movement Constants
         public static final float PROJECTILE_SPEED = 0.7f * Game.SCALE;
         public static final float BUBBLE_SPEED = 0.1f * Game.SCALE;
+        public static final float SHAKING_SPEED = 0.03f * Game.SCALE;
 
 
         public static int getSpriteAmount(int bubbleState) {
             return switch (bubbleState) {
                 case PROJECTILE -> 4;
-                case NORMAL -> 1;
-                case RED -> 1;
+                case NORMAL -> 2;
+                case RED -> 2;
                 case BLINKING -> 2;
                 case POP -> 3;
                 default -> 4;
