@@ -39,7 +39,7 @@ public class Player extends Entity{
     // Timers
     private long lastTimerUpdate;
     private int immuneTimer;
-    private int attackTimer = ATTACK_TIMER;
+    private int attackTimer = 100;
 
     public Player(Playing playing, BubbleManager bubbleManager) {
         super(SPAWN_X, SPAWN_Y, IMMAGE_W, IMMAGE_H);
@@ -61,8 +61,7 @@ public class Player extends Entity{
         updatePosition();
         updateAnimationTick();
 
-
-        if (attacking)
+        if (attacking && !respawning && IsEntityInsideMap(hitbox))
             attack();
     }
 
@@ -79,9 +78,9 @@ public class Player extends Entity{
         }
 
         if (direction == LEFT)
-            bubbleManager.addBubble(hitbox.x - hitbox.width, hitbox.y, direction);
+            bubbleManager.addBubble(hitbox.x - hitbox.width-5*Game.SCALE, hitbox.y-3*Game.SCALE, direction);
         else
-            bubbleManager.addBubble(hitbox.x + hitbox.width, hitbox.y, direction);
+            bubbleManager.addBubble(hitbox.x + hitbox.width, hitbox.y-3*Game.SCALE, direction);
 
         attackTimer = ATTACK_TIMER;
         attackingAnimation = true;

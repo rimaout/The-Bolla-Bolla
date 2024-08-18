@@ -4,16 +4,14 @@ import utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Set;
 
 import static utilz.Constants.PlayerBubble.*;
 
 
 public class BubbleManager {
     private BufferedImage[][] bubbleSprites;
-    private int[][] levelData, windCurrentData;
+    private int[][] levelData, windCurrentDirectionData;
     private LinkedList<PlayerBubble> bubbles;
 
     public BubbleManager() {
@@ -25,6 +23,7 @@ public class BubbleManager {
         for (PlayerBubble b : bubbles) {
             if (b.isActive())
                 b.update();
+            // TODO
 //            else
 //                bubbles.remove(b);
         }
@@ -38,7 +37,7 @@ public class BubbleManager {
     }
 
     public void addBubble(float x, float y, int direction) {
-        bubbles.add(new PlayerBubble(x, y, direction, levelData, windCurrentData));
+        bubbles.add(new PlayerBubble(x, y, direction, levelData, windCurrentDirectionData));
     }
 
     public void loadBubbleSprites() {
@@ -55,8 +54,8 @@ public class BubbleManager {
         this.levelData = levelData;
     }
 
-    public void loadWindData(int[][] windCurrentData) {
-        this.windCurrentData = windCurrentData;
+    public void loadWindData(int[][] windCurrentDirectionData) {
+        this.windCurrentDirectionData = windCurrentDirectionData;
     }
 
     public void resetAll() {

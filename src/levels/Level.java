@@ -2,7 +2,7 @@ package levels;
 
 import entities.ZenChan;
 import static utilz.LoadSave.GetLevelData;
-import static utilz.LoadSave.GetWindsCurrent;
+import static utilz.LoadSave.GetWindsCurrentDirections;
 import static utilz.LoadSave.GetZenChans;
 
 import java.awt.image.BufferedImage;
@@ -19,6 +19,7 @@ public class Level {
     public Level(BufferedImage levelImage) {
         this.levelImage = levelImage;
         createLevelData();
+        createWindCurrentData();
         createEnemies();
     }
 
@@ -27,7 +28,7 @@ public class Level {
     }
 
    private void createWindCurrentData() {
-        windCurrentData = GetWindsCurrent(levelImage);
+        windCurrentData = GetWindsCurrentDirections(levelImage);
     }
 
     private void createEnemies() {

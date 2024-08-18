@@ -8,6 +8,7 @@ public class Constants {
     public static final int ANIMATION_SPEED = 50;
 
     public static class PlayerBubble {
+    public static final int BUBBLE_ANIMATION_SPEED = 25;
 
         // Bubble Dimensions
         public static final int DEFAULT_W = 18;
@@ -29,11 +30,13 @@ public class Constants {
         public static final int POP = 4;
 
         // State Timers (seconds)
-        public static final int NORMAL_TIMER = 5000;
+        public static final int NORMAL_TIMER = 12000;
         public static final int RED_TIMER = 3000;
-        public static final int BLINKING_TIMER = 1000;
+        public static final int BLINKING_TIMER = 2000;
 
-        // State Variables
+        // Movement Constants
+        public static final float PROJECTILE_SPEED = 0.7f * Game.SCALE;
+        public static final float BUBBLE_SPEED = 0.1f * Game.SCALE;
 
 
         public static int getSpriteAmount(int bubbleState) {
@@ -85,10 +88,11 @@ public class Constants {
     }
 
     public static class Directions {
-        public static final int LEFT = 0;
-        public static final int UP = 1;
+        public static final int NONE = 0;
+        public static final int LEFT = 1;
+        public static final int UP = 3;
         public static final int RIGHT = 2;
-        public static final int DOWN = 3;
+        public static final int DOWN = 4;
     }
 
     public static class PlayerConstants {

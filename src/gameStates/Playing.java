@@ -53,6 +53,8 @@ public class Playing extends State implements StateMethods {
         levelManager = new LevelManager(this);
         enemyManager = new EnemyManager(this);
         bubbleManager = new BubbleManager();
+        bubbleManager.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+        bubbleManager.loadWindData(levelManager.getCurrentLevel().getWindCurrentData());
         player = new Player(this, bubbleManager);
         player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);

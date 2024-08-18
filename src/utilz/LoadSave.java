@@ -103,6 +103,9 @@ public class LoadSave {
 
                 Color color = new Color(img.getRGB(y, x));
                 int red = color.getRed();
+                if (red >= 150)
+                    red = 0;
+
                 levelData[x][y] = red;
             }
         return levelData;
@@ -110,7 +113,12 @@ public class LoadSave {
 
     public static ArrayList<ZenChan> GetZenChans(BufferedImage img) {
 
-        // levels and enemies type and position are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
+        //enemies type and position and direction are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile info
+        // the green component of the pixel determines the type of enemy and facing direction
+        // if the green component is:
+        //      0 -> no enemy
+        //      1 -> Zen-Chan facing left
+        //      2 -> Zen-Chan facing right
 
         ArrayList<ZenChan> list = new ArrayList<>();
 
@@ -119,9 +127,8 @@ public class LoadSave {
 
                 Color color = new Color(img.getRGB(y, x));
                 int green = color.getGreen();
-                if (green > 125) {
+                if(green >= 10)
                     green = 0;
-                }
 
                 if (green == ZEN_CHAN) {
                     list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE));
@@ -131,7 +138,16 @@ public class LoadSave {
         return list;
     }
 
-    public static int[][] GetWindsCurrent(BufferedImage img) {
+    public static int[][] GetWindsCurrentDirections(BufferedImage img) {
+
+        // wind currents are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the blue component of the pixel that determines the tile)
+        // if the blu component is:
+        //      0 or 100 -> no wind (don't move)
+        //      1 or 101 -> wind to the left
+        //      2 or 102 -> wind to the right
+        //      3 or 103 -> wind up
+        //      4 or 104 -> wind down
+
         int[][] windCurrentData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 
         for(int x = 0; x < img.getHeight(); x++)
@@ -139,6 +155,10 @@ public class LoadSave {
 
                 Color color = new Color(img.getRGB(y, x));
                 int blue = color.getBlue();
+
+                if (blue >= 100)
+                    blue -= 100;
+
                 windCurrentData[x][y] = blue;
             }
 

@@ -2,12 +2,9 @@ package bubbles;
 
 import entities.Entity;
 import main.Game;
-import utilz.LoadSave;
+import utilz.Constants;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
-import static utilz.Constants.ANIMATION_SPEED;
+import static utilz.HelpMethods.*;
 import static utilz.Constants.PlayerBubble.*;
 import static utilz.Constants.Directions.*;
 
@@ -19,13 +16,11 @@ public class PlayerBubble extends Entity {
     private boolean active = true;
     private int state = PROJECTILE;
 
-    private int normalTimer, redTimer, blinkingTimer, deactivationTimer;
+    private int normalTimer, redTimer, blinkingTimer;
     private long lastTimerUpdate;
 
     // Movement variables
-    private boolean isMoving;
     private int direction;
-    private float xSpeed, ySpeed;
 
     public PlayerBubble(float x, float y, int direction, int[][] levelData, int[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
@@ -45,23 +40,22 @@ public class PlayerBubble extends Entity {
         updateAnimationTick();
         setState();
 
+        updateDirection();
         updatePosition();
     }
 
     public void firstUpdate() {
         isFirstUpdate = false;
 
-        isMoving = true;
         normalTimer = NORMAL_TIMER;
         redTimer = RED_TIMER;
         blinkingTimer = BLINKING_TIMER;
-        //deactivationTimer = DEACTIVATION_TIMER;
         lastTimerUpdate = System.currentTimeMillis();
     }
 
     private void updateAnimationTick() {
         animationTick++;
-        if (animationTick > ANIMATION_SPEED) {
+        if (animationTick > BUBBLE_ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
             if (animationIndex >= getSpriteAmount(state))
@@ -115,37 +109,27 @@ public class PlayerBubble extends Entity {
         int tileX = (int) (hitbox.x / Game.TILES_SIZE);
         int tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
-        int upX = tileX;
-        int upY = tileY - 1;
-
-        int downX = tileX;
-        int downY = tileY + 1;
-
-        int leftX = tileX - 1;
-        int leftY = tileY;
-
-        int rightX = tileX + 1;
-        int rightY = tileY;
-
-
+        direction = windLevelData[tileY][tileX];
     }
 
     private void updatePosition() {
-//        if (state == PROJECTILE) {
-//            if (direction == RIGHT)
-//                updateXPos(xSpeed, levelData );
-//            else
-//                updateXPos(-xSpeed, levelData);
-//        }
+        if (state == PROJECTILE) {
+           if (direction == RIGHT) {
+               if (CanMoveHere((int) (hitbox.x + PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
+                   hitbox.x += PROJECTILE_SPEED;
+           }
+           else if (CanMoveHere((int) (hitbox.x - PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
+               hitbox.x -= PROJECTILE_SPEED;
+        }
+        else {
+            switch (direction) {
+                case LEFT -> hitbox.x -= BUBBLE_SPEED;
+                case RIGHT -> hitbox.x += BUBBLE_SPEED;
+                case UP -> hitbox.y -= BUBBLE_SPEED;
+                case DOWN -> hitbox.y += BUBBLE_SPEED;
+            }
+        }
 
-    }
-
-    public void loadLevelData(int[][] levelData) {
-        this.levelData = levelData;
-    }
-
-    public void loadWindLevelData(int[][] windLevelData) {
-        this.windLevelData = windLevelData;
     }
 
     public boolean isActive() {
