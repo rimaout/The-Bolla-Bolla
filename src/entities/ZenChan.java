@@ -1,8 +1,8 @@
 package entities;
 
 import main.Game;
-
-import static utilz.Constants.Directions.*;
+import utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
 import static utilz.Constants.GRAVITY;
@@ -26,7 +26,7 @@ public class ZenChan extends Enemy {
     private int playerUpdateTimer;
     private long lastTimerUpdate;
 
-    public ZenChan(float x, float y, int startWalkingDir) {
+    public ZenChan(float x, float y, Direction startWalkingDir) {
         super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
         initHitbox(ZEN_CHAN_HITBOX_W, ZEN_CHAN_HITBOX_H);
     }

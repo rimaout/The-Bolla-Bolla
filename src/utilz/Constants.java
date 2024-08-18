@@ -87,12 +87,12 @@ public class Constants {
         }
     }
 
-    public static class Directions {
-        public static final int NONE = 0;
-        public static final int LEFT = 1;
-        public static final int UP = 3;
-        public static final int RIGHT = 2;
-        public static final int DOWN = 4;
+    public enum Direction {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        NONE
     }
 
     public static class PlayerConstants {

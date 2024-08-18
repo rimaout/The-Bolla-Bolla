@@ -1,16 +1,16 @@
 package bubbles;
 
-import entities.Entity;
 import main.Game;
-import utilz.Constants;
+import entities.Entity;
 
 import static utilz.HelpMethods.*;
+import static utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
 import static utilz.Constants.PlayerBubble.*;
-import static utilz.Constants.Directions.*;
 
 public class PlayerBubble extends Entity {
     private int[][] levelData;
-    private int[][] windLevelData;
+    private Direction[][] windLevelData;
 
     private boolean isFirstUpdate = true;
     private boolean active = true;
@@ -20,9 +20,9 @@ public class PlayerBubble extends Entity {
     private long lastTimerUpdate;
 
     // Movement variables
-    private int direction;
+    private Direction direction;
 
-    public PlayerBubble(float x, float y, int direction, int[][] levelData, int[][] windLevelData) {
+    public PlayerBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
         this.levelData = levelData;

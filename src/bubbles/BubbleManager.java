@@ -1,6 +1,7 @@
 package bubbles;
 
 import utilz.LoadSave;
+import static utilz.Constants.Direction;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +12,8 @@ import static utilz.Constants.PlayerBubble.*;
 
 public class BubbleManager {
     private BufferedImage[][] bubbleSprites;
-    private int[][] levelData, windCurrentDirectionData;
+    private int[][] levelData;
+    private Direction[][] windDirectionData;
     private LinkedList<PlayerBubble> bubbles;
 
     public BubbleManager() {
@@ -36,8 +38,8 @@ public class BubbleManager {
         }
     }
 
-    public void addBubble(float x, float y, int direction) {
-        bubbles.add(new PlayerBubble(x, y, direction, levelData, windCurrentDirectionData));
+    public void addBubble(float x, float y, Direction direction) {
+        bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
     }
 
     public void loadBubbleSprites() {
@@ -54,8 +56,8 @@ public class BubbleManager {
         this.levelData = levelData;
     }
 
-    public void loadWindData(int[][] windCurrentDirectionData) {
-        this.windCurrentDirectionData = windCurrentDirectionData;
+    public void loadWindData(Direction[][] windCurrentDirectionData) {
+        this.windDirectionData = windCurrentDirectionData;
     }
 
     public void resetAll() {

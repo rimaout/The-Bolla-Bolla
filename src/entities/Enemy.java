@@ -5,8 +5,9 @@ import main.Game;
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.EnemyConstants.EnemyType.*;
-import static utilz.Constants.Directions.*;
+import static utilz.Constants.EnemyConstants.EnemyType;
+import static utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
 
 public abstract class Enemy extends Entity {
     protected boolean active = true;
@@ -23,12 +24,12 @@ public abstract class Enemy extends Entity {
     protected float jumpSpeed;
     protected float walkSpeed;
     protected int tileX, tileY;
-    protected int walkingDir;
+    protected Direction walkingDir;
 
     // Player info
     protected int playerTileX, playerTileY;
 
-    public Enemy(float x, float y, int width, int height, EnemyType  enemyType, int startWalkingDir) {
+    public Enemy(float x, float y, int width, int height, EnemyType  enemyType, Direction startWalkingDir) {
         super(x, y, width, height);
         this.enemyType = enemyType;
         this.walkingDir = startWalkingDir;

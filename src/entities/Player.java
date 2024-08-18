@@ -1,6 +1,7 @@
 package entities;
 
 import bubbles.BubbleManager;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.Playing;
 import main.Game;
@@ -9,7 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.Directions.*;
+import static utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
 import static utilz.Constants.GRAVITY;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
@@ -70,7 +72,7 @@ public class Player extends Entity{
     }
 
     private void attack() {
-        int direction;
+        Direction direction;
 
         switch (flipW) {
             case -1 -> direction = LEFT;

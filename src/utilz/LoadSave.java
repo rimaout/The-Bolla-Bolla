@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static utilz.Constants.Directions.*;
+import static utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
 import static utilz.Constants.EnemyConstants.ZEN_CHAN_LEFT;
 import static utilz.Constants.EnemyConstants.ZEN_CHAN_RIGHT;
 
@@ -140,7 +141,7 @@ public class LoadSave {
         return list;
     }
 
-    public static int[][] GetWindsCurrentDirections(BufferedImage img) {
+    public static Direction[][] GetWindsDirectionsData(BufferedImage img) {
 
         // wind currents are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the blue component of the pixel that determines the tile)
         // if the blu component is:
@@ -150,7 +151,7 @@ public class LoadSave {
         //      3 or 103 -> wind up
         //      4 or 104 -> wind down
 
-        int[][] windCurrentData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+        Direction[][] windDirectionData = new Direction[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 
         for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {
@@ -161,9 +162,19 @@ public class LoadSave {
                 if (blue >= 100)
                     blue -= 100;
 
-                windCurrentData[x][y] = blue;
+                Direction direction;
+
+                switch (blue) {
+                    case 1 -> direction = LEFT;
+                    case 2 -> direction = RIGHT;
+                    case 3 -> direction = UP;
+                    case 4 -> direction = DOWN;
+                    default -> direction = NONE;
+                }
+
+                windDirectionData[x][y] = direction;
             }
 
-        return windCurrentData;
+        return windDirectionData;
     }
 }

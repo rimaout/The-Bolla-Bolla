@@ -1,8 +1,9 @@
 package levels;
 
 import entities.ZenChan;
+import utilz.Constants.Direction;
 import static utilz.LoadSave.GetLevelData;
-import static utilz.LoadSave.GetWindsCurrentDirections;
+import static utilz.LoadSave.GetWindsDirectionsData;
 import static utilz.LoadSave.GetZenChans;
 
 import java.awt.image.BufferedImage;
@@ -13,13 +14,13 @@ public class Level {
 
     private BufferedImage levelImage;
     private int[][] levelData;
-    private int[][] windCurrentData;
+    private Direction[][] windDirectionData;
     private ArrayList<ZenChan> zenChans;
 
     public Level(BufferedImage levelImage) {
         this.levelImage = levelImage;
         createLevelData();
-        createWindCurrentData();
+        createWindDirectionData();
         createEnemies();
     }
 
@@ -27,8 +28,8 @@ public class Level {
         levelData = GetLevelData(levelImage);
     }
 
-   private void createWindCurrentData() {
-        windCurrentData = GetWindsCurrentDirections(levelImage);
+   private void createWindDirectionData() {
+        windDirectionData = GetWindsDirectionsData(levelImage);
     }
 
     private void createEnemies() {
@@ -43,8 +44,8 @@ public class Level {
         return levelData;
     }
 
-    public int[][] getWindCurrentData() {
-        return windCurrentData;
+    public Direction[][] getWindDirectionData() {
+        return windDirectionData;
     }
 
     public ArrayList<ZenChan> getZenChans() {
