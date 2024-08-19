@@ -63,7 +63,7 @@ public class Player extends Entity{
         updatePosition();
         updateAnimationTick();
 
-        if (attacking && !respawning && IsEntityInsideMap(hitbox))
+        if (attacking && !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Game.TILES_SIZE) )
             attack();
     }
 
@@ -330,7 +330,10 @@ public class Player extends Entity{
     public void resetAll() {
         resetDirection();
         resetInAir();
+        isFirstUpdate = true;
         isImmune = false;
+        immuneTimer = 0;
+        attackTimer = 100;
         hitbox.x = SPAWN_X;
         hitbox.y = SPAWN_Y;
         lives = 3;
@@ -340,8 +343,15 @@ public class Player extends Entity{
         flipW = 1;
         playerAnimation = IDLE_ANIMATION;
 
+
         if (!IsEntityOnFloor(hitbox, levelData))
             inAir = true;
+    }
+
+    public void jumpOnBubble() {
+        airSpeed = JUMP_SPEED;
+        inAir = true;
+        isJumping = true;
     }
 
     public void setAttacking(boolean attacking) {
@@ -366,5 +376,13 @@ public class Player extends Entity{
 
     public int getLives() {
         return lives;
+    }
+
+    public float getXSpeed(){
+        return xSpeed;
+    }
+
+       public boolean isJumpActive() {
+        return jump;
     }
 }

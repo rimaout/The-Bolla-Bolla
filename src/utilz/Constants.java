@@ -16,11 +16,17 @@ public class Constants {
         public static final int IMMAGE_W = (int) (DEFAULT_W * Game.SCALE);
         public static final int IMMAGE_H = (int) (DEFAULT_H * Game.SCALE);
 
-        // Hitbox Dimensions
+        // Hitbox Constants
         public static final int HITBOX_W = (int) (16 * Game.SCALE);
         public static final int HITBOX_H = (int) (16 * Game.SCALE);
-        public static final int DRAWOFFSET_X = (int) (1 * Game.SCALE);
-        public static final int DRAWOFFSET_Y = (int) (1 * Game.SCALE);
+        public static final int HITBOX_DRAWOFFSET_X = (int) (1 * Game.SCALE);
+        public static final int HITBOX_DRAWOFFSET_Y = (int) (1 * Game.SCALE);
+
+        // Collision Box Constants
+        public static final int COLLISIONBOX_W = (int) (9 * Game.SCALE);
+        public static final int COLLISIONBOX_H = (int) (9 * Game.SCALE);
+        public static final int COLLISIONBOX_DRAWOFFSET_X = (int) (3 * Game.SCALE);
+        public static final int COLLISIONBOX_DRAWOFFSET_Y = (int) (4 * Game.SCALE);
 
         // States
         public static final int PROJECTILE = 0;
@@ -93,7 +99,27 @@ public class Constants {
         RIGHT,
         UP,
         DOWN,
-        NONE
+        NONE;
+
+        public static Direction GetRandomDirection() {
+            return switch ((int) (Math.random() * 4)) {
+                case 0 -> Direction.LEFT;
+                case 1 -> Direction.RIGHT;
+                case 2 -> Direction.UP;
+                case 3 -> Direction.DOWN;
+                default -> Direction.NONE;
+            };
+        }
+
+        public static Direction GetOppositeDirection(Direction direction) {
+            return switch (direction) {
+                case LEFT -> Direction.RIGHT;
+                case RIGHT -> Direction.LEFT;
+                case UP -> Direction.DOWN;
+                case DOWN -> Direction.UP;
+                default -> Direction.NONE;
+            };
+        }
     }
 
     public static class PlayerConstants {
@@ -145,7 +171,7 @@ public class Constants {
 
         // Enemy Types
         public enum EnemyType {
-            ZEN_CHAN
+            ZEN_CHAN;
         }
 
         // Zen Chan Constants

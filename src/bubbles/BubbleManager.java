@@ -1,24 +1,45 @@
 package bubbles;
 
+import entities.Player;
+import gameStates.Playing;
+import main.Game;
 import utilz.LoadSave;
+
+import static java.lang.Math.abs;
+import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction;
+import static utilz.Constants.Direction.*;
+import static utilz.Constants.PlayerBubble.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import static utilz.Constants.PlayerBubble.*;
-
-
 public class BubbleManager {
+    private static BubbleManager instance;
+    private Playing playing;
+
     private BufferedImage[][] bubbleSprites;
     private int[][] levelData;
     private Direction[][] windDirectionData;
     private LinkedList<PlayerBubble> bubbles;
 
-    public BubbleManager() {
+    private BubbleManager(Playing playing) {
+        this.playing = playing;
+
         bubbles = new LinkedList<>();
         loadBubbleSprites();
+    }
+
+    public static BubbleManager getInstance(Playing playing) {
+        if (instance == null) {
+            instance = new BubbleManager(playing);
+        }
+        return instance;
+    }
+
+    public static BubbleManager getInstance() {
+        return instance;
     }
 
     public void update() {
@@ -29,17 +50,150 @@ public class BubbleManager {
 //            else
 //                bubbles.remove(b);
         }
+        collisionWithPlayer();
+        collisionBetweenBubbles();
     }
 
     public void draw(Graphics g) {
 
         for (PlayerBubble b : bubbles) {
-            g.drawImage(bubbleSprites[b.getState()][b.getAnimationIndex()], (int) (b.getHitbox().x - DRAWOFFSET_X), (int) (b.getHitbox().y - DRAWOFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            if (!b.isActive())
+                continue;
+
+            g.drawImage(bubbleSprites[b.getState()][b.getAnimationIndex()], (int) (b.getHitbox().x - HITBOX_DRAWOFFSET_X), (int) (b.getHitbox().y - HITBOX_DRAWOFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+//            b.drawCollisionBox(g);
+//            b.drawHitbox(g);
         }
     }
 
+   private void collisionBetweenBubbles() {
+    for (PlayerBubble b1 : bubbles) {
+        if (!b1.isActive())
+            continue;
+
+        for (PlayerBubble b2 : bubbles) {
+            if (!b2.isActive() || b1 == b2)
+                continue;
+            applyRepulsion(b1, b2);
+        }
+    }
+}
+
+    void applyRepulsion(PlayerBubble bubble1, PlayerBubble bubble2) {
+        Point centerB1 = bubble1.getCenter();
+        Point centerB2 = bubble2.getCenter();
+
+        double dx = centerB2.x - centerB1.x;
+        double dy = centerB2.y - centerB1.y;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Defines allowed overlap between bubbles
+        double overlapAllowed = 5.0 * Game.SCALE;        // Allow this much overlap
+        double totalRadius = bubble1.getHitbox().width;  // Sum of both bubble radii
+
+        if (distance < totalRadius - overlapAllowed) {
+            double overlap = totalRadius - distance;
+            double repulsionStrength = 0.05; // Adjust this value as needed
+
+            // Normalize the direction vector
+            if (distance > 0) {
+                dx /= distance;
+                dy /= distance;
+            }
+
+            // Move bubbles apart
+            bubble1.getHitbox().x -= dx * overlap * repulsionStrength;
+            bubble1.getHitbox().y -= dy * overlap * repulsionStrength;
+            bubble2.getHitbox().x += dx * overlap * repulsionStrength;
+            bubble2.getHitbox().x += dy * overlap * repulsionStrength;
+
+            // Introduce randomness
+            double randomAdjustment = 1.0; // Adjust this value as needed
+            bubble1.getHitbox().x += (Math.random() - 0.5) * randomAdjustment;
+            bubble1.getHitbox().y += (Math.random() - 0.5) * randomAdjustment;
+            bubble2.getHitbox().x += (Math.random() - 0.5) * randomAdjustment;
+            bubble2.getHitbox().y += (Math.random() - 0.5) * randomAdjustment;
+        }
+    }
+
+    private void collisionWithPlayer() {
+        Player player = playing.getPlayer();
+
+        for (PlayerBubble b : bubbles) {
+
+            // skip inactive bubbles
+            if (!b.isActive())
+                continue;
+
+            // check if bubble pop
+            if (b.getCollisionBox().intersects(player.getHitbox())) {
+                b.pop();
+                return;
+            }
+
+            // check player jump on bubble
+            if (b.getHitbox().intersects(player.getHitbox())) {
+
+                if (b.getHitbox().y > player.getHitbox().y) {
+                    if (player.isJumpActive()) {
+                        b.setPush(DOWN, -5f);
+                        player.jumpOnBubble();
+                        return;
+                    }
+                }
+
+                // left push
+                if (b.getHitbox().x + b.getHitbox().width - 10  < player.getHitbox().x)
+                    b.setPush(LEFT, abs(player.getXSpeed()));
+
+                // right push
+                else if (b.getHitbox().x - 10 > player.getHitbox().x)
+                    b.setPush(RIGHT, abs(player.getXSpeed()));
+            }
+        }
+    }
+
+    public void triggerChainExplosion(PlayerBubble poppedBubble) {
+        for (PlayerBubble b : bubbles) {
+            if (!b.isActive() || b == poppedBubble)
+                continue;
+
+            double dx = b.getCenter().x - poppedBubble.getCenter().x;
+            double dy = b.getCenter().y - poppedBubble.getCenter().y;
+            double distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Define the chain reaction radius
+            double chainReactionRadius = 20.0 * Game.SCALE; // Adjust as needed
+
+            if (distance < chainReactionRadius) {
+                b.pop();
+            }
+        }
+    }
+
+    private void collisionWithEnemies() {
+        // TODO
+        // enemy captured
+    }
+
     public void addBubble(float x, float y, Direction direction) {
-        bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
+        int tileX = (int) x / Game.TILES_SIZE;
+
+        int mapLeftMostTileX = 3 * Game.TILES_SIZE;
+        int mapRightMostTileX = 28 * Game.TILES_SIZE;
+
+        // check if is not perimeter wall
+        if (direction == Direction.LEFT)
+            if (!IsTilePerimeterWall(tileX))
+                bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
+            else
+                bubbles.add(new PlayerBubble(mapLeftMostTileX, y, direction, levelData, windDirectionData));
+
+        if (direction == Direction.RIGHT)
+            if (!IsTilePerimeterWall(tileX))
+                bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
+            else
+                bubbles.add(new PlayerBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
     }
 
     public void loadBubbleSprites() {
@@ -64,6 +218,4 @@ public class BubbleManager {
         // Reset the bubble manager
         bubbles = new LinkedList<>();
     }
-
-
 }

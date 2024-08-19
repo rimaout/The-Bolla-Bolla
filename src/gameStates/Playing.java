@@ -52,7 +52,7 @@ public class Playing extends State implements StateMethods {
     public void initClasses() {
         levelManager = new LevelManager(this);
         enemyManager = new EnemyManager(this);
-        bubbleManager = new BubbleManager();
+        bubbleManager = BubbleManager.getInstance(this);
         bubbleManager.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         bubbleManager.loadWindData(levelManager.getCurrentLevel().getWindDirectionData());
         player = new Player(this, bubbleManager);

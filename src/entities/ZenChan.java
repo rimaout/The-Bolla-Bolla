@@ -15,6 +15,7 @@ public class ZenChan extends Enemy {
     private boolean goDown = false;
     private boolean isFalling = false;
     private boolean isJumping = false;
+    private Direction startWalkingDir;
 
     // Fly Variables
     private int flyDirectionChangeCounter = 0;
@@ -28,6 +29,7 @@ public class ZenChan extends Enemy {
 
     public ZenChan(float x, float y, Direction startWalkingDir) {
         super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
+        this.startWalkingDir = startWalkingDir;
         initHitbox(ZEN_CHAN_HITBOX_W, ZEN_CHAN_HITBOX_H);
     }
 
@@ -94,7 +96,6 @@ public class ZenChan extends Enemy {
     }
 
     private void moveOnGround(int[][] levelData) {
-        xSpeed = 0;
         float hitboxX = 0;
 
         if (walkingDir == LEFT) {
@@ -272,5 +273,21 @@ public class ZenChan extends Enemy {
             calculatePlayersPos(player);
             playerUpdateTimer = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
         }
+    }
+
+    @Override
+    protected void resetEnemy() {
+        super.resetEnemy();
+
+        isFalling = false;
+        isJumping = false;
+        goUp = false;
+        goDown = false;
+        isFlyingFirstUpdate = true;
+        flyDirectionChangeCounter = 0;
+        flyStartTime = 0;
+        didFlyInsideSolid = false;
+        playerUpdateTimer = 0;
+        lastTimerUpdate = 0;
     }
 }

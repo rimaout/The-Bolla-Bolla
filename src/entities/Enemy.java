@@ -25,6 +25,7 @@ public abstract class Enemy extends Entity {
     protected float walkSpeed;
     protected int tileX, tileY;
     protected Direction walkingDir;
+    protected Direction startWalkingDir;
 
     // Player info
     protected int playerTileX, playerTileY;
@@ -33,6 +34,7 @@ public abstract class Enemy extends Entity {
         super(x, y, width, height);
         this.enemyType = enemyType;
         this.walkingDir = startWalkingDir;
+        this.startWalkingDir = startWalkingDir;
     }
 
     protected void updateAnimationTick() {
@@ -125,7 +127,7 @@ public abstract class Enemy extends Entity {
         firstUpdate = true;
         active = true;
         enemyState = NORMAL_STATE;
-        walkingDir = LEFT;
+        walkingDir = startWalkingDir;
     }
 
     public int getEnemyState() {

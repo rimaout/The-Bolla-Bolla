@@ -23,7 +23,7 @@ public abstract class Entity {
         hitbox = new Rectangle2D.Float(x, y, width, height);
     }
 
-    protected void drawHitbox(Graphics g) {
+    public void drawHitbox(Graphics g) {
         // For debugging purposes
 
         g.setColor(Color.RED);
