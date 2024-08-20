@@ -1,7 +1,6 @@
 package bubbles;
 
 import entities.Enemy;
-import entities.EnemyManager;
 import entities.Player;
 import gameStates.Playing;
 import levels.LevelManager;
@@ -11,7 +10,7 @@ import utilz.LoadSave;
 import static java.lang.Math.abs;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction;
-import static utilz.Constants.PlayerBubble.*;
+import static utilz.Constants.Bubble.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -208,7 +207,7 @@ public class BubbleManager {
                     continue;
 
                 if (b.getExternalCollisionBox().intersects(e.getHitbox())) {
-                    bubblesToAdd.add(new EnemyBubbles(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
+                    bubblesToAdd.add(new EnemyBubble(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
                     b.setActive(false);
                     e.setActive(false);
                     break;

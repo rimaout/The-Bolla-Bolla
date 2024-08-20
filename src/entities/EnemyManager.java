@@ -40,19 +40,22 @@ public class EnemyManager {
 
 
     public void update() {
-        boolean allDead = true;
+        int aliveCounter = 0;
 
         for (Enemy e : enemies) {
             if (e.isActive()) {
                 e.update(player);
                 checkEnemyHit(player, e);
             }
+
             if (e.isAlive())
-                allDead = false;
+                aliveCounter++;
         }
 
-        if(allDead)
-            playing.setLevelCompleted(true);
+        switch (aliveCounter) {
+            case 0 -> playing.setLevelCompleted(true);
+            case 1 -> setAllHungry();
+        }
     }
 
     public void draw(Graphics g) {
@@ -67,6 +70,12 @@ public class EnemyManager {
                     player.death();
     }
 
+    private void setAllHungry() {
+        for (Enemy e : enemies)
+            if (e.isActive())
+                e.setEnemyState(HUNGRY_STATE);
+    }
+
     public void loadLevelData() {
         levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
     }
@@ -76,7 +85,7 @@ public class EnemyManager {
     }
 
     private void loadEnemiesSprites() {
-        zenChanSprites = new BufferedImage[8][4];
+        zenChanSprites = new BufferedImage[9][4];
         BufferedImage temp = LoadSave.GetSprite(LoadSave.ZEN_CHAN_ENEMY_SPRITE);
 
         for (int j = 0; j < zenChanSprites.length; j++)

@@ -117,7 +117,6 @@ public class Game implements Runnable {
                 frames = 0;
                 updates = 0;
             }
-
         }
     }
 

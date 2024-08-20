@@ -7,7 +7,7 @@ public class Constants {
     public static final float GRAVITY = 0.0078f * Game.SCALE;
     public static final int ANIMATION_SPEED = 50;
 
-    public static class PlayerBubble {
+    public static class Bubble {
     public static final int BUBBLE_ANIMATION_SPEED = 25;
 
         // Bubble Dimensions
@@ -196,8 +196,10 @@ public class Constants {
         public static final int WALKING_ANIMATION_NORMAL = 0;
         public static final int WALKING_ANIMATION_HUNGRY = 1;
         public static final int BOBBLE_GREEN_ANIMATION = 3;
-        public static final int BOOBLE_RED_ANIMATION = 4;
+        public static final int BOBBLE_RED_ANIMATION = 5;
         public static final int DEAD_ANIMATION = 6;
+        public static final int BOBBLE_GREEN_POP_ANIMATION = 7;
+        public static final int BOBBLE_RED_POP_ANIMATION = 8;
 
         // Enemy States
         public static final int NORMAL_STATE = 0;
@@ -208,12 +210,13 @@ public class Constants {
         // Enemy Action Constants
         public static final float NORMAL_FALL_SPEED = 0.3f * Game.SCALE;
         public static final float NORMAL_FLY_SPEED = 0.25f * Game.SCALE;
-        public static final float NORMAL_JUMP_SPEED = - 0.42f * Game.SCALE;
         public static final float NORMAL_WALK_SPEED = 0.3f * Game.SCALE;
         public static final float HUNGRY_FALL_SPEED = 0.3f * Game.SCALE;
-        public static final float HUNGRY_FLY_SPEED = 0.25f * Game.SCALE;
-        public static final float HUNGRY_JUMP_SPEED = - 0.42f * Game.SCALE;
-        public static final float HUNGRY_WALK_SPEED = 0.3f * Game.SCALE;
+        public static final float HUNGRY_FLY_SPEED = 0.5f * Game.SCALE;
+        public static final float HUNGRY_WALK_SPEED = 0.7f * Game.SCALE;
+
+        public static final float JUMP_Y_SPEED = -0.45f * Game.SCALE;
+        public static final float JUMP_X_SPEED = 0.4f * Game.SCALE;
         public static final float ATTACK_RANGE = Game.TILES_SIZE;
         public static final float VIEWING_RANGE = Game.TILES_SIZE * 5;
 
@@ -222,11 +225,11 @@ public class Constants {
         public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
             if (enemyType == EnemyType.ZEN_CHAN ) {
                 return switch (enemyState) {
-                    case EnemyConstants.WALKING_ANIMATION_NORMAL -> 2;
-                    case EnemyConstants.WALKING_ANIMATION_HUNGRY -> 2;
-                    case EnemyConstants.BOBBLE_GREEN_ANIMATION -> 2;
-                    case EnemyConstants.BOOBLE_RED_ANIMATION -> 2;
-                    case EnemyConstants.DEAD_ANIMATION -> 4;
+                    case WALKING_ANIMATION_NORMAL -> 2;
+                    case WALKING_ANIMATION_HUNGRY -> 2;
+                    case BOBBLE_GREEN_ANIMATION -> 2;
+                    case BOBBLE_RED_ANIMATION -> 2;
+                    case DEAD_ANIMATION -> 4;
                     default -> 0;
                 };
             }

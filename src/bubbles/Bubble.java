@@ -10,9 +10,10 @@ import java.awt.geom.Rectangle2D;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
-import static utilz.Constants.PlayerBubble.*;
+import static utilz.Constants.Bubble.*;
 
 public abstract class Bubble extends Entity {
+
     protected int[][] levelData;
     protected Direction[][] windLevelData;
     protected Rectangle2D.Float internalCollisionBox;
@@ -132,11 +133,14 @@ public abstract class Bubble extends Entity {
         if (state == BLINKING && blinkingTimer <= 0) {
             previousState = state;
             state = POP_RED;
+
+            if (this instanceof EnemyBubble)
+                ((EnemyBubble) this).respawnEnemy();
         }
 
         if (state == POP_RED || state == POP_NORMAL)
             if (animationIndex == 2)
-                timePop();
+                active = false;
 
         if (startAnimation != state){
             animationTick = 0;
@@ -219,7 +223,6 @@ public abstract class Bubble extends Entity {
     }
 
     public abstract void playerPop();
-    public abstract void timePop();
 
     public Point getCenter() {
         float x = hitbox.x + hitbox.width / 2;

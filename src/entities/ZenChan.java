@@ -124,7 +124,7 @@ public class ZenChan extends Enemy {
 
                 if(canJump(levelData)) {
                     isJumping = true;
-                    ySpeed = jumpSpeed;
+                    ySpeed = JUMP_Y_SPEED;
                     jump(levelData);
                     return;
                 }
@@ -180,7 +180,12 @@ public class ZenChan extends Enemy {
     }
 
     private void jump(int[][] levelData) {
-        float jumpXSpeed = xSpeed * 1.4f;
+        float jumpXSpeed;
+        switch (walkingDir) {
+            case LEFT -> jumpXSpeed = -JUMP_X_SPEED;
+            case RIGHT -> jumpXSpeed = JUMP_X_SPEED;
+            default -> jumpXSpeed = 0;
+        }
 
         // Going up
         if (ySpeed < 0){
@@ -190,7 +195,7 @@ public class ZenChan extends Enemy {
         }
 
         // Going down
-        else if (ySpeed <= -jumpSpeed){
+        else if (ySpeed <= -JUMP_Y_SPEED){
             if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
                 hitbox.y += ySpeed;
                 ySpeed += GRAVITY;

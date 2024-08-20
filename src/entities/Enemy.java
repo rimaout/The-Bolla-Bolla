@@ -2,8 +2,6 @@ package entities;
 
 import main.Game;
 
-import java.awt.*;
-
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.EnemyConstants.*;
@@ -24,7 +22,6 @@ public abstract class Enemy extends Entity {
     protected float ySpeed;
     protected float fallSpeed;
     protected float flySpeed;
-    protected float jumpSpeed;
     protected float walkSpeed;
     protected int tileX, tileY;
     protected Direction walkingDir;
@@ -58,7 +55,6 @@ public abstract class Enemy extends Entity {
             case NORMAL_STATE:
                 fallSpeed = NORMAL_FALL_SPEED;
                 flySpeed = NORMAL_FLY_SPEED;
-                jumpSpeed = NORMAL_JUMP_SPEED;
                 walkSpeed = NORMAL_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_NORMAL;
                 break;
@@ -66,7 +62,6 @@ public abstract class Enemy extends Entity {
             case HUNGRY_STATE:
                 fallSpeed = HUNGRY_FALL_SPEED;
                 flySpeed = HUNGRY_FLY_SPEED;
-                jumpSpeed = HUNGRY_JUMP_SPEED;
                 walkSpeed = HUNGRY_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_HUNGRY;
                 break;
@@ -152,6 +147,10 @@ public abstract class Enemy extends Entity {
     }
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    public void setEnemyState(int state) {
+        this.enemyState = state;
     }
 
     public abstract EnemyType getEnemyType();

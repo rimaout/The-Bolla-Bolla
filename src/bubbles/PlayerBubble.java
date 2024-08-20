@@ -1,12 +1,10 @@
 package bubbles;
 
-import entities.Enemy;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Direction;
-import static utilz.Constants.PlayerBubble.*;
+import static utilz.Constants.Bubble.*;
 
 public class PlayerBubble extends Bubble {
 
@@ -32,9 +30,5 @@ public class PlayerBubble extends Bubble {
             BubbleManager bubbleManager = BubbleManager.getInstance();
             bubbleManager.triggerChainExplosion(this);
         }
-    }
-
-    public void timePop() {
-       active = false;
     }
 }
