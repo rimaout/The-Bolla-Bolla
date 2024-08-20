@@ -1,6 +1,7 @@
 package main;
 
-import gameStates.Gamestate;
+import gameStates.GameState;
+import gameStates.LevelTransition;
 import gameStates.Playing;
 import gameStates.Menu;
 
@@ -14,6 +15,7 @@ public class Game implements Runnable {
 
     private Playing playing;
     private Menu menu;
+    private LevelTransition levelTransition;
 
     private final int FPS_SET = 60;
     private final int UPS_SET = 180;
@@ -45,12 +47,13 @@ public class Game implements Runnable {
     private void initClasses() {
         playing = new Playing(this);
         menu = new Menu(this);
+        levelTransition = new LevelTransition(this);
     }
 
 
     public void update() {
 
-        switch (Gamestate.state){
+        switch (GameState.state){
             case MENU:
                 menu.update();
                 break;
@@ -61,17 +64,23 @@ public class Game implements Runnable {
                 case QUIT:
                     System.exit(0);
                     break;
+            case LEVEL_TRANSITION:
+                levelTransition.update();
+                break;
         }
     }
 
     public void render(Graphics g) {
 
-        switch (Gamestate.state) {
+        switch (GameState.state) {
             case MENU:
                 menu.draw(g);
                 break;
             case PLAYING:
                 playing.draw(g);
+                break;
+            case LEVEL_TRANSITION:
+                levelTransition.draw(g);
                 break;
         }
     }
@@ -123,7 +132,7 @@ public class Game implements Runnable {
     public void windowFocusLost() {
         // If the game is in the playing state, call the windowFocusLost method in the playing class.
         // If in the menu state, do nothing.
-        if (Gamestate.state == Gamestate.PLAYING) {
+        if (GameState.state == GameState.PLAYING) {
             playing.windowFocusLost();
         }
     }
@@ -134,5 +143,9 @@ public class Game implements Runnable {
 
     public Playing getPlaying() {
         return playing;
+    }
+
+    public LevelTransition getLevelTransition() {
+        return levelTransition;
     }
 }

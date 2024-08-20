@@ -74,15 +74,18 @@ public class Player extends Entity{
     private void attack() {
         Direction direction;
 
-        switch (flipW) {
-            case -1 -> direction = LEFT;
-            default -> direction = RIGHT;
-        }
+        if (flipW == -1)
+            direction = LEFT;
+        else
+            direction = RIGHT;
+
+        int xOffset = 10 * Game.SCALE;
+        int yOffset = 3 * Game.SCALE;
 
         if (direction == LEFT)
-            bubbleManager.addBubble(hitbox.x - hitbox.width-5*Game.SCALE, hitbox.y-3*Game.SCALE, direction);
+            bubbleManager.addBubble(hitbox.x , hitbox.y -yOffset, direction);
         else
-            bubbleManager.addBubble(hitbox.x + hitbox.width, hitbox.y-3*Game.SCALE, direction);
+            bubbleManager.addBubble(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction);
 
         attackTimer = ATTACK_TIMER;
         attackingAnimation = true;
@@ -334,8 +337,6 @@ public class Player extends Entity{
         isImmune = false;
         immuneTimer = 0;
         attackTimer = 100;
-        hitbox.x = SPAWN_X;
-        hitbox.y = SPAWN_Y;
         lives = 3;
         xSpeed = 0;
         airSpeed = 0.0f;

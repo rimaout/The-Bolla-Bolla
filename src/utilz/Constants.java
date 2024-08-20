@@ -45,7 +45,7 @@ public class Constants {
         public static final int BLINKING_TIMER = 2000;
 
         // Movement Constants
-        public static final float PROJECTILE_SPEED = 0.7f * Game.SCALE;
+        public static final float PROJECTILE_SPEED = 1f * Game.SCALE;
         public static final float BUBBLE_SPEED = 0.1f * Game.SCALE;
         public static final float SHAKING_SPEED = 0.03f * Game.SCALE;
 
@@ -154,6 +154,7 @@ public class Constants {
         public static final int FALLING_ANIMATION = 3;
         public static final int ATTACK_AMATION = 4;
         public static final int DEAD_ANIMATION = 5;
+        public static final int TRANSITION_ANIMATION = 6;
 
         public static final int IMMUNE_TIME_AFTER_RESPAWN = 2000; // 2 seconds
         public static final int ATTACK_TIMER = 500; // 0.2 seconds

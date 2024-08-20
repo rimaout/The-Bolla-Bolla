@@ -1,6 +1,6 @@
 package ui;
 
-import gameStates.Gamestate;
+import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
 
@@ -26,7 +26,7 @@ public class GameCompletedOverlay {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             playing.resetAll();
-            Gamestate.state = Gamestate.MENU;
+            GameState.state = GameState.MENU;
         }
     }
 }

@@ -33,9 +33,9 @@ public class Menu extends State implements StateMethods {
     private void loadButtons() {
         buttons = new MenuButton[3];
 
-        buttons[0] = new MenuButton(13*Game.SCALE, 190*Game.SCALE, 0, Gamestate.PLAYING);
-        buttons[1] = new MenuButton(93*Game.SCALE, 190*Game.SCALE, 1, Gamestate.OPTIONS);
-        buttons[2] = new MenuButton(173*Game.SCALE, 190*Game.SCALE, 2, Gamestate.QUIT);
+        buttons[0] = new MenuButton(13*Game.SCALE, 190*Game.SCALE, 0, GameState.PLAYING);
+        buttons[1] = new MenuButton(93*Game.SCALE, 190*Game.SCALE, 1, GameState.OPTIONS);
+        buttons[2] = new MenuButton(173*Game.SCALE, 190*Game.SCALE, 2, GameState.QUIT);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class Menu extends State implements StateMethods {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            Gamestate.state = Gamestate.PLAYING;
+            GameState.state = GameState.PLAYING;
         }
     }
 

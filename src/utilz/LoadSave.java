@@ -24,6 +24,7 @@ import static utilz.Constants.EnemyConstants.ZEN_CHAN_RIGHT;
 public class LoadSave {
     // Sprites
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
+    public static final String PLAYER_TRANSITION_SPRITE = "/sprites/Bud_level_transition.png";
     public static final String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
     public static final String LEVEL_TILES_SPRITE = "/sprites/level_tiles.png";
     public static final String NUMBERS_TILES_SPRITE = "/sprites/numbers_tiles.png";
@@ -31,7 +32,7 @@ public class LoadSave {
     public static final String SOUND_BUTTONS_SPRITE = "/sprites/sound_buttons.png";
     public static final String URM_BUTTONS_SPRITE = "/sprites/urm_buttons.png";
     public static final String VOLUME_BUTTON_SPRITE = "/sprites/volume_button.png";
-    public static final String BUBBLE_BUD_SPRITE = "/sprites/bud_bubble.png";
+    public static final String BUBBLE_BUD_SPRITE = "/sprites/Bud_bubble.png";
 
     // Levels
     public static final String LEVEL1_DATA = "/levelMaps/level1.png";
@@ -44,7 +45,6 @@ public class LoadSave {
     // IMAGES
     public static final String GAME_LOGO = "/images/bubbleBobble_Logo.png";
     public static final String PAUSE_BACKGROUND = "/images/pause_menu.png";
-    public static final String LEVEL_COMPLETED_BACKGROUND = "/images/level_completed_menu.png";
 
     // this class will only use static methods, so we don't need a constructor
 

@@ -1,7 +1,6 @@
 package levels;
 
-import bubbles.BubbleManager;
-import entities.EnemyManager;
+import gameStates.GameState;
 import gameStates.Playing;
 import utilz.LoadSave;
 import main.Game;
@@ -14,6 +13,7 @@ public class LevelManager {
     private static LevelManager instance;
 
     private Playing playing;
+
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
     private ArrayList<Level> levels;
@@ -21,6 +21,7 @@ public class LevelManager {
 
     private LevelManager(Playing playing) {
         this.playing = playing;
+
         loadSprites();
         levels = new ArrayList<>();
         buildAllLevels();
@@ -38,18 +39,23 @@ public class LevelManager {
     }
 
     public void loadNextLevel() {
+
+        if (levelIndex >= levels.size()-1) {
+            playing.setGameCompleted(true);
+            return;
+        }
+
+        playing.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
         levelIndex++;
+        playing.getGame().getLevelTransition().setNewLevel(getCurrentLevel());
+
         if (levelIndex >= levels.size()) {
             levelIndex = 0;
             playing.setGameCompleted(true);
+            return;
         }
 
-        EnemyManager.getInstance().loadEnemies();
-        EnemyManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadWindData();
-
+        GameState.state = GameState.LEVEL_TRANSITION;
     }
 
     private void buildAllLevels() {
@@ -109,6 +115,14 @@ public class LevelManager {
 
     public int getLevelsAmount() {
         return levels.size();
+    }
+
+    public BufferedImage[] getNumbersTiles() {
+        return numbersTiles;
+    }
+
+    public BufferedImage[] getLevelTiles() {
+        return levelTiles;
     }
 }
 

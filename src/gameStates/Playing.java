@@ -2,7 +2,6 @@ package gameStates;
 
 import bubbles.BubbleManager;
 import ui.GameCompletedOverlay;
-import ui.LevelCompletedOverlay;
 import utilz.LoadSave;
 import entities.EnemyManager;
 import entities.Player;
@@ -25,7 +24,6 @@ public class Playing extends State implements StateMethods {
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
-    private LevelCompletedOverlay levelCompletedOverlay;
     private BufferedImage[] numbersTiles = new BufferedImage[10];
 
     private boolean paused;
@@ -64,7 +62,6 @@ public class Playing extends State implements StateMethods {
 
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
-        levelCompletedOverlay = new LevelCompletedOverlay(this);
         gameCompletedOverlay = new GameCompletedOverlay(this);
     }
 
@@ -83,7 +80,7 @@ public class Playing extends State implements StateMethods {
         if (paused)
             pauseOverlay.update();
         else if (levelCompleted)
-            levelCompletedOverlay.update();
+            levelManager.loadNextLevel();
         else if(!gameOver && !gameCompleted) {
             levelManager.update();
             player.update();
@@ -106,8 +103,6 @@ public class Playing extends State implements StateMethods {
             gameOverOverlay.draw(g);
         else if (gameCompleted)
             gameCompletedOverlay.draw(g);
-        else if (levelCompleted)
-            levelCompletedOverlay.draw(g);
     }
 
     private void drawUI(Graphics g) {
@@ -147,8 +142,6 @@ public class Playing extends State implements StateMethods {
         if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mousePressed(e);
-            else if (levelCompleted)
-                levelCompletedOverlay.mousePressed(e);
         }
     }
 
@@ -157,8 +150,6 @@ public class Playing extends State implements StateMethods {
         if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mouseReleased(e);
-            else if (levelCompleted)
-                levelCompletedOverlay.mouseReleased(e);
         }
     }
 
@@ -167,8 +158,6 @@ public class Playing extends State implements StateMethods {
         if (!gameOver || !gameCompleted) {
             if (paused)
                 pauseOverlay.mouseMoved(e);
-            else if (levelCompleted)
-                levelCompletedOverlay.mouseMoved(e);
         }
     }
     @Override

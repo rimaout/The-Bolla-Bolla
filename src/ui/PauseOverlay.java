@@ -5,7 +5,7 @@ import static utilz.Constants.UI.UrmButtons.*;
 import static utilz.Constants.UI.VolumeButton.*;
 
 import utilz.LoadSave;
-import gameStates.Gamestate;
+import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
 
@@ -135,7 +135,7 @@ public class PauseOverlay {
             sfxButton.setMuted(!sfxButton.isMuted());
         }
         else if (isMouseOverButton(e, menuButton)) {
-            Gamestate.state = Gamestate.MENU;
+            GameState.state = GameState.MENU;
             playing.unpauseGame();
         }
         else if (isMouseOverButton(e, replayButton)) {

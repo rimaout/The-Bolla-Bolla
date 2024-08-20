@@ -1,7 +1,7 @@
 package ui;
 
 import utilz.LoadSave;
-import gameStates.Gamestate;
+import gameStates.GameState;
 
 import static utilz.Constants.UI.MenuButtons.*;
 
@@ -12,11 +12,11 @@ public class MenuButton {
     private int xPos, yPos, spriteRowIndex, index;
     private boolean mouseOver, mousePressed;
 
-    private Gamestate state;
+    private GameState state;
     private BufferedImage[] buttonImages;
     private Rectangle buttonBounds;
 
-    public MenuButton(int xPos, int yPos, int spriteRowIndex, Gamestate state) {
+    public MenuButton(int xPos, int yPos, int spriteRowIndex, GameState state) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.spriteRowIndex = spriteRowIndex;
@@ -73,7 +73,7 @@ public class MenuButton {
     }
 
     public void applyGameState() {
-        Gamestate.state = state;
+        GameState.state = state;
     }
 
     public void resetBools() {
