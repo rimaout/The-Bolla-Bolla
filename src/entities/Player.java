@@ -1,7 +1,7 @@
 package entities;
 
 import bubbles.BubbleManager;
-import utilz.Constants;
+import levels.LevelManager;
 import utilz.LoadSave;
 import gameStates.Playing;
 import main.Game;
@@ -43,10 +43,10 @@ public class Player extends Entity{
     private int immuneTimer;
     private int attackTimer = 100;
 
-    public Player(Playing playing, BubbleManager bubbleManager) {
+    public Player(Playing playing) {
         super(SPAWN_X, SPAWN_Y, IMMAGE_W, IMMAGE_H);
         this.playing = playing;
-        this.bubbleManager = bubbleManager;
+        this.bubbleManager = BubbleManager.getInstance(playing);
 
         loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
@@ -68,7 +68,7 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - DRAWOFFSET_X) + flipX, (int) (hitbox.y - DRAWOFFSET_Y), width * flipW, height, null);
+        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
     }
 
     private void attack() {
@@ -308,8 +308,8 @@ public class Player extends Entity{
                 animations[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
-    public void loadLevelData(int[][] levelData) {
-        this.levelData = levelData;
+    public void loadLevelData() {
+        this.levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
 
         if (!IsEntityOnFloor(hitbox, levelData))
             inAir = true;

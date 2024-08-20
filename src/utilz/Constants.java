@@ -19,14 +19,17 @@ public class Constants {
         // Hitbox Constants
         public static final int HITBOX_W = (int) (16 * Game.SCALE);
         public static final int HITBOX_H = (int) (16 * Game.SCALE);
-        public static final int HITBOX_DRAWOFFSET_X = (int) (1 * Game.SCALE);
-        public static final int HITBOX_DRAWOFFSET_Y = (int) (1 * Game.SCALE);
+        public static final int HITBOX_OFFSET_X = (int) (1 * Game.SCALE);
+        public static final int HITBOX_OFFSET_Y = (int) (1 * Game.SCALE);
 
         // Collision Box Constants
-        public static final int COLLISIONBOX_W = (int) (9 * Game.SCALE);
-        public static final int COLLISIONBOX_H = (int) (9 * Game.SCALE);
-        public static final int COLLISIONBOX_DRAWOFFSET_X = (int) (3 * Game.SCALE);
-        public static final int COLLISIONBOX_DRAWOFFSET_Y = (int) (4 * Game.SCALE);
+        public static final int INTERNAL_BOX_W = (int) (8 * Game.SCALE);
+        public static final int INTERNAL_BOX_H = (int) (8 * Game.SCALE);
+        public static final int INTERNAL_BOX_OFFSET_X = (int) (3.5 * Game.SCALE);
+        public static final int INTERNAL_BOX_OFFSET_Y = (int) (4 * Game.SCALE);
+        public static final int EXTERNAL_BOX_W = (int) (13.5 * Game.SCALE);
+        public static final int EXTERNAL_BOX_H = (int) (16 * Game.SCALE);
+        public static final int EXTERNAL_BOX_OFFSET_X = (int) (1.5 * Game.SCALE);
 
         // States
         public static final int PROJECTILE = 0;
@@ -135,8 +138,8 @@ public class Constants {
         public static final int IMMAGE_H = (int) (18 * Game.SCALE);
         public static final int HITBOX_W = (int) (13 * Game.SCALE);
         public static final int HITBOX_H = (int) (13 * Game.SCALE);
-        public static final int DRAWOFFSET_X = (int) (3 * Game.SCALE);
-        public static final int DRAWOFFSET_Y = (int) (3 * Game.SCALE);
+        public static final int OFFSET_X = (int) (3 * Game.SCALE);
+        public static final int OFFSET_Y = (int) (3 * Game.SCALE);
 
         // Movement values and variables
         public static final float WALK_SPEED = 0.33f * Game.SCALE;
@@ -179,8 +182,8 @@ public class Constants {
         public static final int ZEN_CHAN_RIGHT = 2;
         public static final int ZEN_CHAN_HITBOX_W = (int) (14 * Game.SCALE);
         public static final int ZEN_CHAN_HITBOX_H = (int) (15 * Game.SCALE);
-        public static final int ZEN_CHAN_DRAWOFFSET_X = (int) (2 * Game.SCALE);
-        public static final int ZEN_CHAN_DRAWOFFSET_Y = (int) (2 * Game.SCALE);
+        public static final int ZEN_CHAN_OFFSET_X = (int) (2 * Game.SCALE);
+        public static final int ZEN_CHAN_OFFSET_Y = (int) (2 * Game.SCALE);
 
         // General Enemy Sprite Sizes
         public static final int ENEMY_DEFAULT_W = 18;

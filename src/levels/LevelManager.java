@@ -1,5 +1,7 @@
 package levels;
 
+import bubbles.BubbleManager;
+import entities.EnemyManager;
 import gameStates.Playing;
 import utilz.LoadSave;
 import main.Game;
@@ -9,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class LevelManager {
+    private static LevelManager instance;
 
     private Playing playing;
     private BufferedImage[] levelTiles;
@@ -16,11 +19,22 @@ public class LevelManager {
     private ArrayList<Level> levels;
     private int levelIndex = 0;
 
-    public LevelManager(Playing playing) {
+    private LevelManager(Playing playing) {
         this.playing = playing;
         loadSprites();
         levels = new ArrayList<>();
         buildAllLevels();
+    }
+
+    public static LevelManager getInstance(Playing playing) {
+        if (instance == null) {
+            instance = new LevelManager(playing);
+        }
+        return instance;
+    }
+
+    public static LevelManager getInstance() {
+        return instance;
     }
 
     public void loadNextLevel() {
@@ -30,12 +44,12 @@ public class LevelManager {
             playing.setGameCompleted(true);
         }
 
-        Level newLevel = levels.get(levelIndex);
+        EnemyManager.getInstance().loadEnemies();
+        EnemyManager.getInstance().loadLevelData();
+        BubbleManager.getInstance().loadLevelData();
+        BubbleManager.getInstance().loadLevelData();
+        BubbleManager.getInstance().loadWindData();
 
-        playing.getEnemyManager().loadEnemies(newLevel);
-        playing.getPlayer().loadLevelData(newLevel.getLevelData());
-        playing.getBubbleManager().loadLevelData(newLevel.getLevelData());
-        playing.getBubbleManager().loadWindData(newLevel.getWindDirectionData());
     }
 
     private void buildAllLevels() {

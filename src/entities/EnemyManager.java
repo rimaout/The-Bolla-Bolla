@@ -1,6 +1,6 @@
 package entities;
 
-import levels.Level;
+import levels.LevelManager;
 import utilz.LoadSave;
 import gameStates.Playing;
 import static utilz.Constants.EnemyConstants.*;
@@ -10,21 +10,40 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class EnemyManager {
+    private static EnemyManager instance;
+
     private Playing playing;
+    private Player player;
+    private int[][] levelData;
+    
     private BufferedImage[][] zenChanSprites;
     private ArrayList<ZenChan> zenChans;
 
-    public EnemyManager(Playing playing) {
+    private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
+        this.player = player;
         loadEnemiesSprites();
+        loadEnemies();
+        loadLevelData();
+    }
+
+    public static EnemyManager getInstance(Playing playing, Player player) {
+        if (instance == null) {
+            instance = new EnemyManager(playing, player);
+        }
+        return instance;
+    }
+
+    public static EnemyManager getInstance() {
+        return instance;
     }
 
 
-    public void update(int [][] lvlData, Player player) {
+    public void update() {
         boolean allDead = true;
 
         for (ZenChan z : zenChans) {
-            z.update(lvlData, player);
+            z.update(levelData, player);
             allDead = false;
         }
 
@@ -38,7 +57,7 @@ public class EnemyManager {
 
         for (ZenChan z : zenChans)
             if(z.isActive())
-                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_DRAWOFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_DRAWOFFSET_Y), ENEMY_W * z.flipW(), ENEMY_H, null);
+                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_OFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_OFFSET_Y), ENEMY_W * z.flipW(), ENEMY_H, null);
     }
 
     public void checkEnemyHit(Player player) {
@@ -47,8 +66,12 @@ public class EnemyManager {
                     player.death();
     }
 
-    public void loadEnemies(Level level) {
-        zenChans = level.getZenChans();
+    public void loadLevelData() {
+        levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
+    }
+
+    public void loadEnemies() {
+        zenChans = LevelManager.getInstance().getCurrentLevel().getZenChans();
     }
 
     private void loadEnemiesSprites() {

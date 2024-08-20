@@ -4,6 +4,7 @@ import main.Game;
 import entities.Entity;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import static utilz.HelpMethods.*;
@@ -14,7 +15,8 @@ import static utilz.Constants.PlayerBubble.*;
 public class PlayerBubble extends Entity {
     private int[][] levelData;
     private Direction[][] windLevelData;
-    private Rectangle2D.Float collisionBox;
+    private Rectangle2D.Float internalCollisionBox;
+    private Ellipse2D.Float externalCollisionBox;
 
     private boolean isFirstUpdate = true;
     private boolean active = true;
@@ -28,10 +30,6 @@ public class PlayerBubble extends Entity {
     private Direction direction;
     private Direction previousDirection;
 
-    // External Entity Push Variables
-    private Direction pushDirection = NONE;
-    private float pushSpeed;
-
     public PlayerBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
@@ -40,22 +38,28 @@ public class PlayerBubble extends Entity {
         this.windLevelData = windLevelData;
 
         initHitbox(HITBOX_W, HITBOX_H);
-        initCollisionBox();
+        initCollisionBoxes();
     }
 
-    private void initCollisionBox() {
-        collisionBox = new Rectangle2D.Float(hitbox.x + COLLISIONBOX_DRAWOFFSET_X, hitbox.y + COLLISIONBOX_DRAWOFFSET_Y, COLLISIONBOX_W, COLLISIONBOX_H);
+    private void initCollisionBoxes() {
+        internalCollisionBox = new Rectangle2D.Float(hitbox.x + INTERNAL_BOX_OFFSET_X, hitbox.y + INTERNAL_BOX_OFFSET_Y, INTERNAL_BOX_W, INTERNAL_BOX_H);
+        externalCollisionBox = new Ellipse2D.Float(hitbox.x + EXTERNAL_BOX_OFFSET_X, hitbox.y, EXTERNAL_BOX_W, EXTERNAL_BOX_H);
     }
 
     public void drawCollisionBox(Graphics g) {
         // For debugging purposes
+        g.setColor(Color.GREEN);
+        g.drawRect((int) internalCollisionBox.x, (int) internalCollisionBox.y, (int) internalCollisionBox.width, (int) internalCollisionBox.height);
+
         g.setColor(Color.BLUE);
-        g.drawRect((int) collisionBox.x, (int) collisionBox.y, (int) collisionBox.width, (int) collisionBox.height);
+        g.drawOval((int) externalCollisionBox.x, (int) externalCollisionBox.y, (int) externalCollisionBox.width, (int) externalCollisionBox.height);
     }
 
-    private void updateCollisionBox() {
-        collisionBox.x = hitbox.x + COLLISIONBOX_DRAWOFFSET_X;
-        collisionBox.y = hitbox.y + COLLISIONBOX_DRAWOFFSET_Y;
+    private void updateCollisionBoxes() {
+        internalCollisionBox.x = hitbox.x + INTERNAL_BOX_OFFSET_X;
+        internalCollisionBox.y = hitbox.y + INTERNAL_BOX_OFFSET_Y;
+        externalCollisionBox.x = hitbox.x + EXTERNAL_BOX_OFFSET_X;
+        externalCollisionBox.y = hitbox.y;
     }
 
     public void update() {
@@ -68,7 +72,7 @@ public class PlayerBubble extends Entity {
 
         updateDirection();
         updatePosition();
-        updateCollisionBox();
+        updateCollisionBoxes();
     }
 
     public void firstUpdate() {
@@ -166,20 +170,9 @@ public class PlayerBubble extends Entity {
                 case NONE -> bubbleShaking();
             }
 
-            // External Push Movement
-            if (pushDirection == LEFT && !IsTilePerimeterWall((int) (hitbox.x - pushSpeed) / Game.TILES_SIZE))
-                xSpeed -= pushSpeed;
-
-            if (pushDirection == RIGHT && !IsTilePerimeterWall((int) (hitbox.x + pushSpeed + hitbox.width) / Game.TILES_SIZE))
-                xSpeed += pushSpeed;
-
-            if (pushDirection == DOWN)
-                ySpeed -= pushSpeed;
-
             // Update Position
             hitbox.x += xSpeed;
             hitbox.y += ySpeed;
-            pushSpeed = 0;
         }
     }
 
@@ -239,12 +232,11 @@ public class PlayerBubble extends Entity {
         return state;
     }
 
-    public Rectangle2D.Float getCollisionBox() {
-        return collisionBox;
+    public Rectangle2D.Float getInternalCollisionBox() {
+        return internalCollisionBox;
     }
 
-    public void setPush(Direction pushDirection, float pushSpeed) {
-        this.pushDirection = pushDirection;
-        this.pushSpeed = pushSpeed;
+    public Ellipse2D.Float getExternalCollisionBox() {
+        return externalCollisionBox;
     }
 }

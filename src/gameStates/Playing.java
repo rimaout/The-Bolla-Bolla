@@ -46,17 +46,22 @@ public class Playing extends State implements StateMethods {
     }
 
     private void loadStartLevel() {
-        enemyManager.loadEnemies(levelManager.getCurrentLevel());
+        enemyManager.loadEnemies();
+        enemyManager.loadLevelData();
     }
 
     public void initClasses() {
-        levelManager = new LevelManager(this);
-        enemyManager = new EnemyManager(this);
+        levelManager = LevelManager.getInstance(this);
+
+        player = new Player(this);
+        player.loadLevelData();
+
+        enemyManager = EnemyManager.getInstance(this, player);
+
         bubbleManager = BubbleManager.getInstance(this);
-        bubbleManager.loadLevelData(levelManager.getCurrentLevel().getLevelData());
-        bubbleManager.loadWindData(levelManager.getCurrentLevel().getWindDirectionData());
-        player = new Player(this, bubbleManager);
-        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+
+
+
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
         levelCompletedOverlay = new LevelCompletedOverlay(this);
@@ -83,7 +88,7 @@ public class Playing extends State implements StateMethods {
             levelManager.update();
             player.update();
             bubbleManager.update();
-            enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
+            enemyManager.update();
         }
     }
 
