@@ -1,10 +1,10 @@
 package levels;
 
-import entities.ZenChan;
+import entities.Enemy;
 import utilz.Constants.Direction;
 import static utilz.LoadSave.GetLevelData;
 import static utilz.LoadSave.GetWindsDirectionsData;
-import static utilz.LoadSave.GetZenChans;
+import static utilz.LoadSave.GetEnemies;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Level {
     private BufferedImage levelImage;
     private int[][] levelData;
     private Direction[][] windDirectionData;
-    private ArrayList<ZenChan> zenChans;
+    private ArrayList<Enemy> Enemies;
 
     public Level(BufferedImage levelImage) {
         this.levelImage = levelImage;
@@ -33,7 +33,7 @@ public class Level {
     }
 
     private void createEnemies() {
-        zenChans = GetZenChans(levelImage);
+        Enemies = GetEnemies(levelImage);
     }
 
     public int getSpriteIndex(int x, int y) {
@@ -48,7 +48,7 @@ public class Level {
         return windDirectionData;
     }
 
-    public ArrayList<ZenChan> getZenChans() {
-        return zenChans;
+    public ArrayList<Enemy> getEnemies() {
+        return Enemies;
     }
 }

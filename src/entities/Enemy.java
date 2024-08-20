@@ -2,6 +2,8 @@ package entities;
 
 import main.Game;
 
+import java.awt.*;
+
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.EnemyConstants.*;
@@ -11,6 +13,7 @@ import static utilz.Constants.Direction.*;
 
 public abstract class Enemy extends Entity {
     protected boolean active = true;
+    protected boolean alive = true;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
     protected int enemyState;
     protected EnemyType enemyType;
@@ -36,6 +39,8 @@ public abstract class Enemy extends Entity {
         this.walkingDir = startWalkingDir;
         this.startWalkingDir = startWalkingDir;
     }
+
+    public abstract void update(Player player);
 
     protected void updateAnimationTick() {
         animationTick++;
@@ -134,7 +139,20 @@ public abstract class Enemy extends Entity {
         return enemyState;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public boolean isActive() {
         return active;
     }
+
+    public boolean isAlive() {
+        return alive;
+    }
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public abstract EnemyType getEnemyType();
 }

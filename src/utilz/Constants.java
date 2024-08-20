@@ -36,7 +36,8 @@ public class Constants {
         public static final int NORMAL = 1;
         public static final int RED = 2;
         public static final int BLINKING = 3;
-        public static final int POP = 4;
+        public static final int POP_NORMAL = 4;
+        public static final int POP_RED = 5;
 
         // State Timers (seconds)
         public static final int NORMAL_TIMER = 12000;
@@ -55,7 +56,7 @@ public class Constants {
                 case NORMAL -> 2;
                 case RED -> 2;
                 case BLINKING -> 2;
-                case POP -> 3;
+                case POP_NORMAL, POP_RED -> 3;
                 default -> 4;
             };
         }

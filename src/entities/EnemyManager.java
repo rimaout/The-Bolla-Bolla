@@ -17,7 +17,7 @@ public class EnemyManager {
     private int[][] levelData;
     
     private BufferedImage[][] zenChanSprites;
-    private ArrayList<ZenChan> zenChans;
+    private ArrayList<Enemy> enemies;
 
     private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
@@ -42,27 +42,28 @@ public class EnemyManager {
     public void update() {
         boolean allDead = true;
 
-        for (ZenChan z : zenChans) {
-            z.update(levelData, player);
-            allDead = false;
+        for (Enemy e : enemies) {
+            if (e.isActive()) {
+                e.update(player);
+                checkEnemyHit(player, e);
+            }
+            if (e.isAlive())
+                allDead = false;
         }
 
         if(allDead)
             playing.setLevelCompleted(true);
-
-        checkEnemyHit(player);
     }
 
     public void draw(Graphics g) {
 
-        for (ZenChan z : zenChans)
-            if(z.isActive())
-                g.drawImage(zenChanSprites[z.getEnemyState()][z.getAnimationIndex()], (int) (z.getHitbox().x - ZEN_CHAN_OFFSET_X) + z.flipX(), (int) (z.getHitbox().y - ZEN_CHAN_OFFSET_Y), ENEMY_W * z.flipW(), ENEMY_H, null);
+        for (Enemy e : enemies)
+            if(e.isActive())
+                g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ZEN_CHAN_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ZEN_CHAN_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
     }
 
-    public void checkEnemyHit(Player player) {
-        for (ZenChan z : zenChans)
-            if (z.getHitbox().intersects(player.getHitbox()) && z.isActive())
+    public void checkEnemyHit(Player player, Enemy enemy) {
+            if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive())
                     player.death();
     }
 
@@ -71,7 +72,7 @@ public class EnemyManager {
     }
 
     public void loadEnemies() {
-        zenChans = LevelManager.getInstance().getCurrentLevel().getZenChans();
+        enemies = LevelManager.getInstance().getCurrentLevel().getEnemies();
     }
 
     private void loadEnemiesSprites() {
@@ -84,7 +85,16 @@ public class EnemyManager {
     }
 
     public void resetAll() {
-        for (ZenChan z : zenChans)
-            z.resetEnemy();
+        for (Enemy e : enemies)
+            e.resetEnemy();
+    }
+
+    public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
+        switch (enemyType) {
+            case ZEN_CHAN:
+                return zenChanSprites;
+            default:
+                return null;
+        }
     }
 }

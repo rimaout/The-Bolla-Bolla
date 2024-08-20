@@ -1,5 +1,6 @@
 package utilz;
 
+import entities.Enemy;
 import entities.ZenChan;
 import main.Game;
 
@@ -114,7 +115,7 @@ public class LoadSave {
         return levelData;
     }
 
-    public static ArrayList<ZenChan> GetZenChans(BufferedImage img) {
+    public static ArrayList<Enemy> GetEnemies(BufferedImage img) {
 
         //enemies type and position and direction are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile info
         // the green component of the pixel determines the type of enemy and facing direction
@@ -123,7 +124,7 @@ public class LoadSave {
         //      1 -> Zen-Chan facing left
         //      2 -> Zen-Chan facing right
 
-        ArrayList<ZenChan> list = new ArrayList<>();
+        ArrayList<Enemy> list = new ArrayList<>();
 
         for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {

@@ -1,5 +1,6 @@
 package entities;
 
+import levels.LevelManager;
 import main.Game;
 import utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
@@ -15,7 +16,6 @@ public class ZenChan extends Enemy {
     private boolean goDown = false;
     private boolean isFalling = false;
     private boolean isJumping = false;
-    private Direction startWalkingDir;
 
     // Fly Variables
     private int flyDirectionChangeCounter = 0;
@@ -33,22 +33,23 @@ public class ZenChan extends Enemy {
         initHitbox(ZEN_CHAN_HITBOX_W, ZEN_CHAN_HITBOX_H);
     }
 
-    public void update(int[][] lvlData, Player player) {
+    @Override
+    public void update(Player player) {
         tileX = (int) (hitbox.x / Game.TILES_SIZE);
         tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
         if (firstUpdate)
-            firstUpdate(lvlData);
+            firstUpdate();
 
         updateTimers();
         updatePlayerInfo(player);
-        updateMove(lvlData);
+        updateMove();
         updateAnimationTick();
         updateMovementVariables();
     }
 
-    private void firstUpdate(int[][] levelData) {
-        if (!IsEntityOnFloor(hitbox, levelData))
+    private void firstUpdate() {
+        if (!IsEntityOnFloor(hitbox, LevelManager.getInstance().getCurrentLevel().getLevelData()))
             goDown = true;
 
         lastTimerUpdate = System.currentTimeMillis();
@@ -63,7 +64,9 @@ public class ZenChan extends Enemy {
 
     }
 
-    private void updateMove(int[][] levelData) {
+    private void updateMove() {
+        int[][] levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
+
         if(!IsEntityOnFloor(hitbox, levelData) && !isJumping && !goUp && !goDown)
             goOnFloor(levelData);
 
@@ -289,5 +292,10 @@ public class ZenChan extends Enemy {
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
         lastTimerUpdate = 0;
+    }
+
+    @Override
+    public EnemyType getEnemyType() {
+        return ZEN_CHAN;
     }
 }
