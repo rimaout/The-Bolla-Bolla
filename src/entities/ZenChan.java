@@ -61,7 +61,6 @@ public class ZenChan extends Enemy {
         lastTimerUpdate = System.currentTimeMillis();
 
         playerUpdateTimer -= timeDelta;
-
     }
 
     private void updateMove() {
@@ -284,9 +283,24 @@ public class ZenChan extends Enemy {
     }
 
     @Override
-    protected void resetEnemy() {
+    public void resetEnemy() {
         super.resetEnemy();
 
+        isFalling = false;
+        isJumping = false;
+        goUp = false;
+        goDown = false;
+        isFlyingFirstUpdate = true;
+        flyDirectionChangeCounter = 0;
+        flyStartTime = 0;
+        didFlyInsideSolid = false;
+        playerUpdateTimer = 0;
+        lastTimerUpdate = 0;
+    }
+
+    @Override
+    public void bubbleCapture() {
+        super.bubbleCapture();
         isFalling = false;
         isJumping = false;
         goUp = false;

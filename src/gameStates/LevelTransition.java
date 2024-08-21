@@ -41,7 +41,6 @@ public class LevelTransition extends State implements StateMethods{
         loadPlayerTransitionSprites();
     }
 
-
     @Override
     public void update() {
         if (firstUpdate) {
@@ -70,7 +69,6 @@ public class LevelTransition extends State implements StateMethods{
         player.getHitbox().y += playerTransitionSpeedY;
 
         // player animation
-
         playerAnimationTick++;
         if (playerAnimationTick > ANIMATION_SPEED) {
             playerAnimationTick = 0;
@@ -82,37 +80,47 @@ public class LevelTransition extends State implements StateMethods{
     }
 
     private void levelUpdate() {
-        // Move the old level up
         oldLevelY -= TRANSITION_SPEED;
-        // Move the new level up from the bottom
         newLevelY -= TRANSITION_SPEED;
 
-        // Check if the transition is complete
+        // if transition is complete
         if (newLevelY <= 0) {
-            // Switch to the new level
-            GameState.state = GameState.PLAYING;
-            game.getPlaying().setLevelCompleted(false);
-            resetAll();
-            loadEntities();
+            initialiseNewLevel();
         }
     }
 
-    private void loadEntities() {
+    private void initialiseNewLevel() {
+        GameState.state = GameState.PLAYING;
+        game.getPlaying().setLevelCompleted(false);
+        resetAll();
+
         EnemyManager.getInstance().loadEnemies();
         EnemyManager.getInstance().loadLevelData();
+
         BubbleManager.getInstance().loadLevelData();
         BubbleManager.getInstance().loadLevelData();
         BubbleManager.getInstance().loadWindData();
+
+        game.getPlaying().getPlayer().loadLevelData();
     }
 
     private void resetAll() {
+        game.getPlaying().resetAll();
         oldLevelY = 0;
         newLevelY = Game.GAME_HEIGHT;
         firstUpdate = true;
     }
 
     private void drawPlayer(Graphics g) {
-        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) player.getHitbox().x, (int) player.getHitbox().y, 31 * Game.SCALE, 34 * Game.SCALE, null);
+
+        float xOffSet = 5 * Game.SCALE;
+        float yOffSet = 12 * Game.SCALE;
+
+        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Game.SCALE, 34 * Game.SCALE, null);
+    }
+
+    private void drawEnemy(Graphics g) {
+
     }
 
     private void drawLevel(Graphics g, Level level, int yOffSet) {

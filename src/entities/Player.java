@@ -285,7 +285,7 @@ public class Player extends Entity{
             isImmune = true;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             respawning = true;
-            resetDirection();
+            resetMovements();
             resetInAir();
         }
     }
@@ -325,13 +325,15 @@ public class Player extends Entity{
         airSpeed = 0;
     }
 
-    public void resetDirection() {
+    public void resetMovements() {
         left = false;
         right = false;
+        jump = false;
+        attacking = false;
     }
 
     public void resetAll() {
-        resetDirection();
+        resetMovements();
         resetInAir();
         isFirstUpdate = true;
         isImmune = false;

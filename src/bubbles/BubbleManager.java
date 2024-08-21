@@ -210,6 +210,7 @@ public class BubbleManager {
                     bubblesToAdd.add(new EnemyBubble(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
                     b.setActive(false);
                     e.setActive(false);
+                    e.bubbleCapture();
                     break;
                 }
             }

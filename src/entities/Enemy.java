@@ -119,7 +119,7 @@ public abstract class Enemy extends Entity {
             return 1;
     }
 
-    protected void resetEnemy() {
+    public void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
         animationIndex = 0;
@@ -128,6 +128,13 @@ public abstract class Enemy extends Entity {
         active = true;
         enemyState = NORMAL_STATE;
         walkingDir = startWalkingDir;
+    }
+
+    public void bubbleCapture() {
+        active = false;
+        enemyState = BOBBLE_STATE;
+        animationIndex = 0;
+        animationTick = 0;
     }
 
     public int getEnemyState() {
