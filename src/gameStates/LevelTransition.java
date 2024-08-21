@@ -1,6 +1,7 @@
 package gameStates;
 
 import bubbles.BubbleManager;
+import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
 import levels.Level;
@@ -9,12 +10,17 @@ import main.Game;
 import utilz.LoadSave;
 
 import static utilz.Constants.ANIMATION_SPEED;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.ENEMY_H;
 import static utilz.Constants.PlayerConstants.*;
+import static utilz.Constants.LevelTransition.*;
+import static utilz.Constants.LevelTransition.TransitionState.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class LevelTransition extends State implements StateMethods{
     private BufferedImage[] levelTiles;
@@ -25,8 +31,8 @@ public class LevelTransition extends State implements StateMethods{
     float oldLevelY = 0;
     float newLevelY = Game.GAME_HEIGHT;
 
+    private TransitionState transitionState;
     private boolean firstUpdate = true;
-    private final float TRANSITION_SPEED = 0.8f * Game.SCALE;
 
     private Player player;
     private float playerStartX, playerStartY;
@@ -43,28 +49,45 @@ public class LevelTransition extends State implements StateMethods{
 
     @Override
     public void update() {
-        if (firstUpdate) {
-            playerStartX = player.getHitbox().x;
-            playerStartY = player.getHitbox().y;
-            firstUpdate = false;
+
+        if (firstUpdate)
+            firstUpdate();
+
+        if (transitionState == LEVEL_TRANSITION) {
+            updatePlayer();
+            updateLevels();
         }
 
-        updatePlayer();
-        levelUpdate();
+        else if (transitionState == LOADING_NEW_LEVEL) {
+            loadNewLevel();
+            transitionState = START_NEW_LEVEL;
+        }
+
+        else if (transitionState == START_NEW_LEVEL)
+            endTransition();
     }
 
-    @Override
-    public void draw(Graphics g) {
-       drawLevel(g, oldLevel, (int) oldLevelY);
-       drawLevel(g, newLevel, (int) newLevelY);
-       drawPlayer(g);
+    private void firstUpdate(){
+        playerStartX = player.getHitbox().x;
+        playerStartY = player.getHitbox().y;
+        transitionState = LEVEL_TRANSITION;
+        firstUpdate = false;
+    }
+
+    private void updateLevels() {
+        oldLevelY -= LEVEL_TRANSITION_SPEED;
+        newLevelY -= LEVEL_TRANSITION_SPEED;
+
+        // if transition is complete
+        if (newLevelY <= 0)
+            transitionState = LOADING_NEW_LEVEL;
     }
 
     private void updatePlayer() {
 
         // player position
-        float playerTransitionSpeedX = (SPAWN_X - playerStartX) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
-        float playerTransitionSpeedY = (SPAWN_Y - playerStartY) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
+        float playerTransitionSpeedX = (SPAWN_X - playerStartX) / (Game.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
+        float playerTransitionSpeedY = (SPAWN_Y - playerStartY) / (Game.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
         player.getHitbox().x += playerTransitionSpeedX;
         player.getHitbox().y += playerTransitionSpeedY;
 
@@ -79,36 +102,11 @@ public class LevelTransition extends State implements StateMethods{
         }
     }
 
-    private void levelUpdate() {
-        oldLevelY -= TRANSITION_SPEED;
-        newLevelY -= TRANSITION_SPEED;
-
-        // if transition is complete
-        if (newLevelY <= 0) {
-            initialiseNewLevel();
-        }
-    }
-
-    private void initialiseNewLevel() {
-        GameState.state = GameState.PLAYING;
-        game.getPlaying().setLevelCompleted(false);
-        resetAll();
-
-        EnemyManager.getInstance().loadEnemies();
-        EnemyManager.getInstance().loadLevelData();
-
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadWindData();
-
-        game.getPlaying().getPlayer().loadLevelData();
-    }
-
-    private void resetAll() {
-        game.getPlaying().resetAll();
-        oldLevelY = 0;
-        newLevelY = Game.GAME_HEIGHT;
-        firstUpdate = true;
+    @Override
+    public void draw(Graphics g) {
+       drawLevel(g, oldLevel, (int) oldLevelY);
+       drawLevel(g, newLevel, (int) newLevelY);
+       drawPlayer(g);
     }
 
     private void drawPlayer(Graphics g) {
@@ -117,10 +115,6 @@ public class LevelTransition extends State implements StateMethods{
         float yOffSet = 12 * Game.SCALE;
 
         g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Game.SCALE, 34 * Game.SCALE, null);
-    }
-
-    private void drawEnemy(Graphics g) {
-
     }
 
     private void drawLevel(Graphics g, Level level, int yOffSet) {
@@ -143,6 +137,26 @@ public class LevelTransition extends State implements StateMethods{
         }
     }
 
+    private void loadNewLevel() {
+        EnemyManager.getInstance().loadEnemies();
+        EnemyManager.getInstance().loadLevelData();
+
+        BubbleManager.getInstance().loadLevelData();
+        BubbleManager.getInstance().loadLevelData();
+        BubbleManager.getInstance().loadWindData();
+
+        game.getPlaying().getPlayer().loadLevelData();
+    }
+
+    public void endTransition() {
+        GameState.state = GameState.PLAYING;
+        game.getPlaying().setLevelCompleted(false);
+
+        game.getPlaying().resetAll();
+        oldLevelY = 0;
+        newLevelY = Game.GAME_HEIGHT;
+        firstUpdate = true;
+    }
 
     private void loadPlayerTransitionSprites() {
         playerTransitionSprites = new BufferedImage[2];

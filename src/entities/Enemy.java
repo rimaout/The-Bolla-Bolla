@@ -1,5 +1,6 @@
 package entities;
 
+import levels.LevelManager;
 import main.Game;
 
 import static utilz.Constants.ANIMATION_SPEED;
@@ -27,11 +28,17 @@ public abstract class Enemy extends Entity {
     protected Direction walkingDir;
     protected Direction startWalkingDir;
 
+    // Spawn Info
+    protected float spawnY;
+    protected boolean reachedSpawn = false;
+
     // Player info
     protected int playerTileX, playerTileY;
 
     public Enemy(float x, float y, int width, int height, EnemyType  enemyType, Direction startWalkingDir) {
-        super(x, y, width, height);
+        super(x, INITIAL_SPAWN_POINT_Y, width, height);
+
+        this.spawnY = y;
         this.enemyType = enemyType;
         this.walkingDir = startWalkingDir;
         this.startWalkingDir = startWalkingDir;
@@ -47,6 +54,18 @@ public abstract class Enemy extends Entity {
             if (animationIndex >= getSpriteAmount(enemyType, enemyState)) {
                 animationIndex = 0;
             }
+        }
+    }
+
+    protected void updateSpawning() {
+
+        // check if enemy will reach spawn point
+        if (hitbox.y + SPAWN_TRANSITION_SPEED < spawnY)
+            hitbox.y += SPAWN_TRANSITION_SPEED;
+
+        else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , LevelManager.getInstance().getCurrentLevel().getLevelData());
+            reachedSpawn = true;
         }
     }
 
@@ -137,10 +156,6 @@ public abstract class Enemy extends Entity {
         animationTick = 0;
     }
 
-    public int getEnemyState() {
-        return enemyState;
-    }
-
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -158,6 +173,14 @@ public abstract class Enemy extends Entity {
 
     public void setEnemyState(int state) {
         this.enemyState = state;
+    }
+
+    public int getEnemyState() {
+        return enemyState;
+    }
+
+    public boolean getReachedSpawn() {
+        return reachedSpawn;
     }
 
     public abstract EnemyType getEnemyType();

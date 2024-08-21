@@ -38,13 +38,20 @@ public class ZenChan extends Enemy {
         tileX = (int) (hitbox.x / Game.TILES_SIZE);
         tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
+        updateAnimationTick();
+
+        if (!EnemyManager.getInstance().getAllEnemiesReachedSpawn()) {
+            if (!reachedSpawn)
+                updateSpawning();
+            return;
+        }
+
         if (firstUpdate)
             firstUpdate();
 
         updateTimers();
         updatePlayerInfo(player);
         updateMove();
-        updateAnimationTick();
         updateMovementVariables();
     }
 

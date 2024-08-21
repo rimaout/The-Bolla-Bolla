@@ -7,8 +7,18 @@ public class Constants {
     public static final float GRAVITY = 0.0078f * Game.SCALE;
     public static final int ANIMATION_SPEED = 50;
 
+    public static class LevelTransition {
+
+        public enum TransitionState {
+            LEVEL_TRANSITION,
+            LOADING_NEW_LEVEL,
+            START_NEW_LEVEL,
+        }
+        public static final float LEVEL_TRANSITION_SPEED = 0.58f * Game.SCALE;
+    }
+
     public static class Bubble {
-    public static final int BUBBLE_ANIMATION_SPEED = 25;
+        public static final int BUBBLE_ANIMATION_SPEED = 25;
 
         // Bubble Dimensions
         public static final int DEFAULT_W = 18;
@@ -178,6 +188,9 @@ public class Constants {
         public enum EnemyType {
             ZEN_CHAN;
         }
+
+        public static final float INITIAL_SPAWN_POINT_Y = -3 * Game.TILES_SIZE;
+        public static final float SPAWN_TRANSITION_SPEED = 0.31f * Game.SCALE;
 
         // Zen Chan Constants
         public static final int ZEN_CHAN_LEFT = 1;

@@ -15,9 +15,11 @@ public class EnemyManager {
     private Playing playing;
     private Player player;
     private int[][] levelData;
-    
+
     private BufferedImage[][] zenChanSprites;
     private ArrayList<Enemy> enemies;
+
+    private boolean allEnemiesReachedSpawn = false;
 
     private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
@@ -41,12 +43,16 @@ public class EnemyManager {
 
     public void update() {
         int aliveCounter = 0;
+        int reachedSpawnCounter = 0;
 
         for (Enemy e : enemies) {
             if (e.isActive()) {
                 e.update(player);
                 checkEnemyHit(player, e);
             }
+
+            if (e.getReachedSpawn())
+                reachedSpawnCounter++;
 
             if (e.isAlive())
                 aliveCounter++;
@@ -56,6 +62,9 @@ public class EnemyManager {
             case 0 -> playing.setLevelCompleted(true);
             case 1 -> setAllHungry();
         }
+
+        if (reachedSpawnCounter == enemies.size())
+            allEnemiesReachedSpawn = true;
     }
 
     public void draw(Graphics g) {
@@ -96,6 +105,8 @@ public class EnemyManager {
     public void resetAll() {
         for (Enemy e : enemies)
             e.resetEnemy();
+
+        allEnemiesReachedSpawn = false;
     }
 
     public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
@@ -105,5 +116,13 @@ public class EnemyManager {
             default:
                 return null;
         }
+    }
+
+    public boolean getAllEnemiesReachedSpawn() {
+        return allEnemiesReachedSpawn;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 }
