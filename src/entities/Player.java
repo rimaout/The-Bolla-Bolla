@@ -107,7 +107,7 @@ public class Player extends Entity{
         }
 
         if (attackingAnimation)
-            playerAnimation = ATTACK_AMATION;
+            playerAnimation = ATTACK_ANIMATION;
 
         if (respawning)
             playerAnimation = DEAD_ANIMATION;

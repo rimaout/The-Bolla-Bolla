@@ -226,17 +226,17 @@ public class BubbleManager {
 
         int mapLeftMostTileX = 3 * Game.TILES_SIZE;
         int mapRightMostTileX = 28 * Game.TILES_SIZE;
+        int xOffset = 4 * Game.SCALE;
 
-        // check if is not perimeter wall
         if (direction == Direction.LEFT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
+                bubbles.add(new PlayerBubble(x + xOffset, y, direction, levelData, windDirectionData));
             else
                 bubbles.add(new PlayerBubble(mapLeftMostTileX, y, direction, levelData, windDirectionData));
 
         if (direction == Direction.RIGHT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new PlayerBubble(x, y, direction, levelData, windDirectionData));
+                bubbles.add(new PlayerBubble(x - xOffset, y, direction, levelData, windDirectionData));
             else
                 bubbles.add(new PlayerBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
     }
