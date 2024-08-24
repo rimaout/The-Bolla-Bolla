@@ -261,15 +261,29 @@ public class ZenChan extends Enemy {
     }
 
     private boolean canFly(int[][] levelData){
+
+        // TODO: Refactor - this method checks fi there is a solid tile to fly on, ig there is checks if there is a empty tile on top
+
         // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
 
-        int OneTileAbove = tileY-1;
-        int TwoTilesAbove = tileY-2;
-        int ThreeTilesAbove = tileY-3;
+        int oneTileAbove = tileY-1;
+        boolean oneUpSolid = IsTileSolid(tileX, oneTileAbove, levelData) &&  IsTileSolid(tileX+1, oneTileAbove, levelData);
 
-        return (IsTileSolid(tileX, OneTileAbove, levelData) &&  IsTileSolid(tileX+1, OneTileAbove, levelData))||
-                (IsTileSolid(tileX, TwoTilesAbove, levelData) &&  IsTileSolid(tileX+1, TwoTilesAbove, levelData))||
-                (IsTileSolid(tileX, ThreeTilesAbove, levelData) && IsTileSolid(tileX+1, ThreeTilesAbove, levelData));
+        int twoTilesAbove = tileY-2;
+        boolean twoUpSolid = IsTileSolid(tileX, twoTilesAbove, levelData) &&  IsTileSolid(tileX+1, twoTilesAbove, levelData);
+        boolean twoUpEmpty = !IsTileSolid(tileX, twoTilesAbove, levelData) &&  IsTileSolid(tileX+1, twoTilesAbove, levelData);
+
+        int threeTilesAbove = tileY-3;
+        boolean threeUpSolid = IsTileSolid(tileX, threeTilesAbove, levelData) && IsTileSolid(tileX+1, threeTilesAbove, levelData);
+        boolean threeUpEmpty = !IsTileSolid(tileX, threeTilesAbove, levelData) || IsTileSolid(tileX+1, threeTilesAbove, levelData);
+
+        int fourTilesAbove = tileY-4;
+        boolean fourUpEmpty = !IsTileSolid(tileX, fourTilesAbove, levelData) || IsTileSolid(tileX+1, fourTilesAbove, levelData);
+
+        if ( (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty))
+            return true;
+
+        return false;
     }
 
     private void updateWalkingDir() {
