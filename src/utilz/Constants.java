@@ -5,7 +5,22 @@ import main.Game;
 public class Constants {
 
     public static final float GRAVITY = 0.0078f * Game.SCALE;
-    public static final int ANIMATION_SPEED = 50;
+    public static final int ANIMATION_SPEED = 55;
+
+    public static class Home {
+
+        // Logo Constants
+        public static final int LOGO_END_Y = (int) (15 * Game.SCALE);
+        public static final int LOGO_SPEED = 1;
+
+        // Twinkle Bubble Constants
+        public static final int BUBBLE_DEFAULT_W = 8;
+        public static final int BUBBLE_DEFAULT_H = 8;
+        public static final int BUBBLE_W = (int) (BUBBLE_DEFAULT_W * Game.SCALE);
+        public static final int BUBBLE_H = (int) (BUBBLE_DEFAULT_H * Game.SCALE);
+
+        public static final float BUBBLE_SPEED = 0.0666f * Game.SCALE;
+    }
 
     public static class LevelTransition {
 

@@ -1,7 +1,7 @@
 package gameStates;
 
-import utilz.LoadSave;
 import main.Game;
+import utilz.LoadSave;
 import ui.MenuButton;
 
 import java.awt.*;

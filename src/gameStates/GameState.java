@@ -1,8 +1,8 @@
 package gameStates;
 
 public enum GameState {
-    MENU, PLAYING, LEVEL_TRANSITION , OPTIONS, QUIT, GAMEOVER, GAMECOMPLETED;
+    HOME, MENU, PLAYING, LEVEL_TRANSITION , OPTIONS, QUIT, GAMEOVER, GAMECOMPLETED;
 
     // initialize the state to MENU
-    public static GameState state = MENU;
+    public static GameState state = HOME;
 }

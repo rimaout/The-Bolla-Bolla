@@ -1,8 +1,6 @@
 package main;
 
-import gameStates.GameState;
-import gameStates.LevelTransition;
-import gameStates.Playing;
+import gameStates.*;
 import gameStates.Menu;
 
 import java.awt.*;
@@ -13,8 +11,9 @@ public class Game implements Runnable {
     private GamePanel gamePanel;
     private Thread gameThread;
 
-    private Playing playing;
+    private Home home;
     private Menu menu;
+    private Playing playing;
     private LevelTransition levelTransition;
 
     private final int FPS_SET = 60;
@@ -45,8 +44,9 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
-        playing = new Playing(this);
+        home = new Home(this);
         menu = new Menu(this);
+        playing = new Playing(this);
         levelTransition = new LevelTransition(this);
     }
 
@@ -54,6 +54,9 @@ public class Game implements Runnable {
     public void update() {
 
         switch (GameState.state){
+            case HOME:
+                home.update();
+                break;
             case MENU:
                 menu.update();
                 break;
@@ -73,6 +76,9 @@ public class Game implements Runnable {
     public void render(Graphics g) {
 
         switch (GameState.state) {
+            case HOME:
+                home.draw(g);
+                break;
             case MENU:
                 menu.draw(g);
                 break;
@@ -136,6 +142,8 @@ public class Game implements Runnable {
             playing.windowFocusLost();
         }
     }
+
+    public Home getHome(){return home;};
 
     public Menu getMenu() {
         return menu;

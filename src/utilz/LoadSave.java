@@ -33,7 +33,7 @@ public class LoadSave {
     public static final String URM_BUTTONS_SPRITE = "/sprites/urm_buttons.png";
     public static final String VOLUME_BUTTON_SPRITE = "/sprites/volume_button.png";
     public static final String BUBBLE_BUD_SPRITE = "/sprites/Bud_bubble.png";
-
+    public static final String BUBBLE_TWINKLE = "/sprites/bubble-twinkle.png";
     // Levels
     public static final String LEVEL1_DATA = "/levelMaps/level1.png";
     public static final String LEVEL2_DATA = "/levelMaps/level2.png";
@@ -46,7 +46,8 @@ public class LoadSave {
     public static final String GAME_LOGO = "/images/bubbleBobble_Logo.png";
     public static final String PAUSE_BACKGROUND = "/images/pause_menu.png";
 
-    // this class will only use static methods, so we don't need a constructor
+    // FONTS
+    public static final String FONT = "/fonts/nintendo-nes-font.ttf";
 
     public static BufferedImage GetSprite(String spriteFile) {
         InputStream is = LoadSave.class.getResourceAsStream(spriteFile);
