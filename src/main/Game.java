@@ -12,6 +12,7 @@ public class Game implements Runnable {
     private Thread gameThread;
 
     private Home home;
+    private Intro intro;
     private Menu menu;
     private Playing playing;
     private LevelTransition levelTransition;
@@ -47,6 +48,7 @@ public class Game implements Runnable {
         home = new Home(this);
         menu = new Menu(this);
         playing = new Playing(this);
+        intro = new Intro(this);
         levelTransition = new LevelTransition(this);
     }
 
@@ -56,6 +58,9 @@ public class Game implements Runnable {
         switch (GameState.state){
             case HOME:
                 home.update();
+                break;
+            case INTRO:
+                intro.update();
                 break;
             case MENU:
                 menu.update();
@@ -78,6 +83,9 @@ public class Game implements Runnable {
         switch (GameState.state) {
             case HOME:
                 home.draw(g);
+                break;
+            case INTRO:
+                intro.draw(g);
                 break;
             case MENU:
                 menu.draw(g);

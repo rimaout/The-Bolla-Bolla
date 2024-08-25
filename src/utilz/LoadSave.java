@@ -69,6 +69,19 @@ public class LoadSave {
         return img;
     }
 
+    public static Font getCustomFont() {
+        Font font = null;
+        try {
+            InputStream is = LoadSave.class.getResourceAsStream(LoadSave.FONT);
+            font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+        return font;
+    }
+
     public static BufferedImage[] GetAllLevels() {
         URL url = LoadSave.class.getResource("/levelMaps");
         File file = null;

@@ -58,8 +58,6 @@ public class Playing extends State implements StateMethods {
 
         bubbleManager = BubbleManager.getInstance(this);
 
-
-
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
         gameCompletedOverlay = new GameCompletedOverlay(this);

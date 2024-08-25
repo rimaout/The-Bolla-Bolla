@@ -31,7 +31,7 @@ public class LevelTransition extends State implements StateMethods{
     float oldLevelY = 0;
     float newLevelY = Game.GAME_HEIGHT;
 
-    private TransitionState transitionState;
+    private TransitionState transitionState = LEVEL_TRANSITION;
     private boolean firstUpdate = true;
 
     private Player player;
@@ -70,7 +70,6 @@ public class LevelTransition extends State implements StateMethods{
     private void firstUpdate(){
         playerStartX = player.getHitbox().x;
         playerStartY = player.getHitbox().y;
-        transitionState = LEVEL_TRANSITION;
         firstUpdate = false;
     }
 
@@ -164,7 +163,6 @@ public class LevelTransition extends State implements StateMethods{
         BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_TRANSITION_SPRITE);
         playerTransitionSprites[0] = img.getSubimage(0, 0, 31, 34);
         playerTransitionSprites[1] = img.getSubimage(31, 0, 31, 34);
-
     }
 
     public void setOldLevel(Level oldLevel) {

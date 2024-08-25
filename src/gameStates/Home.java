@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,8 +27,8 @@ public class Home extends State implements StateMethods {
     public Home(Game game) {
         super(game);
         loadLogo();
-        loadCustomFont();
 
+        customFont = LoadSave.getCustomFont();
         loadTwinkleBubble();
         initializeBubbles();
     }
@@ -73,17 +71,6 @@ public class Home extends State implements StateMethods {
             Font smallerFont = customFont.deriveFont(15f);
             g.setFont(smallerFont);
             g.drawString("© 2024 RIMA CORPORATION", Game.GAME_WIDTH / 2 - 55 * Game.SCALE, Game.GAME_HEIGHT / 2 + 100 * Game.SCALE);
-        }
-    }
-
-    private void loadCustomFont() {
-        try {
-            InputStream is = getClass().getResourceAsStream(LoadSave.FONT);
-            customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(customFont);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -140,9 +127,10 @@ public class Home extends State implements StateMethods {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            GameState.state = GameState.PLAYING;
-        }
+
+        if (isLogoInPosition)
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                GameState.state = GameState.INTRO;
     }
 
     @Override

@@ -27,9 +27,29 @@ public class Constants {
         public enum TransitionState {
             LEVEL_TRANSITION,
             LOADING_NEW_LEVEL,
-            START_NEW_LEVEL,
+            START_NEW_LEVEL
         }
         public static final float LEVEL_TRANSITION_SPEED = 0.58f * Game.SCALE;
+    }
+
+    public static class INTRO {
+
+        public enum IntroState {
+            INTRO,
+            LEVEL_TRANSITION,
+            START_NEW_LEVEL
+        }
+
+        public static final float TRANSITION_SPEED = 0.58f * Game.SCALE;
+
+        public static final float TEXT_START_Y = 20 * Game.SCALE;
+
+        public static final float PLAYER_START_X = 9 * Game.TILES_SIZE;
+        public static final float PLAYER_START_Y = 10 * Game.TILES_SIZE;
+
+        public static final int RADIUS = 70;
+        public static final int TOTAL_LAPS = 3;
+        public static final float ANGLE_INCREMENT = 0.015f;
     }
 
     public static class Bubble {
