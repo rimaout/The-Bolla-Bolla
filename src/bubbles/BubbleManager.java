@@ -203,7 +203,7 @@ public class BubbleManager {
                 continue;
 
             for (Enemy e : EnemyArray) {
-                if (!e.isActive())
+                if (!e.isActive() || e.isImmune())
                     continue;
 
                 if (b.getExternalCollisionBox().intersects(e.getHitbox())) {

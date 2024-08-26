@@ -34,7 +34,6 @@ public class Player extends Entity{
 
     // General Variables
     private int lives = 3;
-    private boolean isImmune;
     private  int flipX = 0;
     private int flipW = 1;
 
@@ -140,10 +139,10 @@ public class Player extends Entity{
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
 
-        if (isImmune) {
+        if (immune) {
             immuneTimer -= timeDelta;
             if (immuneTimer <= 0)
-                isImmune = false;
+                immune = false;
         }
 
         attackTimer -= timeDelta;
@@ -281,8 +280,8 @@ public class Player extends Entity{
 
     public void death() {
 
-        if (!isImmune) {
-            isImmune = true;
+        if (!immune) {
+            immune = true;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             respawning = true;
             resetMovements();
@@ -336,7 +335,7 @@ public class Player extends Entity{
         resetMovements();
         resetInAir();
         isFirstUpdate = true;
-        isImmune = false;
+        immune = false;
         immuneTimer = 0;
         attackTimer = 100;
         lives = 3;

@@ -12,6 +12,8 @@ public abstract class Entity {
     protected Rectangle2D.Float hitbox;
     protected int animationTick, animationIndex;
 
+    protected boolean immune = false;
+
     public Entity(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -61,5 +63,9 @@ public abstract class Entity {
 
    public int getAnimationIndex() {
         return animationIndex;
+   }
+
+   public boolean isImmune() {
+       return immune;
    }
 }

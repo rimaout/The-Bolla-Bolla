@@ -28,10 +28,10 @@ public class LevelTransition extends State implements StateMethods{
     private BufferedImage[] playerTransitionSprites;
 
     Level oldLevel, newLevel;
-    float oldLevelY = 0;
-    float newLevelY = Game.GAME_HEIGHT;
+    float oldLevelY;
+    float newLevelY;
 
-    private TransitionState transitionState = LEVEL_TRANSITION;
+    private TransitionState transitionState;
     private boolean firstUpdate = true;
 
     private Player player;
@@ -68,8 +68,14 @@ public class LevelTransition extends State implements StateMethods{
     }
 
     private void firstUpdate(){
+        transitionState = LEVEL_TRANSITION;
+
         playerStartX = player.getHitbox().x;
         playerStartY = player.getHitbox().y;
+
+        oldLevelY = 0;
+        newLevelY = Game.GAME_HEIGHT;
+
         firstUpdate = false;
     }
 
@@ -150,10 +156,8 @@ public class LevelTransition extends State implements StateMethods{
     public void endTransition() {
         GameState.state = GameState.PLAYING;
         game.getPlaying().setLevelCompleted(false);
-
         game.getPlaying().resetAll();
-        oldLevelY = 0;
-        newLevelY = Game.GAME_HEIGHT;
+
         firstUpdate = true;
     }
 

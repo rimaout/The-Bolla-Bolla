@@ -60,12 +60,15 @@ public abstract class Enemy extends Entity {
     protected void updateSpawning() {
 
         // check if enemy will reach spawn point
-        if (hitbox.y + SPAWN_TRANSITION_SPEED < spawnY)
+        if (hitbox.y + SPAWN_TRANSITION_SPEED < spawnY) {
             hitbox.y += SPAWN_TRANSITION_SPEED;
+            immune = true;
+        }
 
         else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , LevelManager.getInstance().getCurrentLevel().getLevelData());
             reachedSpawn = true;
+            immune = false;
         }
     }
 
