@@ -226,16 +226,6 @@ public class Playing extends State implements StateMethods {
         return player;
     }
 
-    public BubbleManager getBubbleManager() {
-        return bubbleManager;
-    }
-
-
-
-    public EnemyManager getEnemyManager() {
-        return enemyManager;
-    }
-
     public void setLevelCompleted(boolean levelCompleted) {
         this.levelCompleted = levelCompleted;
     }
