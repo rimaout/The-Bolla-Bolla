@@ -57,7 +57,6 @@ public class Intro extends State implements StateMethods {
             firstUpdate();
 
         updateState();
-
         updatePlayer();
 
         if (introState == LEVEL_TRANSITION) {
@@ -74,8 +73,8 @@ public class Intro extends State implements StateMethods {
         if (introState == LEVEL_TRANSITION)
             drawLevel(g, level, (int) levelY);
 
-        drawPlayer(g);
         drawText(g);
+        drawPlayer(g);
     }
 
     private void firstUpdate(){
@@ -131,7 +130,8 @@ public class Intro extends State implements StateMethods {
         }
 
         if (introState == LEVEL_TRANSITION) {
-            float playerTransitionSpeedX = (SPAWN_X - PLAYER_START_X) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
+            float xOffSet = 20 * Game.SCALE;
+            float playerTransitionSpeedX = (SPAWN_X - PLAYER_START_X - xOffSet) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
             float playerTransitionSpeedY = (SPAWN_Y - PLAYER_START_Y) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
             player.getHitbox().x += playerTransitionSpeedX;
             player.getHitbox().y += playerTransitionSpeedY;

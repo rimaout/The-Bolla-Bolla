@@ -41,6 +41,7 @@ public class EnemyBubble extends PlayerBubble{
 
     public void respawnEnemy() {
         if (!playerPopped) {
+            enemy.resetEnemy();
             enemy.getHitbox().x = hitbox.x;
             enemy.getHitbox().y = hitbox.y;
             enemy.setEnemyState(HUNGRY_STATE);

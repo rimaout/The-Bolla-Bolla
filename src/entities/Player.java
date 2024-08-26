@@ -43,7 +43,8 @@ public class Player extends Entity{
     private int attackTimer = 100;
 
     public Player(Playing playing) {
-        super(SPAWN_X, SPAWN_Y, IMMAGE_W, IMMAGE_H);
+
+        super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         this.playing = playing;
         this.bubbleManager = BubbleManager.getInstance(playing);
 

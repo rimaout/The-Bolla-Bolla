@@ -180,7 +180,7 @@ public class BubbleManager {
             double distance = Math.sqrt(dx * dx + dy * dy);
 
             // Define the chain reaction radius
-            double chainReactionRadius = 17 * Game.SCALE; // Adjust as needed
+            double chainReactionRadius = 19 * Game.SCALE; // Adjust as needed
 
             if (distance < chainReactionRadius) {
                 timer.schedule(new TimerTask() {
