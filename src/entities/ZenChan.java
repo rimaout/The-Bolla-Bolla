@@ -27,6 +27,9 @@ public class ZenChan extends Enemy {
     private int playerUpdateTimer;
     private long lastTimerUpdate;
 
+    // Jump Variables
+    private int jumpDistance = 0;
+
     public ZenChan(float x, float y, Direction startWalkingDir) {
         super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
         this.startWalkingDir = startWalkingDir;
@@ -52,7 +55,7 @@ public class ZenChan extends Enemy {
         updateTimers();
         updatePlayerInfo(player);
         updateMove();
-        updateMovementVariables();
+        updateStateVariables();
     }
 
     private void firstUpdate() {
@@ -85,9 +88,14 @@ public class ZenChan extends Enemy {
             return;
         }
         if(isJumping){
-            jump(levelData);
+            jump(levelData, jumpDistance);
             return;
         }
+
+        // enemy stuck in a wall
+        if(IsEntityInsideSolid(hitbox, levelData))
+            hitbox.y += 1;
+
 
         moveOnGround(levelData);
 
@@ -121,6 +129,12 @@ public class ZenChan extends Enemy {
             if (!IsSolid(hitboxX + xSpeed, hitbox.y + hitbox.height + 1, levelData)){
 
                 if(goDown){
+
+                    if(!canFall()){
+                        goDown = false;
+                        return;
+                    }
+
                     hitbox.x += xSpeed;
                     isFalling = true;
                     goDown = false;
@@ -128,10 +142,12 @@ public class ZenChan extends Enemy {
                     return;
                 }
 
-                if(canJump(levelData)) {
+                jumpDistance = calculateJumpDistance(levelData);
+
+                if(canJump(jumpDistance)) {
                     isJumping = true;
                     ySpeed = JUMP_Y_SPEED;
-                    jump(levelData);
+                    jump(levelData, jumpDistance);
                     return;
                 }
                 changeWalkingDir();
@@ -185,13 +201,17 @@ public class ZenChan extends Enemy {
         }
     }
 
-    private void jump(int[][] levelData) {
+    private void jump(int[][] levelData, int jumpDistance) {
         float jumpXSpeed;
+
         switch (walkingDir) {
             case LEFT -> jumpXSpeed = -JUMP_X_SPEED;
             case RIGHT -> jumpXSpeed = JUMP_X_SPEED;
             default -> jumpXSpeed = 0;
         }
+
+        if (jumpDistance > 6)
+            jumpXSpeed *= 1.3f;
 
         // Going up
         if (ySpeed < 0){
@@ -217,6 +237,11 @@ public class ZenChan extends Enemy {
         }
     }
 
+    private boolean canFall(){
+        // check if the under is not out of the level
+        return tileY + 1 < Game.TILES_IN_HEIGHT - 1;
+    }
+
     private void fall(int [][] levelData) {
         if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
             hitbox.y += fallSpeed;
@@ -236,29 +261,66 @@ public class ZenChan extends Enemy {
         }
     }
 
-    private boolean canJump(int[][] levelData) {
-        // check if after 3 tiles there is a floor
+    private boolean canJump(int jumpDistance) {
+        if (jumpDistance == -1)
+            return false;
+
+        return true;
+    }
+
+    private int calculateJumpDistance(int[][] levelData) {
+        int tileDistanceToPerimeterWall = -1;
+        int tileDistanceToFloor = -1;
+
         int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
 
+        // Find the distance to the perimeter wall (max distance 5 tiles)
         if (walkingDir == LEFT) {
-
-            if(IsTilePerimeterWall(tileX - 4))
-                return false;
-
-            if (IsTileSolid(tileX - 4, yFlorTile , levelData))
-                return true;
+            for (int i = 2; i < 8; i++)
+                if (IsTilePerimeterWall(tileX - i)) {
+                    tileDistanceToPerimeterWall = i;
+                    break;
+                }
         }
 
-        else if (walkingDir == RIGHT)
+        else if (walkingDir == RIGHT) {
+            for (int i = 2; i < 8; i++)
+                if (IsTilePerimeterWall(tileX + i)) {
+                    tileDistanceToPerimeterWall = i;
+                    break;
+                }
+        }
 
-           if(IsTilePerimeterWall(tileX + 5))
-                return false;
+        // check if between 2 and 6 tiles there is a floor
+        if (walkingDir == LEFT) {
+            for (int i = 2; i < 8; i++)
+                if (IsTileSolid(tileX - i, yFlorTile, levelData)) {
+                    tileDistanceToFloor = i;
+                    break;
+                }
+        }
 
-            if (IsTileSolid(tileX + 5, yFlorTile, levelData))
-                return true;
+        else if (walkingDir == RIGHT) {
+            for (int i = 2; i  < 8 ; i++)
+                if (IsTileSolid(tileX + i +1 , yFlorTile, levelData)) {
+                    tileDistanceToFloor = i + 1;
+                    break;
+                }
+        }
 
-        return false;
+        // if value is -1, there is no floor or perimeter wall in the range
+        if (tileDistanceToFloor == -1)
+            return -1;
+
+        if (tileDistanceToPerimeterWall == -1)
+            return tileDistanceToFloor;
+
+        if (tileDistanceToPerimeterWall > tileDistanceToFloor)
+            return tileDistanceToFloor;
+
+        return -1;
     }
+
 
     private boolean canFly(int[][] levelData){
 

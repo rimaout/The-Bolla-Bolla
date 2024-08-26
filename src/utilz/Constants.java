@@ -263,7 +263,7 @@ public class Constants {
         public static final float HUNGRY_FLY_SPEED = 0.5f * Game.SCALE;
         public static final float HUNGRY_WALK_SPEED = 0.7f * Game.SCALE;
 
-        public static final float JUMP_Y_SPEED = -0.45f * Game.SCALE;
+        public static final float JUMP_Y_SPEED = -0.44f * Game.SCALE;
         public static final float JUMP_X_SPEED = 0.4f * Game.SCALE;
         public static final float ATTACK_RANGE = Game.TILES_SIZE;
         public static final float VIEWING_RANGE = Game.TILES_SIZE * 5;

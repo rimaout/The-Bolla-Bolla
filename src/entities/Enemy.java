@@ -72,7 +72,7 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    protected void updateMovementVariables() {
+    protected void updateStateVariables() {
         switch (enemyState) {
             case NORMAL_STATE:
                 fallSpeed = NORMAL_FALL_SPEED;
