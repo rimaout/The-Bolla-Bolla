@@ -19,6 +19,7 @@ public class LevelManager {
     private ArrayList<Level> levels;
     private int levelIndex = 0;
 
+
     private LevelManager(Playing playing) {
         this.playing = playing;
 
@@ -46,8 +47,7 @@ public class LevelManager {
         }
 
         playing.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
-        levelIndex++;
-        playing.getGame().getLevelTransition().setNewLevel(getCurrentLevel());
+        playing.getGame().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
 
         if (levelIndex >= levels.size()) {
             levelIndex = 0;
@@ -66,6 +66,7 @@ public class LevelManager {
     }
 
     public void draw(Graphics g) {
+
         int index;
         BufferedImage tile;
 
@@ -85,10 +86,6 @@ public class LevelManager {
 
     public void update() {
 
-    }
-
-    public Level getCurrentLevel() {
-        return levels.get(levelIndex);
     }
 
     private void loadSprites() {
@@ -113,10 +110,6 @@ public class LevelManager {
         }
     }
 
-    public int getLevelsAmount() {
-        return levels.size();
-    }
-
     public BufferedImage[] getNumbersTiles() {
         return numbersTiles;
     }
@@ -124,5 +117,18 @@ public class LevelManager {
     public BufferedImage[] getLevelTiles() {
         return levelTiles;
     }
+
+    public Level getCurrentLevel() {
+        return levels.get(levelIndex);
+    }
+
+    public Level getLevelWithIndex(int levelIndex) {
+        return levels.get(levelIndex);
+    }
+
+    public void increaseLevelIndex() {
+        levelIndex++;
+    }
+
 }
 

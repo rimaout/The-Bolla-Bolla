@@ -109,9 +109,10 @@ public class LevelTransition extends State implements StateMethods{
 
     @Override
     public void draw(Graphics g) {
-       drawLevel(g, oldLevel, (int) oldLevelY);
-       drawLevel(g, newLevel, (int) newLevelY);
-       drawPlayer(g);
+
+        drawLevel(g, newLevel, (int) newLevelY);
+        drawLevel(g, oldLevel, (int) oldLevelY);
+        drawPlayer(g);
     }
 
     private void drawPlayer(Graphics g) {
@@ -143,6 +144,8 @@ public class LevelTransition extends State implements StateMethods{
     }
 
     private void loadNewLevel() {
+        LevelManager.getInstance().increaseLevelIndex();
+
         EnemyManager.getInstance().loadEnemies();
         EnemyManager.getInstance().loadLevelData();
 
@@ -155,6 +158,7 @@ public class LevelTransition extends State implements StateMethods{
 
     public void endTransition() {
         GameState.state = GameState.PLAYING;
+
         firstUpdate = true;
     }
 
