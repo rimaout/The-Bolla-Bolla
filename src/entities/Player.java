@@ -331,20 +331,21 @@ public class Player extends Entity{
         attacking = false;
     }
 
-    public void resetAll() {
+    public void resetAll(Boolean resetLives) {
         resetMovements();
         resetInAir();
         isFirstUpdate = true;
         immune = false;
         immuneTimer = 0;
         attackTimer = 100;
-        lives = 3;
         xSpeed = 0;
         airSpeed = 0.0f;
         flipX = 0;
         flipW = 1;
         playerAnimation = IDLE_ANIMATION;
 
+        if (resetLives)
+            lives = 3;
 
         if (!IsEntityOnFloor(hitbox, levelData))
             inAir = true;

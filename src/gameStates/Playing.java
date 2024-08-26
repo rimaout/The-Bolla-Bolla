@@ -38,16 +38,6 @@ public class Playing extends State implements StateMethods {
         loadStartLevel();
     }
 
-    public void loadNextLevel() {
-       resetAll();
-       levelManager.loadNextLevel();
-    }
-
-    private void loadStartLevel() {
-        enemyManager.loadEnemies();
-        enemyManager.loadLevelData();
-    }
-
     public void initClasses() {
         levelManager = LevelManager.getInstance(this);
 
@@ -63,22 +53,14 @@ public class Playing extends State implements StateMethods {
         gameCompletedOverlay = new GameCompletedOverlay(this);
     }
 
-    private void loadNumberTiles() {
-
-        // load numbers
-        numbersTiles = new BufferedImage[10];
-        BufferedImage numbersSprite = LoadSave.GetSprite(LoadSave.NUMBERS_TILES_SPRITE);
-        for (int i = 0; i < numbersTiles.length; i++) {
-            numbersTiles[i] = numbersSprite.getSubimage(i * 8, 0, 8, 8);
-        }
-    }
-
     @Override
     public void update() {
         if (paused)
             pauseOverlay.update();
+
         else if (levelCompleted)
-            levelManager.loadNextLevel();
+            loadNextLevel();
+
         else if(!gameOver && !gameCompleted) {
             levelManager.update();
             player.update();
@@ -97,8 +79,10 @@ public class Playing extends State implements StateMethods {
 
         if (paused)
             pauseOverlay.draw(g);
+
         else if (gameOver)
             gameOverOverlay.draw(g);
+
         else if (gameCompleted)
             gameCompletedOverlay.draw(g);
     }
@@ -116,10 +100,34 @@ public class Playing extends State implements StateMethods {
         levelCompleted = false;
         gameOver = false;
         gameCompleted = false;
-        player.resetAll();
+        player.resetAll(false);
         enemyManager.resetAll();
         bubbleManager.resetAll();
     }
+
+    public void loadNextLevel() {
+        enemyManager.resetAll();
+        bubbleManager.resetAll();
+        levelManager.loadNextLevel();
+        player.resetAll(false);
+        levelCompleted = false;
+    }
+
+    private void loadStartLevel() {
+        enemyManager.loadEnemies();
+        enemyManager.loadLevelData();
+    }
+
+    private void loadNumberTiles() {
+
+        // load numbers
+        numbersTiles = new BufferedImage[10];
+        BufferedImage numbersSprite = LoadSave.GetSprite(LoadSave.NUMBERS_TILES_SPRITE);
+        for (int i = 0; i < numbersTiles.length; i++) {
+            numbersTiles[i] = numbersSprite.getSubimage(i * 8, 0, 8, 8);
+        }
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

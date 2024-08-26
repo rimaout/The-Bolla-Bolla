@@ -155,9 +155,6 @@ public class LevelTransition extends State implements StateMethods{
 
     public void endTransition() {
         GameState.state = GameState.PLAYING;
-        game.getPlaying().setLevelCompleted(false);
-        game.getPlaying().resetAll();
-
         firstUpdate = true;
     }
 
