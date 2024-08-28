@@ -1,5 +1,6 @@
 package bubbles;
 
+import entities.Player;
 import main.Game;
 import entities.Entity;
 
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import static utilz.Constants.GRAVITY;
+import static utilz.Constants.PlayerConstants.JUMP_SPEED;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
@@ -31,6 +34,9 @@ public abstract class Bubble extends Entity {
     protected float xSpeed, ySpeed;
     protected Direction direction;
     protected Direction previousDirection;
+
+    // Dead Animation Variables
+    protected float ySpeedDead;
 
     public Bubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
@@ -74,10 +80,18 @@ public abstract class Bubble extends Entity {
         updateAnimationTick();
         setState();
 
-        updateDirection();
-        updatePosition();
+        if (state == DEAD)
+            updateDeadAnimation();
+
+        else {
+            updateDirection();
+            updatePosition();
+        }
+
         updateCollisionBoxes();
     }
+
+    abstract void updateDeadAnimation();
 
     public void firstUpdate() {
         isFirstUpdate = false;
@@ -222,7 +236,7 @@ public abstract class Bubble extends Entity {
         }
     }
 
-    public abstract void playerPop();
+    public abstract void playerPop(Player player);
 
     public Point getCenter() {
         float x = hitbox.x + hitbox.width / 2;
@@ -253,5 +267,13 @@ public abstract class Bubble extends Entity {
 
     public Ellipse2D.Float getExternalCollisionBox() {
         return externalCollisionBox;
+    }
+
+    public void setYDeadSpeed(float ySpeedDead){
+        this.ySpeedDead = ySpeedDead;
+    }
+
+    public void setXSpeed(float xSpeed){
+        this.xSpeed = xSpeed;
     }
 }

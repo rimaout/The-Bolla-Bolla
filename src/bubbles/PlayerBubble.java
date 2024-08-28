@@ -1,5 +1,7 @@
 package bubbles;
 
+import entities.Player;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -17,7 +19,12 @@ public class PlayerBubble extends Bubble {
         g.drawImage(playerBubbleSprites[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
     }
 
-    public void playerPop() {
+    protected void updateDeadAnimation(){
+        // Empty implementation
+        // Only used by EnemyBubble
+    }
+
+    public void playerPop(Player player) {
         if (state != PROJECTILE && state != POP_NORMAL && state != POP_RED) {
 
             if (state == RED)

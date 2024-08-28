@@ -23,6 +23,7 @@ public class BubbleManager {
 
     private static BubbleManager instance;
     private Playing playing;
+    private Player player;
 
     private int[][] levelData;
     private Direction[][] windDirectionData;
@@ -30,18 +31,19 @@ public class BubbleManager {
 
     private LinkedList<Bubble> bubbles;
 
-    private BubbleManager(Playing playing) {
+    private BubbleManager(Playing playing, Player player) {
         this.playing = playing;
-        bubbles = new LinkedList<>();
+        this.player = player;
 
+        bubbles = new LinkedList<>();
         loadBubbleSprites();
         loadLevelData();
         loadWindData();
     }
 
-    public static BubbleManager getInstance(Playing playing) {
+    public static BubbleManager getInstance(Playing playing,Player player) {
         if (instance == null) {
-            instance = new BubbleManager(playing);
+            instance = new BubbleManager(playing, player);
         }
         return instance;
     }
@@ -78,11 +80,11 @@ public class BubbleManager {
 
    private void collisionBetweenBubbles() {
     for (Bubble b1 : bubbles) {
-        if (!b1.isActive())
+        if (!b1.isActive() || b1.state == DEAD)
             continue;
 
         for (Bubble b2 : bubbles) {
-            if (!b2.isActive() || b1 == b2)
+            if (!b2.isActive() || b1 == b2 || b2.state == DEAD)
                 continue;
             applyRepulsion(b1, b2);
         }
@@ -127,17 +129,16 @@ public class BubbleManager {
     }
 
     private void collisionWithPlayer() {
-        Player player = playing.getPlayer();
 
         for (Bubble b : bubbles) {
 
             // skip inactive bubbles
-            if (!b.isActive())
+            if (!b.isActive() || b.getState() == DEAD)
                 continue;
 
             // check if bubble pop
             if (b.getInternalCollisionBox().intersects(player.getHitbox())) {
-                b.playerPop();
+                b.playerPop(player);
                 return;
             }
 
@@ -186,7 +187,7 @@ public class BubbleManager {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        b.playerPop();
+                        b.playerPop(player);
                     }
                 }, delay);
                 delay += delayIncrement;

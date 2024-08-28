@@ -83,6 +83,7 @@ public class Constants {
         public static final int BLINKING = 3;
         public static final int POP_NORMAL = 4;
         public static final int POP_RED = 5;
+        public static final int DEAD = 6;
 
         // State Timers (seconds)
         public static final int NORMAL_TIMER = 12000;
@@ -93,7 +94,8 @@ public class Constants {
         public static final float PROJECTILE_SPEED = 1f * Game.SCALE;
         public static final float BUBBLE_SPEED = 0.1f * Game.SCALE;
         public static final float SHAKING_SPEED = 0.03f * Game.SCALE;
-
+        public static final float DEAD_X_SPEED = 0.6f * Game.SCALE;
+        public static final float DEAD_Y_SPEED = 1.2f * Game.SCALE;
 
         public static int getSpriteAmount(int bubbleState) {
             return switch (bubbleState) {

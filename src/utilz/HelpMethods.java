@@ -24,6 +24,11 @@ public class HelpMethods {
         return xTile < 2 || xTile > Game.TILES_IN_WIDTH - 3;
     }
 
+    public static boolean IsPerimeterWallTile(float x) {
+        int tileX = (int) (x / Game.TILES_SIZE);
+        return IsTilePerimeterWall(tileX);
+    }
+
     public static boolean IsTileInsideMap(int xTile, int yTile) {
         return xTile >= 0 && xTile < Game.TILES_IN_WIDTH && yTile >= 0 && yTile < Game.TILES_IN_HEIGHT;
     }

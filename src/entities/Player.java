@@ -46,7 +46,7 @@ public class Player extends Entity{
 
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         this.playing = playing;
-        this.bubbleManager = BubbleManager.getInstance(playing);
+        this.bubbleManager = BubbleManager.getInstance(playing, this);
 
         loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
@@ -386,7 +386,14 @@ public class Player extends Entity{
         return xSpeed;
     }
 
-       public boolean isJumpActive() {
+    public boolean isJumpActive() {
         return jump;
+    }
+
+    public Direction getDirection(){
+        if (flipW == -1)
+            return LEFT;
+        else
+            return RIGHT;
     }
 }
