@@ -5,6 +5,10 @@ import entities.EnemyManager;
 import entities.Player;
 import utilz.Constants.Direction;
 
+import javax.swing.*;
+
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 
 import java.awt.*;
@@ -19,6 +23,9 @@ public class EnemyBubble extends PlayerBubble{
     Enemy enemy;
     private boolean playerPopped;
     private Random random = new Random();
+
+    private float ySpeedDead;
+    private float xSpeedDead;
 
     public EnemyBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData, Enemy enemy) {
         super(x, y, direction, levelData, windLevelData);
@@ -61,23 +68,30 @@ public class EnemyBubble extends PlayerBubble{
     protected void updateDeadAnimation() {
         ySpeed += GRAVITY;
 
+        if (direction == LEFT)
+            xSpeed = -xSpeedDead;
+        else
+            xSpeed = xSpeedDead;
+
         // Going up
         if (ySpeed < 1) {
             hitbox.y += ySpeed;
 
-            if (IsPerimeterWallTile(hitbox.x + xSpeed))
-                xSpeed = -xSpeed;
+            if (willBubbleBeInPerimeterWall(xSpeed))
+                changeDirection();
 
             hitbox.x += xSpeed;
         }
         // Going down
-        else if (!CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
-            conpenetrationSafeUpdateXPos(xSpeed, levelData);
-            active = false;
-        } else {
+        else if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
             hitbox.y += ySpeed;
             updateXPos(xSpeed, levelData);
+
+        } else {
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
+            conpenetrationSafeUpdateXPos(xSpeed, levelData);
+            //Todo: Swap item (fruit)
+            active = false;
         }
     }
 
@@ -89,12 +103,12 @@ public class EnemyBubble extends PlayerBubble{
 
         // calculate the speed of the bubble (random values between 50% and 100% of the Max speed)
         ySpeedDead = - (0.5f + random.nextFloat() * 0.5f) * DEAD_Y_SPEED;
-        xSpeed = (0.5f + random.nextFloat() * 0.5f) * DEAD_X_SPEED;
         ySpeed = ySpeedDead;
+        xSpeedDead = (0.5f + random.nextFloat() * 0.5f) * DEAD_X_SPEED;
+        xSpeed = xSpeedDead;
 
         // Set the direction of the bubble (following the player direction)
-        if (player.getDirection() == Direction.LEFT)
-            xSpeed = -xSpeed;
+        direction = player.getDirection();
 
         // Set Bubble state
         state = DEAD;
@@ -106,5 +120,11 @@ public class EnemyBubble extends PlayerBubble{
         enemy.setAlive(false);
     }
 
+    private boolean willBubbleBeInPerimeterWall(float xSpeed) {
+        if (direction == LEFT)
+            return IsPerimeterWallTile(hitbox.x + xSpeed);
+        else
+            return IsPerimeterWallTile(hitbox.x + hitbox.width + xSpeed);
+    }
 
 }

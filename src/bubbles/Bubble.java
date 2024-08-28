@@ -35,9 +35,6 @@ public abstract class Bubble extends Entity {
     protected Direction direction;
     protected Direction previousDirection;
 
-    // Dead Animation Variables
-    protected float ySpeedDead;
-
     public Bubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
@@ -269,11 +266,8 @@ public abstract class Bubble extends Entity {
         return externalCollisionBox;
     }
 
-    public void setYDeadSpeed(float ySpeedDead){
-        this.ySpeedDead = ySpeedDead;
+    protected void changeDirection() {
+        direction = (direction == LEFT) ? RIGHT : LEFT;
     }
 
-    public void setXSpeed(float xSpeed){
-        this.xSpeed = xSpeed;
-    }
 }
