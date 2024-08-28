@@ -286,4 +286,37 @@ public class Constants {
             return 0;
         }
     }
+
+    public static class Items {
+
+        public static final int ITEM_DEFAULT_W = 18;
+        public static final int ITEM_DEFAULT_H = 18;
+        public static final int ITEM_W = (int) (ITEM_DEFAULT_W * Game.SCALE);
+        public static final int ITEM_H = (int) (ITEM_DEFAULT_H * Game.SCALE);
+
+        public static final int ITEM_HITBOX_W = (int) (14 * Game.SCALE);
+        public static final int ITEM_HITBOX_H = (int) (14 * Game.SCALE);
+        public static final int ITEM_OFFSET_X = (int) (2 * Game.SCALE);
+        public static final int ITEM_OFFSET_Y = (int) (2 * Game.SCALE);
+
+        public static final int DE_SPAWN_TIMER = 8000;
+
+        public enum BubbleRewardType {
+            APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA;
+
+            public static int GetItemImageIndex(BubbleRewardType bubbleRewardType) {
+                return switch (bubbleRewardType) {
+                    case APPLE -> 0;
+                    case PEPPER -> 1;
+                    case GRAPE -> 2;
+                    case PERSIMMON -> 3;
+                    case CHERRY -> 4;
+                    case MUSHROOM -> 5;
+                    case BANANA -> 6;
+                };
+            }
+
+        }
+
+    }
 }

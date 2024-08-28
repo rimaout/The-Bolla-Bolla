@@ -7,7 +7,7 @@ import main.Game;
 import static utilz.HelpMethods.*;
 
 public abstract class Entity {
-    protected float x, y; // Used protected access modifier so that the subclasses can access the x and y variables, with the private access modifier, the subclasses won't be able to access the x and y variables.
+    protected float x, y;
     protected int width, height;
     protected Rectangle2D.Float hitbox;
     protected int animationTick, animationIndex;
