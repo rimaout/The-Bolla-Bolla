@@ -112,7 +112,7 @@ public class Playing extends State implements StateMethods {
 
         // Draw Lives
         BufferedImage liveTile = numbersTiles[player.getLives()];
-        g.drawImage(liveTile, 1*Game.TILES_SIZE, 26*Game.TILES_SIZE, 8 * Game.SCALE, 8 * Game.SCALE, null);
+        g.drawImage(liveTile, Game.TILES_SIZE, 26 * Game.TILES_SIZE, 8 * Game.SCALE, 8 * Game.SCALE, null);
     }
 
     public void resetAll() {
@@ -120,7 +120,7 @@ public class Playing extends State implements StateMethods {
         levelCompleted = false;
         gameOver = false;
         gameCompleted = false;
-        player.resetAll(false);
+        player.resetAll(true, true);
         enemyManager.resetAll();
         bubbleManager.resetAll();
     }
@@ -129,7 +129,7 @@ public class Playing extends State implements StateMethods {
         enemyManager.resetAll();
         bubbleManager.resetAll();
         levelManager.loadNextLevel();
-        player.resetAll(false);
+        player.resetAll(false, false);
 
         levelCompleted = false;
     }
@@ -245,9 +245,5 @@ public class Playing extends State implements StateMethods {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public void setGameCompleted(boolean gameCompleted) {
-        this.gameCompleted = gameCompleted;
     }
 }

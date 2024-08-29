@@ -333,7 +333,7 @@ public class Player extends Entity{
         attacking = false;
     }
 
-    public void resetAll(Boolean resetLives) {
+    public void resetAll(Boolean resetLives, Boolean resetPoints) {
         resetMovements();
         resetInAir();
         isFirstUpdate = true;
@@ -348,6 +348,9 @@ public class Player extends Entity{
 
         if (resetLives)
             lives = 3;
+
+        if (resetPoints)
+            points = 0;
 
         if (!IsEntityOnFloor(hitbox, levelData))
             inAir = true;

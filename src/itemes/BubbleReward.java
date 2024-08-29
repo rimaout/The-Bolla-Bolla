@@ -16,6 +16,7 @@ public class BubbleReward extends Item{
     public BubbleReward(int x, int y, BubbleRewardType type) {
         super(x, y);
         this.type = type;
+
         itemImages = ItemManager.getInstance().getBubbleRewardImages();
         deSpawnImages = ItemManager.getInstance().getDeSpawnImages();
     }
@@ -27,8 +28,6 @@ public class BubbleReward extends Item{
             g.drawImage(itemImages[GetItemImageIndex(type)], x, y, ITEM_W, ITEM_H, null);
         else
             g.drawImage(deSpawnImages[animationIndex], x, y, ITEM_W, ITEM_H, null);
-
-        drawHitbox(g);
     }
 
     @Override

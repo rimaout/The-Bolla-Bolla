@@ -49,7 +49,7 @@ public class Constants {
 
         public static final int RADIUS = 70;
         public static final int TOTAL_LAPS = 3;
-        public static final float ANGLE_INCREMENT = 0.015f;
+        public static final float ANGLE_INCREMENT = 0.022f;
     }
 
     public static class Bubble {
