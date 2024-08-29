@@ -294,10 +294,10 @@ public class Constants {
         public static final int ITEM_W = (int) (ITEM_DEFAULT_W * Game.SCALE);
         public static final int ITEM_H = (int) (ITEM_DEFAULT_H * Game.SCALE);
 
-        public static final int ITEM_HITBOX_W = (int) (14 * Game.SCALE);
-        public static final int ITEM_HITBOX_H = (int) (14 * Game.SCALE);
-        public static final int ITEM_OFFSET_X = (int) (2 * Game.SCALE);
-        public static final int ITEM_OFFSET_Y = (int) (2 * Game.SCALE);
+        public static final int ITEM_HITBOX_W = (int) (6 * Game.SCALE);
+        public static final int ITEM_HITBOX_H = (int) (6 * Game.SCALE);
+        public static final int ITEM_OFFSET_X = (int) (6 * Game.SCALE);
+        public static final int ITEM_OFFSET_Y = (int) (7 * Game.SCALE);
 
         public static final int DE_SPAWN_TIMER = 8000;
 
@@ -313,6 +313,31 @@ public class Constants {
                     case CHERRY -> 4;
                     case MUSHROOM -> 5;
                     case BANANA -> 6;
+                };
+            }
+
+            public static BubbleRewardType GetBubbleRewardType(int consecutivePopsCounter) {
+                return switch (consecutivePopsCounter) {
+                    case 0 -> APPLE;
+                    case 1 -> PEPPER;
+                    case 2 -> GRAPE;
+                    case 3 -> PERSIMMON;
+                    case 4 -> CHERRY;
+                    case 5 -> MUSHROOM;
+                    case 6 -> BANANA;
+                    default -> BANANA;
+                };
+            }
+
+            public static int getPoints(BubbleRewardType bubbleRewardType) {
+                return switch (bubbleRewardType) {
+                    case APPLE -> 1000;
+                    case PEPPER -> 2000;
+                    case GRAPE -> 3000;
+                    case PERSIMMON -> 4000;
+                    case CHERRY -> 5000;
+                    case MUSHROOM -> 6000;
+                    case BANANA -> 7000;
                 };
             }
 

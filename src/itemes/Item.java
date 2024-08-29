@@ -1,5 +1,8 @@
 package itemes;
 
+import entities.Player;
+import gameStates.Playing;
+
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Items.*;
 
@@ -21,7 +24,7 @@ public abstract class Item {
         this.x = x;
         this.y = y;
 
-        initHitbox(ITEM_W, ITEM_H);
+        initHitbox();
     }
 
     protected void update(){
@@ -30,14 +33,18 @@ public abstract class Item {
         if (deSpawning)
             updateAnimationTick();
     }
+
     abstract void draw(Graphics g);
+    abstract void addPoints(Player player);
+    abstract void applyEffect(Player player);
+
 
     protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
-            if (animationIndex >= 4) {
+            if (animationIndex >= 2) {
                 active = false;
             }
         }
@@ -54,8 +61,8 @@ public abstract class Item {
 
     }
 
-    protected void initHitbox(float width, float height) {
-        hitbox = new Rectangle2D.Float(x, y, width, height);
+    protected void initHitbox() {
+        hitbox = new Rectangle2D.Float(x + ITEM_OFFSET_X, y + ITEM_OFFSET_Y, ITEM_HITBOX_W, ITEM_HITBOX_H);
     }
 
     public void drawHitbox(Graphics g) {
@@ -71,6 +78,10 @@ public abstract class Item {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public boolean isDeSpawning() {

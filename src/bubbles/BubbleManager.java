@@ -173,7 +173,7 @@ public class BubbleManager {
         int delayIncrement = 100; // increment delay for each bubble
 
         for (Bubble b : bubbles) {
-            if (!b.isActive() || b == poppedBubble)
+            if (!b.isActive() || b == poppedBubble || b.state == DEAD)
                 continue;
 
             double dx = b.getCenter().x - poppedBubble.getCenter().x;
@@ -197,7 +197,7 @@ public class BubbleManager {
 
     private void collisionWithEnemies() {
         ArrayList<Enemy> EnemyArray = LevelManager.getInstance().getCurrentLevel().getEnemies();
-        ArrayList<Bubble> bubblesToAdd = new ArrayList<>();
+        ArrayList<Bubble> EnemyBubblesToAdd = new ArrayList<>();
 
         for (Bubble b : bubbles) {
             if (!b.isActive() || b.state != PROJECTILE || !(b instanceof PlayerBubble))
@@ -208,18 +208,15 @@ public class BubbleManager {
                     continue;
 
                 if (b.getExternalCollisionBox().intersects(e.getHitbox())) {
-                    bubblesToAdd.add(new EnemyBubble(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
+                    EnemyBubblesToAdd.add(new EnemyBubble(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
                     b.setActive(false);
                     e.setActive(false);
                     e.bubbleCapture();
-                    break;
                 }
             }
         }
 
-        for (Bubble b : bubblesToAdd)
-            bubbles.add(b);
-
+        bubbles.addAll(EnemyBubblesToAdd);
     }
 
     public void addBubble(float x, float y, Direction direction) {

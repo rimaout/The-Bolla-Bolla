@@ -1,9 +1,11 @@
 package itemes;
 
+import entities.Player;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.Items.BubbleRewardType;
+import static utilz.Constants.Items.*;
 import static utilz.Constants.Items.BubbleRewardType.*;
 
 public class BubbleReward extends Item{
@@ -21,10 +23,24 @@ public class BubbleReward extends Item{
     @Override
     void draw(Graphics g) {
 
-        if (deSpawning)
-            g.drawImage(itemImages[animationIndex], x, y, null);
+        if (!deSpawning)
+            g.drawImage(itemImages[GetItemImageIndex(type)], x, y, ITEM_W, ITEM_H, null);
         else
-            g.drawImage(itemImages[GetItemImageIndex(type)], x, y, null);
+            g.drawImage(deSpawnImages[animationIndex], x, y, ITEM_W, ITEM_H, null);
+
+        drawHitbox(g);
+    }
+
+    @Override
+    public void addPoints(Player player) {
+        player.addPoints(getPoints(type));
+        System.out.println("Points: " + player.getPoints());
+        //TODO: make points and lives manager to handle points and draw them
+    }
+
+    @Override
+    void applyEffect(Player player) {
+        // Bubble Rewards do not apply effects to the player
     }
 
 }

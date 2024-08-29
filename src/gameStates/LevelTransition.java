@@ -4,6 +4,7 @@ import bubbles.BubbleManager;
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
+import itemes.ItemManager;
 import levels.Level;
 import levels.LevelManager;
 import main.Game;
@@ -152,6 +153,8 @@ public class LevelTransition extends State implements StateMethods{
         BubbleManager.getInstance().loadLevelData();
         BubbleManager.getInstance().loadLevelData();
         BubbleManager.getInstance().loadWindData();
+
+        ItemManager.getInstance().resetForNewLevel();
 
         game.getPlaying().getPlayer().loadLevelData();
     }

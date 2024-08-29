@@ -34,6 +34,7 @@ public class Player extends Entity{
 
     // General Variables
     private int lives = 3;
+    private int points = 0;
     private  int flipX = 0;
     private int flipW = 1;
 
@@ -53,22 +54,22 @@ public class Player extends Entity{
     }
 
     public void update() {
-        if(lives <= 0) {
-            playing.setGameOver(true);
-            return;
-        }
 
         updateTimers();
         setAnimation();
         updatePosition();
         updateAnimationTick();
 
-        if (attacking && !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Game.TILES_SIZE) )
+        if (attacking && canAttack())
             attack();
     }
 
     public void draw(Graphics g) {
         g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
+    }
+
+    private boolean canAttack() {
+        return !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Game.TILES_SIZE);
     }
 
     private void attack() {
@@ -374,12 +375,20 @@ public class Player extends Entity{
         this.jump = jump;
     }
 
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void addLive() {
+        lives++;
     }
 
     public int getLives() {
         return lives;
+    }
+
+    public void addPoints(int pointsToAdd) {
+        this.points += pointsToAdd;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     public float getXSpeed(){

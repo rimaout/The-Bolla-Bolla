@@ -3,6 +3,7 @@ package bubbles;
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
+import itemes.ItemManager;
 import utilz.Constants.Direction;
 
 import javax.swing.*;
@@ -10,22 +11,25 @@ import javax.swing.*;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.Bubble.*;
+import static utilz.Constants.GRAVITY;
+import static utilz.Constants.Items.BubbleRewardType.*;
+import static utilz.HelpMethods.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.GRAVITY;
-import static utilz.HelpMethods.*;
-
 public class EnemyBubble extends PlayerBubble{
     Enemy enemy;
-    private boolean playerPopped;
-    private Random random = new Random();
 
+    private int consecutivePopsCounter;
+    private boolean playerPopped;
     private float ySpeedDead;
     private float xSpeedDead;
+
+
+    private Random random = new Random();
 
     public EnemyBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData, Enemy enemy) {
         super(x, y, direction, levelData, windLevelData);
@@ -63,8 +67,6 @@ public class EnemyBubble extends PlayerBubble{
         }
     }
 
-
-
     protected void updateDeadAnimation() {
         ySpeed += GRAVITY;
 
@@ -90,11 +92,12 @@ public class EnemyBubble extends PlayerBubble{
         } else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
             conpenetrationSafeUpdateXPos(xSpeed, levelData);
-            //Todo: Swap item (fruit)
             active = false;
+
+            // Spawn Reward
+            ItemManager.getInstance().addBubbleReward((int) hitbox.x, (int) hitbox.y, GetBubbleRewardType(consecutivePopsCounter));
         }
     }
-
 
     @Override
     public void playerPop(Player player) {

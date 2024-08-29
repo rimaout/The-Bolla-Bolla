@@ -1,6 +1,7 @@
 package gameStates;
 
 import bubbles.BubbleManager;
+import itemes.ItemManager;
 import ui.GameCompletedOverlay;
 import utilz.LoadSave;
 import entities.EnemyManager;
@@ -21,6 +22,7 @@ public class Playing extends State implements StateMethods {
     private LevelManager levelManager;
     private EnemyManager enemyManager;
     private BubbleManager bubbleManager;
+    private ItemManager itemManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
@@ -46,6 +48,7 @@ public class Playing extends State implements StateMethods {
 
         enemyManager = EnemyManager.getInstance(this, player);
         bubbleManager = BubbleManager.getInstance(this, player);
+        itemManager = ItemManager.getInstance(this);
 
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
@@ -54,6 +57,7 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void update() {
+
         if (paused)
             pauseOverlay.update();
 
@@ -65,15 +69,20 @@ public class Playing extends State implements StateMethods {
             player.update();
             bubbleManager.update();
             enemyManager.update();
+            itemManager.update();
         }
+
+        updateBolleans();
     }
 
     @Override
     public void draw(Graphics g) {
         levelManager.draw(g);
         enemyManager.draw(g);
-        player.draw(g);
         bubbleManager.draw(g);
+        itemManager.draw(g);
+        player.draw(g);
+
         drawUI(g);
 
         if (paused)
@@ -84,6 +93,18 @@ public class Playing extends State implements StateMethods {
 
         else if (gameCompleted)
             gameCompletedOverlay.draw(g);
+    }
+
+
+    private void updateBolleans(){
+        if (player.getLives() == 0)
+            gameOver = true;
+
+        if (enemyManager.areAllEnemiesDead() && itemManager.areAllRewardsDeSpawned())
+            levelCompleted = true;
+
+        if (levelManager.areAllLevelsCompleted())
+            gameCompleted = true;
     }
 
     private void drawUI(Graphics g) {
@@ -109,6 +130,7 @@ public class Playing extends State implements StateMethods {
         bubbleManager.resetAll();
         levelManager.loadNextLevel();
         player.resetAll(false);
+
         levelCompleted = false;
     }
 
@@ -223,14 +245,6 @@ public class Playing extends State implements StateMethods {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public void setLevelCompleted(boolean levelCompleted) {
-        this.levelCompleted = levelCompleted;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 
     public void setGameCompleted(boolean gameCompleted) {

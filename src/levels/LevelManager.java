@@ -19,6 +19,7 @@ public class LevelManager {
     private ArrayList<Level> levels;
     private int levelIndex = 0;
 
+    private boolean allLevelsCompleted = false;
 
     private LevelManager(Playing playing) {
         this.playing = playing;
@@ -42,19 +43,12 @@ public class LevelManager {
     public void loadNextLevel() {
 
         if (levelIndex >= levels.size()-1) {
-            playing.setGameCompleted(true);
+            allLevelsCompleted = true;
             return;
         }
 
         playing.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
         playing.getGame().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
-
-        if (levelIndex >= levels.size()) {
-            levelIndex = 0;
-            playing.setGameCompleted(true);
-            return;
-        }
-
         GameState.state = GameState.LEVEL_TRANSITION;
     }
 
@@ -128,6 +122,10 @@ public class LevelManager {
 
     public void increaseLevelIndex() {
         levelIndex++;
+    }
+
+    public boolean areAllLevelsCompleted() {
+        return allLevelsCompleted;
     }
 
 }

@@ -20,6 +20,7 @@ public class EnemyManager {
     private ArrayList<Enemy> enemies;
 
     private boolean allEnemiesReachedSpawn = false;
+    private boolean allEnemiesDead = false;
 
     private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
@@ -42,7 +43,7 @@ public class EnemyManager {
 
 
     public void update() {
-        int aliveCounter = 0;
+        int deadCounter = 0;
         int reachedSpawnCounter = 0;
 
         for (Enemy e : enemies) {
@@ -54,13 +55,13 @@ public class EnemyManager {
             if (e.getReachedSpawn())
                 reachedSpawnCounter++;
 
-            if (e.isAlive())
-                aliveCounter++;
+            if (!e.isAlive())
+                deadCounter++;
         }
 
-        switch (aliveCounter) {
-            case 0 -> playing.setLevelCompleted(true);
-            case 1 -> setAllHungry();
+        switch (enemies.size() - deadCounter) {
+            case 0 -> allEnemiesDead = true; // All enemies are dead
+            case 1 -> setAllHungry();        // Only one enemy left: set to hungry mode
         }
 
         if (reachedSpawnCounter == enemies.size())
@@ -107,6 +108,7 @@ public class EnemyManager {
             e.resetEnemy();
 
         allEnemiesReachedSpawn = false;
+        allEnemiesDead = false;
     }
 
     public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
@@ -122,7 +124,7 @@ public class EnemyManager {
         return allEnemiesReachedSpawn;
     }
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
+    public boolean areAllEnemiesDead() {
+        return allEnemiesDead;
     }
 }
