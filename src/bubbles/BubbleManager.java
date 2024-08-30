@@ -22,7 +22,6 @@ import java.util.TimerTask;
 public class BubbleManager {
 
     private static BubbleManager instance;
-    private Playing playing;
     private Player player;
 
     private int[][] levelData;
@@ -31,19 +30,23 @@ public class BubbleManager {
 
     private LinkedList<Bubble> bubbles;
 
-    private BubbleManager(Playing playing, Player player) {
-        this.playing = playing;
+    private long lastTimerUpdate;
+    private int popTimer = 0;
+    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 500;
+
+    private BubbleManager(Player player) {
         this.player = player;
 
         bubbles = new LinkedList<>();
+
         loadBubbleSprites();
         loadLevelData();
         loadWindData();
     }
 
-    public static BubbleManager getInstance(Playing playing,Player player) {
+    public static BubbleManager getInstance(Player player) {
         if (instance == null) {
-            instance = new BubbleManager(playing, player);
+            instance = new BubbleManager(player);
         }
         return instance;
     }
@@ -53,6 +56,8 @@ public class BubbleManager {
     }
 
     public void update() {
+        updateTimer();
+
         for (Bubble b : bubbles) {
             if (b.isActive())
                 b.update();
@@ -76,6 +81,16 @@ public class BubbleManager {
             //b.drawCollisionBox(g);
             //b.drawHitbox(g);
         }
+    }
+
+    private void updateTimer() {
+
+        if (lastTimerUpdate == 0)
+            lastTimerUpdate = System.currentTimeMillis();
+
+        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        lastTimerUpdate = System.currentTimeMillis();
+        popTimer -= timeDelta;
     }
 
    private void collisionBetweenBubbles() {
@@ -137,17 +152,18 @@ public class BubbleManager {
                 continue;
 
             // check if bubble pop
-            if (b.getInternalCollisionBox().intersects(player.getHitbox())) {
-                b.playerPop(player);
-                return;
-            }
+            if (popTimer <= 0)
+                if (b.getInternalCollisionBox().intersects(player.getHitbox())) {
+                    startChainExplosions(b);
+                    return;
+                }
 
             // check player jump on bubble
             if (b.getExternalCollisionBox().intersects(player.getHitbox())) {
 
+                // Jump on bubble
                 if (b.getHitbox().y > player.getHitbox().y) {
                     if (player.isJumpActive()) {
-
                         b.getHitbox().y += 2 * Game.SCALE;
                         player.jumpOnBubble();
                         return;
@@ -167,40 +183,12 @@ public class BubbleManager {
         }
     }
 
-    public void triggerChainExplosion(Bubble poppedBubble) {
-        Timer timer = new Timer();
-        int delay = 100; // delay in milliseconds
-        int delayIncrement = 100; // increment delay for each bubble
-
-        for (Bubble b : bubbles) {
-            if (!b.isActive() || b == poppedBubble || b.state == DEAD)
-                continue;
-
-            double dx = b.getCenter().x - poppedBubble.getCenter().x;
-            double dy = b.getCenter().y - poppedBubble.getCenter().y;
-            double distance = Math.sqrt(dx * dx + dy * dy);
-
-            // Define the chain reaction radius
-            double chainReactionRadius = 19 * Game.SCALE; // Adjust as needed
-
-            if (distance < chainReactionRadius) {
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        b.playerPop(player);
-                    }
-                }, delay);
-                delay += delayIncrement;
-            }
-        }
-    }
-
     private void collisionWithEnemies() {
         ArrayList<Enemy> EnemyArray = LevelManager.getInstance().getCurrentLevel().getEnemies();
         ArrayList<Bubble> EnemyBubblesToAdd = new ArrayList<>();
 
         for (Bubble b : bubbles) {
-            if (!b.isActive() || b.state != PROJECTILE || !(b instanceof PlayerBubble))
+            if (!b.isActive() || b.state != PROJECTILE || !(b instanceof EmptyBubble))
                 continue;
 
             for (Enemy e : EnemyArray) {
@@ -228,15 +216,15 @@ public class BubbleManager {
 
         if (direction == Direction.LEFT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new PlayerBubble(x + xOffset, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(x + xOffset, y, direction, levelData, windDirectionData));
             else
-                bubbles.add(new PlayerBubble(mapLeftMostTileX, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(mapLeftMostTileX, y, direction, levelData, windDirectionData));
 
         if (direction == Direction.RIGHT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new PlayerBubble(x - xOffset, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(x - xOffset, y, direction, levelData, windDirectionData));
             else
-                bubbles.add(new PlayerBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
     }
 
     public void loadBubbleSprites() {
@@ -264,5 +252,12 @@ public class BubbleManager {
 
     public BufferedImage[][] getPlayerBubbleSprites() {
         return playerBubbleSprites;
+    }
+
+    public void startChainExplosions(Bubble firstPoppedBubble) {
+        popTimer = POP_DELAY_AFTER_CHAIN_EXPLOSION;
+
+        LinkedList<Bubble> bubblesShallowCopy = new LinkedList<>(bubbles);
+        new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
     }
 }

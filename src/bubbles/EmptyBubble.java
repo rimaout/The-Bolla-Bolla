@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Bubble.*;
 
-public class PlayerBubble extends Bubble {
+public class EmptyBubble extends Bubble {
 
-    public PlayerBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
+    public EmptyBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, direction, levelData, windLevelData);
     }
 
@@ -20,11 +20,10 @@ public class PlayerBubble extends Bubble {
     }
 
     protected void updateDeadAnimation(){
-        // Empty implementation
-        // Only used by EnemyBubble
+        // Empty implementation, only used by EnemyBubble
     }
 
-    public void playerPop(Player player) {
+    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
         if (state != PROJECTILE && state != POP_NORMAL && state != POP_RED) {
 
             if (state == RED)
@@ -34,8 +33,6 @@ public class PlayerBubble extends Bubble {
 
             animationIndex = 0;
             animationTick = 0;
-            BubbleManager bubbleManager = BubbleManager.getInstance();
-            bubbleManager.triggerChainExplosion(this);
         }
     }
 }

@@ -6,10 +6,7 @@ import entities.Player;
 import itemes.ItemManager;
 import utilz.Constants.Direction;
 
-import javax.swing.*;
-
 import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.GRAVITY;
@@ -20,7 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class EnemyBubble extends PlayerBubble{
+public class EnemyBubble extends EmptyBubble {
     Enemy enemy;
 
     private int consecutivePopsCounter;
@@ -100,10 +97,13 @@ public class EnemyBubble extends PlayerBubble{
     }
 
     @Override
-    public void playerPop(Player player) {
+    public void playerPop(Player player, int EnemyBubblePopCounte, ChainExplosionManager chainExplosionManager) {
 
-        BubbleManager.getInstance().triggerChainExplosion(this);
-
+        if (!popped) {
+            chainExplosionManager.increaseEnemyBubblePopCounter();
+            consecutivePopsCounter = chainExplosionManager.getEnemyBubblePopCounter();
+        }
+        
         // calculate the speed of the bubble (random values between 50% and 100% of the Max speed)
         ySpeedDead = - (0.5f + random.nextFloat() * 0.5f) * DEAD_Y_SPEED;
         ySpeed = ySpeedDead;
@@ -115,11 +115,11 @@ public class EnemyBubble extends PlayerBubble{
 
         // Set Bubble state
         state = DEAD;
+        popped = true;
         playerPopped = true;
         animationIndex = 0;
         animationTick = 0;
 
-        // TODO: remove when you can set the enemy to dead after the end of the animation
         enemy.setAlive(false);
     }
 

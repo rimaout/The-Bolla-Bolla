@@ -318,13 +318,13 @@ public class Constants {
 
             public static BubbleRewardType GetBubbleRewardType(int consecutivePopsCounter) {
                 return switch (consecutivePopsCounter) {
-                    case 0 -> APPLE;
-                    case 1 -> PEPPER;
-                    case 2 -> GRAPE;
-                    case 3 -> PERSIMMON;
-                    case 4 -> CHERRY;
-                    case 5 -> MUSHROOM;
-                    case 6 -> BANANA;
+                    case 1 -> APPLE;
+                    case 2 -> PEPPER;
+                    case 3 -> GRAPE;
+                    case 4 -> PERSIMMON;
+                    case 5 -> CHERRY;
+                    case 6 -> MUSHROOM;
+                    case 7 -> BANANA;
                     default -> BANANA;
                 };
             }

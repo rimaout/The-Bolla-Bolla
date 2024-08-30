@@ -33,8 +33,6 @@ public class BubbleReward extends Item{
     @Override
     public void addPoints(Player player) {
         player.addPoints(getPoints(type));
-        System.out.println("Points: " + player.getPoints());
-        //TODO: make points and lives manager to handle points and draw them
     }
 
     @Override

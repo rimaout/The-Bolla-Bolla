@@ -24,6 +24,7 @@ public abstract class Bubble extends Entity {
 
     protected boolean isFirstUpdate = true;
     protected boolean active = true;
+    protected boolean popped = false;
     protected int state = PROJECTILE;
     protected int previousState = PROJECTILE;
 
@@ -233,7 +234,7 @@ public abstract class Bubble extends Entity {
         }
     }
 
-    public abstract void playerPop(Player player);
+    public abstract void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);
 
     public Point getCenter() {
         float x = hitbox.x + hitbox.width / 2;
