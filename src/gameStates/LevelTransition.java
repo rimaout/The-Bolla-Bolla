@@ -1,7 +1,6 @@
 package gameStates;
 
 import bubbles.BubbleManager;
-import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
 import itemes.ItemManager;
@@ -11,8 +10,6 @@ import main.Game;
 import utilz.LoadSave;
 
 import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.EnemyConstants.ENEMY_H;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.Constants.LevelTransition.*;
 import static utilz.Constants.LevelTransition.TransitionState.*;
@@ -21,7 +18,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class LevelTransition extends State implements StateMethods{
     private BufferedImage[] levelTiles;
@@ -44,7 +40,7 @@ public class LevelTransition extends State implements StateMethods{
 
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
-        player = game.getPlaying().getPlayer();
+        player = game.getPlaying().getPlayerOne();
         loadPlayerTransitionSprites();
     }
 
@@ -156,7 +152,7 @@ public class LevelTransition extends State implements StateMethods{
 
         ItemManager.getInstance().resetForNewLevel();
 
-        game.getPlaying().getPlayer().loadLevelData();
+        game.getPlaying().getPlayerOne().loadLevelData();
     }
 
     public void endTransition() {

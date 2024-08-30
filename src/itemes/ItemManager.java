@@ -1,5 +1,6 @@
 package itemes;
 
+import entities.EnemyManager;
 import entities.Player;
 import gameStates.Playing;
 import utilz.LoadSave;
@@ -56,14 +57,14 @@ public class ItemManager {
             else{
                 deSpawnCounter++;
 
-                if (deSpawnCounter == bubbleRewards.size())
+                if (deSpawnCounter == EnemyManager.getInstance().getEnemyCount())
                     allRewardsDeSpawned = true;
             }
         }
     }
 
     private void checkCollisionWithPlayer(Item item) {
-        Player player = playing.getPlayer();
+        Player player = playing.getPlayerOne();
 
         if(item.getHitbox().intersects(player.getHitbox())){
             item.setActive(false);

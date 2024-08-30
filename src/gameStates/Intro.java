@@ -43,7 +43,7 @@ public class Intro extends State implements StateMethods {
 
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
-        player = game.getPlaying().getPlayer();
+        player = game.getPlaying().getPlayerOne();
         customFont = LoadSave.getCustomFont();
         loadPlayerTransitionSprites();
 

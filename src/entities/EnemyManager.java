@@ -120,6 +120,10 @@ public class EnemyManager {
         }
     }
 
+    public int getEnemyCount() {
+        return enemies.size();
+    }
+
     public boolean getAllEnemiesReachedSpawn() {
         return allEnemiesReachedSpawn;
     }
