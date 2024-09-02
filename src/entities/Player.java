@@ -64,7 +64,16 @@ public class Player extends Entity{
             attack();
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
+        if (immune && !respawning) {
+            if (immuneTimer % 100 < 40) { // Transparency blink effect
+                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55F)); // Set transparency
+                g.drawImage(animations[playerAnimation][animationIndex], (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
+                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F)); // Set transparency
+                return;
+            }
+        }
+
         g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
     }
 
@@ -150,6 +159,8 @@ public class Player extends Entity{
         attackTimer -= timeDelta;
         if (attackTimer > 0)
                 attacking = false;
+
+        
     }
 
     private void updatePosition() {

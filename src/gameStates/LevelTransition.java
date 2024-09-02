@@ -3,7 +3,7 @@ package gameStates;
 import bubbles.BubbleManager;
 import entities.EnemyManager;
 import entities.Player;
-import itemes.ItemManager;
+import itemesAndRewards.ItemManager;
 import levels.Level;
 import levels.LevelManager;
 import main.Game;
