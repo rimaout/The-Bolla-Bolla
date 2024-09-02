@@ -1,7 +1,8 @@
 package gameStates;
 
 import bubbles.BubbleManager;
-import itemes.ItemManager;
+import itemesAndRewards.ItemManager;
+import itemesAndRewards.RewardPointsManager;
 import ui.GameCompletedOverlay;
 import ui.PlayingHud;
 import entities.EnemyManager;
@@ -24,6 +25,7 @@ public class Playing extends State implements StateMethods {
     private EnemyManager enemyManager;
     private BubbleManager bubbleManager;
     private ItemManager itemManager;
+    private RewardPointsManager rewardPointsManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
@@ -49,6 +51,7 @@ public class Playing extends State implements StateMethods {
         enemyManager = EnemyManager.getInstance(this, playerOne);
         bubbleManager = BubbleManager.getInstance(playerOne);
         itemManager = ItemManager.getInstance(this);
+        rewardPointsManager = RewardPointsManager.getInstance(playerOne);
 
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
@@ -71,7 +74,7 @@ public class Playing extends State implements StateMethods {
             bubbleManager.update();
             enemyManager.update();
             itemManager.update();
-
+            rewardPointsManager.update();
         }
 
         updateBolleans();
@@ -84,8 +87,9 @@ public class Playing extends State implements StateMethods {
         playingHud.draw(g);
         enemyManager.draw(g);
         bubbleManager.draw(g);
+        rewardPointsManager.draw((Graphics2D) g);
 
-        playerOne.draw(g);
+        playerOne.draw((Graphics2D) g);
 
         if (paused)
             pauseOverlay.draw(g);
@@ -118,6 +122,8 @@ public class Playing extends State implements StateMethods {
         playerOne.resetAll(true, true);
         enemyManager.resetAll();
         bubbleManager.resetAll();
+        itemManager.resetAll();
+        rewardPointsManager.resetAll();
     }
 
     public void loadNextLevel() {
@@ -125,6 +131,8 @@ public class Playing extends State implements StateMethods {
         bubbleManager.resetAll();
         levelManager.loadNextLevel();
         playerOne.resetAll(false, false);
+        itemManager.resetAll();
+        rewardPointsManager.resetAll();
 
         levelCompleted = false;
     }
@@ -230,4 +238,5 @@ public class Playing extends State implements StateMethods {
     public Player getPlayerOne() {
         return playerOne;
     }
+
 }

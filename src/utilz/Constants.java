@@ -2,6 +2,8 @@ package utilz;
 
 import main.Game;
 
+import java.awt.*;
+
 public class Constants {
 
     public static final float GRAVITY = 0.0078f * Game.SCALE;
@@ -340,8 +342,25 @@ public class Constants {
                     case BANANA -> 7000;
                 };
             }
-
         }
+    }
 
+    public static class PointsManager {
+
+        public static final int SMALL_DEFAULT_W = 18;
+        public static final int SMALL_DEFAULT_H = 10;
+        public static final int SMALL_W = (int) (SMALL_DEFAULT_W / 1.1 * Game.SCALE);
+        public static final int SMALL_H = (int) (SMALL_DEFAULT_H / 1.1 * Game.SCALE);
+
+        public static final int BIG_DEFAULT_W = 28;
+        public static final int BIG_DEFAULT_H = 13;
+        public static final int BIG_W = (int) (SMALL_DEFAULT_W * 1.35 * Game.SCALE);
+        public static final int BIG_H = (int) (SMALL_DEFAULT_H * 1.35 * Game.SCALE);
+
+        public static final int CONSECUTIVE_POP_DELAY = 200;
+
+        public enum PointsType {
+            SMALL, BIG
+        }
     }
 }

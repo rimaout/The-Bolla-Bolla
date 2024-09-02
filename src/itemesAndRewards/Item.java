@@ -1,7 +1,6 @@
-package itemes;
+package itemesAndRewards;
 
 import entities.Player;
-import gameStates.Playing;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Items.*;

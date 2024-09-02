@@ -3,6 +3,7 @@ package bubbles;
 import entities.Enemy;
 import entities.Player;
 import gameStates.Playing;
+import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
@@ -16,13 +17,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BubbleManager {
 
     private static BubbleManager instance;
     private Player player;
+
 
     private int[][] levelData;
     private Direction[][] windDirectionData;
@@ -33,6 +33,7 @@ public class BubbleManager {
     private long lastTimerUpdate;
     private int popTimer = 0;
     private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 500;
+
 
     private BubbleManager(Player player) {
         this.player = player;
@@ -56,7 +57,7 @@ public class BubbleManager {
     }
 
     public void update() {
-        updateTimer();
+        updateTimers();
 
         for (Bubble b : bubbles) {
             if (b.isActive())
@@ -69,6 +70,8 @@ public class BubbleManager {
         collisionWithPlayer();
         collisionBetweenBubbles();
         collisionWithEnemies();
+
+
     }
 
     public void draw(Graphics g) {
@@ -83,7 +86,7 @@ public class BubbleManager {
         }
     }
 
-    private void updateTimer() {
+    private void updateTimers() {
 
         if (lastTimerUpdate == 0)
             lastTimerUpdate = System.currentTimeMillis();

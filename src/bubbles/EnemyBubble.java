@@ -3,7 +3,8 @@ package bubbles;
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
-import itemes.ItemManager;
+import itemesAndRewards.ItemManager;
+import itemesAndRewards.RewardPointsManager;
 import utilz.Constants.Direction;
 
 import static utilz.Constants.Direction.LEFT;
@@ -102,6 +103,7 @@ public class EnemyBubble extends EmptyBubble {
         if (!popped) {
             chainExplosionManager.increaseEnemyBubblePopCounter();
             consecutivePopsCounter = chainExplosionManager.getEnemyBubblePopCounter();
+            RewardPointsManager.getInstance().addChainReactionReward(consecutivePopsCounter);
         }
         
         // calculate the speed of the bubble (random values between 50% and 100% of the Max speed)

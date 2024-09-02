@@ -1,4 +1,4 @@
-package itemes;
+package itemesAndRewards;
 
 import entities.EnemyManager;
 import entities.Player;

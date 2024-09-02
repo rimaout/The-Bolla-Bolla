@@ -1,4 +1,4 @@
-package itemes;
+package itemesAndRewards;
 
 import entities.Player;
 
@@ -32,7 +32,7 @@ public class BubbleReward extends Item{
 
     @Override
     public void addPoints(Player player) {
-        player.addPoints(getPoints(type));
+        RewardPointsManager.getInstance(player).addSmallPoints(getPoints(type));
     }
 
     @Override
