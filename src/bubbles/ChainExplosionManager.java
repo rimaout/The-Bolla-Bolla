@@ -1,6 +1,7 @@
 package bubbles;
 
 import entities.Player;
+import itemesAndRewards.PowerUpManager;
 import main.Game;
 
 import java.util.LinkedList;
@@ -51,6 +52,7 @@ public class ChainExplosionManager {
 
     public void increaseEnemyBubblePopCounter() {
         enemyBubblePopCounter++;
+        PowerUpManager.getInstance().increaseBubblePopCounter();
     }
 
     public int getEnemyBubblePopCounter() {

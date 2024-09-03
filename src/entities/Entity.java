@@ -3,6 +3,7 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+import itemesAndRewards.PowerUpManager;
 import main.Game;
 import static utilz.HelpMethods.*;
 
@@ -33,8 +34,10 @@ public abstract class Entity {
     }
 
     protected void updateXPos(float xMovement, int[][] levelData) {
-        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData))
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData)) {
             hitbox.x += xMovement;
+            PowerUpManager.getInstance().addDistance(xMovement);
+        }
     }
 
     protected void conpenetrationSafeUpdateXPos(float xMovement, int[][] levelData) {
@@ -44,16 +47,21 @@ public abstract class Entity {
             int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Game.TILES_SIZE);
             int yTile = (int) (hitbox.y / Game.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelData))
+            if (!IsWall(xTile, yTile, levelData)) {
                 hitbox.x += xMovement;
+                PowerUpManager.getInstance().addDistance(xMovement);
+            }
         }
+
         // Moving left
         else {
             int xTile = (int) ((hitbox.x + xMovement) / Game.TILES_SIZE);
             int yTile = (int) (hitbox.y / Game.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelData))
+            if (!IsWall(xTile, yTile, levelData)) {
                 hitbox.x += xMovement;
+                PowerUpManager.getInstance().addDistance(xMovement);
+            }
         }
     }
 

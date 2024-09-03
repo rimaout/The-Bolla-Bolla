@@ -25,14 +25,14 @@ public class BubbleReward extends Item{
     void draw(Graphics g) {
 
         if (!deSpawning)
-            g.drawImage(itemImages[GetItemImageIndex(type)], x, y, ITEM_W, ITEM_H, null);
+            g.drawImage(itemImages[GetRewardImageIndex(type)], x, y, W, H, null);
         else
-            g.drawImage(deSpawnImages[animationIndex], x, y, ITEM_W, ITEM_H, null);
+            g.drawImage(deSpawnImages[animationIndex], x, y, W, H, null);
     }
 
     @Override
     public void addPoints(Player player) {
-        RewardPointsManager.getInstance(player).addSmallPoints(getPoints(type));
+        RewardPointsManager.getInstance(player).addSmallPoints(GetPoints(type));
     }
 
     @Override

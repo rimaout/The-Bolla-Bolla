@@ -2,8 +2,6 @@ package utilz;
 
 import main.Game;
 
-import java.awt.*;
-
 public class Constants {
 
     public static final float GRAVITY = 0.0078f * Game.SCALE;
@@ -31,6 +29,7 @@ public class Constants {
             LOADING_NEW_LEVEL,
             START_NEW_LEVEL
         }
+
         public static final float LEVEL_TRANSITION_SPEED = 0.58f * Game.SCALE;
     }
 
@@ -116,34 +115,34 @@ public class Constants {
         public static class MenuButtons {
             public static final int BUTTON_DEFAULT_W = 140;
             public static final int BUTTON_DEFAULT_H = 56;
-            public static final int BUTTON_W = BUTTON_DEFAULT_W * Game.SCALE/2;
-            public static final int BUTTON_H = BUTTON_DEFAULT_H * Game.SCALE/2;
+            public static final int BUTTON_W = BUTTON_DEFAULT_W * Game.SCALE / 2;
+            public static final int BUTTON_H = BUTTON_DEFAULT_H * Game.SCALE / 2;
         }
 
         public static class PauseButtons {
             public static final int SOUND_BT_DEFAULT_W = 42;
             public static final int SOUND_BT_DEFAULT_H = 42;
-            public static final int SOUND_BT_W = (int) (SOUND_BT_DEFAULT_W * Game.SCALE/2);
-            public static final int SOUND_BT_H = (int) (SOUND_BT_DEFAULT_H * Game.SCALE/2);
+            public static final int SOUND_BT_W = (int) (SOUND_BT_DEFAULT_W * Game.SCALE / 2);
+            public static final int SOUND_BT_H = (int) (SOUND_BT_DEFAULT_H * Game.SCALE / 2);
         }
 
         public static class UrmButtons {
             public static final int URM_BT_DEFAULT_W = 56;
             public static final int URM_BT_DEFAULT_H = 56;
-            public static final int URM_BT_W = (int) (URM_BT_DEFAULT_W * Game.SCALE/2);
-            public static final int URM_BT_H = (int) (URM_BT_DEFAULT_H * Game.SCALE/2);
+            public static final int URM_BT_W = (int) (URM_BT_DEFAULT_W * Game.SCALE / 2);
+            public static final int URM_BT_H = (int) (URM_BT_DEFAULT_H * Game.SCALE / 2);
         }
 
         public static class VolumeButton {
             public static final int VOLUME_BT_DEFAULT_W = 28;
             public static final int VOLUME_BT_DEFAULT_H = 44;
-            public static final int VOLUME_BT_W = (int) (VOLUME_BT_DEFAULT_W * Game.SCALE/3);
-            public static final int VOLUME_BT_H = (int) (VOLUME_BT_DEFAULT_H * Game.SCALE/3);
+            public static final int VOLUME_BT_W = (int) (VOLUME_BT_DEFAULT_W * Game.SCALE / 3);
+            public static final int VOLUME_BT_H = (int) (VOLUME_BT_DEFAULT_H * Game.SCALE / 3);
 
             public static final int VOLUME_SLIDER_DEFAULT_W = 215;
             public static final int VOLUME_SLIDER_DEFAULT_H = 44;
-            public static final int VOLUME_SLIDER_W = (int) (VOLUME_SLIDER_DEFAULT_W * Game.SCALE/3);
-            public static final int VOLUME_SLIDER_H = (int) (VOLUME_SLIDER_DEFAULT_H * Game.SCALE/3);
+            public static final int VOLUME_SLIDER_W = (int) (VOLUME_SLIDER_DEFAULT_W * Game.SCALE / 3);
+            public static final int VOLUME_SLIDER_H = (int) (VOLUME_SLIDER_DEFAULT_H * Game.SCALE / 3);
         }
     }
 
@@ -275,7 +274,7 @@ public class Constants {
         public static final int PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
 
         public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
-            if (enemyType == EnemyType.ZEN_CHAN ) {
+            if (enemyType == EnemyType.ZEN_CHAN) {
                 return switch (enemyState) {
                     case WALKING_ANIMATION_NORMAL -> 2;
                     case WALKING_ANIMATION_HUNGRY -> 2;
@@ -291,22 +290,23 @@ public class Constants {
 
     public static class Items {
 
-        public static final int ITEM_DEFAULT_W = 18;
-        public static final int ITEM_DEFAULT_H = 18;
-        public static final int ITEM_W = (int) (ITEM_DEFAULT_W * Game.SCALE);
-        public static final int ITEM_H = (int) (ITEM_DEFAULT_H * Game.SCALE);
+        public static final int DEFAULT_W = 18;
+        public static final int DEFAULT_H = 18;
+        public static final int W = (int) (DEFAULT_W * Game.SCALE);
+        public static final int H = (int) (DEFAULT_H * Game.SCALE);
 
-        public static final int ITEM_HITBOX_W = (int) (6 * Game.SCALE);
-        public static final int ITEM_HITBOX_H = (int) (6 * Game.SCALE);
-        public static final int ITEM_OFFSET_X = (int) (6 * Game.SCALE);
-        public static final int ITEM_OFFSET_Y = (int) (7 * Game.SCALE);
+        public static final int HITBOX_W = (int) (6 * Game.SCALE);
+        public static final int HITBOX_H = (int) (6 * Game.SCALE);
+        public static final int OFFSET_X = (int) (6 * Game.SCALE);
+        public static final int OFFSET_Y = (int) (7 * Game.SCALE);
 
         public static final int DE_SPAWN_TIMER = 8000;
+        public static final int SPAWN_POWER_UP_TIMER = 12000;
 
         public enum BubbleRewardType {
             APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA;
 
-            public static int GetItemImageIndex(BubbleRewardType bubbleRewardType) {
+            public static int GetRewardImageIndex(BubbleRewardType bubbleRewardType) {
                 return switch (bubbleRewardType) {
                     case APPLE -> 0;
                     case PEPPER -> 1;
@@ -331,7 +331,7 @@ public class Constants {
                 };
             }
 
-            public static int getPoints(BubbleRewardType bubbleRewardType) {
+            public static int GetPoints(BubbleRewardType bubbleRewardType) {
                 return switch (bubbleRewardType) {
                     case APPLE -> 1000;
                     case PEPPER -> 2000;
@@ -340,6 +340,40 @@ public class Constants {
                     case CHERRY -> 5000;
                     case MUSHROOM -> 6000;
                     case BANANA -> 7000;
+                };
+            }
+        }
+
+        public enum PowerUpType {
+            GREEN_CANDY, BLUE_CANDY, RED_CANDY, SHOE, ORANGE_PARASOL, BLUE_PARASOL, CHACKN_HEART, CRYSTAL_RING, EMERALD_RING, RUBY_RING;
+
+            public static int GetPowerUpImageIndex(PowerUpType powerUpType) {
+                return switch (powerUpType) {
+                    case GREEN_CANDY -> 0;
+                    case BLUE_CANDY -> 1;
+                    case RED_CANDY -> 2;
+                    case SHOE -> 3;
+                    case ORANGE_PARASOL -> 4;
+                    case BLUE_PARASOL -> 5;
+                    case CHACKN_HEART -> 6;
+                    case CRYSTAL_RING -> 7;
+                    case EMERALD_RING -> 8;
+                    case RUBY_RING -> 9;
+                };
+            }
+
+            public static int GetPoints (PowerUpType powerUpType) {
+                return switch (powerUpType) {
+                    case GREEN_CANDY -> 100;
+                    case BLUE_CANDY -> 100;
+                    case RED_CANDY -> 100;
+                    case SHOE -> 100;
+                    case ORANGE_PARASOL -> 200;
+                    case BLUE_PARASOL -> 200;
+                    case CHACKN_HEART -> 3000;
+                    case CRYSTAL_RING -> 1000;
+                    case EMERALD_RING -> 1000;
+                    case RUBY_RING -> 1000;
                 };
             }
         }

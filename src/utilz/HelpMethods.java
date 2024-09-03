@@ -2,6 +2,7 @@ package utilz;
 
 import main.Game;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class HelpMethods {
@@ -186,5 +187,15 @@ public class HelpMethods {
         else
             return IsAllTilesWalkable(tileX1, tileX2, yTile, levelData);
 
+    }
+
+    public static Point GetRandomPositionOnFloor(int[][] levelData) {
+        int x = (int) (Math.random() * Game.TILES_IN_WIDTH);
+        int y = 0;
+
+        while (!IsTileSolid(x, y, levelData))
+            y++;
+
+        return new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
     }
 }

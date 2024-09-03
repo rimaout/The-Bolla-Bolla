@@ -35,6 +35,7 @@ public class LoadSave {
     public static final String BUBBLE_BUD_SPRITE = "/sprites/Bud_bubble.png";
     public static final String BUBBLE_TWINKLE = "/sprites/bubble-twinkle.png";
     public static final String ITEM_BUBBLE_REWARD_SPRITE = "/sprites/item_bubble_reward.png";
+    public static final String ITEM_POWER_UP_SPRITE = "/sprites/power_ups.png";
     public static final String ITEM_DESPAWN_SPRITE = "/sprites/item_despawn.png";
     public static final String BUD_SMALL_POINTS_SPRITE = "/sprites/Bud_small_points.png";
     public static final String BUD_BIG_POINTS_SPRITE = "/sprites/Bud_big_points.png";

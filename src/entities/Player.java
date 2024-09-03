@@ -1,6 +1,7 @@
 package entities;
 
 import bubbles.BubbleManager;
+import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
 import utilz.LoadSave;
 import gameStates.Playing;
@@ -99,6 +100,8 @@ public class Player extends Entity{
 
         attackTimer = ATTACK_TIMER;
         attackingAnimation = true;
+
+        PowerUpManager.getInstance().increaseBubbleShootCounter();
     }
 
     private void setAnimation() {
@@ -196,8 +199,10 @@ public class Player extends Entity{
             inAir = true;
             isJumping = true;
             
-            if(!IsEntityInsideSolid(hitbox, levelData))    // can't jump if is inside solid
+            if(!IsEntityInsideSolid(hitbox, levelData)) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
+                PowerUpManager.getInstance().increaseJumpCounter();
+            }
         }
 
         if (!left && !right && !inAir)
@@ -311,6 +316,8 @@ public class Player extends Entity{
             hitbox.x = SPAWN_X;
             hitbox.y = SPAWN_Y;
             lives--;
+
+            PowerUpManager.getInstance().resetAll();    // Reset all powerUps when player dies
         }
     }
 
@@ -371,6 +378,7 @@ public class Player extends Entity{
         airSpeed = JUMP_SPEED;
         inAir = true;
         isJumping = true;
+        PowerUpManager.getInstance().increaseJumpCounter();
     }
 
     public void setAttacking(boolean attacking) {

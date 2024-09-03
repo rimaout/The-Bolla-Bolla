@@ -2,6 +2,7 @@ package gameStates;
 
 import bubbles.BubbleManager;
 import itemesAndRewards.ItemManager;
+import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;
 import ui.GameCompletedOverlay;
 import ui.PlayingHud;
@@ -26,6 +27,7 @@ public class Playing extends State implements StateMethods {
     private BubbleManager bubbleManager;
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
+    private PowerUpManager powerUpManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
@@ -52,6 +54,7 @@ public class Playing extends State implements StateMethods {
         bubbleManager = BubbleManager.getInstance(playerOne);
         itemManager = ItemManager.getInstance(this);
         rewardPointsManager = RewardPointsManager.getInstance(playerOne);
+        powerUpManager = PowerUpManager.getInstance(playerOne);
 
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
@@ -75,6 +78,7 @@ public class Playing extends State implements StateMethods {
             enemyManager.update();
             itemManager.update();
             rewardPointsManager.update();
+            powerUpManager.update();
         }
 
         updateBolleans();
@@ -123,6 +127,7 @@ public class Playing extends State implements StateMethods {
         enemyManager.resetAll();
         bubbleManager.resetAll();
         itemManager.resetAll();
+        powerUpManager.resetAll();
         rewardPointsManager.resetAll();
     }
 

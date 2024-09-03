@@ -37,7 +37,6 @@ public abstract class Item {
     abstract void addPoints(Player player);
     abstract void applyEffect(Player player);
 
-
     protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED) {
@@ -61,7 +60,7 @@ public abstract class Item {
     }
 
     protected void initHitbox() {
-        hitbox = new Rectangle2D.Float(x + ITEM_OFFSET_X, y + ITEM_OFFSET_Y, ITEM_HITBOX_W, ITEM_HITBOX_H);
+        hitbox = new Rectangle2D.Float(x + OFFSET_X, y + OFFSET_Y, HITBOX_W, HITBOX_H);
     }
 
     public void drawHitbox(Graphics g) {
