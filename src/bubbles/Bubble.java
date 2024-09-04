@@ -36,6 +36,8 @@ public abstract class Bubble extends Entity {
     protected Direction direction;
     protected Direction previousDirection;
 
+    float projectileAnimationTick = 0;
+
     public Bubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
@@ -101,6 +103,22 @@ public abstract class Bubble extends Entity {
     }
 
     private void updateAnimationTick() {
+
+        if (state == PROJECTILE ) {
+
+            float projectileSpeedMultiplier = BubbleManager.getInstance().getProjectileSpeedMultiplier();
+            float projectileDistanceMultiplier = BubbleManager.getInstance().getProjectileDistanceMultiplier();
+            projectileAnimationTick += projectileSpeedMultiplier / projectileDistanceMultiplier;
+
+            if (projectileAnimationTick > BUBBLE_ANIMATION_SPEED) {
+                projectileAnimationTick = 0;
+                animationIndex++;
+                if (animationIndex >= getSpriteAmount(state))
+                    animationIndex = 0;
+            }
+            return;
+        }
+
         animationTick++;
         if (animationTick > BUBBLE_ANIMATION_SPEED) {
             animationTick = 0;
@@ -175,13 +193,17 @@ public abstract class Bubble extends Entity {
 
     private void updatePosition() {
 
+
         if (state == PROJECTILE) {
+
+            float projectileSpeed = PROJECTILE_SPEED * BubbleManager.getInstance().getProjectileSpeedMultiplier();
+
             if (direction == RIGHT) {
                 if (CanMoveHere((int) (hitbox.x + PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
-                    hitbox.x += PROJECTILE_SPEED;
+                    hitbox.x += projectileSpeed;
             }
             else if (CanMoveHere((int) (hitbox.x - PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
-                hitbox.x -= PROJECTILE_SPEED;
+                hitbox.x -= projectileSpeed;
         }
 
         if (state != PROJECTILE && (state != POP_NORMAL || state != POP_RED)) {

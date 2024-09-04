@@ -1,6 +1,7 @@
 package itemesAndRewards;
 
 
+import bubbles.BubbleManager;
 import entities.EnemyManager;
 import entities.Player;
 import main.Game;
@@ -63,6 +64,16 @@ public class PowerUpManager{
         else
             player.setBubbleCadenceMultiplier(1);
 
+        if (blueCandy)
+            BubbleManager.getInstance().setProjectileSpeedMultiplier(1.65f);
+        else
+            BubbleManager.getInstance().setProjectileSpeedMultiplier(1f);
+
+        if (redCandy)
+            BubbleManager.getInstance().setProjectileDistanceMultiplier(1.65f);
+        else
+            BubbleManager.getInstance().setProjectileDistanceMultiplier(1f);
+
         if (shoe)
             player.setSpeedMultiplier(1.7f);
         else
@@ -80,10 +91,10 @@ public class PowerUpManager{
 
         ArrayList<PowerUpType> powerUps = new ArrayList<>();
 
-        if (bubbleShootCounter >= 35) powerUps.add(PowerUpType.GREEN_CANDY);        // Working
-        if (bubblePopCounter >= 35) powerUps.add(PowerUpType.BLUE_CANDY);
-        if (jumpCounter >= 35) powerUps.add(PowerUpType.RED_CANDY);
-        if (walkedDistance >= Game.GAME_WIDTH * 5) powerUps.add(PowerUpType.SHOE);  // Working //TODO: change to * 15
+        if (bubbleShootCounter >= 10 ) powerUps.add(PowerUpType.GREEN_CANDY);       // Working // TODO: change to 35
+        if (bubblePopCounter >= 10) powerUps.add(PowerUpType.BLUE_CANDY);           // Working // TODO: change to 35
+        if (jumpCounter >= 10) powerUps.add(PowerUpType.RED_CANDY);                 // Working // TODO: change to 35
+        if (walkedDistance >= Game.GAME_WIDTH * 5) powerUps.add(PowerUpType.SHOE);  // Working // TODO: change to * 15
         if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);
         if (itemCollectCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);
         if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // TODO: change to 55
@@ -97,6 +108,9 @@ public class PowerUpManager{
     }
 
     public void resetAll() {
+        greenCandy = false;
+        blueCandy = false;
+        redCandy = false;
         shoe = false;
         orangeParasol = false;
         blueParasol = false;

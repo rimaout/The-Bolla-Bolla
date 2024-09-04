@@ -23,7 +23,6 @@ public class BubbleManager {
     private static BubbleManager instance;
     private Player player;
 
-
     private int[][] levelData;
     private Direction[][] windDirectionData;
     private BufferedImage[][] playerBubbleSprites;
@@ -33,6 +32,10 @@ public class BubbleManager {
     private long lastTimerUpdate;
     private int popTimer = 0;
     private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 500;
+
+    // PowerUp Multipliers
+    private float projectileSpeedMultiplier = 1;
+    private float projectileDistanceMultiplier = 1;
 
 
     private BubbleManager(Player player) {
@@ -257,6 +260,10 @@ public class BubbleManager {
     public void resetAll() {
         // Reset the bubble manager
         bubbles = new LinkedList<>();
+        popTimer = 0;
+        lastTimerUpdate = 0;
+
+        projectileSpeedMultiplier = 1;
     }
 
     public BufferedImage[][] getPlayerBubbleSprites() {
@@ -268,5 +275,21 @@ public class BubbleManager {
 
         LinkedList<Bubble> bubblesShallowCopy = new LinkedList<>(bubbles);
         new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
+    }
+
+    public void setProjectileSpeedMultiplier(float projectileSpeedMultiplier) {
+        this.projectileSpeedMultiplier = projectileSpeedMultiplier;
+    }
+
+    public float getProjectileSpeedMultiplier() {
+        return projectileSpeedMultiplier;
+    }
+
+    public void setProjectileDistanceMultiplier(float projectileDistanceMultiplier) {
+        this.projectileDistanceMultiplier = projectileDistanceMultiplier;
+    }
+
+    public float getProjectileDistanceMultiplier() {
+        return projectileDistanceMultiplier;
     }
 }
