@@ -1,5 +1,7 @@
 package entities;
 
+import bubbles.BubbleManager;
+import bubbles.EnemyBubble;
 import levels.LevelManager;
 import main.Game;
 
@@ -157,6 +159,12 @@ public abstract class Enemy extends Entity {
         enemyState = BOBBLE_STATE;
         animationIndex = 0;
         animationTick = 0;
+    }
+
+    public void death(Player player) {
+        active = false;
+        enemyState = DEAD_STATE;
+        BubbleManager.getInstance().addDeadEnemy(this, player);
     }
 
     public void setActive(boolean active) {

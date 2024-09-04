@@ -42,7 +42,11 @@ public class Player extends Entity{
     // Timers
     private long lastTimerUpdate;
     private int immuneTimer;
-    private int attackTimer = 100;
+    private int attackTimer = 150;
+
+    // PowerUp Values
+    private float speedMultiplier = 1;                // shoes
+    private float bubbleCadenceMultiplier = 1;        // greenCandy
 
     public Player(Playing playing) {
 
@@ -98,8 +102,8 @@ public class Player extends Entity{
         else
             bubbleManager.addBubble(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction);
 
-        attackTimer = ATTACK_TIMER;
         attackingAnimation = true;
+        attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);
 
         PowerUpManager.getInstance().increaseBubbleShootCounter();
     }
@@ -211,12 +215,12 @@ public class Player extends Entity{
         xSpeed = 0;
 
         if (left) {
-            xSpeed -= WALK_SPEED;
+            xSpeed -= WALK_SPEED * speedMultiplier;
             flipX = width;
             flipW = -1;
         }
         if (right) {
-            xSpeed += WALK_SPEED;
+            xSpeed += WALK_SPEED * speedMultiplier;
             flipX = 0;
             flipW = 1;
         }
@@ -426,5 +430,18 @@ public class Player extends Entity{
             return LEFT;
         else
             return RIGHT;
+    }
+
+    public void setSpeedMultiplier(float speedMultiplier) {
+        this.speedMultiplier = speedMultiplier;
+    }
+
+    public void setBubbleCadenceMultiplier(float bubbleCadenceMultiplier) {
+        this.bubbleCadenceMultiplier = bubbleCadenceMultiplier;
+    }
+
+    public void setChacknHeartImmunity(int immunityTime) {
+        immune = true;
+        immuneTimer = immunityTime;
     }
 }

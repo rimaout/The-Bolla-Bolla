@@ -230,6 +230,12 @@ public class BubbleManager {
                 bubbles.add(new EmptyBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
     }
 
+    public void addDeadEnemy(Enemy e, Player player) {
+         EnemyBubble deadEnemyBubble = new EnemyBubble(e.getHitbox().x, e.getHitbox().y, player.getDirection(), levelData, windDirectionData, e);
+         deadEnemyBubble.playerPop(player);
+         bubbles.add(deadEnemyBubble);
+    }
+
     public void loadBubbleSprites() {
         // Load bubble sprites
         BufferedImage img = LoadSave.GetSprite(LoadSave.BUBBLE_BUD_SPRITE);

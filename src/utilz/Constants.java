@@ -204,7 +204,7 @@ public class Constants {
         public static final int DEAD_ANIMATION = 5;
 
         public static final int IMMUNE_TIME_AFTER_RESPAWN = 2000; // 2 seconds
-        public static final int ATTACK_TIMER = 300; // 0.3 seconds
+        public static final int ATTACK_TIMER = 500;
 
         public static int getSpriteAmount(int playerAnimation) {
             return switch (playerAnimation) {

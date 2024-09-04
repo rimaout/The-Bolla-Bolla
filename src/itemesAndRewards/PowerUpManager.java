@@ -1,10 +1,10 @@
 package itemesAndRewards;
 
 
+import entities.EnemyManager;
 import entities.Player;
 import main.Game;
 import utilz.Constants.Items.PowerUpType;
-import utilz.Constants.Items.PowerUpType.*;
 
 import java.util.ArrayList;
 
@@ -53,37 +53,40 @@ public class PowerUpManager{
     }
 
     public void update() {
-        applyPowerUpEffects();
-        printPowerUpStatus();
+        applyPowerUp();
     }
 
-    public void printPowerUpStatus() {
-        // print all counters
-        System.out.println("bubbleShootCounter: " + bubbleShootCounter);
-        System.out.println("bubblePopCounter: " + bubblePopCounter);
-        System.out.println("jumpCounter: " + jumpCounter);
-        System.out.println("walkedDistance: " + walkedDistance);
-        System.out.println("waterBubblePopCounter: " + waterBubblePopCounter);
-        System.out.println("itemCollectCounter: " + itemCollectCounter);
-        System.out.println("greenCandyCounter: " + greenCandyCounter);
-        System.out.println("blueCandyCounter: " + blueCandyCounter);
-        System.out.println("redCandyCounter: " + redCandyCounter);
-    }
+    public void applyPowerUp() {
 
-    public void applyPowerUpEffects() {
+        if (greenCandy)
+            player.setBubbleCadenceMultiplier(0.5f);
+        else
+            player.setBubbleCadenceMultiplier(1);
+
+        if (shoe)
+            player.setSpeedMultiplier(1.7f);
+        else
+            player.setSpeedMultiplier(1);
+
+        if (chacknHeart) {
+            player.setChacknHeartImmunity(15000);
+            EnemyManager.getInstance().setChacknHeartfreeze(15000);
+            chacknHeart = false;
+        }
+
     }
 
     public PowerUpType getPowerUpToSpawn() {
 
         ArrayList<PowerUpType> powerUps = new ArrayList<>();
 
-        if (bubbleShootCounter >= 35) powerUps.add(PowerUpType.GREEN_CANDY);
+        if (bubbleShootCounter >= 35) powerUps.add(PowerUpType.GREEN_CANDY);        // Working
         if (bubblePopCounter >= 35) powerUps.add(PowerUpType.BLUE_CANDY);
         if (jumpCounter >= 35) powerUps.add(PowerUpType.RED_CANDY);
-        if (walkedDistance >= Game.GAME_WIDTH*15) powerUps.add(PowerUpType.SHOE);
+        if (walkedDistance >= Game.GAME_WIDTH * 5) powerUps.add(PowerUpType.SHOE);  // Working //TODO: change to * 15
         if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);
         if (itemCollectCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);
-        if (itemCollectCounter >= 55) powerUps.add(PowerUpType.CHACKN_HEART);
+        if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // TODO: change to 55
         if (blueCandyCounter >= 3) powerUps.add(PowerUpType.CRYSTAL_RING);
         if (greenCandyCounter >= 3) powerUps.add(PowerUpType.EMERALD_RING);
         if (redCandyCounter >= 3) powerUps.add(PowerUpType.RUBY_RING);
@@ -138,43 +141,76 @@ public class PowerUpManager{
         itemCollectCounter++;
     }
 
-    public void increaseGreenCandyCounter() {
+    public void collectedGreenCandy() {
         greenCandyCounter++;
+        greenCandy = true;
+
+        // reset quest
+        bubbleShootCounter = 0;
     }
 
-    public void increaseBlueCandyCounter() {
+    public void collectedBlueCandy() {
         blueCandyCounter++;
+        blueCandy = true;
+
+        // reset quest
+        bubblePopCounter = 0;
     }
 
-    public void increaseRedCandyCounter() {
+    public void collectedRedCandyCounter() {
         redCandyCounter++;
+        redCandy = true;
+
+        // reset quest
+        jumpCounter = 0;
     }
 
-    public void setShoe(boolean shoe) {
-        this.shoe = shoe;
+    public void collectedShoe() {
+        shoe = true;
+
+        // reset quest
+        walkedDistance = 0;
     }
 
-    public void setOrangeParasol(boolean orangeParasol) {
-        this.orangeParasol = orangeParasol;
+    public void collectedOrangeParasol() {
+        orangeParasol = true;
+
+        // reset quest
+        waterBubblePopCounter = 0;
     }
 
-    public void setBlueParasol(boolean blueParasol) {
-        this.blueParasol = blueParasol;
+    public void collectedBlueParasol() {
+        blueParasol = true;
+
+        // reset quest
+        waterBubblePopCounter = 0;
     }
 
-    public void setChacknHeart(boolean chacknHeart) {
-        this.chacknHeart = chacknHeart;
+    public void collectedChacknHeart() {
+        chacknHeart = true;
+
+        // reset quest
+        itemCollectCounter = 0;
     }
 
-    public void setCrystalRing(boolean crystalRing) {
-        this.crystalRing = crystalRing;
+    public void collectedCrystalRing() {
+        crystalRing = true;
+
+        // reset quest
+        blueCandyCounter = 0;
     }
 
-    public void setEmeraldRing(boolean emeraldRing) {
-        this.emeraldRing = emeraldRing;
+    public void collectedEmeraldRing() {
+        emeraldRing = true;
+
+        // reset quest
+        greenCandyCounter = 0;
     }
 
-    public void setRubyRing(boolean rubyRing) {
-        this.rubyRing = rubyRing;
+    public void collectedRubyRing() {
+        rubyRing = true;
+
+        // reset quest
+        redCandyCounter = 0;
     }
 }

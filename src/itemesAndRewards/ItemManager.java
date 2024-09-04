@@ -6,7 +6,7 @@ import gameStates.Playing;
 import levels.LevelManager;
 import utilz.LoadSave;
 import static utilz.Constants.Items.*;
-import static utilz.HelpMethods.GetRandomPositionOnFloor;
+import static utilz.HelpMethods.GetRandomPosition;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -92,7 +92,7 @@ public class ItemManager {
         if (spawnPowerUpTimer <= 0 && !powerUpSpawned) {
             powerUpSpawned = true;
 
-            Point spawnPoint = GetRandomPositionOnFloor(LevelManager.getInstance().getCurrentLevel().getLevelData());
+            Point spawnPoint = GetRandomPosition(LevelManager.getInstance().getCurrentLevel().getLevelData(), new Rectangle(0, 0, W, H));
             PowerUpType powerUp = PowerUpManager.getInstance().getPowerUpToSpawn();
 
             if (powerUp != null) {

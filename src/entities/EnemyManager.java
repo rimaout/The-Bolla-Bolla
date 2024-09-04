@@ -22,6 +22,15 @@ public class EnemyManager {
     private boolean allEnemiesReachedSpawn = false;
     private boolean allEnemiesDead = false;
 
+    private boolean enemiesFreeze = false;
+    private int freezeTimer;
+
+    private boolean playerInvincibleMode = false;
+    private int invincibleTimer;
+
+    private boolean firstUpdate = true;
+    private long lastTimerUpdate;
+
     private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
         this.player = player;
@@ -43,12 +52,39 @@ public class EnemyManager {
 
 
     public void update() {
+        timersUpdate();
+        enemiesUpdate();
+    }
+
+    private void timersUpdate() {
+        if (firstUpdate) {
+            firstUpdate = false;
+            lastTimerUpdate = System.currentTimeMillis();
+        }
+
+        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        lastTimerUpdate = System.currentTimeMillis();
+
+        freezeTimer -= timeDelta;
+        invincibleTimer -= timeDelta;
+
+        if (freezeTimer <= 0)
+            enemiesFreeze = false;
+
+        if (invincibleTimer <= 0)
+            playerInvincibleMode = false;
+    }
+
+    private void enemiesUpdate() {
         int deadCounter = 0;
         int reachedSpawnCounter = 0;
 
         for (Enemy e : enemies) {
             if (e.isActive()) {
-                e.update(player);
+
+                if (!enemiesFreeze)
+                    e.update(player);
+
                 checkEnemyHit(player, e);
             }
 
@@ -77,6 +113,10 @@ public class EnemyManager {
 
     public void checkEnemyHit(Player player, Enemy enemy) {
             if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive())
+
+                if (playerInvincibleMode)
+                    enemy.death(player);
+                else
                     player.death();
     }
 
@@ -109,6 +149,13 @@ public class EnemyManager {
 
         allEnemiesReachedSpawn = false;
         allEnemiesDead = false;
+
+        freezeTimer = 0;
+        enemiesFreeze = false;
+        invincibleTimer = 0;
+        playerInvincibleMode = false;
+
+        firstUpdate = true;
     }
 
     public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
@@ -130,5 +177,13 @@ public class EnemyManager {
 
     public boolean areAllEnemiesDead() {
         return allEnemiesDead;
+    }
+
+    public void setChacknHeartfreeze(int timer) {
+        freezeTimer = timer;
+        invincibleTimer = timer;
+
+        enemiesFreeze = true;
+        playerInvincibleMode = true;
     }
 }

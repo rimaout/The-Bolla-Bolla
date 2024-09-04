@@ -42,16 +42,16 @@ public class PowerUp extends Item {
     @Override
     void applyEffect(Player player) {
         switch (type) {
-            case GREEN_CANDY -> powerUpManager.increaseGreenCandyCounter();
-            case BLUE_CANDY -> powerUpManager.increaseBlueCandyCounter();
-            case RED_CANDY -> powerUpManager.increaseRedCandyCounter();
-            case SHOE -> powerUpManager.setShoe(true);
-            case ORANGE_PARASOL -> powerUpManager.setOrangeParasol(true);
-            case BLUE_PARASOL -> powerUpManager.setBlueParasol(true);
-            case CHACKN_HEART -> powerUpManager.setChacknHeart(true);
-            case CRYSTAL_RING -> powerUpManager.setCrystalRing(true);
-            case EMERALD_RING -> powerUpManager.setEmeraldRing(true);
-            case RUBY_RING -> powerUpManager.setRubyRing(true);
+            case GREEN_CANDY -> powerUpManager.collectedGreenCandy();
+            case BLUE_CANDY -> powerUpManager.collectedBlueCandy();
+            case RED_CANDY -> powerUpManager.collectedRedCandyCounter();
+            case SHOE -> powerUpManager.collectedShoe();
+            case ORANGE_PARASOL -> powerUpManager.collectedOrangeParasol();
+            case BLUE_PARASOL -> powerUpManager.collectedBlueParasol();
+            case CHACKN_HEART -> powerUpManager.collectedChacknHeart();
+            case CRYSTAL_RING -> powerUpManager.collectedCrystalRing();
+            case EMERALD_RING -> powerUpManager.collectedEmeraldRing();
+            case RUBY_RING -> powerUpManager.collectedRubyRing();
         }
     }
 }

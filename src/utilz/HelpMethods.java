@@ -189,13 +189,22 @@ public class HelpMethods {
 
     }
 
-    public static Point GetRandomPositionOnFloor(int[][] levelData) {
-        int x = (int) (Math.random() * Game.TILES_IN_WIDTH);
-        int y = 0;
+    public static Point GetRandomPosition(int[][] levelData, Rectangle hitbox) {
+        //This method find a random position in the level where the hitbox is not colliding with a solid tile
+        int xRangeStart = (Game.TILES_IN_WIDTH + 3)  * Game.TILES_SIZE;
+        int xRangeEnd = (Game.TILES_IN_WIDTH - 3 * Game.TILES_SIZE) - hitbox.width;
 
-        while (!IsTileSolid(x, y, levelData))
-            y++;
+        int yRangeStart = 4 * Game.TILES_SIZE;
+        int yRangeEnd = (Game.TILES_IN_HEIGHT - 3) * Game.TILES_SIZE - hitbox.height;
 
-        return new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
+        hitbox.x = (int) (Math.random() * (xRangeEnd - xRangeStart) + xRangeStart);
+        hitbox.y = (int) (Math.random() * (yRangeEnd - yRangeStart) + yRangeStart);
+
+        while (IsEntityInsideSolid(new Rectangle2D.Float(hitbox.x, hitbox.y, hitbox.width, hitbox.height), levelData)) {
+            hitbox.x = (int) (Math.random() * (xRangeEnd - xRangeStart) + xRangeStart);
+            hitbox.y = (int) (Math.random() * (yRangeEnd - yRangeStart) + yRangeStart);
+        }
+
+        return new Point(hitbox.x, hitbox.y);
     }
 }
