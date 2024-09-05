@@ -2,6 +2,7 @@ package entities;
 
 import bubbles.BubbleManager;
 import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import utilz.LoadSave;
 import gameStates.Playing;
@@ -45,8 +46,11 @@ public class Player extends Entity{
     private int attackTimer = 150;
 
     // PowerUp Values
-    private float speedMultiplier = 1;                // shoes
-    private float bubbleCadenceMultiplier = 1;        // greenCandy
+    private float speedMultiplier = 1;         // shoes
+    private float bubbleCadenceMultiplier = 1; // greenCandy
+    private int jumpPoints = 0;                // emeraldRing
+    private int walkPoints = 0;                // crystalRing
+    private int bubbleShotPoints = 0;          // rubyRing
 
     public Player(Playing playing) {
 
@@ -106,6 +110,7 @@ public class Player extends Entity{
         attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);
 
         PowerUpManager.getInstance().increaseBubbleShootCounter();
+        addPoints(bubbleShotPoints);     // rubyRing powerUp
     }
 
     private void setAnimation() {
@@ -206,6 +211,7 @@ public class Player extends Entity{
             if(!IsEntityInsideSolid(hitbox, levelData)) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
                 PowerUpManager.getInstance().increaseJumpCounter();
+                addPoints(jumpPoints);  //emeraldRing powerUp
             }
         }
 
@@ -239,7 +245,8 @@ public class Player extends Entity{
 
     private void handleOnFloorMovement(){
         updateXPos(xSpeed, levelData);
-        moving = true; // Activate running animation
+        addPoints(walkPoints);  // crystalRing powerUp
+        moving = true;          // Activate running animation
     }
 
     private void handleMovementInsideSolid() {
@@ -443,5 +450,17 @@ public class Player extends Entity{
     public void setChacknHeartImmunity(int immunityTime) {
         immune = true;
         immuneTimer = immunityTime;
+    }
+
+    public void setJumpPoints(int jumpPoints) {
+        this.jumpPoints = jumpPoints;
+    }
+
+    public void setWalkPoints(int walkPoints) {
+        this.walkPoints = walkPoints;
+    }
+
+    public void setBubbleShotPoints(int bubbleShotPoints) {
+        this.bubbleShotPoints = bubbleShotPoints;
     }
 }

@@ -23,8 +23,8 @@ public class PowerUpManager{
     private boolean orangeParasol = false;
     private boolean blueParasol = false;
     private boolean chacknHeart = false;
-    private boolean crystalRing = false;
     private boolean emeraldRing = false;
+    private boolean crystalRing = false;
     private boolean rubyRing = false;
 
     // PowerUp Counters
@@ -85,6 +85,30 @@ public class PowerUpManager{
             chacknHeart = false;
         }
 
+        if (orangeParasol)
+            System.out.println("Orange Parasol");
+        else
+            System.out.println("No Orange Parasol");
+
+        if (blueParasol)
+            System.out.println("Blue Parasol");
+        else
+            System.out.println("No Blue Parasol");
+
+        if (emeraldRing)
+            player.setJumpPoints(500);
+        else
+            player.setJumpPoints(0);
+
+        if (crystalRing)
+            player.setWalkPoints(10);
+        else
+            player.setWalkPoints(0);
+
+        if (rubyRing)
+            player.setBubbleShotPoints(100);
+        else
+            player.setBubbleShotPoints(0);
     }
 
     public PowerUpType getPowerUpToSpawn() {
@@ -95,12 +119,12 @@ public class PowerUpManager{
         if (bubblePopCounter >= 10) powerUps.add(PowerUpType.BLUE_CANDY);           // Working // TODO: change to 35
         if (jumpCounter >= 10) powerUps.add(PowerUpType.RED_CANDY);                 // Working // TODO: change to 35
         if (walkedDistance >= Game.GAME_WIDTH * 5) powerUps.add(PowerUpType.SHOE);  // Working // TODO: change to * 15
-        if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);
-        if (itemCollectCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);
+        if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);  // TODO: not implemented water bubble yet
+        if (waterBubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);    // TODO: not implemented water bubble yet
         if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // TODO: change to 55
-        if (blueCandyCounter >= 3) powerUps.add(PowerUpType.CRYSTAL_RING);
-        if (greenCandyCounter >= 3) powerUps.add(PowerUpType.EMERALD_RING);
-        if (redCandyCounter >= 3) powerUps.add(PowerUpType.RUBY_RING);
+        if (blueCandyCounter >= 1) powerUps.add(PowerUpType.CRYSTAL_RING);          // Working // TODO: change to 3
+        if (greenCandyCounter >= 1) powerUps.add(PowerUpType.EMERALD_RING);         // Working // TODO: change to 3
+        if (redCandyCounter >= 1) powerUps.add(PowerUpType.RUBY_RING);              // Working // TODO: change to 3
 
         if (powerUps.isEmpty()) return null;
 
