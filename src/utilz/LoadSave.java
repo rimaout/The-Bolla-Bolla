@@ -49,7 +49,7 @@ public class LoadSave {
     public static final String LEVEL6_DATA = "/levelMaps/level6.png";
 
     // IMAGES
-    public static final String GAME_LOGO = "/images/bubbleBobble_Logo.png";
+    public static final String GAME_LOGO = "/images/logo.png";
     public static final String PAUSE_BACKGROUND = "/images/pause_menu.png";
 
     // FONTS

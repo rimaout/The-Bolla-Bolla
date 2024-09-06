@@ -86,14 +86,14 @@ public class PowerUpManager{
         }
 
         if (orangeParasol)
-            System.out.println("Orange Parasol");
+            System.out.print("");
         else
-            System.out.println("No Orange Parasol");
+            System.out.print("");
 
         if (blueParasol)
-            System.out.println("Blue Parasol");
+            System.out.print("");
         else
-            System.out.println("No Blue Parasol");
+            System.out.print("");
 
         if (emeraldRing)
             player.setJumpPoints(500);

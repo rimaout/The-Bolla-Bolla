@@ -74,7 +74,7 @@ public class EnemyBubble extends EmptyBubble {
             xSpeed = xSpeedDead;
 
         // Going up
-        if (ySpeed < 1) {
+        if (ySpeed < 0.5) {
             hitbox.y += ySpeed;
 
             if (willBubbleBeInPerimeterWall(xSpeed))
@@ -83,10 +83,9 @@ public class EnemyBubble extends EmptyBubble {
             hitbox.x += xSpeed;
         }
         // Going down
-        else if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
+        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, levelData)) {
             hitbox.y += ySpeed;
             updateXPos(xSpeed, levelData);
-
         } else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
             conpenetrationSafeUpdateXPos(xSpeed, levelData);

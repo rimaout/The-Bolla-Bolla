@@ -31,7 +31,7 @@ public class BubbleManager {
 
     private long lastTimerUpdate;
     private int popTimer = 0;
-    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 500;
+    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 350;
 
     // PowerUp Multipliers
     private float projectileSpeedMultiplier = 1;
