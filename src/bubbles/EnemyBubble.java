@@ -40,7 +40,7 @@ public class EnemyBubble extends EmptyBubble {
         BufferedImage[][] enemySprites = EnemyManager.getInstance().getEnemySprite(enemy.getEnemyType());
 
         if (state == NORMAL)
-            g.drawImage(enemySprites[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemySprites[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
 
         else if (state == RED || state == BLINKING)
             g.drawImage(enemySprites[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);

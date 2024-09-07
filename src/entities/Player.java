@@ -439,6 +439,10 @@ public class Player extends Entity{
             return RIGHT;
     }
 
+    public int getYTile() {
+        return (int) hitbox.y / Game.TILES_SIZE;
+    }
+
     public void setSpeedMultiplier(float speedMultiplier) {
         this.speedMultiplier = speedMultiplier;
     }

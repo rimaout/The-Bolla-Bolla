@@ -17,6 +17,7 @@ public class EnemyManager {
     private int[][] levelData;
 
     private BufferedImage[][] zenChanSprites;
+    private BufferedImage[][] maitaSprites;
     private ArrayList<Enemy> enemies;
 
     private boolean allEnemiesReachedSpawn = false;
@@ -34,7 +35,7 @@ public class EnemyManager {
     private EnemyManager(Playing playing, Player player) {
         this.playing = playing;
         this.player = player;
-        loadEnemiesSprites();
+        loadSprites();
         loadEnemies();
         loadLevelData();
     }
@@ -108,7 +109,7 @@ public class EnemyManager {
 
         for (Enemy e : enemies)
             if(e.isActive())
-                g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ZEN_CHAN_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ZEN_CHAN_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
+                g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
     }
 
     public void checkEnemyHit(Player player, Enemy enemy) {
@@ -134,13 +135,19 @@ public class EnemyManager {
         enemies = LevelManager.getInstance().getCurrentLevel().getEnemies();
     }
 
-    private void loadEnemiesSprites() {
+    private void loadSprites() {
         zenChanSprites = new BufferedImage[9][4];
         BufferedImage temp = LoadSave.GetSprite(LoadSave.ZEN_CHAN_ENEMY_SPRITE);
 
         for (int j = 0; j < zenChanSprites.length; j++)
             for (int i = 0; i < zenChanSprites[j].length; i++)
                 zenChanSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
+
+        maitaSprites = new BufferedImage[9][4];
+        temp = LoadSave.GetSprite(LoadSave.MAITA_ENEMY_SPRITE);
+        for (int j = 0; j < maitaSprites.length; j++)
+            for (int i = 0; i < maitaSprites[j].length; i++)
+                maitaSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
     }
 
     public void resetAll() {
@@ -159,12 +166,10 @@ public class EnemyManager {
     }
 
     public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
-        switch (enemyType) {
-            case ZEN_CHAN:
-                return zenChanSprites;
-            default:
-                return null;
-        }
+        return switch (enemyType) {
+            case ZEN_CHAN -> zenChanSprites;
+            case MAITA -> maitaSprites;
+        };
     }
 
     public int getEnemyCount() {

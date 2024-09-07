@@ -1,6 +1,7 @@
 package utilz;
 
 import entities.Enemy;
+import entities.Maita;
 import entities.ZenChan;
 import main.Game;
 
@@ -18,14 +19,14 @@ import java.util.Comparator;
 
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
-import static utilz.Constants.EnemyConstants.ZEN_CHAN_LEFT;
-import static utilz.Constants.EnemyConstants.ZEN_CHAN_RIGHT;
+import static utilz.Constants.EnemyConstants.*;
 
 public class LoadSave {
     // Sprites
     public static final String PLAYER_SPRITE = "/sprites/Bud.png";
     public static final String PLAYER_TRANSITION_SPRITE = "/sprites/Bud_level_transition.png";
     public static final String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
+    public static final String MAITA_ENEMY_SPRITE = "/sprites/Maita.png";
     public static final String LEVEL_TILES_SPRITE = "/sprites/level_tiles.png";
     public static final String NUMBERS_TILES_SPRITE = "/sprites/numbers_tiles.png";
     public static final String MENU_BUTTONS_SPRITE = "/sprites/menu_buttons.png";
@@ -143,6 +144,8 @@ public class LoadSave {
         //      0 -> no enemy
         //      1 -> Zen-Chan facing left
         //      2 -> Zen-Chan facing right
+        //      3 -> Maita facing left
+        //      4 -> Maita facing right
 
         ArrayList<Enemy> list = new ArrayList<>();
 
@@ -154,10 +157,12 @@ public class LoadSave {
                 if(green >= 10)
                     green = 0;
 
-                if (green == ZEN_CHAN_LEFT)
-                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
-                else if (green == ZEN_CHAN_RIGHT)
-                    list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
+                switch (green) {
+                    case ZEN_CHAN_LEFT -> list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
+                    case ZEN_CHAN_RIGHT -> list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
+                    case MAITA_LEFT -> list.add(new Maita(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
+                    case MAITA_RIGHT -> list.add(new Maita(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
+                }
             }
         return list;
     }

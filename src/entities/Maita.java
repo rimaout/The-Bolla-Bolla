@@ -3,13 +3,18 @@ package entities;
 import levels.LevelManager;
 import main.Game;
 import utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
+
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.EnemyConstants.EnemyType.MAITA;
 import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
+import static utilz.Constants.EnemyConstants.PLAYER_INFO_MAX_UPDATE_INTERVAL;
 import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
+import static utilz.HelpMethods.IsTileSolid;
 
-public class ZenChan extends Enemy {
+public class Maita extends Enemy {
 
     // Movement Variables
     private boolean goUp = false;
@@ -25,13 +30,14 @@ public class ZenChan extends Enemy {
 
     // Player Info Update variables
     private int playerUpdateTimer;
+    private int fireBallTimer;
     private long lastTimerUpdate;
 
     // Jump Variables
     private int jumpDistance = 0;
 
-    public ZenChan(float x, float y, Direction startWalkingDir) {
-        super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
+    public Maita(float x, float y, Direction startWalkingDir) {
+        super(x, y, ENEMY_W, ENEMY_H, MAITA, startWalkingDir);
         this.startWalkingDir = startWalkingDir;
         initHitbox(ENEMY_HITBOX_W, ENEMY_HITBOX_H);
     }
@@ -52,10 +58,12 @@ public class ZenChan extends Enemy {
         if (firstUpdate)
             firstUpdate();
 
-        updateTimers();
+        updateTimers(player);
         updatePlayerInfo(player);
         updateMove();
         updateStateVariables();
+
+        checkFireBall(player);
     }
 
     private void firstUpdate() {
@@ -66,11 +74,14 @@ public class ZenChan extends Enemy {
         firstUpdate = false;
     }
 
-    private void updateTimers() {
+    private void updateTimers(Player player) {
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
 
         playerUpdateTimer -= timeDelta;
+
+        if (playerTileY == tileY)
+            fireBallTimer -= timeDelta;
     }
 
     private void updateMove() {
@@ -249,7 +260,7 @@ public class ZenChan extends Enemy {
             // fall ended
             hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
             isFalling = false;
-         }
+        }
     }
 
     private void goOnFloor(int[][] levelData) {
@@ -348,9 +359,17 @@ public class ZenChan extends Enemy {
         return false;
     }
 
+    private void checkFireBall(Player player) {
+        if (fireBallTimer <= 0) {
+            System.out.println("Fireball"); //TODO: Implement fireball (crea fireball in direzione del player
+            fireBallTimer = FIREBALL_TIMER;
+        }
+    }
+
     private void updatePlayerInfo(Player player){
 
         // update player info in a random interval between 0-8 seconds
+
         if (playerUpdateTimer <= 0) {
             calculatePlayersPos(player);
             playerUpdateTimer = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
@@ -390,6 +409,6 @@ public class ZenChan extends Enemy {
 
     @Override
     public EnemyType getEnemyType() {
-        return ZEN_CHAN;
+        return MAITA;
     }
 }

@@ -223,19 +223,25 @@ public class Constants {
 
         // Enemy Types
         public enum EnemyType {
-            ZEN_CHAN;
+            ZEN_CHAN, MAITA;
         }
 
-        public static final float INITIAL_SPAWN_POINT_Y = -3 * Game.TILES_SIZE;
-        public static final float SPAWN_TRANSITION_SPEED = 0.31f * Game.SCALE;
+        // Maita Constants
+        public static final int FIREBALL_TIMER = 5000;
 
-        // Zen Chan Constants
+        // Spawning Constants
         public static final int ZEN_CHAN_LEFT = 1;
         public static final int ZEN_CHAN_RIGHT = 2;
-        public static final int ZEN_CHAN_HITBOX_W = (int) (14 * Game.SCALE);
-        public static final int ZEN_CHAN_HITBOX_H = (int) (15 * Game.SCALE);
-        public static final int ZEN_CHAN_OFFSET_X = (int) (2 * Game.SCALE);
-        public static final int ZEN_CHAN_OFFSET_Y = (int) (2 * Game.SCALE);
+        public static final int MAITA_LEFT = 3;
+        public static final int MAITA_RIGHT = 4;
+        public static final float INITIAL_SPAWN_POINT_Y = -3 * Game.TILES_SIZE;
+        public static final float SPAWN_TRANSITION_SPEED = 0.31f * Game.SCALE;
+        
+        // Hitbox Constants
+        public static final int ENEMY_HITBOX_W = (int) (14 * Game.SCALE);
+        public static final int ENEMY_HITBOX_H = (int) (15 * Game.SCALE);
+        public static final int ENEMY_HITBOX_OFFSET_X = (int) (2 * Game.SCALE);
+        public static final int ENEMY_HITBOX_OFFSET_Y = (int) (1 * Game.SCALE);
 
         // General Enemy Sprite Sizes
         public static final int ENEMY_DEFAULT_W = 18;
@@ -274,7 +280,7 @@ public class Constants {
         public static final int PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
 
         public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
-            if (enemyType == EnemyType.ZEN_CHAN) {
+            if (enemyType == EnemyType.ZEN_CHAN || enemyType == EnemyType.MAITA) {
                 return switch (enemyState) {
                     case WALKING_ANIMATION_NORMAL -> 2;
                     case WALKING_ANIMATION_HUNGRY -> 2;

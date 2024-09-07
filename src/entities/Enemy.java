@@ -143,6 +143,13 @@ public abstract class Enemy extends Entity {
             return 1;
     }
 
+    protected void updateWalkingDir() {
+        if (playerTileX < tileX)
+            walkingDir = LEFT;
+        else if (playerTileX > tileX)
+            walkingDir = RIGHT;
+    }
+
     public void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
