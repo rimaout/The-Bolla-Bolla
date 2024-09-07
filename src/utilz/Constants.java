@@ -272,12 +272,14 @@ public class Constants {
         public static final float HUNGRY_FLY_SPEED = 0.5f * Game.SCALE;
         public static final float HUNGRY_WALK_SPEED = 0.7f * Game.SCALE;
 
+
+        public static final int NORMAL_PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
+        public static final int HUNGRY_PLAYER_INFO_MAX_UPDATE_INTERVAL = 5000; // 5 seconds
+        
         public static final float JUMP_Y_SPEED = -0.44f * Game.SCALE;
         public static final float JUMP_X_SPEED = 0.4f * Game.SCALE;
         public static final float ATTACK_RANGE = Game.TILES_SIZE;
         public static final float VIEWING_RANGE = Game.TILES_SIZE * 5;
-
-        public static final int PLAYER_INFO_MAX_UPDATE_INTERVAL = 8000; // 8 seconds
 
         public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
             if (enemyType == EnemyType.ZEN_CHAN || enemyType == EnemyType.MAITA) {

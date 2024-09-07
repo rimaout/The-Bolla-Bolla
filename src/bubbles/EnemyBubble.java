@@ -105,23 +105,7 @@ public class EnemyBubble extends EmptyBubble {
             RewardPointsManager.getInstance().addChainReactionReward(consecutivePopsCounter);
         }
         
-        // calculate the speed of the bubble (random values between 50% and 100% of the Max speed)
-        ySpeedDead = - (0.5f + random.nextFloat() * 0.5f) * DEAD_Y_SPEED;
-        ySpeed = ySpeedDead;
-        xSpeedDead = (0.5f + random.nextFloat() * 0.5f) * DEAD_X_SPEED;
-        xSpeed = xSpeedDead;
-
-        // Set the direction of the bubble (following the player direction)
-        direction = player.getDirection();
-
-        // Set Bubble state
-        state = DEAD;
-        popped = true;
-        playerPopped = true;
-        animationIndex = 0;
-        animationTick = 0;
-
-        enemy.setAlive(false);
+       playerPop(player);
     }
 
     public void playerPop(Player player) {

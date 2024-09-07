@@ -350,10 +350,9 @@ public class ZenChan extends Enemy {
 
     private void updatePlayerInfo(Player player){
 
-        // update player info in a random interval between 0-8 seconds
         if (playerUpdateTimer <= 0) {
             calculatePlayersPos(player);
-            playerUpdateTimer = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
+            playerUpdateTimer = (int) (Math.random() * updatePlayerPosMaxInterval);
         }
     }
 

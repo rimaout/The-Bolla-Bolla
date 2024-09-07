@@ -1,7 +1,6 @@
 package entities;
 
 import bubbles.BubbleManager;
-import bubbles.EnemyBubble;
 import levels.LevelManager;
 import main.Game;
 
@@ -36,6 +35,7 @@ public abstract class Enemy extends Entity {
 
     // Player info
     protected int playerTileX, playerTileY;
+    protected int updatePlayerPosMaxInterval;
 
     public Enemy(float x, float y, int width, int height, EnemyType  enemyType, Direction startWalkingDir) {
         super(x, INITIAL_SPAWN_POINT_Y, width, height);
@@ -81,6 +81,7 @@ public abstract class Enemy extends Entity {
                 flySpeed = NORMAL_FLY_SPEED;
                 walkSpeed = NORMAL_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_NORMAL;
+                updatePlayerPosMaxInterval = NORMAL_PLAYER_INFO_MAX_UPDATE_INTERVAL;
                 break;
 
             case HUNGRY_STATE:
@@ -88,6 +89,7 @@ public abstract class Enemy extends Entity {
                 flySpeed = HUNGRY_FLY_SPEED;
                 walkSpeed = HUNGRY_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_HUNGRY;
+                updatePlayerPosMaxInterval = HUNGRY_PLAYER_INFO_MAX_UPDATE_INTERVAL;
                 break;
 
             case BOBBLE_STATE:

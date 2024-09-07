@@ -2,8 +2,6 @@ package bubbles;
 
 import entities.Enemy;
 import entities.Player;
-import gameStates.Playing;
-import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
@@ -96,7 +94,7 @@ public class BubbleManager {
 
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
-        popTimer -= timeDelta;
+        popTimer -= (int) timeDelta;
     }
 
    private void collisionBetweenBubbles() {
@@ -135,17 +133,17 @@ public class BubbleManager {
             }
 
             // Move bubbles apart
-            bubble1.getHitbox().x -= dx * overlap * repulsionStrength;
-            bubble1.getHitbox().y -= dy * overlap * repulsionStrength;
-            bubble2.getHitbox().x += dx * overlap * repulsionStrength;
-            bubble2.getHitbox().x += dy * overlap * repulsionStrength;
+            bubble1.getHitbox().x -= (float) (dx * overlap * repulsionStrength);
+            bubble1.getHitbox().y -= (float) (dy * overlap * repulsionStrength);
+            bubble2.getHitbox().x += (float) (dx * overlap * repulsionStrength);
+            bubble2.getHitbox().x += (float) (dy * overlap * repulsionStrength);
 
             // Introduce randomness
             double randomAdjustment = 1.0; // Adjust this value as needed
-            bubble1.getHitbox().x += (Math.random() - 0.5) * randomAdjustment;
-            bubble1.getHitbox().y += (Math.random() - 0.5) * randomAdjustment;
-            bubble2.getHitbox().x += (Math.random() - 0.5) * randomAdjustment;
-            bubble2.getHitbox().y += (Math.random() - 0.5) * randomAdjustment;
+            bubble1.getHitbox().x += (float) ((Math.random() - 0.5) * randomAdjustment);
+            bubble1.getHitbox().y += (float) ((Math.random() - 0.5) * randomAdjustment);
+            bubble2.getHitbox().x += (float) ((Math.random() - 0.5) * randomAdjustment);
+            bubble2.getHitbox().y += (float) ((Math.random() - 0.5) * randomAdjustment);
         }
     }
 

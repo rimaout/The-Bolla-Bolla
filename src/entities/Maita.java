@@ -8,8 +8,7 @@ import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.MAITA;
-import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
-import static utilz.Constants.EnemyConstants.PLAYER_INFO_MAX_UPDATE_INTERVAL;
+import static utilz.Constants.EnemyConstants.NORMAL_PLAYER_INFO_MAX_UPDATE_INTERVAL;
 import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
 import static utilz.HelpMethods.IsTileSolid;
@@ -58,7 +57,7 @@ public class Maita extends Enemy {
         if (firstUpdate)
             firstUpdate();
 
-        updateTimers(player);
+        updateTimers();
         updatePlayerInfo(player);
         updateMove();
         updateStateVariables();
@@ -74,7 +73,7 @@ public class Maita extends Enemy {
         firstUpdate = false;
     }
 
-    private void updateTimers(Player player) {
+    private void updateTimers() {
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
 
@@ -372,7 +371,7 @@ public class Maita extends Enemy {
 
         if (playerUpdateTimer <= 0) {
             calculatePlayersPos(player);
-            playerUpdateTimer = (int) (Math.random() * PLAYER_INFO_MAX_UPDATE_INTERVAL);
+            playerUpdateTimer = (int) (Math.random() * updatePlayerPosMaxInterval);
         }
     }
 

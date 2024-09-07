@@ -81,7 +81,7 @@ public class Playing extends State implements StateMethods {
             powerUpManager.update();
         }
 
-        updateBolleans();
+        updateBooleans();
     }
 
     @Override
@@ -106,13 +106,12 @@ public class Playing extends State implements StateMethods {
     }
 
 
-    private void updateBolleans(){
+    private void updateBooleans(){
         if (playerOne.getLives() == 0)
             gameOver = true;
 
-        if (enemyManager.areAllEnemiesDead() && itemManager.areAllRewardsDeSpawned()) {
+        if (enemyManager.getAllEnemiesDeadChronometer() >= 6000)
             levelCompleted = true;
-        }
 
         if (levelManager.areAllLevelsCompleted())
             gameCompleted = true;

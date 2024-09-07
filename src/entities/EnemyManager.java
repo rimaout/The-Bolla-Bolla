@@ -21,7 +21,9 @@ public class EnemyManager {
     private ArrayList<Enemy> enemies;
 
     private boolean allEnemiesReachedSpawn = false;
+
     private boolean allEnemiesDead = false;
+    private int allEnemiesDeadChronometer = 0;
 
     private boolean enemiesFreeze = false;
     private int freezeTimer;
@@ -74,6 +76,9 @@ public class EnemyManager {
 
         if (invincibleTimer <= 0)
             playerInvincibleMode = false;
+
+        if (allEnemiesDead)
+            allEnemiesDeadChronometer += timeDelta;
     }
 
     private void enemiesUpdate() {
@@ -156,6 +161,7 @@ public class EnemyManager {
 
         allEnemiesReachedSpawn = false;
         allEnemiesDead = false;
+        allEnemiesDeadChronometer = 0;
 
         freezeTimer = 0;
         enemiesFreeze = false;
@@ -180,15 +186,15 @@ public class EnemyManager {
         return allEnemiesReachedSpawn;
     }
 
-    public boolean areAllEnemiesDead() {
-        return allEnemiesDead;
-    }
-
     public void setChacknHeartfreeze(int timer) {
         freezeTimer = timer;
         invincibleTimer = timer;
 
         enemiesFreeze = true;
         playerInvincibleMode = true;
+    }
+
+    public int getAllEnemiesDeadChronometer() {
+        return allEnemiesDeadChronometer;
     }
 }
