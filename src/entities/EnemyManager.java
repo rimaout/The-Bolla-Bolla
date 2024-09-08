@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class EnemyManager {
     private static EnemyManager instance;
 
-    private Playing playing;
     private Player player;
     private int[][] levelData;
 
     private BufferedImage[][] zenChanSprites;
     private BufferedImage[][] maitaSprites;
+
     private ArrayList<Enemy> enemies;
 
     private boolean allEnemiesReachedSpawn = false;
@@ -35,7 +35,6 @@ public class EnemyManager {
     private long lastTimerUpdate;
 
     private EnemyManager(Playing playing, Player player) {
-        this.playing = playing;
         this.player = player;
         loadSprites();
         loadEnemies();
@@ -68,8 +67,8 @@ public class EnemyManager {
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
 
-        freezeTimer -= timeDelta;
-        invincibleTimer -= timeDelta;
+        freezeTimer -= (int) timeDelta;
+        invincibleTimer -= (int) timeDelta;
 
         if (freezeTimer <= 0)
             enemiesFreeze = false;
@@ -78,7 +77,7 @@ public class EnemyManager {
             playerInvincibleMode = false;
 
         if (allEnemiesDead)
-            allEnemiesDeadChronometer += timeDelta;
+            allEnemiesDeadChronometer += (int) timeDelta;
     }
 
     private void enemiesUpdate() {
@@ -111,7 +110,6 @@ public class EnemyManager {
     }
 
     public void draw(Graphics g) {
-
         for (Enemy e : enemies)
             if(e.isActive())
                 g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
@@ -156,8 +154,7 @@ public class EnemyManager {
     }
 
     public void resetAll() {
-        for (Enemy e : enemies)
-            e.resetEnemy();
+        enemies.clear();
 
         allEnemiesReachedSpawn = false;
         allEnemiesDead = false;

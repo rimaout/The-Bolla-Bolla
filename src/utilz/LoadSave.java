@@ -40,14 +40,7 @@ public class LoadSave {
     public static final String ITEM_DESPAWN_SPRITE = "/sprites/item_despawn.png";
     public static final String BUD_SMALL_POINTS_SPRITE = "/sprites/Bud_small_points.png";
     public static final String BUD_BIG_POINTS_SPRITE = "/sprites/Bud_big_points.png";
-
-    // Levels
-    public static final String LEVEL1_DATA = "/levelMaps/level1.png";
-    public static final String LEVEL2_DATA = "/levelMaps/level2.png";
-    public static final String LEVEL3_DATA = "/levelMaps/level3.png";
-    public static final String LEVEL4_DATA = "/levelMaps/level4.png";
-    public static final String LEVEL5_DATA = "/levelMaps/level5.png";
-    public static final String LEVEL6_DATA = "/levelMaps/level6.png";
+    public static final String PROJECTILE_FIREBALL_SPRITE = "/sprites/fireball.png";
 
     // IMAGES
     public static final String GAME_LOGO = "/images/logo.png";

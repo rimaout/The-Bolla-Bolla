@@ -115,10 +115,6 @@ public abstract class Enemy extends Entity {
         return Math.abs(player.getHitbox().x - hitbox.x) <= VIEWING_RANGE;
     }
 
-    protected boolean isPlayerInAttackRange(Player player) {
-        return Math.abs(player.getHitbox().x - hitbox.x) <= ATTACK_RANGE;
-    }
-
     protected void calculatePlayersPos(Player player) {
         playerTileX = (int) (player.getHitbox().x / Game.TILES_SIZE);
         playerTileY = (int)(player.getHitbox().y / Game.TILES_SIZE);
@@ -150,6 +146,13 @@ public abstract class Enemy extends Entity {
             walkingDir = LEFT;
         else if (playerTileX > tileX)
             walkingDir = RIGHT;
+    }
+
+    protected Direction directionToFacePlayer(Player player) {
+        if (player.getXTile() < tileX)
+            return LEFT;
+        else
+            return RIGHT;
     }
 
     public void resetEnemy() {
@@ -187,6 +190,7 @@ public abstract class Enemy extends Entity {
     public boolean isAlive() {
         return alive;
     }
+
     public void setAlive(boolean alive) {
         this.alive = alive;
     }

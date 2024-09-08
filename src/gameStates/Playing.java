@@ -1,6 +1,7 @@
 package gameStates;
 
 import bubbles.BubbleManager;
+import entities.ProjectileManager;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;
@@ -25,6 +26,7 @@ public class Playing extends State implements StateMethods {
     private LevelManager levelManager;
     private EnemyManager enemyManager;
     private BubbleManager bubbleManager;
+    private ProjectileManager projectileManager;
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
     private PowerUpManager powerUpManager;
@@ -52,6 +54,7 @@ public class Playing extends State implements StateMethods {
 
         enemyManager = EnemyManager.getInstance(this, playerOne);
         bubbleManager = BubbleManager.getInstance(playerOne);
+        projectileManager = ProjectileManager.getInstance(playerOne);
         itemManager = ItemManager.getInstance(this);
         rewardPointsManager = RewardPointsManager.getInstance(playerOne);
         powerUpManager = PowerUpManager.getInstance(playerOne);
@@ -76,6 +79,7 @@ public class Playing extends State implements StateMethods {
             playerOne.update();
             bubbleManager.update();
             enemyManager.update();
+            projectileManager.update();
             itemManager.update();
             rewardPointsManager.update();
             powerUpManager.update();
@@ -91,6 +95,7 @@ public class Playing extends State implements StateMethods {
         playingHud.draw(g);
         enemyManager.draw(g);
         bubbleManager.draw(g);
+        projectileManager.draw(g);
         rewardPointsManager.draw((Graphics2D) g);
 
         playerOne.draw((Graphics2D) g);
@@ -124,6 +129,7 @@ public class Playing extends State implements StateMethods {
         gameCompleted = false;
         playerOne.resetAll(true, true);
         enemyManager.resetAll();
+        projectileManager.resetAll();
         bubbleManager.resetAll();
         itemManager.resetAll();
         powerUpManager.resetAll();
@@ -133,6 +139,7 @@ public class Playing extends State implements StateMethods {
     public void loadNextLevel() {
         enemyManager.resetAll();
         bubbleManager.resetAll();
+        projectileManager.resetAll();
         levelManager.loadNextLevel();
         playerOne.resetAll(false, false);
         itemManager.resetAll();

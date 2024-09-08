@@ -14,6 +14,7 @@ public abstract class Entity {
     protected int animationTick, animationIndex;
 
     protected boolean immune = false;
+    protected boolean active = true;
 
     public Entity(float x, float y, int width, int height) {
         this.x = x;
@@ -64,16 +65,23 @@ public abstract class Entity {
             }
         }
     }
-
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 
-   public int getAnimationIndex() {
+    public int getAnimationIndex() {
         return animationIndex;
-   }
+    }
 
-   public boolean isImmune() {
+    public boolean isImmune() {
        return immune;
    }
+
+    public boolean isActive() {
+         return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

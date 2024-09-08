@@ -8,7 +8,6 @@ import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.MAITA;
-import static utilz.Constants.EnemyConstants.NORMAL_PLAYER_INFO_MAX_UPDATE_INTERVAL;
 import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
 import static utilz.HelpMethods.IsTileSolid;
@@ -31,6 +30,8 @@ public class Maita extends Enemy {
     private int playerUpdateTimer;
     private int fireBallTimer;
     private long lastTimerUpdate;
+
+    private boolean fireBallReady = false;
 
     // Jump Variables
     private int jumpDistance = 0;
@@ -57,7 +58,7 @@ public class Maita extends Enemy {
         if (firstUpdate)
             firstUpdate();
 
-        updateTimers();
+        updateTimers(player);
         updatePlayerInfo(player);
         updateMove();
         updateStateVariables();
@@ -70,17 +71,21 @@ public class Maita extends Enemy {
             goDown = true;
 
         lastTimerUpdate = System.currentTimeMillis();
+        fireBallTimer = FIREBALL_INITIAL_TIMER;
         firstUpdate = false;
     }
 
-    private void updateTimers() {
+    private void updateTimers(Player player) {
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
 
         playerUpdateTimer -= timeDelta;
 
-        if (playerTileY == tileY)
+        if (player.getYTile() == tileY)
             fireBallTimer -= timeDelta;
+
+        if (fireBallTimer <= 0)
+            fireBallReady = true;
     }
 
     private void updateMove() {
@@ -359,9 +364,11 @@ public class Maita extends Enemy {
     }
 
     private void checkFireBall(Player player) {
-        if (fireBallTimer <= 0) {
-            System.out.println("Fireball"); //TODO: Implement fireball (crea fireball in direzione del player
+        if (fireBallReady && player.getYTile() == tileY && isPlayerInViewingRange(player)) {
+            ProjectileManager.getInstance().addProjectile(new MaitaProjectile(hitbox.x, hitbox.y, directionToFacePlayer(player)));
+
             fireBallTimer = FIREBALL_TIMER;
+            fireBallReady = false;
         }
     }
 
@@ -389,6 +396,8 @@ public class Maita extends Enemy {
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
         lastTimerUpdate = 0;
+        fireBallTimer = FIREBALL_INITIAL_TIMER;
+        fireBallReady = false;
     }
 
     @Override

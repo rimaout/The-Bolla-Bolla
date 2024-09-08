@@ -432,6 +432,10 @@ public class Player extends Entity{
         return jump;
     }
 
+    public boolean isRespawning() {
+        return respawning;
+    }
+
     public Direction getDirection(){
         if (flipW == -1)
             return LEFT;
@@ -441,6 +445,10 @@ public class Player extends Entity{
 
     public int getYTile() {
         return (int) hitbox.y / Game.TILES_SIZE;
+    }
+
+    public int getXTile() {
+        return (int) hitbox.x / Game.TILES_SIZE;
     }
 
     public void setSpeedMultiplier(float speedMultiplier) {

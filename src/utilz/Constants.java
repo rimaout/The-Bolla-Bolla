@@ -228,6 +228,7 @@ public class Constants {
 
         // Maita Constants
         public static final int FIREBALL_TIMER = 5000;
+        public static final int FIREBALL_INITIAL_TIMER = 2000;
 
         // Spawning Constants
         public static final int ZEN_CHAN_LEFT = 1;
@@ -278,8 +279,7 @@ public class Constants {
         
         public static final float JUMP_Y_SPEED = -0.44f * Game.SCALE;
         public static final float JUMP_X_SPEED = 0.4f * Game.SCALE;
-        public static final float ATTACK_RANGE = Game.TILES_SIZE;
-        public static final float VIEWING_RANGE = Game.TILES_SIZE * 5;
+        public static final float VIEWING_RANGE = Game.TILES_SIZE * 15;
 
         public static int getSpriteAmount(EnemyType enemyType, int enemyState) {
             if (enemyType == EnemyType.ZEN_CHAN || enemyType == EnemyType.MAITA) {
@@ -403,6 +403,40 @@ public class Constants {
 
         public enum PointsType {
             SMALL, BIG
+        }
+    }
+
+    public static class Projectiles {
+
+        public static final int DEFAULT_W = 18;
+        public static final int DEFAULT_H = 18;
+        public static final int W = (int) (DEFAULT_W * Game.SCALE);
+        public static final int H = (int) (DEFAULT_H * Game.SCALE);
+
+        public static final int HITBOX_W = (int) (9 * Game.SCALE);
+        public static final int HITBOX_H = (int) (9 * Game.SCALE);
+        public static final int OFFSET_X = (int) (-5 * Game.SCALE);
+        public static final int OFFSET_Y = (int) (-4 * Game.SCALE);
+
+        public static final float FIREBALL_SPEED = 0.53f * Game.SCALE;
+
+        public enum ProjectileState {
+            MOVING, IMPACT
+        }
+
+
+        public static int getSpriteAmount(ProjectileState projectileState) {
+            return switch (projectileState) {
+                case MOVING -> 4;
+                case IMPACT -> 2;
+            };
+        }
+
+        public static int getAnimation(ProjectileState projectileState) {
+            return switch (projectileState) {
+                case MOVING -> 0;
+                case IMPACT -> 1;
+            };
         }
     }
 }

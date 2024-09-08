@@ -144,7 +144,6 @@ public class LevelTransition extends State implements StateMethods{
         LevelManager.getInstance().increaseLevelIndex();
 
         EnemyManager.getInstance().loadEnemies();
-        EnemyManager.getInstance().loadLevelData();
 
         BubbleManager.getInstance().loadLevelData();
         BubbleManager.getInstance().loadLevelData();
