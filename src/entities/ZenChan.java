@@ -38,8 +38,6 @@ public class ZenChan extends Enemy {
 
     @Override
     public void update(Player player) {
-        tileX = (int) (hitbox.x / Game.TILES_SIZE);
-        tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
         updateAnimationTick();
 
@@ -100,13 +98,13 @@ public class ZenChan extends Enemy {
         moveOnGround(levelData);
 
         //Go up
-        if (playerTileY < tileY && canFly(levelData)) {
+        if (playerTileY < getTileY() && canFly(levelData)) {
             goUp = true;
             goDown = false;
         }
 
         //Go down
-        if (playerTileY > tileY) {
+        if (playerTileY > getTileY()) {
             goDown = true;
             goUp = false;
         }
@@ -239,7 +237,7 @@ public class ZenChan extends Enemy {
 
     private boolean canFall(){
         // check if the under is not out of the level
-        return tileY + 1 < Game.TILES_IN_HEIGHT - 1;
+        return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
     }
 
     private void fall(int [][] levelData) {
@@ -277,7 +275,7 @@ public class ZenChan extends Enemy {
         // Find the distance to the perimeter wall (max distance 5 tiles)
         if (walkingDir == LEFT) {
             for (int i = 2; i < 8; i++)
-                if (IsTilePerimeterWall(tileX - i)) {
+                if (IsTilePerimeterWall(getTileX() - i)) {
                     tileDistanceToPerimeterWall = i;
                     break;
                 }
@@ -285,7 +283,7 @@ public class ZenChan extends Enemy {
 
         else if (walkingDir == RIGHT) {
             for (int i = 2; i < 8; i++)
-                if (IsTilePerimeterWall(tileX + i)) {
+                if (IsTilePerimeterWall(getTileX() + i)) {
                     tileDistanceToPerimeterWall = i;
                     break;
                 }
@@ -294,7 +292,7 @@ public class ZenChan extends Enemy {
         // check if between 2 and 6 tiles there is a floor
         if (walkingDir == LEFT) {
             for (int i = 2; i < 8; i++)
-                if (IsTileSolid(tileX - i, yFlorTile, levelData)) {
+                if (IsTileSolid(getTileX() - i, yFlorTile, levelData)) {
                     tileDistanceToFloor = i;
                     break;
                 }
@@ -302,7 +300,7 @@ public class ZenChan extends Enemy {
 
         else if (walkingDir == RIGHT) {
             for (int i = 2; i  < 8 ; i++)
-                if (IsTileSolid(tileX + i +1 , yFlorTile, levelData)) {
+                if (IsTileSolid(getTileX() + i +1 , yFlorTile, levelData)) {
                     tileDistanceToFloor = i + 1;
                     break;
                 }
@@ -328,19 +326,19 @@ public class ZenChan extends Enemy {
 
         // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
 
-        int oneTileAbove = tileY-1;
-        boolean oneUpSolid = IsTileSolid(tileX, oneTileAbove, levelData) &&  IsTileSolid(tileX+1, oneTileAbove, levelData);
+        int oneTileAbove = getTileY()-1;
+        boolean oneUpSolid = IsTileSolid(getTileX(), oneTileAbove, levelData) &&  IsTileSolid(getTileX()+1, oneTileAbove, levelData);
 
-        int twoTilesAbove = tileY-2;
-        boolean twoUpSolid = IsTileSolid(tileX, twoTilesAbove, levelData) &&  IsTileSolid(tileX+1, twoTilesAbove, levelData);
-        boolean twoUpEmpty = !IsTileSolid(tileX, twoTilesAbove, levelData) &&  IsTileSolid(tileX+1, twoTilesAbove, levelData);
+        int twoTilesAbove = getTileY()-2;
+        boolean twoUpSolid = IsTileSolid(getTileX(), twoTilesAbove, levelData) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelData);
+        boolean twoUpEmpty = !IsTileSolid(getTileX(), twoTilesAbove, levelData) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelData);
 
-        int threeTilesAbove = tileY-3;
-        boolean threeUpSolid = IsTileSolid(tileX, threeTilesAbove, levelData) && IsTileSolid(tileX+1, threeTilesAbove, levelData);
-        boolean threeUpEmpty = !IsTileSolid(tileX, threeTilesAbove, levelData) || IsTileSolid(tileX+1, threeTilesAbove, levelData);
+        int threeTilesAbove = getTileY()-3;
+        boolean threeUpSolid = IsTileSolid(getTileX(), threeTilesAbove, levelData) && IsTileSolid(getTileX()+1, threeTilesAbove, levelData);
+        boolean threeUpEmpty = !IsTileSolid(getTileX(), threeTilesAbove, levelData) || IsTileSolid(getTileX()+1, threeTilesAbove, levelData);
 
-        int fourTilesAbove = tileY-4;
-        boolean fourUpEmpty = !IsTileSolid(tileX, fourTilesAbove, levelData) || IsTileSolid(tileX+1, fourTilesAbove, levelData);
+        int fourTilesAbove = getTileY()-4;
+        boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelData) || IsTileSolid(getTileX()+1, fourTilesAbove, levelData);
 
         if ( (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty))
             return true;

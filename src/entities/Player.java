@@ -53,7 +53,6 @@ public class Player extends Entity{
     private int bubbleShotPoints = 0;          // rubyRing
 
     public Player(Playing playing) {
-
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         this.playing = playing;
         this.bubbleManager = BubbleManager.getInstance(this);
@@ -441,14 +440,6 @@ public class Player extends Entity{
             return LEFT;
         else
             return RIGHT;
-    }
-
-    public int getYTile() {
-        return (int) hitbox.y / Game.TILES_SIZE;
-    }
-
-    public int getXTile() {
-        return (int) hitbox.x / Game.TILES_SIZE;
     }
 
     public void setSpeedMultiplier(float speedMultiplier) {

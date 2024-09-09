@@ -25,7 +25,6 @@ public abstract class Enemy extends Entity {
     protected float fallSpeed;
     protected float flySpeed;
     protected float walkSpeed;
-    protected int tileX, tileY;
     protected Direction walkingDir;
     protected Direction startWalkingDir;
 
@@ -106,9 +105,9 @@ public abstract class Enemy extends Entity {
     protected boolean canSeePlayer(int[][] levelData, Player player) {
         int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
 
-        return playerTileY == tileY                                             // Same row
+        return playerTileY == getTileY()                                             // Same row
                 && isPlayerInViewingRange(player)                               // Player is in range
-                && IsSightClear(levelData, hitbox, player.hitbox, tileY);       // No obstacles in the way
+                && IsSightClear(levelData, hitbox, player.hitbox, getTileY());       // No obstacles in the way
     }
 
     protected boolean isPlayerInViewingRange(Player player) {
@@ -142,17 +141,28 @@ public abstract class Enemy extends Entity {
     }
 
     protected void updateWalkingDir() {
-        if (playerTileX < tileX)
+        if (playerTileX < getTileX())
             walkingDir = LEFT;
-        else if (playerTileX > tileX)
+        else if (playerTileX > getTileX())
             walkingDir = RIGHT;
     }
 
-    protected Direction directionToFacePlayer(Player player) {
-        if (player.getXTile() < tileX)
+    protected Direction isPlayerLeftOrRight(Player player) {
+        if (player.getTileX() < getTileX())
             return LEFT;
-        else
+        else if (player.getTileX() > getTileX())
             return RIGHT;
+        else
+            return NONE;
+    }
+
+    protected Direction isPlayerUpOrDown(Player player) {
+        if (player.getTileY() < getTileY())
+            return UP;
+        else if (player.getTileY() > getTileY())
+            return DOWN;
+        else
+            return NONE;
     }
 
     public void resetEnemy() {

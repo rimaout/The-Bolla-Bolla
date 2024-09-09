@@ -65,6 +65,15 @@ public abstract class Entity {
             }
         }
     }
+
+    public int getTileX() {
+        return (int) (hitbox.x / Game.TILES_SIZE);
+    }
+
+    public int getTileY() {
+        return (int) (hitbox.y / Game.TILES_SIZE);
+    }
+
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }

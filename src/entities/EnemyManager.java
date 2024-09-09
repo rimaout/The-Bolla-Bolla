@@ -17,6 +17,7 @@ public class EnemyManager {
 
     private BufferedImage[][] zenChanSprites;
     private BufferedImage[][] maitaSprites;
+    private BufferedImage[][] skelMonstaSprites;
 
     private ArrayList<Enemy> enemies;
 
@@ -111,8 +112,14 @@ public class EnemyManager {
 
     public void draw(Graphics g) {
         for (Enemy e : enemies)
-            if(e.isActive())
-                g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
+            if(e.isActive()) {
+
+                // TODO: Refactor this
+                if (e.getEnemyType() != EnemyType.SKEL_MONSTA)
+                    g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
+                else
+                    ((SkelMonsta) e).draw(g);
+            }
     }
 
     public void checkEnemyHit(Player player, Enemy enemy) {
@@ -128,6 +135,8 @@ public class EnemyManager {
         for (Enemy e : enemies)
             if (e.isActive())
                 e.setEnemyState(HUNGRY_STATE);
+
+        enemies.add(new SkelMonsta());
     }
 
     public void loadLevelData() {
@@ -151,6 +160,12 @@ public class EnemyManager {
         for (int j = 0; j < maitaSprites.length; j++)
             for (int i = 0; i < maitaSprites[j].length; i++)
                 maitaSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
+
+        skelMonstaSprites = new BufferedImage[3][2];
+        temp = LoadSave.GetSprite(LoadSave.SKEL_MONSTA_ENEMY_SPRITE);
+        for (int j = 0; j < skelMonstaSprites.length; j++)
+            for (int i = 0; i < skelMonstaSprites[j].length; i++)
+                skelMonstaSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
     }
 
     public void resetAll() {
@@ -172,11 +187,20 @@ public class EnemyManager {
         return switch (enemyType) {
             case ZEN_CHAN -> zenChanSprites;
             case MAITA -> maitaSprites;
+            case SKEL_MONSTA -> skelMonstaSprites;
         };
     }
 
     public int getEnemyCount() {
         return enemies.size();
+    }
+
+    public int getActiveEnemiesCount() {
+        int count = 0;
+        for (Enemy e : enemies)
+            if (e.isActive())
+                count++;
+        return count;
     }
 
     public boolean getAllEnemiesReachedSpawn() {

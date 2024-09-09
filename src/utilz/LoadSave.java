@@ -27,6 +27,7 @@ public class LoadSave {
     public static final String PLAYER_TRANSITION_SPRITE = "/sprites/Bud_level_transition.png";
     public static final String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
     public static final String MAITA_ENEMY_SPRITE = "/sprites/Maita.png";
+    public static final String SKEL_MONSTA_ENEMY_SPRITE = "/sprites/Skel-Monsta.png";
     public static final String LEVEL_TILES_SPRITE = "/sprites/level_tiles.png";
     public static final String NUMBERS_TILES_SPRITE = "/sprites/numbers_tiles.png";
     public static final String MENU_BUTTONS_SPRITE = "/sprites/menu_buttons.png";

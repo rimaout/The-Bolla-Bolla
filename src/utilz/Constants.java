@@ -223,7 +223,7 @@ public class Constants {
 
         // Enemy Types
         public enum EnemyType {
-            ZEN_CHAN, MAITA;
+            ZEN_CHAN, MAITA, SKEL_MONSTA
         }
 
         // Maita Constants
@@ -237,6 +237,12 @@ public class Constants {
         public static final int MAITA_RIGHT = 4;
         public static final float INITIAL_SPAWN_POINT_Y = -3 * Game.TILES_SIZE;
         public static final float SPAWN_TRANSITION_SPEED = 0.31f * Game.SCALE;
+
+        //SkellMonsta Constants
+        public static final int SKEL_MONSTA_SPAWN_X = 3 * Game.TILES_SIZE;
+        public static final int SKEL_MONSTA_SPAWN_Y = 24 * Game.TILES_SIZE + 2 * Game.SCALE;
+        public static final int SKEL_MONSTA_MOVEMENT_MAX_DISTANCE = 6 * Game.TILES_SIZE;
+        public static final int SKEL_MONSTA_MOVEMENT_TIMER = 300;
         
         // Hitbox Constants
         public static final int ENEMY_HITBOX_W = (int) (14 * Game.SCALE);
@@ -292,8 +298,13 @@ public class Constants {
                     default -> 0;
                 };
             }
+
+            if (enemyType == EnemyType.SKEL_MONSTA)
+                return 2; // SkelMonsta only has animations of 2 frames
+
             return 0;
         }
+
     }
 
     public static class Items {
