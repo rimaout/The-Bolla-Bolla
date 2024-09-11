@@ -205,6 +205,10 @@ public class EnemyManager {
         return count;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     public boolean getAllEnemiesReachedSpawn() {
         return allEnemiesReachedSpawn;
     }
@@ -219,5 +223,9 @@ public class EnemyManager {
 
     public int getAllEnemiesDeadChronometer() {
         return allEnemiesDeadChronometer;
+    }
+
+    public boolean areAllEnemiesDead() {
+        return allEnemiesDead;
     }
 }

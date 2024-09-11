@@ -1,6 +1,7 @@
 package bubbles;
 
 import entities.Player;
+import levels.LevelManager;
 import main.Game;
 import entities.Entity;
 
@@ -38,13 +39,12 @@ public abstract class Bubble extends Entity {
 
     float projectileAnimationTick = 0;
 
-    public Bubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
+    public Bubble(float x, float y, Direction direction) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
         this.previousDirection = direction;
-        this.levelData = levelData;
-        this.windLevelData = windLevelData;
 
+        loadLevelData();
         initHitbox(HITBOX_W, HITBOX_H);
         initCollisionBoxes();
     }
@@ -254,6 +254,11 @@ public abstract class Bubble extends Entity {
             else
                 xSpeed -= SHAKING_SPEED;
         }
+    }
+
+    private void loadLevelData() {
+        this.levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
+        this.windLevelData = LevelManager.getInstance().getCurrentLevel().getWindDirectionData();
     }
 
     public abstract void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);

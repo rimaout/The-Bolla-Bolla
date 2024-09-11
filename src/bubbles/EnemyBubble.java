@@ -29,8 +29,8 @@ public class EnemyBubble extends EmptyBubble {
 
     private Random random = new Random();
 
-    public EnemyBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData, Enemy enemy) {
-        super(x, y, direction, levelData, windLevelData);
+    public EnemyBubble(Enemy enemy, float x, float y, Direction direction) {
+        super(x, y, direction);
         this.state = NORMAL;
         this.enemy = enemy;
     }

@@ -2,7 +2,7 @@ package gameStates;
 
 import bubbles.BubbleManager;
 import entities.HurryUpManager;
-import entities.ProjectileManager;
+import projectiles.ProjectileManager;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;

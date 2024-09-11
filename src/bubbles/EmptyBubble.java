@@ -10,8 +10,8 @@ import static utilz.Constants.Bubble.*;
 
 public class EmptyBubble extends Bubble {
 
-    public EmptyBubble(float x, float y, Direction direction, int[][] levelData, Direction[][] windLevelData) {
-        super(x, y, direction, levelData, windLevelData);
+    public EmptyBubble(float x, float y, Direction direction) {
+        super(x, y, direction);
     }
 
     public void draw(Graphics g) {

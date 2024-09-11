@@ -11,7 +11,8 @@ public abstract class Entity {
     protected float x, y;
     protected int width, height;
     protected Rectangle2D.Float hitbox;
-    protected int animationTick, animationIndex;
+    protected int animationIndex;
+    protected float animationTick;
 
     protected boolean immune = false;
     protected boolean active = true;

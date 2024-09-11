@@ -433,18 +433,34 @@ public class Constants {
         public static final int OFFSET_X = (int) (-5 * Game.SCALE);
         public static final int OFFSET_Y = (int) (-4 * Game.SCALE);
 
-        public static final float FIREBALL_SPEED = 0.53f * Game.SCALE;
+        public static final int PROJECTILE_ANIMATION_SPEED = 25;
+        public static final float PLAYER_BUBBLE_SPEED = 1f * Game.SCALE;
+        public static final float MAITA_FIREBALL_SPEED = 0.53f * Game.SCALE;
 
         public enum ProjectileState {
             MOVING, IMPACT
         }
 
+        public enum ProjectileType {
+            PLAYER_BUBBLE, MAITA_FIREBALL
+        }
 
-        public static int getSpriteAmount(ProjectileState projectileState) {
-            return switch (projectileState) {
-                case MOVING -> 4;
-                case IMPACT -> 2;
-            };
+
+        public static int getSpriteAmount(ProjectileState projectileState, ProjectileType projectileType) {
+
+            if (projectileType == ProjectileType.MAITA_FIREBALL)
+                return switch (projectileState) {
+                    case MOVING -> 4;
+                    case IMPACT -> 2;
+                };
+
+            if (projectileType == ProjectileType.PLAYER_BUBBLE)
+                return switch (projectileState) {
+                    case MOVING -> 4;
+                    case IMPACT -> 0;
+                };
+
+            return 0;
         }
 
         public static int getAnimation(ProjectileState projectileState) {

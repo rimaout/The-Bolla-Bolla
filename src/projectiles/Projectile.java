@@ -1,5 +1,7 @@
-package entities;
+package projectiles;
 
+import entities.Entity;
+import entities.Player;
 import utilz.Constants.Direction;
 import utilz.Constants.Projectiles.ProjectileState;
 
@@ -12,38 +14,39 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 
-public abstract class Projectile extends Entity{
+public abstract class Projectile extends Entity {
     protected ProjectileState state = MOVING;
+    protected ProjectileType type;
     protected Direction direction;
 
-    public Projectile(float x, float y, Direction direction) {
+    public Projectile(float x, float y, Direction direction, ProjectileType type) {
         super(x, y, H, W);
         this.direction = direction;
+        this.type = type;
 
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
-    public void update(Player player) {
+    public void update() {
         updatePos();
-        checkPlayerCollision(player);
         updateAnimationTick();
     }
 
     protected abstract void draw(Graphics g, BufferedImage[][] sprites);
     protected abstract void updatePos();
-    protected abstract void checkPlayerCollision(Player player);
+    protected abstract void checkEntityHit(Entity entity);
 
-    private void updateAnimationTick() {
+    protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
-            if (animationIndex >= getSpriteAmount(state)) {
+            if (animationIndex >= getSpriteAmount(state, type)) {
                 animationIndex = 0;
             }
         }
 
-        if (state == IMPACT && animationIndex == getSpriteAmount(state) - 1) {
+        if (state == IMPACT && animationIndex == getSpriteAmount(state, type) - 1) {
            active = false;
         }
     }

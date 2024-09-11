@@ -1,5 +1,8 @@
-package entities;
+package projectiles;
 
+import entities.Enemy;
+import entities.Entity;
+import entities.Player;
 import levels.LevelManager;
 import utilz.Constants.Direction;
 
@@ -10,18 +13,18 @@ import static utilz.Constants.Direction.*;
 import static utilz.Constants.Projectiles.*;
 import static utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static utilz.Constants.Projectiles.ProjectileState.MOVING;
+import static utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
 import static utilz.HelpMethods.CanMoveHere;
 
-public class MaitaProjectile extends Projectile {
+public class MaitaFireProjectile extends Projectile {
 
-    public MaitaProjectile(float x, float y, Direction direction) {
-        super(x, y, direction);
+    public MaitaFireProjectile(float x, float y, Direction direction) {
+        super(x, y, direction, MAITA_FIREBALL);
     }
 
     @Override
     protected void draw(Graphics g, BufferedImage[][] sprites) {
         g.drawImage(sprites[getAnimation(state)][animationIndex], (int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
-        drawHitbox(g);
     }
 
     @Override
@@ -31,9 +34,9 @@ public class MaitaProjectile extends Projectile {
 
             float xSpeed;
             if (direction == LEFT)
-                xSpeed = -FIREBALL_SPEED;
+                xSpeed = -MAITA_FIREBALL_SPEED;
             else
-                xSpeed = FIREBALL_SPEED;
+                xSpeed = MAITA_FIREBALL_SPEED;
 
             int[][] levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
             if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData))
@@ -48,10 +51,15 @@ public class MaitaProjectile extends Projectile {
         }
     }
 
+
     @Override
-    protected void checkPlayerCollision(Player player) {
-        if (hitbox.intersects(player.getHitbox()) && !player.isRespawning()) {
-            player.death();
+    public void checkEntityHit(Entity player) {
+
+        if (!(player instanceof Player p))
+            throw new IllegalArgumentException("MaitaFireProjectile can only hit Player, use a Player has parameter");
+
+        if (hitbox.intersects(p.getHitbox()) && !p.isRespawning()) {
+            p.death();
             state = IMPACT;
 
             // Reset animation

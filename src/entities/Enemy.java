@@ -1,6 +1,7 @@
 package entities;
 
 import bubbles.BubbleManager;
+import bubbles.EnemyBubble;
 import levels.LevelManager;
 import main.Game;
 

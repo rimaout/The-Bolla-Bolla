@@ -2,6 +2,8 @@ package entities;
 
 import levels.LevelManager;
 import main.Game;
+import projectiles.MaitaFireProjectile;
+import projectiles.ProjectileManager;
 import utilz.Constants.Direction;
 
 import static utilz.Constants.Direction.LEFT;
@@ -363,7 +365,7 @@ public class Maita extends Enemy {
 
     private void checkFireBall(Player player) {
         if (fireBallReady && player.getTileY() == getTileY() && isPlayerInViewingRange(player)) {
-            ProjectileManager.getInstance().addProjectile(new MaitaProjectile(hitbox.x, hitbox.y, isPlayerLeftOrRight(player)));
+            ProjectileManager.getInstance().addProjectile(new MaitaFireProjectile(hitbox.x, hitbox.y, isPlayerLeftOrRight(player)));
 
             fireBallTimer = FIREBALL_TIMER;
             fireBallReady = false;

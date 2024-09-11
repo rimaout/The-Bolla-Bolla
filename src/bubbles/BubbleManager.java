@@ -21,8 +21,6 @@ public class BubbleManager {
     private static BubbleManager instance;
     private Player player;
 
-    private int[][] levelData;
-    private Direction[][] windDirectionData;
     private BufferedImage[][] playerBubbleSprites;
 
     private LinkedList<Bubble> bubbles;
@@ -42,8 +40,6 @@ public class BubbleManager {
         bubbles = new LinkedList<>();
 
         loadBubbleSprites();
-        loadLevelData();
-        loadWindData();
     }
 
     public static BubbleManager getInstance(Player player) {
@@ -63,16 +59,11 @@ public class BubbleManager {
         for (Bubble b : bubbles) {
             if (b.isActive())
                 b.update();
-            // TODO
-//            else
-//                bubbles.remove(b);
         }
 
         collisionWithPlayer();
         collisionBetweenBubbles();
         collisionWithEnemies();
-
-
     }
 
     public void draw(Graphics g) {
@@ -200,15 +191,18 @@ public class BubbleManager {
                     continue;
 
                 if (b.getExternalCollisionBox().intersects(e.getHitbox())) {
-                    EnemyBubblesToAdd.add(new EnemyBubble(e.getHitbox().x, e.getHitbox().y, b.getDirection(), levelData, windDirectionData, e));
+                    EnemyBubblesToAdd.add(new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, b.getDirection()));
                     b.setActive(false);
-                    e.setActive(false);
                     e.bubbleCapture();
                 }
             }
         }
 
         bubbles.addAll(EnemyBubblesToAdd);
+    }
+
+    public void addBubble(Bubble bubble) {
+        bubbles.add(bubble);
     }
 
     public void addBubble(float x, float y, Direction direction) {
@@ -220,19 +214,19 @@ public class BubbleManager {
 
         if (direction == Direction.LEFT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new EmptyBubble(x + xOffset, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(x + xOffset, y, direction));
             else
-                bubbles.add(new EmptyBubble(mapLeftMostTileX, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(mapLeftMostTileX, y, direction));
 
         if (direction == Direction.RIGHT)
             if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new EmptyBubble(x - xOffset, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble(x - xOffset, y, direction));
             else
-                bubbles.add(new EmptyBubble( mapRightMostTileX - IMMAGE_W, y, direction, levelData, windDirectionData));
+                bubbles.add(new EmptyBubble( mapRightMostTileX - IMMAGE_W, y, direction));
     }
 
     public void addDeadEnemy(Enemy e, Player player) {
-         EnemyBubble deadEnemyBubble = new EnemyBubble(e.getHitbox().x, e.getHitbox().y, player.getDirection(), levelData, windDirectionData, e);
+         EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, player.getDirection());
          deadEnemyBubble.playerPop(player);
          bubbles.add(deadEnemyBubble);
     }
@@ -245,14 +239,6 @@ public class BubbleManager {
         for (int j = 0; j < playerBubbleSprites.length; j++)
             for (int i = 0; i < playerBubbleSprites[j].length; i++)
                 playerBubbleSprites[j][i] = img.getSubimage(i * DEFAULT_W, j*DEFAULT_H, DEFAULT_W, DEFAULT_H);
-    }
-
-    public void loadLevelData() {
-        levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
-    }
-
-    public void loadWindData() {
-        windDirectionData = LevelManager.getInstance().getCurrentLevel().getWindDirectionData();
     }
 
     public void resetAll() {

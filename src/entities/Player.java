@@ -2,8 +2,9 @@ package entities;
 
 import bubbles.BubbleManager;
 import itemesAndRewards.PowerUpManager;
-import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
+import projectiles.PlayerBubbleProjectile;
+import projectiles.ProjectileManager;
 import utilz.LoadSave;
 import gameStates.Playing;
 import main.Game;
@@ -101,7 +102,8 @@ public class Player extends Entity{
         int yOffset = 3 * Game.SCALE;
 
         if (direction == LEFT)
-            bubbleManager.addBubble(hitbox.x , hitbox.y -yOffset, direction);
+            ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x - xOffset, hitbox.y - yOffset, direction));
+            //bubbleManager.addBubble(hitbox.x - xOffset, hitbox.y - yOffset, direction);
         else
             bubbleManager.addBubble(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction);
 

@@ -142,13 +142,7 @@ public class LevelTransition extends State implements StateMethods{
 
     private void loadNewLevel() {
         LevelManager.getInstance().increaseLevelIndex();
-
         EnemyManager.getInstance().loadEnemies();
-
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadLevelData();
-        BubbleManager.getInstance().loadWindData();
-
         ItemManager.getInstance().resetForNewLevel();
 
         game.getPlaying().getPlayerOne().loadLevelData();
