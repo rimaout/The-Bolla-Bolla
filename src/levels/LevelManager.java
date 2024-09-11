@@ -104,6 +104,13 @@ public class LevelManager {
         }
     }
 
+    public void resetAll() {
+        // reset all levels (use only when game is restarted)
+
+        levelIndex = 0;
+        allLevelsCompleted = false;
+    }
+
     public BufferedImage[] getNumbersTiles() {
         return numbersTiles;
     }

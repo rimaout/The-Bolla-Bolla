@@ -21,8 +21,10 @@ public class SkelMonsta extends Enemy{
     private float walkedDistance;
 
     public SkelMonsta() {
-
         super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H, SKEL_MONSTA, RIGHT);
+
+        active = false;
+        y = SKEL_MONSTA_SPAWN_Y;    // Set the y position to the spawn point (the super constructor sets it outside the screen, but skelMonsta spawns from the ground)
         initHitbox(ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
     }
 
@@ -40,6 +42,7 @@ public class SkelMonsta extends Enemy{
         updateAnimationTick();
         updateTimer(player);
         updateMove(player);
+        checkPlayerHit(player);
     }
 
     @Override
@@ -54,24 +57,30 @@ public class SkelMonsta extends Enemy{
         }
     }
 
+    private void checkPlayerHit(Player player) {
+        if (spawning || despawning)
+            return;
+
+        if (hitbox.intersects(player.getHitbox())) {
+            player.death();
+            HurryUpManager.getInstance().restart();
+        }
+    }
+
     private void updateState() {
 
-        if (spawning && animationTick == 2) {
+        if (spawning && animationIndex >= 1) {
+            animationTick = 0;
+            animationIndex = 0;
+
             spawning = false;
             moving = true;
             return;
         }
 
-        if (despawning && animationTick == 2) {
+        if (despawning && animationIndex >= 1) {
             active = false;
-            return;
-        }
-
-        int activeEnemiesCounter = EnemyManager.getInstance().getActiveEnemiesCount();
-
-        if (activeEnemiesCounter == 1) {
-            despawning = true;
-            moving = false;
+            HurryUpManager.getInstance().resetAll();
         }
     }
 
@@ -93,15 +102,16 @@ public class SkelMonsta extends Enemy{
 
         nextMoveTimer -= (int) timeDelta;
 
-
-        if (nextMoveTimer <= 0 && !moving) {
+        if (nextMoveTimer <= 0 && !moving)
             walkingDir = getDirectionToPlayer(player);
-            System.out.println(walkingDir);
-        }
-        if (nextMoveTimer <= 0)
+
+        if (nextMoveTimer <= 0 && !spawning && !despawning)
             moving = true;
         else
             moving = false;
+
+        if (EnemyManager.getInstance().getActiveEnemiesCount() == 0 && !despawning)
+            despawn();
     }
 
     private void updateMove(Player player) {
@@ -180,6 +190,29 @@ public class SkelMonsta extends Enemy{
         walkedDistance = 0;
     }
 
+    public void activate() {
+        active = true;
+    }
+
+    public void reset() {
+        active = false;
+        firstUpdate = true;
+
+        hitbox.x = SKEL_MONSTA_SPAWN_X;
+        hitbox.y = SKEL_MONSTA_SPAWN_Y;
+        walkingDir = RIGHT;
+
+        animationIndex = 0;
+        animationTick = 0;
+    }
+
+    public void despawn() {
+        animationTick = 0;
+        animationIndex = 0;
+
+        despawning = true;
+        moving = false;
+    }
 
     @Override
     public EnemyType getEnemyType() {

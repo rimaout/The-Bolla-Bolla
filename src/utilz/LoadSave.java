@@ -46,6 +46,7 @@ public class LoadSave {
     // IMAGES
     public static final String GAME_LOGO = "/images/logo.png";
     public static final String PAUSE_BACKGROUND = "/images/pause_menu.png";
+    public static final String HURRY_IMAGE = "/images/hurry_image.png";
 
     // FONTS
     public static final String FONT = "/fonts/nintendo-nes-font.ttf";

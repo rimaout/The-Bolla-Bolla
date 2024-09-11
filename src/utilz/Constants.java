@@ -450,4 +450,15 @@ public class Constants {
             };
         }
     }
+
+    public static class HurryUpManager {
+        public static final int HURRY_IMG_W = (int) (40 * Game.SCALE * 1.3);
+        public static final int HURRY_IMG_H = (int) (11 * Game.SCALE * 1.3);
+        public static final int HURRY_IMG_X = (int) (Game.GAME_WIDTH / 2 - 40 * Game.SCALE * 1.3 / 2);
+        public static final int HURRY_IMG_Y = (int) (Game.GAME_HEIGHT - 5 * Game.SCALE);
+        public static final float HURRY_IMG_SPEED = 0.3f * Game.SCALE;
+
+        public static final int START_ANIMATION_TIMER = 17000;
+        public static final int START_HURRY_UP_TIMER = 20000;
+    }
 }

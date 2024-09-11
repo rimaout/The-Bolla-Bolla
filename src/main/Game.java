@@ -55,7 +55,7 @@ public class Game implements Runnable {
 
     public void update() {
 
-        switch (GameState.state){
+        switch (GameState.state) {
             case HOME:
                 home.update();
                 break;
@@ -69,9 +69,9 @@ public class Game implements Runnable {
                 playing.update();
                 break;
             case OPTIONS:
-                case QUIT:
-                    System.exit(0);
-                    break;
+            case QUIT:
+                System.exit(0);
+                break;
             case LEVEL_TRANSITION:
                 levelTransition.update();
                 break;
@@ -121,7 +121,7 @@ public class Game implements Runnable {
             deltaF += (currentTime - lastUpdateTime) / timePerFrame;
             lastUpdateTime = currentTime;
 
-            if(deltaU >= 1) {
+            if (deltaU >= 1) {
                 update();
                 updates++;
                 deltaU--;
@@ -134,7 +134,7 @@ public class Game implements Runnable {
             }
 
             // FPS | UPS Calculation
-            if(System.currentTimeMillis() - lastFrameTime >= 1000) {
+            if (System.currentTimeMillis() - lastFrameTime >= 1000) {
                 lastFrameTime = System.currentTimeMillis();
                 System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
@@ -151,7 +151,11 @@ public class Game implements Runnable {
         }
     }
 
-    public Home getHome(){return home;};
+    public Home getHome() {
+        return home;
+    }
+
+    ;
 
     public Menu getMenu() {
         return menu;

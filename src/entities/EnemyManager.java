@@ -35,16 +35,16 @@ public class EnemyManager {
     private boolean firstUpdate = true;
     private long lastTimerUpdate;
 
-    private EnemyManager(Playing playing, Player player) {
+    private EnemyManager(Player player) {
         this.player = player;
         loadSprites();
         loadEnemies();
         loadLevelData();
     }
 
-    public static EnemyManager getInstance(Playing playing, Player player) {
+    public static EnemyManager getInstance(Player player) {
         if (instance == null) {
-            instance = new EnemyManager(playing, player);
+            instance = new EnemyManager(player);
         }
         return instance;
     }
@@ -112,14 +112,8 @@ public class EnemyManager {
 
     public void draw(Graphics g) {
         for (Enemy e : enemies)
-            if(e.isActive()) {
-
-                // TODO: Refactor this
-                if (e.getEnemyType() != EnemyType.SKEL_MONSTA)
-                    g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
-                else
-                    ((SkelMonsta) e).draw(g);
-            }
+            if(e.isActive())
+                g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
     }
 
     public void checkEnemyHit(Player player, Enemy enemy) {
@@ -127,16 +121,24 @@ public class EnemyManager {
 
                 if (playerInvincibleMode)
                     enemy.death(player);
-                else
+                else {
                     player.death();
+                    setAllNormal();
+                }
     }
 
-    private void setAllHungry() {
+    public void setAllHungry() {
         for (Enemy e : enemies)
             if (e.isActive())
                 e.setEnemyState(HUNGRY_STATE);
+    }
 
-        enemies.add(new SkelMonsta());
+    private void setAllNormal() {
+        for (Enemy e : enemies)
+            if (e.isActive())
+                e.setEnemyState(NORMAL_STATE);
+
+        HurryUpManager.getInstance().restart();
     }
 
     public void loadLevelData() {
