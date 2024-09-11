@@ -1,10 +1,10 @@
 package itemesAndRewards;
 
 
-import bubbles.BubbleManager;
 import entities.EnemyManager;
 import entities.Player;
 import main.Game;
+import projectiles.ProjectileManager;
 import utilz.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import static java.lang.Math.abs;
 
 public class PowerUpManager{
     private static PowerUpManager instance;
-    private Player player;
+    private final Player player;
 
     // PowerUp Flags
     private boolean greenCandy = false;
@@ -65,14 +65,14 @@ public class PowerUpManager{
             player.setBubbleCadenceMultiplier(1);
 
         if (blueCandy)
-            BubbleManager.getInstance().setProjectileSpeedMultiplier(1.65f);
+            ProjectileManager.getInstance().setPlayerProjectileSpeedMultiplier(1.65f);
         else
-            BubbleManager.getInstance().setProjectileSpeedMultiplier(1f);
+            ProjectileManager.getInstance().setPlayerProjectileSpeedMultiplier(1f);
 
         if (redCandy)
-            BubbleManager.getInstance().setProjectileDistanceMultiplier(1.65f);
+            ProjectileManager.getInstance().setPlayerProjectileDistanceMultiplier(1.65f);
         else
-            BubbleManager.getInstance().setProjectileDistanceMultiplier(1f);
+            ProjectileManager.getInstance().setPlayerProjectileDistanceMultiplier(1f);
 
         if (shoe)
             player.setSpeedMultiplier(1.7f);

@@ -12,7 +12,6 @@ import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.MAITA;
 import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
-import static utilz.HelpMethods.IsTileSolid;
 
 public class Maita extends Enemy {
 
@@ -277,10 +276,7 @@ public class Maita extends Enemy {
     }
 
     private boolean canJump(int jumpDistance) {
-        if (jumpDistance == -1)
-            return false;
-
-        return true;
+        return jumpDistance != -1;
     }
 
     private int calculateJumpDistance(int[][] levelData) {
@@ -357,10 +353,7 @@ public class Maita extends Enemy {
         int fourTilesAbove = getTileY()-4;
         boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelData) || IsTileSolid(getTileX()+1, fourTilesAbove, levelData);
 
-        if ( (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty))
-            return true;
-
-        return false;
+        return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }
 
     private void checkFireBall(Player player) {
@@ -401,8 +394,9 @@ public class Maita extends Enemy {
     }
 
     @Override
-    public void bubbleCapture() {
-        super.bubbleCapture();
+    public void bubbleCapture(Direction direction) {
+        super.bubbleCapture(direction);
+
         isFalling = false;
         isJumping = false;
         goUp = false;

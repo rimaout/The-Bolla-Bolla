@@ -2,24 +2,20 @@ package bubbles;
 
 import entities.Enemy;
 import entities.Player;
-import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
 
-import static java.lang.Math.abs;
-import static utilz.HelpMethods.*;
-import static utilz.Constants.Direction;
-import static utilz.Constants.Bubble.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.LinkedList;
+
+import static java.lang.Math.abs;
+import static utilz.Constants.Bubble.*;
 
 public class BubbleManager {
 
     private static BubbleManager instance;
-    private Player player;
+    private final Player player;
 
     private BufferedImage[][] playerBubbleSprites;
 
@@ -27,12 +23,7 @@ public class BubbleManager {
 
     private long lastTimerUpdate;
     private int popTimer = 0;
-    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 350;
-
-    // PowerUp Multipliers
-    private float projectileSpeedMultiplier = 1;
-    private float projectileDistanceMultiplier = 1;
-
+    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 200;
 
     private BubbleManager(Player player) {
         this.player = player;
@@ -63,7 +54,6 @@ public class BubbleManager {
 
         collisionWithPlayer();
         collisionBetweenBubbles();
-        collisionWithEnemies();
     }
 
     public void draw(Graphics g) {
@@ -178,51 +168,8 @@ public class BubbleManager {
         }
     }
 
-    private void collisionWithEnemies() {
-        ArrayList<Enemy> EnemyArray = LevelManager.getInstance().getCurrentLevel().getEnemies();
-        ArrayList<Bubble> EnemyBubblesToAdd = new ArrayList<>();
-
-        for (Bubble b : bubbles) {
-            if (!b.isActive() || b.state != PROJECTILE || !(b instanceof EmptyBubble))
-                continue;
-
-            for (Enemy e : EnemyArray) {
-                if (!e.isActive() || e.isImmune())
-                    continue;
-
-                if (b.getExternalCollisionBox().intersects(e.getHitbox())) {
-                    EnemyBubblesToAdd.add(new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, b.getDirection()));
-                    b.setActive(false);
-                    e.bubbleCapture();
-                }
-            }
-        }
-
-        bubbles.addAll(EnemyBubblesToAdd);
-    }
-
     public void addBubble(Bubble bubble) {
         bubbles.add(bubble);
-    }
-
-    public void addBubble(float x, float y, Direction direction) {
-        int tileX = (int) x / Game.TILES_SIZE;
-
-        int mapLeftMostTileX = 3 * Game.TILES_SIZE;
-        int mapRightMostTileX = 28 * Game.TILES_SIZE;
-        int xOffset = 4 * Game.SCALE;
-
-        if (direction == Direction.LEFT)
-            if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new EmptyBubble(x + xOffset, y, direction));
-            else
-                bubbles.add(new EmptyBubble(mapLeftMostTileX, y, direction));
-
-        if (direction == Direction.RIGHT)
-            if (!IsTilePerimeterWall(tileX))
-                bubbles.add(new EmptyBubble(x - xOffset, y, direction));
-            else
-                bubbles.add(new EmptyBubble( mapRightMostTileX - IMMAGE_W, y, direction));
     }
 
     public void addDeadEnemy(Enemy e, Player player) {
@@ -246,8 +193,6 @@ public class BubbleManager {
         bubbles = new LinkedList<>();
         popTimer = 0;
         lastTimerUpdate = 0;
-
-        projectileSpeedMultiplier = 1;
     }
 
     public BufferedImage[][] getPlayerBubbleSprites() {
@@ -259,21 +204,5 @@ public class BubbleManager {
 
         LinkedList<Bubble> bubblesShallowCopy = new LinkedList<>(bubbles);
         new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
-    }
-
-    public void setProjectileSpeedMultiplier(float projectileSpeedMultiplier) {
-        this.projectileSpeedMultiplier = projectileSpeedMultiplier;
-    }
-
-    public float getProjectileSpeedMultiplier() {
-        return projectileSpeedMultiplier;
-    }
-
-    public void setProjectileDistanceMultiplier(float projectileDistanceMultiplier) {
-        this.projectileDistanceMultiplier = projectileDistanceMultiplier;
-    }
-
-    public float getProjectileDistanceMultiplier() {
-        return projectileDistanceMultiplier;
     }
 }

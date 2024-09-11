@@ -5,8 +5,8 @@ import entities.Player;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.Direction;
 import static utilz.Constants.Bubble.*;
+import static utilz.Constants.Direction;
 
 public class EmptyBubble extends Bubble {
 
@@ -24,7 +24,7 @@ public class EmptyBubble extends Bubble {
     }
 
     public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
-        if (state != PROJECTILE && state != POP_NORMAL && state != POP_RED) {
+        if (state != POP_NORMAL && state != POP_RED) {
 
             if (state == RED)
                 state = POP_RED;

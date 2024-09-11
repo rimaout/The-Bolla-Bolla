@@ -1,20 +1,16 @@
 package bubbles;
 
+import entities.Entity;
 import entities.Player;
 import levels.LevelManager;
-import main.Game;
-import entities.Entity;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-import static utilz.Constants.GRAVITY;
-import static utilz.Constants.PlayerConstants.JUMP_SPEED;
-import static utilz.HelpMethods.*;
+import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
-import static utilz.Constants.Bubble.*;
 
 public abstract class Bubble extends Entity {
 
@@ -26,8 +22,8 @@ public abstract class Bubble extends Entity {
     protected boolean isFirstUpdate = true;
     protected boolean active = true;
     protected boolean popped = false;
-    protected int state = PROJECTILE;
-    protected int previousState = PROJECTILE;
+    protected int state = NORMAL;
+    protected int previousState = NORMAL;
 
     protected int normalTimer, redTimer, blinkingTimer;
     protected long lastTimerUpdate;
@@ -37,15 +33,13 @@ public abstract class Bubble extends Entity {
     protected Direction direction;
     protected Direction previousDirection;
 
-    float projectileAnimationTick = 0;
-
     public Bubble(float x, float y, Direction direction) {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
         this.previousDirection = direction;
+        initHitbox(HITBOX_W, HITBOX_H);
 
         loadLevelData();
-        initHitbox(HITBOX_W, HITBOX_H);
         initCollisionBoxes();
     }
 
@@ -104,21 +98,6 @@ public abstract class Bubble extends Entity {
 
     private void updateAnimationTick() {
 
-        if (state == PROJECTILE ) {
-
-            float projectileSpeedMultiplier = BubbleManager.getInstance().getProjectileSpeedMultiplier();
-            float projectileDistanceMultiplier = BubbleManager.getInstance().getProjectileDistanceMultiplier();
-            projectileAnimationTick += projectileSpeedMultiplier / projectileDistanceMultiplier;
-
-            if (projectileAnimationTick > BUBBLE_ANIMATION_SPEED) {
-                projectileAnimationTick = 0;
-                animationIndex++;
-                if (animationIndex >= getSpriteAmount(state))
-                    animationIndex = 0;
-            }
-            return;
-        }
-
         animationTick++;
         if (animationTick > BUBBLE_ANIMATION_SPEED) {
             animationTick = 0;
@@ -144,11 +123,6 @@ public abstract class Bubble extends Entity {
 
     private void setState() {
         int startAnimation = state;
-
-        if (state == PROJECTILE && animationIndex == 3) {
-            previousState = state;
-            state = NORMAL;
-        }
 
         if (state == NORMAL && normalTimer <= 0) {
             previousState = state;
@@ -179,34 +153,16 @@ public abstract class Bubble extends Entity {
     }
 
     private void updateDirection() {
-        if (state == PROJECTILE)
-            return;
-
-        int tileX = (int) (hitbox.x / Game.TILES_SIZE);
-        int tileY = (int) (hitbox.y / Game.TILES_SIZE);
 
         if (direction != NONE)
             previousDirection = direction;
 
-        direction = windLevelData[tileY][tileX];
+        direction = windLevelData[getTileY()][getTileX()];
     }
 
     private void updatePosition() {
 
-
-        if (state == PROJECTILE) {
-
-            float projectileSpeed = PROJECTILE_SPEED * BubbleManager.getInstance().getProjectileSpeedMultiplier();
-
-            if (direction == RIGHT) {
-                if (CanMoveHere((int) (hitbox.x + PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
-                    hitbox.x += projectileSpeed;
-            }
-            else if (CanMoveHere((int) (hitbox.x - PROJECTILE_SPEED), (int) hitbox.y, hitbox.width, hitbox.height, levelData))
-                hitbox.x -= projectileSpeed;
-        }
-
-        if (state != PROJECTILE && (state != POP_NORMAL || state != POP_RED)) {
+        if (state != POP_NORMAL || state != POP_RED) {
             xSpeed = 0;
             ySpeed = 0;
 

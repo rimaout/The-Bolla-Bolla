@@ -1,19 +1,19 @@
 package gameStates;
 
 import bubbles.BubbleManager;
+import entities.EnemyManager;
 import entities.HurryUpManager;
-import projectiles.ProjectileManager;
+import entities.Player;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;
-import ui.GameCompletedOverlay;
-import ui.PlayingHud;
-import entities.EnemyManager;
-import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import projectiles.ProjectileManager;
+import ui.GameCompletedOverlay;
 import ui.GameOverOverlay;
 import ui.PauseOverlay;
+import ui.PlayingHud;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,7 +21,7 @@ import java.awt.event.MouseEvent;
 
 public class Playing extends State implements StateMethods {
     private Player playerOne;
-    private Player playerTwo = null;
+    private final Player playerTwo = null;
 
     private LevelManager levelManager;
     private EnemyManager enemyManager;
@@ -135,7 +135,7 @@ public class Playing extends State implements StateMethods {
         levelManager.resetAll();
         enemyManager.resetAll();
         hurryUpManager.resetAll();
-        projectileManager.resetAll();
+        projectileManager.resetNewGame();
         bubbleManager.resetAll();
         itemManager.resetAll();
         powerUpManager.resetAll();
@@ -146,7 +146,7 @@ public class Playing extends State implements StateMethods {
         enemyManager.resetAll();
         hurryUpManager.resetAll();
         bubbleManager.resetAll();
-        projectileManager.resetAll();
+        projectileManager.resetNewLevel();
         levelManager.loadNextLevel();
         playerOne.resetAll(false, false);
         itemManager.resetAll();

@@ -5,20 +5,24 @@ import entities.EnemyManager;
 import entities.Player;
 import utilz.LoadSave;
 
-import static utilz.Constants.Projectiles.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import static utilz.Constants.Projectiles.*;
+
 public class ProjectileManager {
     private static ProjectileManager instance;
-    private Player player;
+    private final Player player;
 
     private BufferedImage[][] fireBallSprites;
     private BufferedImage[][] bubbleSprites;
 
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private final ArrayList<Projectile> projectiles = new ArrayList<>();
+
+    // PowerUp Multipliers
+    private float playerProjectileSpeedMultiplier = 1;
+    private float playerProjectileDistanceMultiplier = 1;
 
 
     private ProjectileManager(Player player) {
@@ -67,10 +71,6 @@ public class ProjectileManager {
                 p.checkEntityHit(e);
             }
         }
-
-
-
-
     }
 
     public void addProjectile(Projectile projectile) {
@@ -78,7 +78,13 @@ public class ProjectileManager {
     }
 
 
-    public void resetAll() {
+    public void resetNewGame() {
+        projectiles.clear();
+        playerProjectileSpeedMultiplier = 1;
+        playerProjectileDistanceMultiplier = 1;
+    }
+
+    public void resetNewLevel() {
         projectiles.clear();
     }
 
@@ -102,4 +108,21 @@ public class ProjectileManager {
             case PLAYER_BUBBLE -> bubbleSprites;
         };
     }
+
+    public float getPlayerProjectileSpeedMultiplier() {
+        return playerProjectileSpeedMultiplier;
+    }
+
+    public void setPlayerProjectileSpeedMultiplier(float playerProjectileSpeedMultiplier) {
+        this.playerProjectileSpeedMultiplier = playerProjectileSpeedMultiplier;
+    }
+
+    public float getPlayerProjectileDistanceMultiplier() {
+        return playerProjectileDistanceMultiplier;
+    }
+
+    public void setPlayerProjectileDistanceMultiplier(float playerProjectileDistanceMultiplier) {
+        this.playerProjectileDistanceMultiplier = playerProjectileDistanceMultiplier;
+    }
+
 }

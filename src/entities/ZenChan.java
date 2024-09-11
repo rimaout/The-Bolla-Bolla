@@ -3,7 +3,9 @@ package entities;
 import levels.LevelManager;
 import main.Game;
 import utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
+
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
 import static utilz.Constants.GRAVITY;
@@ -260,10 +262,7 @@ public class ZenChan extends Enemy {
     }
 
     private boolean canJump(int jumpDistance) {
-        if (jumpDistance == -1)
-            return false;
-
-        return true;
+        return jumpDistance != -1;
     }
 
     private int calculateJumpDistance(int[][] levelData) {
@@ -340,10 +339,7 @@ public class ZenChan extends Enemy {
         int fourTilesAbove = getTileY()-4;
         boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelData) || IsTileSolid(getTileX()+1, fourTilesAbove, levelData);
 
-        if ( (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty))
-            return true;
-
-        return false;
+        return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }
 
     private void updatePlayerInfo(Player player){
@@ -371,8 +367,9 @@ public class ZenChan extends Enemy {
     }
 
     @Override
-    public void bubbleCapture() {
-        super.bubbleCapture();
+    public void bubbleCapture(Direction direction) {
+        super.bubbleCapture(direction);
+        
         isFalling = false;
         isJumping = false;
         goUp = false;

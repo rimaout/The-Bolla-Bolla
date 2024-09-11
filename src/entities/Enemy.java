@@ -6,11 +6,11 @@ import levels.LevelManager;
 import main.Game;
 
 import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.HelpMethods.*;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.EnemyConstants.EnemyType;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.HelpMethods.GetEntityYPosAboveFloor;
+import static utilz.HelpMethods.IsSightClear;
 
 public abstract class Enemy extends Entity {
     protected boolean active = true;
@@ -177,7 +177,9 @@ public abstract class Enemy extends Entity {
         walkingDir = startWalkingDir;
     }
 
-    public void bubbleCapture() {
+    public void bubbleCapture(Direction direction) {
+
+        BubbleManager.getInstance().addBubble(new EnemyBubble(this, hitbox.x, hitbox.y, direction));
         active = false;
         enemyState = BOBBLE_STATE;
         animationIndex = 0;

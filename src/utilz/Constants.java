@@ -7,17 +7,41 @@ public class Constants {
     public static final float GRAVITY = 0.0078f * Game.SCALE;
     public static final int ANIMATION_SPEED = 55;
 
+    public enum Direction {
+        LEFT, RIGHT, UP, DOWN, NONE;
+
+        public static Direction GetRandomDirection() {
+            return switch ((int) (Math.random() * 4)) {
+                case 0 -> Direction.LEFT;
+                case 1 -> Direction.RIGHT;
+                case 2 -> Direction.UP;
+                case 3 -> Direction.DOWN;
+                default -> Direction.NONE;
+            };
+        }
+
+        public static Direction GetOppositeDirection(Direction direction) {
+            return switch (direction) {
+                case LEFT -> Direction.RIGHT;
+                case RIGHT -> Direction.LEFT;
+                case UP -> Direction.DOWN;
+                case DOWN -> Direction.UP;
+                default -> Direction.NONE;
+            };
+        }
+    }
+
     public static class Home {
 
         // Logo Constants
-        public static final int LOGO_END_Y = (int) (15 * Game.SCALE);
+        public static final int LOGO_END_Y = 15 * Game.SCALE;
         public static final int LOGO_SPEED = 1;
 
         // Twinkle Bubble Constants
         public static final int BUBBLE_DEFAULT_W = 8;
         public static final int BUBBLE_DEFAULT_H = 8;
-        public static final int BUBBLE_W = (int) (BUBBLE_DEFAULT_W * Game.SCALE);
-        public static final int BUBBLE_H = (int) (BUBBLE_DEFAULT_H * Game.SCALE);
+        public static final int BUBBLE_W = BUBBLE_DEFAULT_W * Game.SCALE;
+        public static final int BUBBLE_H = BUBBLE_DEFAULT_H * Game.SCALE;
 
         public static final float BUBBLE_SPEED = 0.0666f * Game.SCALE;
     }
@@ -25,32 +49,10 @@ public class Constants {
     public static class LevelTransition {
 
         public enum TransitionState {
-            LEVEL_TRANSITION,
-            LOADING_NEW_LEVEL,
-            START_NEW_LEVEL
+            LEVEL_TRANSITION, LOADING_NEW_LEVEL, START_NEW_LEVEL
         }
 
         public static final float LEVEL_TRANSITION_SPEED = 0.58f * Game.SCALE;
-    }
-
-    public static class INTRO {
-
-        public enum IntroState {
-            INTRO,
-            LEVEL_TRANSITION,
-            START_NEW_LEVEL
-        }
-
-        public static final float TRANSITION_SPEED = 0.58f * Game.SCALE;
-
-        public static final float TEXT_START_Y = 20 * Game.SCALE;
-
-        public static final float PLAYER_START_X = 9 * Game.TILES_SIZE;
-        public static final float PLAYER_START_Y = 10 * Game.TILES_SIZE;
-
-        public static final int RADIUS = 70;
-        public static final int TOTAL_LAPS = 3;
-        public static final float ANGLE_INCREMENT = 0.022f;
     }
 
     public static class Bubble {
@@ -59,26 +61,25 @@ public class Constants {
         // Bubble Dimensions
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
-        public static final int IMMAGE_W = (int) (DEFAULT_W * Game.SCALE);
-        public static final int IMMAGE_H = (int) (DEFAULT_H * Game.SCALE);
+        public static final int IMMAGE_W = DEFAULT_W * Game.SCALE;
+        public static final int IMMAGE_H = DEFAULT_H * Game.SCALE;
 
         // Hitbox Constants
-        public static final int HITBOX_W = (int) (16 * Game.SCALE);
-        public static final int HITBOX_H = (int) (16 * Game.SCALE);
-        public static final int HITBOX_OFFSET_X = (int) (1 * Game.SCALE);
-        public static final int HITBOX_OFFSET_Y = (int) (1 * Game.SCALE);
+        public static final int HITBOX_W = 16 * Game.SCALE;
+        public static final int HITBOX_H = 16 * Game.SCALE;
+        public static final int HITBOX_OFFSET_X = Game.SCALE;
+        public static final int HITBOX_OFFSET_Y = Game.SCALE;
 
         // Collision Box Constants
-        public static final int INTERNAL_BOX_W = (int) (8 * Game.SCALE);
-        public static final int INTERNAL_BOX_H = (int) (8 * Game.SCALE);
+        public static final int INTERNAL_BOX_W = 8 * Game.SCALE;
+        public static final int INTERNAL_BOX_H = 8 * Game.SCALE;
         public static final int INTERNAL_BOX_OFFSET_X = (int) (3.5 * Game.SCALE);
-        public static final int INTERNAL_BOX_OFFSET_Y = (int) (4 * Game.SCALE);
+        public static final int INTERNAL_BOX_OFFSET_Y = 4 * Game.SCALE;
         public static final int EXTERNAL_BOX_W = (int) (13.5 * Game.SCALE);
-        public static final int EXTERNAL_BOX_H = (int) (16 * Game.SCALE);
+        public static final int EXTERNAL_BOX_H = 16 * Game.SCALE;
         public static final int EXTERNAL_BOX_OFFSET_X = (int) (1.5 * Game.SCALE);
 
         // Empty & Player Bubble states
-        public static final int PROJECTILE = 0;
         public static final int NORMAL = 1;
         public static final int RED = 2;
         public static final int BLINKING = 3;
@@ -104,7 +105,6 @@ public class Constants {
 
         public static int getSpriteAmount(int bubbleState) {
             return switch (bubbleState) {
-                case PROJECTILE -> 4;
                 case NORMAL -> 2;
                 case RED -> 2;
                 case BLINKING -> 2;
@@ -126,55 +126,41 @@ public class Constants {
         public static class PauseButtons {
             public static final int SOUND_BT_DEFAULT_W = 42;
             public static final int SOUND_BT_DEFAULT_H = 42;
-            public static final int SOUND_BT_W = (int) (SOUND_BT_DEFAULT_W * Game.SCALE / 2);
-            public static final int SOUND_BT_H = (int) (SOUND_BT_DEFAULT_H * Game.SCALE / 2);
+            public static final int SOUND_BT_W = SOUND_BT_DEFAULT_W * Game.SCALE / 2;
+            public static final int SOUND_BT_H = SOUND_BT_DEFAULT_H * Game.SCALE / 2;
         }
 
         public static class UrmButtons {
             public static final int URM_BT_DEFAULT_W = 56;
             public static final int URM_BT_DEFAULT_H = 56;
-            public static final int URM_BT_W = (int) (URM_BT_DEFAULT_W * Game.SCALE / 2);
-            public static final int URM_BT_H = (int) (URM_BT_DEFAULT_H * Game.SCALE / 2);
+            public static final int URM_BT_W = URM_BT_DEFAULT_W * Game.SCALE / 2;
+            public static final int URM_BT_H = URM_BT_DEFAULT_H * Game.SCALE / 2;
         }
 
         public static class VolumeButton {
             public static final int VOLUME_BT_DEFAULT_W = 28;
             public static final int VOLUME_BT_DEFAULT_H = 44;
-            public static final int VOLUME_BT_W = (int) (VOLUME_BT_DEFAULT_W * Game.SCALE / 3);
-            public static final int VOLUME_BT_H = (int) (VOLUME_BT_DEFAULT_H * Game.SCALE / 3);
+            public static final int VOLUME_BT_W = VOLUME_BT_DEFAULT_W * Game.SCALE / 3;
+            public static final int VOLUME_BT_H = VOLUME_BT_DEFAULT_H * Game.SCALE / 3;
 
             public static final int VOLUME_SLIDER_DEFAULT_W = 215;
             public static final int VOLUME_SLIDER_DEFAULT_H = 44;
-            public static final int VOLUME_SLIDER_W = (int) (VOLUME_SLIDER_DEFAULT_W * Game.SCALE / 3);
-            public static final int VOLUME_SLIDER_H = (int) (VOLUME_SLIDER_DEFAULT_H * Game.SCALE / 3);
+            public static final int VOLUME_SLIDER_W = VOLUME_SLIDER_DEFAULT_W * Game.SCALE / 3;
+            public static final int VOLUME_SLIDER_H = VOLUME_SLIDER_DEFAULT_H * Game.SCALE / 3;
         }
     }
 
-    public enum Direction {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
-        NONE;
+    public static class INTRO {
 
-        public static Direction GetRandomDirection() {
-            return switch ((int) (Math.random() * 4)) {
-                case 0 -> Direction.LEFT;
-                case 1 -> Direction.RIGHT;
-                case 2 -> Direction.UP;
-                case 3 -> Direction.DOWN;
-                default -> Direction.NONE;
-            };
-        }
-
-        public static Direction GetOppositeDirection(Direction direction) {
-            return switch (direction) {
-                case LEFT -> Direction.RIGHT;
-                case RIGHT -> Direction.LEFT;
-                case UP -> Direction.DOWN;
-                case DOWN -> Direction.UP;
-                default -> Direction.NONE;
-            };
+        public static final float TRANSITION_SPEED = 0.58f * Game.SCALE;
+        public static final float TEXT_START_Y = 20 * Game.SCALE;
+        public static final float PLAYER_START_X = 9 * Game.TILES_SIZE;
+        public static final float PLAYER_START_Y = 10 * Game.TILES_SIZE;
+        public static final int RADIUS = 70;
+        public static final int TOTAL_LAPS = 3;
+        public static final float ANGLE_INCREMENT = 0.022f;
+        public enum IntroState {
+            INTRO, LEVEL_TRANSITION, START_NEW_LEVEL
         }
     }
 
@@ -187,12 +173,12 @@ public class Constants {
         // Player Image and Hitbox Constants
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
-        public static final int IMMAGE_W = (int) (18 * Game.SCALE);
-        public static final int IMMAGE_H = (int) (18 * Game.SCALE);
-        public static final int HITBOX_W = (int) (13 * Game.SCALE);
-        public static final int HITBOX_H = (int) (13 * Game.SCALE);
-        public static final int OFFSET_X = (int) (3 * Game.SCALE);
-        public static final int OFFSET_Y = (int) (3 * Game.SCALE);
+        public static final int IMMAGE_W = 18 * Game.SCALE;
+        public static final int IMMAGE_H = 18 * Game.SCALE;
+        public static final int HITBOX_W = 13 * Game.SCALE;
+        public static final int HITBOX_H = 13 * Game.SCALE;
+        public static final int OFFSET_X = 3 * Game.SCALE;
+        public static final int OFFSET_Y = 3 * Game.SCALE;
 
         // Movement values and variables
         public static final float WALK_SPEED = 0.33f * Game.SCALE;
@@ -249,16 +235,16 @@ public class Constants {
         public static final int SKEL_MONSTA_MOVEMENT_TIMER = 300;
         
         // Hitbox Constants
-        public static final int ENEMY_HITBOX_W = (int) (14 * Game.SCALE);
-        public static final int ENEMY_HITBOX_H = (int) (15 * Game.SCALE);
-        public static final int ENEMY_HITBOX_OFFSET_X = (int) (2 * Game.SCALE);
-        public static final int ENEMY_HITBOX_OFFSET_Y = (int) (1 * Game.SCALE);
+        public static final int ENEMY_HITBOX_W = 14 * Game.SCALE;
+        public static final int ENEMY_HITBOX_H = 15 * Game.SCALE;
+        public static final int ENEMY_HITBOX_OFFSET_X = 2 * Game.SCALE;
+        public static final int ENEMY_HITBOX_OFFSET_Y = Game.SCALE;
 
         // General Enemy Sprite Sizes
         public static final int ENEMY_DEFAULT_W = 18;
         public static final int ENEMY_DEFAULT_H = 18;
-        public static final int ENEMY_W = (int) (ENEMY_DEFAULT_W * Game.SCALE);
-        public static final int ENEMY_H = (int) (ENEMY_DEFAULT_H * Game.SCALE);
+        public static final int ENEMY_W = ENEMY_DEFAULT_W * Game.SCALE;
+        public static final int ENEMY_H = ENEMY_DEFAULT_H * Game.SCALE;
 
         // General Animation Constants
         public static final int WALKING_ANIMATION_NORMAL = 0;
@@ -315,13 +301,13 @@ public class Constants {
 
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
-        public static final int W = (int) (DEFAULT_W * Game.SCALE);
-        public static final int H = (int) (DEFAULT_H * Game.SCALE);
+        public static final int W = DEFAULT_W * Game.SCALE;
+        public static final int H = DEFAULT_H * Game.SCALE;
 
-        public static final int HITBOX_W = (int) (6 * Game.SCALE);
-        public static final int HITBOX_H = (int) (6 * Game.SCALE);
-        public static final int OFFSET_X = (int) (6 * Game.SCALE);
-        public static final int OFFSET_Y = (int) (7 * Game.SCALE);
+        public static final int HITBOX_W = 6 * Game.SCALE;
+        public static final int HITBOX_H = 6 * Game.SCALE;
+        public static final int OFFSET_X = 6 * Game.SCALE;
+        public static final int OFFSET_Y = 7 * Game.SCALE;
 
         public static final int DE_SPAWN_TIMER = 8000;
         public static final int SPAWN_POWER_UP_TIMER = 12000;
@@ -425,16 +411,16 @@ public class Constants {
 
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
-        public static final int W = (int) (DEFAULT_W * Game.SCALE);
-        public static final int H = (int) (DEFAULT_H * Game.SCALE);
+        public static final int W = DEFAULT_W * Game.SCALE;
+        public static final int H = DEFAULT_H * Game.SCALE;
 
-        public static final int HITBOX_W = (int) (9 * Game.SCALE);
-        public static final int HITBOX_H = (int) (9 * Game.SCALE);
-        public static final int OFFSET_X = (int) (-5 * Game.SCALE);
-        public static final int OFFSET_Y = (int) (-4 * Game.SCALE);
+        public static final int HITBOX_W = 9 * Game.SCALE;
+        public static final int HITBOX_H = 9 * Game.SCALE;
+        public static final int OFFSET_X = -5 * Game.SCALE;
+        public static final int OFFSET_Y = -4 * Game.SCALE;
 
         public static final int PROJECTILE_ANIMATION_SPEED = 25;
-        public static final float PLAYER_BUBBLE_SPEED = 1f * Game.SCALE;
+        public static final float PLAYER_BUBBLE_SPEED = 1.2f * Game.SCALE;
         public static final float MAITA_FIREBALL_SPEED = 0.53f * Game.SCALE;
 
         public enum ProjectileState {
@@ -475,7 +461,7 @@ public class Constants {
         public static final int HURRY_IMG_W = (int) (40 * Game.SCALE * 1.3);
         public static final int HURRY_IMG_H = (int) (11 * Game.SCALE * 1.3);
         public static final int HURRY_IMG_X = (int) (Game.GAME_WIDTH / 2 - 40 * Game.SCALE * 1.3 / 2);
-        public static final int HURRY_IMG_Y = (int) (Game.GAME_HEIGHT - 5 * Game.SCALE);
+        public static final int HURRY_IMG_Y = Game.GAME_HEIGHT - 5 * Game.SCALE;
         public static final float HURRY_IMG_SPEED = 0.3f * Game.SCALE;
 
         public static final int START_ANIMATION_TIMER = 17000;

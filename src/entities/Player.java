@@ -1,28 +1,27 @@
 package entities;
 
 import bubbles.BubbleManager;
+import gameStates.Playing;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
+import main.Game;
 import projectiles.PlayerBubbleProjectile;
 import projectiles.ProjectileManager;
 import utilz.LoadSave;
-import gameStates.Playing;
-import main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
-import static utilz.Constants.GRAVITY;
+import static utilz.Constants.*;
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
 public class Player extends Entity{
     private int[][] levelData;
-    private Playing playing;
-    private BubbleManager bubbleManager;
+    private final Playing playing;
+    private final BubbleManager bubbleManager;
     private boolean isFirstUpdate = true;
 
     // Animation values and variables
@@ -103,9 +102,8 @@ public class Player extends Entity{
 
         if (direction == LEFT)
             ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x - xOffset, hitbox.y - yOffset, direction));
-            //bubbleManager.addBubble(hitbox.x - xOffset, hitbox.y - yOffset, direction);
         else
-            bubbleManager.addBubble(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction);
+            ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction));
 
         attackingAnimation = true;
         attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);
