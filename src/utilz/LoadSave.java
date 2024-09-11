@@ -42,6 +42,7 @@ public class LoadSave {
     public static final String BUD_SMALL_POINTS_SPRITE = "/sprites/Bud_small_points.png";
     public static final String BUD_BIG_POINTS_SPRITE = "/sprites/Bud_big_points.png";
     public static final String PROJECTILE_FIREBALL_SPRITE = "/sprites/fireball.png";
+    public static final String WATER_BUBBLE_SPRITE = "/sprites/water_bubble.png";
 
     // IMAGES
     public static final String GAME_LOGO = "/images/logo.png";

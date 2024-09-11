@@ -77,7 +77,7 @@ public class Constants {
         public static final int EXTERNAL_BOX_H = (int) (16 * Game.SCALE);
         public static final int EXTERNAL_BOX_OFFSET_X = (int) (1.5 * Game.SCALE);
 
-        // States
+        // Empty & Player Bubble states
         public static final int PROJECTILE = 0;
         public static final int NORMAL = 1;
         public static final int RED = 2;
@@ -85,6 +85,10 @@ public class Constants {
         public static final int POP_NORMAL = 4;
         public static final int POP_RED = 5;
         public static final int DEAD = 6;
+
+        // Water Bubble states
+        public static final int WATER_BUBBLE = 0;
+        public static final int WATER_FLOW = 1;
 
         // State Timers (seconds)
         public static final int NORMAL_TIMER = 12000;

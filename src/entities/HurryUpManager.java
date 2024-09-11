@@ -77,6 +77,9 @@ public class HurryUpManager {
         startAnimationTimer -= (int) timeDelta;
         startHurryUpTimer -= (int) timeDelta;
 
+        if (EnemyManager.getInstance().areAllEnemiesDead())
+            restart();
+
         if (startAnimationTimer <= 0)
             animationActive = true;
 
@@ -86,6 +89,8 @@ public class HurryUpManager {
 
     private void updateHurryPos() {
         if (animationActive) {
+
+            // If image is at center of screen, stop moving
             if (hurryImgY <= Game.GAME_HEIGHT / 2 - HURRY_IMG_H / 2)
                 return;
 
