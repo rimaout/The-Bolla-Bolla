@@ -1,7 +1,7 @@
 package entities;
 
-import utilz.Constants.EnemyConstants.EnemyType;
 import utilz.Constants.Direction;
+import utilz.Constants.EnemyConstants.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,16 +21,15 @@ public class SkelMonsta extends Enemy{
     private float walkedDistance;
 
     public SkelMonsta() {
-        super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H, SKEL_MONSTA, RIGHT);
-
+        super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_W, ENEMY_H, SKEL_MONSTA, RIGHT);
         active = false;
         y = SKEL_MONSTA_SPAWN_Y;    // Set the y position to the spawn point (the super constructor sets it outside the screen, but skelMonsta spawns from the ground)
-        initHitbox(ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
+        initHitbox(ENEMY_HITBOX_W, ENEMY_HITBOX_H);
     }
 
     public void draw(Graphics g) {
         BufferedImage[][] sprites = EnemyManager.getInstance().getEnemySprite(SKEL_MONSTA);
-        g.drawImage(sprites[getAnimation()][animationIndex], (int) hitbox.x, (int) hitbox.y, ENEMY_W, ENEMY_H, null);
+        g.drawImage(sprites[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
     }
 
     @Override
@@ -40,7 +39,8 @@ public class SkelMonsta extends Enemy{
 
         updateState();
         updateAnimationTick();
-        updateTimer(player);
+        updateTimer();
+        calculateNextMove(player);
         updateMove(player);
         checkPlayerHit(player);
     }
@@ -82,11 +82,16 @@ public class SkelMonsta extends Enemy{
             active = false;
             HurryUpManager.getInstance().resetAll();
         }
+
+        if (EnemyManager.getInstance().getActiveEnemiesCount() == 0 && !despawning)
+            despawn();
     }
 
     private void firstUpdate() {
         lastTimerUpdate = System.currentTimeMillis();
 
+        walkingDir = RIGHT;
+        previousWalkingDir = RIGHT;
         walkedDistance = 0;
         spawning = true;
         moving = false;
@@ -95,23 +100,27 @@ public class SkelMonsta extends Enemy{
         firstUpdate = false;
     }
 
-    private void updateTimer(Player player) {
+    private void updateTimer() {
         long currentTime = System.currentTimeMillis();
         long timeDelta = currentTime - lastTimerUpdate;
         lastTimerUpdate = currentTime;
 
         nextMoveTimer -= (int) timeDelta;
+    }
 
-        if (nextMoveTimer <= 0 && !moving)
+    private void calculateNextMove(Player player) {
+
+        if (nextMoveTimer <= 0 && !moving) {
+            if (walkingDir != UP && walkingDir != DOWN)
+                previousWalkingDir = walkingDir;
+
             walkingDir = getDirectionToPlayer(player);
+        }
 
         if (nextMoveTimer <= 0 && !spawning && !despawning)
             moving = true;
         else
             moving = false;
-
-        if (EnemyManager.getInstance().getActiveEnemiesCount() == 0 && !despawning)
-            despawn();
     }
 
     private void updateMove(Player player) {
@@ -124,38 +133,35 @@ public class SkelMonsta extends Enemy{
             case LEFT -> moveOnXAxis(LEFT, player);
             case RIGHT -> moveOnXAxis(RIGHT, player);
         }
+
+        updateWalkedDistance();
     }
 
     private void moveOnYAxis(Direction direction, Player player) {
-        walkedDistance += NORMAL_WALK_SPEED;
-
-        if (walkedDistance >= SKEL_MONSTA_MOVEMENT_MAX_DISTANCE)
-            stopMove();
-
         if (player.getTileY() == getTileY())
             return;
 
-        if (direction == UP)
-            hitbox.y -= NORMAL_WALK_SPEED;
-
-        else if (direction == DOWN)
-            hitbox.y += NORMAL_WALK_SPEED;
+        switch (direction) {
+            case UP -> hitbox.y -= NORMAL_WALK_SPEED;
+            case DOWN -> hitbox.y += NORMAL_WALK_SPEED;
+        }
     }
 
     private void moveOnXAxis(Direction direction, Player player) {
+        if (player.getTileX() == getTileX())
+            return;
+
+        switch (direction) {
+            case LEFT -> hitbox.x -= NORMAL_WALK_SPEED;
+            case RIGHT -> hitbox.x += NORMAL_WALK_SPEED;
+        }
+    }
+
+    private void updateWalkedDistance() {
         walkedDistance += NORMAL_WALK_SPEED;
 
         if (walkedDistance >= SKEL_MONSTA_MOVEMENT_MAX_DISTANCE)
             stopMove();
-
-        if (player.getTileX() == getTileX())
-            return;
-
-        if (direction == LEFT)
-            hitbox.x -= NORMAL_WALK_SPEED;
-
-        else if (direction == RIGHT)
-            hitbox.x += NORMAL_WALK_SPEED;
     }
 
     private Direction getDirectionToPlayer(Player player) {

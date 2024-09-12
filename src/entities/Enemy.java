@@ -27,6 +27,7 @@ public abstract class Enemy extends Entity {
     protected float flySpeed;
     protected float walkSpeed;
     protected Direction walkingDir;
+    protected Direction previousWalkingDir;
     protected Direction startWalkingDir;
 
     // Spawn Info
@@ -128,17 +129,21 @@ public abstract class Enemy extends Entity {
     }
 
     protected int flipX() {
-        if (walkingDir == RIGHT)
-            return width;
-        else
-            return 0;
+        Direction direction = switch (walkingDir) {
+            case UP, DOWN -> previousWalkingDir;
+            default -> walkingDir;
+        };
+
+        return (direction == RIGHT) ? width : 0;
     }
 
     protected int flipW() {
-        if (walkingDir == RIGHT)
-            return -1;
-        else
-            return 1;
+        Direction direction = switch (walkingDir) {
+            case UP, DOWN -> previousWalkingDir;
+            default -> walkingDir;
+        };
+
+        return (direction == RIGHT) ? -1 : 1;
     }
 
     protected void updateWalkingDir() {
