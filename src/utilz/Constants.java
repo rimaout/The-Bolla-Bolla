@@ -254,6 +254,8 @@ public class Constants {
         public static final int DEAD_ANIMATION = 6;
         public static final int BOBBLE_GREEN_POP_ANIMATION = 7;
         public static final int BOBBLE_RED_POP_ANIMATION = 8;
+        public static final float NORMAL_ANIMATION_SPEED_MULTIPLIER = 1.0f;
+        public static final float HUNGRY_ANIMATION_SPEED_MULTIPLIER = 0.53f;
 
         // Enemy States
         public static final int NORMAL_STATE = 0;

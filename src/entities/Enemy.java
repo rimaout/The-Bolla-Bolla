@@ -16,6 +16,7 @@ public abstract class Enemy extends Entity {
     protected boolean active = true;
     protected boolean alive = true;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
+    protected float animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
     protected int enemyState;
     protected EnemyType enemyType;
     protected boolean firstUpdate = true;
@@ -51,7 +52,7 @@ public abstract class Enemy extends Entity {
 
     protected void updateAnimationTick() {
         animationTick++;
-        if (animationTick >= ANIMATION_SPEED) {
+        if (animationTick >= ANIMATION_SPEED * animationSpeedMultiplier) {
             animationTick = 0;
             animationIndex++;
             if (animationIndex >= getSpriteAmount(enemyType, enemyState)) {
@@ -83,6 +84,7 @@ public abstract class Enemy extends Entity {
                 walkSpeed = NORMAL_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_NORMAL;
                 updatePlayerPosMaxInterval = NORMAL_PLAYER_INFO_MAX_UPDATE_INTERVAL;
+                animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
                 break;
 
             case HUNGRY_STATE:
@@ -91,15 +93,18 @@ public abstract class Enemy extends Entity {
                 walkSpeed = HUNGRY_WALK_SPEED;
                 animationAction = WALKING_ANIMATION_HUNGRY;
                 updatePlayerPosMaxInterval = HUNGRY_PLAYER_INFO_MAX_UPDATE_INTERVAL;
+                animationSpeedMultiplier = HUNGRY_ANIMATION_SPEED_MULTIPLIER;
                 break;
 
             case BOBBLE_STATE:
                 animationAction = BOBBLE_GREEN_ANIMATION;
+                animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
                 break;
 
             case DEAD_STATE:
                 active = false;
                 animationAction = DEAD_ANIMATION;
+                animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
                 break;
         }
     }
