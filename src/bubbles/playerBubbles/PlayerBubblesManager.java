@@ -1,5 +1,6 @@
-package bubbles;
+package bubbles.playerBubbles;
 
+import bubbles.Bubble;
 import entities.Enemy;
 import entities.Player;
 import main.Game;
@@ -9,38 +10,37 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import static java.lang.Math.abs;
 import static utilz.Constants.Bubble.*;
 
-public class BubbleManager {
+public class PlayerBubblesManager {
 
-    private static BubbleManager instance;
+    // This class is responsible for managing the bubbles that the player shoots
+
+    private static PlayerBubblesManager instance;
     private final Player player;
 
     private BufferedImage[][] playerBubbleSprites;
 
-    private LinkedList<Bubble> bubbles;
+    private LinkedList<PlayerBubble> bubbles;
 
     private long lastTimerUpdate;
     private int popTimer = 0;
     private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 200;
 
-    private BubbleManager(Player player) {
+    private PlayerBubblesManager(Player player) {
         this.player = player;
-
         bubbles = new LinkedList<>();
-
         loadBubbleSprites();
     }
 
-    public static BubbleManager getInstance(Player player) {
+    public static PlayerBubblesManager getInstance(Player player) {
         if (instance == null) {
-            instance = new BubbleManager(player);
+            instance = new PlayerBubblesManager(player);
         }
         return instance;
     }
 
-    public static BubbleManager getInstance() {
+    public static PlayerBubblesManager getInstance() {
         return instance;
     }
 
@@ -48,23 +48,19 @@ public class BubbleManager {
         updateTimers();
 
         for (Bubble b : bubbles) {
-            if (b.isActive())
+            if (b.isActive()) {
                 b.update();
+                b.checkCollisionWithPlayer(player);
+            }
         }
 
-        collisionWithPlayer();
         collisionBetweenBubbles();
     }
 
     public void draw(Graphics g) {
-
         for (Bubble b : bubbles) {
-            if (!b.isActive())
-                continue;
-
-            b.draw(g);
-            //b.drawCollisionBox(g);
-            //b.drawHitbox(g);
+            if (b.isActive())
+                b.draw(g);
         }
     }
 
@@ -80,13 +76,12 @@ public class BubbleManager {
 
    private void collisionBetweenBubbles() {
     for (Bubble b1 : bubbles) {
-        if (!b1.isActive() || b1.state == DEAD)
+        if (!b1.isActive() || b1.getState() == DEAD)
             continue;
 
         for (Bubble b2 : bubbles) {
-            if (!b2.isActive() || b1 == b2 || b2.state == DEAD)
-                continue;
-            applyRepulsion(b1, b2);
+            if (b2.isActive() && b1 != b2 && b2.getState() != DEAD)
+                applyRepulsion(b1, b2);
         }
     }
 }
@@ -128,58 +123,14 @@ public class BubbleManager {
         }
     }
 
-    private void collisionWithPlayer() {
+    public void startChainExplosions(PlayerBubble firstPoppedBubble) {
+        popTimer = POP_DELAY_AFTER_CHAIN_EXPLOSION;
 
-        for (Bubble b : bubbles) {
-
-            // skip inactive bubbles
-            if (!b.isActive() || b.getState() == DEAD)
-                continue;
-
-            // check if bubble pop
-            if (popTimer <= 0)
-                if (b.getInternalCollisionBox().intersects(player.getHitbox())) {
-                    startChainExplosions(b);
-                    return;
-                }
-
-            // check player jump on bubble
-            if (b.getExternalCollisionBox().intersects(player.getHitbox())) {
-
-                // Jump on bubble
-                if (b.getHitbox().y > player.getHitbox().y) {
-                    if (player.isJumpActive()) {
-                        b.getHitbox().y += 2 * Game.SCALE;
-                        player.jumpOnBubble();
-                        return;
-                    }
-                }
-
-                int correctionOffset = 5 * Game.SCALE;
-
-                // left push
-                if (b.getHitbox().x + b.getHitbox().width - correctionOffset <= player.getHitbox().x)
-                    b.getHitbox().x -= abs(player.getXSpeed());
-
-                // right push
-                else if (b.getHitbox().x + correctionOffset >= player.getHitbox().x + player.getHitbox().width)
-                    b.getHitbox().x += abs(player.getXSpeed());
-            }
-        }
-    }
-
-    public void addBubble(Bubble bubble) {
-        bubbles.add(bubble);
-    }
-
-    public void addDeadEnemy(Enemy e, Player player) {
-         EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, player.getDirection());
-         deadEnemyBubble.playerPop(player);
-         bubbles.add(deadEnemyBubble);
+        LinkedList<PlayerBubble> bubblesShallowCopy = new LinkedList<>(bubbles);
+        new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
     }
 
     public void loadBubbleSprites() {
-        // Load bubble sprites
         BufferedImage img = LoadSave.GetSprite(LoadSave.BUBBLE_BUD_SPRITE);
 
         playerBubbleSprites = new BufferedImage[6][4];
@@ -189,20 +140,26 @@ public class BubbleManager {
     }
 
     public void resetAll() {
-        // Reset the bubble manager
         bubbles = new LinkedList<>();
         popTimer = 0;
         lastTimerUpdate = 0;
+    }
+
+    public void addBubble(PlayerBubble bubble) {
+        bubbles.add(bubble);
+    }
+
+    public void addDeadEnemy(Enemy e, Player player) {
+        EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, player.getDirection());
+        deadEnemyBubble.playerPop(player);
+        bubbles.add(deadEnemyBubble);
     }
 
     public BufferedImage[][] getPlayerBubbleSprites() {
         return playerBubbleSprites;
     }
 
-    public void startChainExplosions(Bubble firstPoppedBubble) {
-        popTimer = POP_DELAY_AFTER_CHAIN_EXPLOSION;
-
-        LinkedList<Bubble> bubblesShallowCopy = new LinkedList<>(bubbles);
-        new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
+    public int getPopTimer() {
+        return popTimer;
     }
 }

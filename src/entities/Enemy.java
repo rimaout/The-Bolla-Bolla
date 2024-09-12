@@ -1,7 +1,7 @@
 package entities;
 
-import bubbles.BubbleManager;
-import bubbles.EnemyBubble;
+import bubbles.playerBubbles.EnemyBubble;
+import bubbles.playerBubbles.PlayerBubblesManager;
 import levels.LevelManager;
 import main.Game;
 
@@ -189,7 +189,7 @@ public abstract class Enemy extends Entity {
 
     public void bubbleCapture(Direction direction) {
 
-        BubbleManager.getInstance().addBubble(new EnemyBubble(this, hitbox.x, hitbox.y, direction));
+        PlayerBubblesManager.getInstance().addBubble(new EnemyBubble(this, hitbox.x, hitbox.y, direction));
         active = false;
         enemyState = BOBBLE_STATE;
         animationIndex = 0;
@@ -199,7 +199,7 @@ public abstract class Enemy extends Entity {
     public void death(Player player) {
         active = false;
         enemyState = DEAD_STATE;
-        BubbleManager.getInstance().addDeadEnemy(this, player);
+        PlayerBubblesManager.getInstance().addDeadEnemy(this, player);
     }
 
     public void setActive(boolean active) {

@@ -1,7 +1,7 @@
 package projectiles;
 
-import bubbles.BubbleManager;
-import bubbles.EmptyBubble;
+import bubbles.playerBubbles.EmptyBubble;
+import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;
 import entities.Entity;
 import levels.LevelManager;
@@ -45,7 +45,7 @@ public class PlayerBubbleProjectile extends Projectile {
             animationIndex++;
             if (animationIndex >= 4) {
                 active = false;
-                BubbleManager.getInstance().addBubble(new EmptyBubble(hitbox.x, hitbox.y, direction));
+                PlayerBubblesManager.getInstance().addBubble(new EmptyBubble(hitbox.x, hitbox.y, direction));
             }
         }
     }

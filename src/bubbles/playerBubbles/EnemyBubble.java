@@ -1,22 +1,24 @@
-package bubbles;
+package bubbles.playerBubbles;
 
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
+import levels.Level;
+import levels.LevelManager;
 import utilz.Constants.Direction;
-
-import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.GRAVITY;
-import static utilz.Constants.Items.BubbleRewardType.*;
-import static utilz.HelpMethods.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+
+import static utilz.Constants.Bubble.*;
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.GRAVITY;
+import static utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
+import static utilz.HelpMethods.*;
 
 public class EnemyBubble extends EmptyBubble {
     Enemy enemy;
@@ -25,7 +27,6 @@ public class EnemyBubble extends EmptyBubble {
     private boolean playerPopped;
     private float ySpeedDead;
     private float xSpeedDead;
-
 
     private Random random = new Random();
 
@@ -66,6 +67,8 @@ public class EnemyBubble extends EmptyBubble {
     }
 
     protected void updateDeadAnimation() {
+        Level level = LevelManager.getInstance().getCurrentLevel();
+
         ySpeed += GRAVITY;
 
         if (direction == LEFT)
@@ -83,12 +86,12 @@ public class EnemyBubble extends EmptyBubble {
             hitbox.x += xSpeed;
         }
         // Going down
-        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, levelData)) {
+        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, level.getLevelData())) {
             hitbox.y += ySpeed;
-            updateXPos(xSpeed, levelData);
+            updateXPos(xSpeed, level.getLevelData());
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
-            conpenetrationSafeUpdateXPos(xSpeed, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, level.getLevelData());
+            conpenetrationSafeUpdateXPos(xSpeed, level.getLevelData());
             active = false;
 
             // Spawn Reward
@@ -97,7 +100,7 @@ public class EnemyBubble extends EmptyBubble {
     }
 
     @Override
-    public void playerPop(Player player, int EnemyBubblePopCounte, ChainExplosionManager chainExplosionManager) {
+    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
 
         if (!popped) {
             chainExplosionManager.increaseEnemyBubblePopCounter();

@@ -1,4 +1,4 @@
-package bubbles;
+package bubbles.playerBubbles;
 
 import entities.Player;
 import itemesAndRewards.PowerUpManager;
@@ -12,7 +12,7 @@ import static utilz.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
     private Player player;
-    private LinkedList<Bubble> bubbles;
+    private LinkedList<PlayerBubble> bubbles;
 
     private Timer timer = new Timer();
 
@@ -22,18 +22,18 @@ public class ChainExplosionManager {
 
     int enemyBubblePopCounter = 0;
 
-    public ChainExplosionManager(Player player, Bubble firstPoppedBubble, LinkedList<Bubble> bubbles) {
+    public ChainExplosionManager(Player player, PlayerBubble firstPoppedBubble, LinkedList<PlayerBubble> bubbles) {
         this.player = player;
         this.bubbles = bubbles;
 
         chainExplosion(firstPoppedBubble);
     }
 
-    public void chainExplosion(Bubble poppedBubble) {
+    public void chainExplosion(PlayerBubble poppedBubble) {
 
-        for (Bubble b : bubbles) {
+        for (PlayerBubble b : bubbles) {
 
-            if (!b.isActive() || b == poppedBubble || b.state == DEAD)
+            if (!b.isActive() || b == poppedBubble || b.getState() == DEAD)
                 continue;
 
             // Calculate the distance between the first popped bubble and the current bubble
@@ -58,5 +58,4 @@ public class ChainExplosionManager {
     public int getEnemyBubblePopCounter() {
         return enemyBubblePopCounter;
     }
-
 }

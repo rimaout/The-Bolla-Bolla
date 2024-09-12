@@ -1,6 +1,5 @@
 package gameStates;
 
-import bubbles.BubbleManager;
 import entities.EnemyManager;
 import entities.Player;
 import itemesAndRewards.ItemManager;
@@ -9,15 +8,17 @@ import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.PlayerConstants.*;
-import static utilz.Constants.LevelTransition.*;
-import static utilz.Constants.LevelTransition.TransitionState.*;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
+import static utilz.Constants.ANIMATION_SPEED;
+import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
+import static utilz.Constants.LevelTransition.TransitionState;
+import static utilz.Constants.LevelTransition.TransitionState.*;
+import static utilz.Constants.PlayerConstants.SPAWN_X;
+import static utilz.Constants.PlayerConstants.SPAWN_Y;
 
 public class LevelTransition extends State implements StateMethods{
     private BufferedImage[] levelTiles;

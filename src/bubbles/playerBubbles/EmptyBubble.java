@@ -1,4 +1,4 @@
-package bubbles;
+package bubbles.playerBubbles;
 
 import entities.Player;
 
@@ -8,14 +8,14 @@ import java.awt.image.BufferedImage;
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Direction;
 
-public class EmptyBubble extends Bubble {
+public class EmptyBubble extends PlayerBubble {
 
     public EmptyBubble(float x, float y, Direction direction) {
         super(x, y, direction);
     }
 
     public void draw(Graphics g) {
-        BufferedImage[][] playerBubbleSprites = BubbleManager.getInstance().getPlayerBubbleSprites();
+        BufferedImage[][] playerBubbleSprites = PlayerBubblesManager.getInstance().getPlayerBubbleSprites();
         g.drawImage(playerBubbleSprites[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
     }
 

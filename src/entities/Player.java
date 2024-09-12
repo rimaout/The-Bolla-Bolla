@@ -1,6 +1,6 @@
 package entities;
 
-import bubbles.BubbleManager;
+import bubbles.playerBubbles.PlayerBubblesManager;
 import gameStates.Playing;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
@@ -21,7 +21,7 @@ import static utilz.HelpMethods.*;
 public class Player extends Entity{
     private int[][] levelData;
     private final Playing playing;
-    private final BubbleManager bubbleManager;
+    private final PlayerBubblesManager playerBubblesManager;
     private boolean isFirstUpdate = true;
 
     // Animation values and variables
@@ -55,7 +55,7 @@ public class Player extends Entity{
     public Player(Playing playing) {
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         this.playing = playing;
-        this.bubbleManager = BubbleManager.getInstance(this);
+        this.playerBubblesManager = PlayerBubblesManager.getInstance(this);
 
         loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
