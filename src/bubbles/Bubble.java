@@ -24,7 +24,6 @@ public abstract class Bubble extends Entity {
     protected boolean popped = false;
     protected int state = NORMAL;
     protected int previousState = NORMAL;
-
     protected int normalTimer, redTimer, blinkingTimer;
     protected long lastTimerUpdate;
 
@@ -37,16 +36,15 @@ public abstract class Bubble extends Entity {
         super(x, y, IMMAGE_W, IMMAGE_H);
         this.direction = direction;
         this.previousDirection = direction;
-        initHitbox(HITBOX_W, HITBOX_H);
 
+        initHitbox(HITBOX_W, HITBOX_H);
         initCollisionBoxes();
     }
 
     public abstract void update();
-
     public abstract void draw(Graphics g);
-
     public abstract void checkCollisionWithPlayer(Player player);
+
 
     protected void initCollisionBoxes() {
         internalCollisionBox = new Rectangle2D.Float(hitbox.x + INTERNAL_BOX_OFFSET_X, hitbox.y + INTERNAL_BOX_OFFSET_Y, INTERNAL_BOX_W, INTERNAL_BOX_H);

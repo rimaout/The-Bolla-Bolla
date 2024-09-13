@@ -1,5 +1,6 @@
 package utilz;
 
+import bubbles.specialBubbles.BubbleGenerator;
 import entities.Enemy;
 import entities.Maita;
 import entities.ZenChan;
@@ -20,6 +21,10 @@ import java.util.Comparator;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.BubbleGenerator.GeneratorType;
+import static utilz.Constants.BubbleGenerator.GeneratorType.*;
+import static utilz.Constants.BubbleGenerator.GeneratorPosition;
+import static utilz.Constants.BubbleGenerator.GeneratorPosition.*;
 
 public class LoadSave {
     // Sprites
@@ -187,16 +192,40 @@ public class LoadSave {
                 Direction direction;
 
                 switch (blue) {
-                    case 1 -> direction = LEFT;
-                    case 2 -> direction = RIGHT;
-                    case 3 -> direction = UP;
-                    case 4 -> direction = DOWN;
-                    default -> direction = NONE;
+                    case 1 -> direction  = Direction.LEFT;
+                    case 2 -> direction  = Direction.RIGHT;
+                    case 3 -> direction  = Direction.UP;
+                    case 4 -> direction  = Direction.DOWN;
+                    default -> direction = Direction.NONE;
                 }
 
                 windDirectionData[x][y] = direction;
             }
 
         return windDirectionData;
+    }
+
+    public static BubbleGenerator GetBubbleGenerator(BufferedImage img) {
+
+        // bubble generators info are stored in the top left corner pixel of the image
+        // if the green component is:
+        //      100 -> no bubble generator
+        //      101 -> water bubble generator on top of the level
+        //      102 -> water bubble generator on the bottom of the level
+        //      103 -> lightning bubble generator on top of the level
+        //      104 -> lightning bubble generator on the bottom of the level
+
+        Color color = new Color(img.getRGB(0, 0));
+        int green = color.getGreen();
+        BubbleGenerator bubbleGenerator;
+
+        switch (green) {
+            case 101 -> bubbleGenerator = new BubbleGenerator(WATER_BUBBLE, TOP);
+            case 102 -> bubbleGenerator = new BubbleGenerator(WATER_BUBBLE, BOTTOM);
+            case 103 -> bubbleGenerator = new BubbleGenerator(LIGHTNING_BUBBLE, TOP);
+            case 104 -> bubbleGenerator = new BubbleGenerator(LIGHTNING_BUBBLE, BOTTOM);
+            default  -> bubbleGenerator = new BubbleGenerator(GeneratorType.NONE, GeneratorPosition.NONE);
+        }
+        return bubbleGenerator;
     }
 }

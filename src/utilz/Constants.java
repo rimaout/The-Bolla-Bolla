@@ -79,7 +79,7 @@ public class Constants {
         public static final int EXTERNAL_BOX_H = 16 * Game.SCALE;
         public static final int EXTERNAL_BOX_OFFSET_X = (int) (1.5 * Game.SCALE);
 
-        // Empty & Player Bubble states
+        // PlayerBubble states
         public static final int NORMAL = 1;
         public static final int RED = 2;
         public static final int BLINKING = 3;
@@ -87,9 +87,9 @@ public class Constants {
         public static final int POP_RED = 5;
         public static final int DEAD = 6;
 
-        // Water Bubble states
-        public static final int WATER_BUBBLE = 0;
-        public static final int WATER_FLOW = 1;
+        // SPECIAL BUBBLE STATES
+        public static final int BUBBLE = 0;
+        public static final int POPPED = 1;
 
         // State Timers (seconds)
         public static final int NORMAL_TIMER = 12000;
@@ -468,5 +468,23 @@ public class Constants {
 
         public static final int START_ANIMATION_TIMER = 17000;
         public static final int START_HURRY_UP_TIMER = 20000;
+    }
+
+    public static class BubbleGenerator {
+        public static final int BUBBLE_GENERATION_INTERVAL = 5000;
+        public static final int MAX_SPECIAL_BUBBLES = 7;
+
+        public static final int LEFT_GENERATOR_X = 12 * Game.TILES_SIZE;
+        public static final int RIGHT_GENERATOR_X = 22 * Game.TILES_SIZE;
+        public static final int TOP_GENERATOR_Y = -2 * Game.TILES_SIZE;
+        public static final int BOTTOM_GENERATOR_Y = Game.TILES_IN_HEIGHT + 2 * Game.TILES_SIZE;
+
+        public enum GeneratorPosition {
+            NONE, TOP, BOTTOM
+        }
+
+        public enum GeneratorType {
+            NONE, WATER_BUBBLE, LIGHTNING_BUBBLE
+        }
     }
 }
