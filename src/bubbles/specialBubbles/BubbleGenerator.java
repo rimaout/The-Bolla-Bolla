@@ -10,20 +10,16 @@ import utilz.Constants.Direction;
 public class BubbleGenerator {
     private GeneratorType generatorType;
     private GeneratorPosition generatorPosition;
-    private SpecialBubbleManager bubbleManager;
 
     private boolean firstUpdate = false;
     private long lastTimerUpdate;
-    private int spawnTimer = BUBBLE_GENERATION_INTERVAL;
+    private int spawnTimer;
 
     private Random random = new Random();
-
 
     public BubbleGenerator(GeneratorType generatorType, GeneratorPosition generatorPosition) {
         this.generatorType = generatorType;
         this.generatorPosition = generatorPosition;
-        this.bubbleManager = SpecialBubbleManager.getInstance();
-
     }
 
     public void update() {
@@ -34,10 +30,12 @@ public class BubbleGenerator {
     public void updateTimers() {
         if (!firstUpdate) {
             lastTimerUpdate = System.currentTimeMillis();
+            spawnTimer = BUBBLE_GENERATION_INTERVAL;
             firstUpdate = true;
         }
 
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        lastTimerUpdate = System.currentTimeMillis();
         spawnTimer -= timeDelta;
     }
 
@@ -45,12 +43,13 @@ public class BubbleGenerator {
         if (spawnTimer <= 0) {
             spawnTimer = BUBBLE_GENERATION_INTERVAL;
 
-            if (bubbleManager.getActiveBubblesCount() < MAX_SPECIAL_BUBBLES)
+            if (SpecialBubbleManager.getInstance().getActiveBubblesCount() < MAX_SPECIAL_BUBBLES)
                 spawnBubble();
         }
     }
 
     public void spawnBubble() {
+        SpecialBubbleManager bubbleManager = SpecialBubbleManager.getInstance();
 
         // Calculate x pos (chose randomly between Left Generator Position and Right Generator Position)
         int bubbleX;

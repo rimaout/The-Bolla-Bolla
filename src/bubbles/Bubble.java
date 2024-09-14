@@ -13,6 +13,7 @@ import static java.lang.Math.abs;
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
+import static utilz.HelpMethods.IsEntityInsideMap;
 
 public abstract class Bubble extends Entity {
 
@@ -78,6 +79,10 @@ public abstract class Bubble extends Entity {
     }
 
     protected void updateDirection() {
+
+        if (!IsEntityInsideMap(hitbox))
+            return;
+
         if (direction != NONE)
             previousDirection = direction;
 
@@ -102,6 +107,16 @@ public abstract class Bubble extends Entity {
             // Update Position
             hitbox.x += xSpeed;
             hitbox.y += ySpeed;
+        }
+    }
+
+    protected void pacManEffect() {
+        if (direction == DOWN && getTileY() == Game.TILES_IN_HEIGHT + 1) {
+            hitbox.y = -2 * Game.TILES_SIZE;
+        }
+
+        if (direction == UP && getTileY() == - 1) {
+            hitbox.y = (Game.TILES_IN_HEIGHT + 2) * Game.TILES_SIZE;
         }
     }
 

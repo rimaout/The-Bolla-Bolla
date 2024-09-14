@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Bubble.*;
 
-public class WaterBubble extends SpecialBubble{
+public class WaterBubble extends SpecialBubble {
     public WaterBubble(float x, float y, Direction direction) {
         super(x, y, direction);
     }
@@ -23,29 +23,17 @@ public class WaterBubble extends SpecialBubble{
     public void update() {
         updateAnimationTick();
 
-       if (state == POPPED) {
-            updateWaterFlow();
-        }
-
         if (state == BUBBLE) {
             updateDirection();
             updatePosition();
             updateCollisionBoxes();
+            pacManEffect();
         }
     }
 
     @Override
     public void playerPop(Player player) {
-        popped = true;
-        state = POPPED;
-
-        active = false; // only for now until we implement the water flow
+        active = false;
+        SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x, hitbox.y, direction));
     }
-    
-    private void updateWaterFlow() {
-
-    }
-
-
-
 }

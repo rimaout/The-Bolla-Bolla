@@ -122,6 +122,7 @@ public class ItemManager {
     }
 
     public void addBubbleReward(int x, int y, BubbleRewardType type) {
+        
         items.add(new BubbleReward(x, y, type));
     }
 

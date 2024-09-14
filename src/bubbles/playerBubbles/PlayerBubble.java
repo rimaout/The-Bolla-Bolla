@@ -38,6 +38,7 @@ public abstract class PlayerBubble extends Bubble {
         }
 
         updateCollisionBoxes();
+        pacManEffect();
     }
 
     @Override

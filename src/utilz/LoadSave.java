@@ -209,11 +209,11 @@ public class LoadSave {
 
         // bubble generators info are stored in the top left corner pixel of the image
         // if the green component is:
-        //      100 -> no bubble generator
         //      101 -> water bubble generator on top of the level
         //      102 -> water bubble generator on the bottom of the level
         //      103 -> lightning bubble generator on top of the level
         //      104 -> lightning bubble generator on the bottom of the level
+        //      any other value -> no bubble generators
 
         Color color = new Color(img.getRGB(0, 0));
         int green = color.getGreen();
@@ -226,6 +226,7 @@ public class LoadSave {
             case 104 -> bubbleGenerator = new BubbleGenerator(LIGHTNING_BUBBLE, BOTTOM);
             default  -> bubbleGenerator = new BubbleGenerator(GeneratorType.NONE, GeneratorPosition.NONE);
         }
+
         return bubbleGenerator;
     }
 }

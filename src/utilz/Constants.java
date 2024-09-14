@@ -20,6 +20,14 @@ public class Constants {
             };
         }
 
+        public static Direction GetRandomHorizontalDirection() {
+            return switch ((int) (Math.random() * 2)) {
+                case 0 -> Direction.LEFT;
+                case 1 -> Direction.RIGHT;
+                default -> Direction.NONE;
+            };
+        }
+
         public static Direction GetOppositeDirection(Direction direction) {
             return switch (direction) {
                 case LEFT -> Direction.RIGHT;
@@ -97,11 +105,12 @@ public class Constants {
         public static final int BLINKING_TIMER = 2000;
 
         // Movement Constants
-        public static final float PROJECTILE_SPEED = 1f * Game.SCALE;
         public static final float BUBBLE_SPEED = 0.1f * Game.SCALE;
         public static final float SHAKING_SPEED = 0.03f * Game.SCALE;
         public static final float DEAD_X_SPEED = 0.6f * Game.SCALE;
         public static final float DEAD_Y_SPEED = 1.2f * Game.SCALE;
+
+
 
         public static int getSpriteAmount(int bubbleState) {
             return switch (bubbleState) {
@@ -112,6 +121,22 @@ public class Constants {
                 default -> 4;
             };
         }
+    }
+
+    public static class WaterFLow {
+        public static final int DEFAULT_W = 18;
+        public static final int DEFAULT_H = 18;
+        public static final int W = DEFAULT_W * Game.SCALE;
+        public static final int H = DEFAULT_H * Game.SCALE;
+
+        public static final int HITBOX_W = 9 * Game.SCALE;
+        public static final int HITBOX_H = 12 * Game.SCALE;
+        public static final int HITBOX_OFFSET_X = 5 * Game.SCALE;
+        public static final int HITBOX_OFFSET_Y = 2 * Game.SCALE;
+
+        public static final float WATER_FLOW_SPEED = 0.5f * Game.SCALE;
+        public static final int WATER_FLOW_DRAW_INTERVAL = 100;
+        public static final int WATER_FLOW_ACTIVE_TIME = 8000;
     }
 
     public static class UI {
@@ -471,11 +496,11 @@ public class Constants {
     }
 
     public static class BubbleGenerator {
-        public static final int BUBBLE_GENERATION_INTERVAL = 5000;
+        public static final int BUBBLE_GENERATION_INTERVAL = 6500;
         public static final int MAX_SPECIAL_BUBBLES = 7;
 
-        public static final int LEFT_GENERATOR_X = 12 * Game.TILES_SIZE;
-        public static final int RIGHT_GENERATOR_X = 22 * Game.TILES_SIZE;
+        public static final int LEFT_GENERATOR_X = 10 * Game.TILES_SIZE;
+        public static final int RIGHT_GENERATOR_X = 20 * Game.TILES_SIZE;
         public static final int TOP_GENERATOR_Y = -2 * Game.TILES_SIZE;
         public static final int BOTTOM_GENERATOR_Y = Game.TILES_IN_HEIGHT + 2 * Game.TILES_SIZE;
 

@@ -21,12 +21,15 @@ public class SpecialBubbleManager {
     private BufferedImage[][] fireBubbleSprites;
 
     private LinkedList<SpecialBubble> bubbles;
+    private LinkedList<WaterFlow> waterFlows;
+
     private BubbleGenerator bubbleGenerator;
 
 
     private SpecialBubbleManager(Player player) {
         this.player = player;
         bubbles = new LinkedList<>();
+        waterFlows = new LinkedList<>();
 
         loadBubbleSprites();
         loadBubbleGenerator();
@@ -48,6 +51,11 @@ public class SpecialBubbleManager {
             if (b.isActive())
                 b.draw(g);
         }
+
+        for (WaterFlow w : waterFlows) {
+            if (w.isActive())
+                w.draw(g);
+        }
     }
 
     public void update() {
@@ -59,6 +67,11 @@ public class SpecialBubbleManager {
                 b.checkCollisionWithPlayer(player);
             }
         }
+
+        for (WaterFlow w : waterFlows) {
+            if (w.isActive())
+                w.update();
+        }
     }
 
     private void loadBubbleGenerator() {
@@ -67,13 +80,9 @@ public class SpecialBubbleManager {
 
     private void loadBubbleSprites() {
         waterBubbleSprites = new BufferedImage[2][1];
-        fireBubbleSprites = new BufferedImage[2][4];
-
         BufferedImage temp = LoadSave.GetSprite(LoadSave.WATER_BUBBLE_SPRITE);
-        for (int i = 0; i < waterBubbleSprites.length; i++) {
-            for (int j = 0; j < waterBubbleSprites[1].length; j++)
-                waterBubbleSprites[i][j] = temp.getSubimage(j * DEFAULT_W, i * DEFAULT_H, DEFAULT_W, DEFAULT_H);
-        }
+        waterBubbleSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
+        waterBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
 
 //        temp = LoadSave.GetSprite(LoadSave.FIRE_BUBBLE_SPRITE);
 //        for (int i = 0; i < fireBubbleSprites.length; i++) {
@@ -84,11 +93,16 @@ public class SpecialBubbleManager {
 
     public void resetAll() {
         bubbles.clear();
+        waterFlows.clear();
         loadBubbleGenerator();
     }
 
     public void addBubble(SpecialBubble bubble) {
         bubbles.add(bubble);
+    }
+
+    public void addWaterFlow(WaterFlow waterFlow) {
+        waterFlows.add(waterFlow);
     }
 
     public BufferedImage[][] getWaterBubbleSprites() {
