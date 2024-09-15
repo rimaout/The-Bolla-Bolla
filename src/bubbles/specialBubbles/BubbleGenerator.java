@@ -11,7 +11,7 @@ public class BubbleGenerator {
     private GeneratorType generatorType;
     private GeneratorPosition generatorPosition;
 
-    private boolean firstUpdate = false;
+    private boolean firstUpdate = true;
     private long lastTimerUpdate;
     private int spawnTimer;
 
@@ -28,10 +28,10 @@ public class BubbleGenerator {
     }
 
     public void updateTimers() {
-        if (!firstUpdate) {
+        if (firstUpdate) {
             lastTimerUpdate = System.currentTimeMillis();
-            spawnTimer = BUBBLE_GENERATION_INTERVAL;
-            firstUpdate = true;
+            spawnTimer = BUBBLE_GENERATION_INTERVAL/2;
+            firstUpdate = false;
         }
 
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;

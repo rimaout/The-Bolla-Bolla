@@ -132,11 +132,10 @@ public class Constants {
         public static final int HITBOX_W = 9 * Game.SCALE;
         public static final int HITBOX_H = 12 * Game.SCALE;
         public static final int HITBOX_OFFSET_X = 5 * Game.SCALE;
-        public static final int HITBOX_OFFSET_Y = 2 * Game.SCALE;
+        public static final int HITBOX_OFFSET_Y = 4 * Game.SCALE;
 
-        public static final float WATER_FLOW_SPEED = 0.5f * Game.SCALE;
-        public static final int WATER_FLOW_DRAW_INTERVAL = 100;
-        public static final int WATER_FLOW_ACTIVE_TIME = 8000;
+        public static final float WATER_FLOW_SPEED = 1.5f * Game.SCALE;
+        public static final int ADD_WATER_DROP_INTERVAL = 65;
     }
 
     public static class UI {
@@ -321,7 +320,6 @@ public class Constants {
 
             return 0;
         }
-
     }
 
     public static class Items {
@@ -496,7 +494,7 @@ public class Constants {
     }
 
     public static class BubbleGenerator {
-        public static final int BUBBLE_GENERATION_INTERVAL = 6500;
+        public static final int BUBBLE_GENERATION_INTERVAL = 4000;
         public static final int MAX_SPECIAL_BUBBLES = 7;
 
         public static final int LEFT_GENERATOR_X = 10 * Game.TILES_SIZE;

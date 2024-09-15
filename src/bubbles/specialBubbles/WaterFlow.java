@@ -1,14 +1,28 @@
 package bubbles.specialBubbles;
 
+import bubbles.Bubble;
+import bubbles.playerBubbles.PlayerBubble;
+import bubbles.playerBubbles.PlayerBubblesManager;
+import entities.Enemy;
+import entities.EnemyManager;
 import entities.Entity;
+import entities.Player;
+import itemesAndRewards.Item;
+import itemesAndRewards.ItemManager;
+import itemesAndRewards.PowerUpManager;
 import levels.Level;
 import levels.LevelManager;
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.Direction;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
+import static utilz.Constants.PlayerConstants.IDLE_ANIMATION;
+import static utilz.Constants.PlayerConstants.OFFSET_X;
 import static utilz.Constants.WaterFLow.*;
 import static utilz.Constants.Direction.*;
 import static utilz.HelpMethods.*;
@@ -21,26 +35,45 @@ public class WaterFlow extends Entity {
     private Direction direction;
     private Direction previousDirection;
 
-    private long lastTimerUpdate;
-    private int drawTimer = WATER_FLOW_DRAW_INTERVAL;
-    private int activeTimer = WATER_FLOW_ACTIVE_TIME;
+    private Player capturedPlayer;
+    private int capturedEnemiesCounter;
 
-    public WaterFlow(float x, float y, Direction direction) {
+    private long lastTimerUpdate;
+    private int addWaterDropTimer = ADD_WATER_DROP_INTERVAL;
+
+    private long transparencyTimer = 0;
+    private boolean isTransparent = false;
+
+    private List<Point> lastPositions = new LinkedList<>();
+
+    public WaterFlow(float x, float y) {
         super(x, y, W, H);
-        this.direction = direction;
+        this.direction = GetRandomHorizontalDirection();
         this.previousDirection = direction;
         this.level = LevelManager.getInstance().getCurrentLevel();
-
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
     public void draw(Graphics g) {
-//        if (drawTimer > 0)
-//            return;
-
+        Graphics2D g2d = (Graphics2D) g;
         BufferedImage[][] waterBubbleSprites = SpecialBubbleManager.getInstance().getWaterBubbleSprites();
-        g.drawImage(waterBubbleSprites[1][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), W, H, null);
-        drawTimer = WATER_FLOW_DRAW_INTERVAL;
+        Composite originalComposite = g2d.getComposite();
+
+        // Set the transparency level based on the transparency state
+        float alpha = isTransparent ? 0.0f : 0.83f; // 0.0f for complete transparency when transparent
+
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
+        for (Point pos : lastPositions) {
+            g.drawImage(waterBubbleSprites[1][0], (int) (pos.x - HITBOX_OFFSET_X), (int) (pos.y - HITBOX_OFFSET_Y), W, H, null);
+        }
+
+        if (capturedPlayer != null)
+            g.drawImage(capturedPlayer.getSprites()[IDLE_ANIMATION][0], (int) (hitbox.x - HITBOX_OFFSET_X) + flipX(), (int) (hitbox.y - HITBOX_OFFSET_Y), W * flipW(), H, null);
+        else
+            g.drawImage(waterBubbleSprites[1][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), W, H, null);
+
+        g2d.setComposite(originalComposite);
         drawHitbox(g);
     }
 
@@ -50,15 +83,28 @@ public class WaterFlow extends Entity {
             return;
         }
 
-        timerUpdate();
+        timersUpdate();
         updateMove();
-        pacManEffect();
+        updateWaterDropsPositions();
+        updateOutOfScreen();
+    }
+
+    private void updateWaterDropsPositions() {
+        if (addWaterDropTimer <= 0) {
+            if (lastPositions.size() >= 3)
+                lastPositions.removeFirst();
+
+            lastPositions.add(new Point((int) hitbox.x, (int) hitbox.y));
+            addWaterDropTimer = ADD_WATER_DROP_INTERVAL;
+        }
     }
 
     private void firstUpdate() {
+        lastTimerUpdate = System.currentTimeMillis();
+
         //get starting position
         if (IsEntityInsideSolid(hitbox, level.getLevelData())) {
-            hitbox.y -= 1;
+            hitbox.y += 1;
         }
         else {
             lastTimerUpdate = System.currentTimeMillis();
@@ -66,20 +112,21 @@ public class WaterFlow extends Entity {
         }
     }
 
-    public void timerUpdate() {
-        if (firstUpdate) {
-            lastTimerUpdate = System.currentTimeMillis();
-            firstUpdate = false;
-        }
+    public void timersUpdate() {
 
         long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
         lastTimerUpdate = System.currentTimeMillis();
+        addWaterDropTimer -= (int) timeDelta;
 
-        drawTimer -= (int) timeDelta;
-        activeTimer -= (int) timeDelta;
-
-        if (activeTimer <= 0)
-            active = false;
+        // Update the transparency timer
+        long currentTime = System.currentTimeMillis();
+        if (isTransparent && currentTime - transparencyTimer >= 30) {
+            isTransparent = false;
+            transparencyTimer = currentTime;
+        } else if (!isTransparent && currentTime - transparencyTimer >= 200) {
+            isTransparent = true;
+            transparencyTimer = currentTime;
+        }
     }
 
     private void updateMove() {
@@ -97,10 +144,10 @@ public class WaterFlow extends Entity {
     private void fall() {
         float newY = hitbox.y + WATER_FLOW_SPEED;
 
-        if (!IsSolid(hitbox.x, newY + hitbox.width, level.getLevelData()))
+        if (!IsSolid(hitbox.x, newY + hitbox.width + 1, level.getLevelData()))
             hitbox.y = newY;
         else
-            direction = LEFT;
+            direction = previousDirection;
     }
 
     private void moveLeft() {
@@ -127,16 +174,102 @@ public class WaterFlow extends Entity {
         }
     }
 
-    private void pacManEffect() {
-        if (getTileY() == Game.TILES_IN_HEIGHT + 1)
-            hitbox.y = -2 * Game.TILES_SIZE;
+    private void updateOutOfScreen() {
+        if (getTileY() == Game.TILES_IN_HEIGHT + 1) {
+
+            if (capturedPlayer != null)
+                spawnPlayer();
+
+            // spawn drop at the top of the screen
+
+
+            active = false;
+        }
     }
 
-    public void checkCollisionWithPlayer() {
-
+    private void spawnPlayer() {
+        // spawn player at the top of the screen
+        capturedPlayer.setActive(true);
+        capturedPlayer.resetAll(false, false);
+        capturedPlayer.getHitbox().y = Game.TILES_IN_HEIGHT + 1;
     }
 
-    public void checkCollisionWithEnemies() {
+    private void spawnDrop() {
+        // spawn drop at the top of the screen
+    }
 
+    public void updateCollisions(Player player) {
+        checkCollisionWithPlayer(player);
+
+        if (capturedPlayer != null)
+            return;
+        EnemyManager.getInstance().getEnemies().forEach(this::checkCollisionWithEnemy);
+        PlayerBubblesManager.getInstance().getBubbles().forEach(this::checkCollisionWithBubble);
+        ItemManager.getInstance().getItems().forEach(item -> checkCollisionWithItem(item, player));
+    }
+
+    private void checkCollisionWithPlayer(Player player) {
+        if (!player.isActive())
+            return;
+
+        // if player is above the water flow, don't capture him
+        if (player.getTileY() < getTileY())
+            return;
+
+        // check collision with player
+        if (hitbox.intersects(player.getHitbox())) {
+            capturedPlayer = player;
+            player.setActive(false);
+        }
+    }
+
+    private void checkCollisionWithEnemy(Enemy enemy) {
+        if (!enemy.isActive())
+            return;
+
+        if (hitbox.intersects(enemy.getHitbox())) {
+            enemy.setActive(false);
+            enemy.setAlive(false);
+            capturedEnemiesCounter++;
+        }
+    }
+
+    private void checkCollisionWithBubble(PlayerBubble bubble) {
+        if (!bubble.isActive())
+            return;
+
+        if (hitbox.intersects(bubble.getHitbox())) {
+            bubble.pop();
+        }
+    }
+
+    private void checkCollisionWithItem(Item item, Player player) {
+        if (!item.isActive())
+            return;
+
+        if (hitbox.intersects(item.getHitbox())) {
+            item.setActive(false);
+            item.addPoints(player);
+            item.applyEffect(player);
+            PowerUpManager.getInstance().increaseItemCollectCounter();
+        }
+    }
+
+    private int flipX() {
+        Direction flipDirection = switch (direction) {
+            case UP, DOWN -> previousDirection;
+            default -> direction;
+        };
+
+        return (flipDirection == RIGHT) ? 0 : W;
+    }
+
+    private int flipW() {
+        Direction flipDirection = switch (direction) {
+            case UP, DOWN -> previousDirection;
+            default -> direction;
+        };
+
+        return (flipDirection == RIGHT) ? 1 : -1;
     }
 }

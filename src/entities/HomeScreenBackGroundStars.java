@@ -1,9 +1,7 @@
 package entities;
 
-import entities.Entity;
 import gameStates.Home;
 import main.Game;
-import utilz.Constants;
 import utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
 
@@ -13,13 +11,13 @@ import java.awt.image.BufferedImage;
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Home.*;
 
-public class TwinkBubble extends Entity {
+public class HomeScreenBackGroundStars extends Entity {
     private Home home;
 
     private BufferedImage[] sprite;
     private Direction direction;
 
-    public TwinkBubble(BufferedImage[] sprite, int startX, int startY, Home home) {
+    public HomeScreenBackGroundStars(BufferedImage[] sprite, int startX, int startY, Home home) {
         super(startX, startY, BUBBLE_W, BUBBLE_H);
         this.sprite = sprite;
         this.home = home;

@@ -1,6 +1,5 @@
 package entities;
 
-import bubbles.playerBubbles.PlayerBubblesManager;
 import gameStates.Playing;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
@@ -20,12 +19,10 @@ import static utilz.HelpMethods.*;
 
 public class Player extends Entity{
     private int[][] levelData;
-    private final Playing playing;
-    private final PlayerBubblesManager playerBubblesManager;
     private boolean isFirstUpdate = true;
 
     // Animation values and variables
-    private BufferedImage[][] animations;
+    private BufferedImage[][] sprites;
     private int playerAnimation = IDLE_ANIMATION;
 
     // Movement values and variables
@@ -54,8 +51,6 @@ public class Player extends Entity{
 
     public Player(Playing playing) {
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
-        this.playing = playing;
-        this.playerBubblesManager = PlayerBubblesManager.getInstance(this);
 
         loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
@@ -76,13 +71,13 @@ public class Player extends Entity{
         if (immune && !respawning) {
             if (immuneTimer % 100 < 40) { // Transparency blink effect
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55F)); // Set transparency
-                g.drawImage(animations[playerAnimation][animationIndex], (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
+                g.drawImage(sprites[playerAnimation][animationIndex], (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F)); // Set transparency
                 return;
             }
         }
 
-        g.drawImage(animations[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
+        g.drawImage(sprites[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
     }
 
     private boolean canAttack() {
@@ -334,10 +329,10 @@ public class Player extends Entity{
     private void loadAnimation() {
         BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
 
-        animations = new BufferedImage[6][7];
-        for (int j = 0; j < animations.length; j++)
-            for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
+        sprites = new BufferedImage[6][7];
+        for (int j = 0; j < sprites.length; j++)
+            for (int i = 0; i < sprites[j].length; i++)
+                sprites[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
     public void loadLevelData() {
@@ -465,5 +460,9 @@ public class Player extends Entity{
 
     public void setBubbleShotPoints(int bubbleShotPoints) {
         this.bubbleShotPoints = bubbleShotPoints;
+    }
+
+    public BufferedImage[][] getSprites() {
+        return sprites;
     }
 }

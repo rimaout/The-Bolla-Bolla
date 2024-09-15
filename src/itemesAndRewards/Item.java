@@ -33,9 +33,9 @@ public abstract class Item {
             updateAnimationTick();
     }
 
-    abstract void draw(Graphics g);
-    abstract void addPoints(Player player);
-    abstract void applyEffect(Player player);
+    public abstract void draw(Graphics g);
+    public abstract void addPoints(Player player);
+    public abstract void applyEffect(Player player);
 
     protected void updateAnimationTick() {
         animationTick++;

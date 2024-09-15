@@ -22,7 +22,7 @@ public class BubbleReward extends Item{
     }
 
     @Override
-    void draw(Graphics g) {
+    public void draw(Graphics g) {
 
         if (!deSpawning)
             g.drawImage(itemImages[GetRewardImageIndex(type)], x, y, W, H, null);
@@ -36,7 +36,7 @@ public class BubbleReward extends Item{
     }
 
     @Override
-    void applyEffect(Player player) {
+    public void applyEffect(Player player) {
         // Bubble Rewards do not apply effects to the player
     }
 

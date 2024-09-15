@@ -1,6 +1,6 @@
 package gameStates;
 
-import entities.TwinkBubble;
+import entities.HomeScreenBackGroundStars;
 import main.Game;
 import utilz.LoadSave;
 import static utilz.Constants.Home.*;
@@ -19,7 +19,7 @@ public class Home extends State implements StateMethods {
     private int logoX, logoY, logoW, logoH;
 
     private BufferedImage[] twinkleBubbleSprite;
-    private List<TwinkBubble> bubbles;
+    private List<HomeScreenBackGroundStars> bubbles;
 
     private boolean isLogoInPosition = false;
     private Font customFont;
@@ -46,7 +46,7 @@ public class Home extends State implements StateMethods {
     public void update() {
 
         // Update Bubbles
-        bubbles.forEach(TwinkBubble::update);
+        bubbles.forEach(HomeScreenBackGroundStars::update);
 
         // Update Logo Position
         if (logoY < LOGO_END_Y)
@@ -92,7 +92,7 @@ public class Home extends State implements StateMethods {
         for (int i = 0; i < bubbleCount; i++) {
             int x = random.nextInt(Game.GAME_WIDTH);
             int y = random.nextInt(Game.GAME_HEIGHT);
-            bubbles.add(new TwinkBubble(twinkleBubbleSprite, x, y, this));
+            bubbles.add(new HomeScreenBackGroundStars(twinkleBubbleSprite, x, y, this));
         }
     }
 

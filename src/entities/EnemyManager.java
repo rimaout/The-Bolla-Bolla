@@ -117,14 +117,17 @@ public class EnemyManager {
     }
 
     public void checkEnemyHit(Player player, Enemy enemy) {
-            if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive())
+        if (!player.isActive())
+            return;
 
-                if (playerInvincibleMode)
-                    enemy.death(player);
-                else {
-                    player.death();
-                    setAllNormal();
-                }
+        if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive()) {
+            if (playerInvincibleMode)
+                enemy.death(player);
+            else {
+                player.death();
+                setAllNormal();
+            }
+        }
     }
 
     public void setAllHungry() {

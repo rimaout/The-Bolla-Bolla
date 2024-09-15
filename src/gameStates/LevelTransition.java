@@ -21,6 +21,8 @@ import static utilz.Constants.PlayerConstants.SPAWN_X;
 import static utilz.Constants.PlayerConstants.SPAWN_Y;
 
 public class LevelTransition extends State implements StateMethods{
+    Playing playing;
+
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
     private BufferedImage[] playerTransitionSprites;
@@ -39,6 +41,7 @@ public class LevelTransition extends State implements StateMethods{
     public LevelTransition(Game game) {
         super(game);
 
+        this.playing = game.getPlaying();
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
         player = game.getPlaying().getPlayerOne();
@@ -142,11 +145,7 @@ public class LevelTransition extends State implements StateMethods{
     }
 
     private void loadNewLevel() {
-        LevelManager.getInstance().increaseLevelIndex();
-        EnemyManager.getInstance().loadEnemies();
-        ItemManager.getInstance().resetForNewLevel();
-
-        game.getPlaying().getPlayerOne().loadLevelData();
+        playing.startNewLevel();
     }
 
     public void endTransition() {

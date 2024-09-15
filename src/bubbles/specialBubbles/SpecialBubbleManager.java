@@ -1,5 +1,8 @@
 package bubbles.specialBubbles;
 
+import bubbles.playerBubbles.PlayerBubblesManager;
+import entities.Enemy;
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import utilz.LoadSave;
@@ -25,6 +28,8 @@ public class SpecialBubbleManager {
 
     private BubbleGenerator bubbleGenerator;
 
+    EnemyManager enemyManager = EnemyManager.getInstance();
+    PlayerBubblesManager playerBubbleManager = PlayerBubblesManager.getInstance();
 
     private SpecialBubbleManager(Player player) {
         this.player = player;
@@ -69,12 +74,15 @@ public class SpecialBubbleManager {
         }
 
         for (WaterFlow w : waterFlows) {
-            if (w.isActive())
+            if (w.isActive()) {
                 w.update();
+                w.updateCollisions(player);
+
+            }
         }
     }
 
-    private void loadBubbleGenerator() {
+    public void loadBubbleGenerator() {
         bubbleGenerator = LevelManager.getInstance().getCurrentLevel().getBubbleGenerator();
     }
 
@@ -83,18 +91,13 @@ public class SpecialBubbleManager {
         BufferedImage temp = LoadSave.GetSprite(LoadSave.WATER_BUBBLE_SPRITE);
         waterBubbleSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
         waterBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
-
-//        temp = LoadSave.GetSprite(LoadSave.FIRE_BUBBLE_SPRITE);
-//        for (int i = 0; i < fireBubbleSprites.length; i++) {
-//            for (int j = 0; j < fireBubbleSprites[1].length; j++)
-//                fireBubbleSprites[i][j] = temp.getSubimage(j * DEFAULT_W, i * DEFAULT_H, DEFAULT_W, DEFAULT_H);
-//        }
     }
 
     public void resetAll() {
         bubbles.clear();
         waterFlows.clear();
         loadBubbleGenerator();
+        player.setActive(true);
     }
 
     public void addBubble(SpecialBubble bubble) {

@@ -54,6 +54,8 @@ public class MaitaFireProjectile extends Projectile {
 
     @Override
     public void checkEntityHit(Entity player) {
+        if (!player.isActive())
+            return;
 
         if (!(player instanceof Player p))
             throw new IllegalArgumentException("MaitaFireProjectile can only hit Player, use a Player has parameter");

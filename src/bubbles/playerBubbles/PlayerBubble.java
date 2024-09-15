@@ -18,6 +18,7 @@ public abstract class PlayerBubble extends Bubble {
 
     protected abstract void updateDeadAnimation();
 
+    public abstract void pop();
     public abstract void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);
 
     @Override
@@ -43,6 +44,9 @@ public abstract class PlayerBubble extends Bubble {
 
     @Override
     public void checkCollisionWithPlayer(Player player) {
+        if (!player.isActive())
+            return;
+
         PlayerBubblesManager manager = PlayerBubblesManager.getInstance();
 
         if (!active || state == DEAD)

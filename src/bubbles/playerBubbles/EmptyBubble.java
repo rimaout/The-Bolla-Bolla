@@ -23,7 +23,7 @@ public class EmptyBubble extends PlayerBubble {
         // Empty implementation, only used by EnemyBubble
     }
 
-    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
+    public void pop() {
         if (state != POP_NORMAL && state != POP_RED) {
 
             if (state == RED)
@@ -34,5 +34,9 @@ public class EmptyBubble extends PlayerBubble {
             animationIndex = 0;
             animationTick = 0;
         }
+    }
+
+    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
+       pop();
     }
 }

@@ -155,6 +155,10 @@ public class PlayerBubblesManager {
         bubbles.add(deadEnemyBubble);
     }
 
+    public LinkedList<PlayerBubble> getBubbles() {
+        return bubbles;
+    }
+
     public BufferedImage[][] getPlayerBubbleSprites() {
         return playerBubbleSprites;
     }

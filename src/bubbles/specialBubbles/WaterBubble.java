@@ -1,6 +1,7 @@
 package bubbles.specialBubbles;
 
 import entities.Player;
+import main.Game;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -34,6 +35,25 @@ public class WaterBubble extends SpecialBubble {
     @Override
     public void playerPop(Player player) {
         active = false;
-        SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x, hitbox.y, direction));
+        spawnWaterFlow();
+    }
+
+    private void spawnWaterFlow() {
+
+        // if waterBubble conpenetrates with left perimeter wall, spawn waterFlow not in the wall
+        if (getTileX() < 2) {
+            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x + Game.TILES_SIZE, hitbox.y));
+            return;
+        }
+
+
+        // if waterBubble conpenetrates with right perimeter wall, spawn waterFlow not in the wall
+        if ( getTileX() + Game.TILES_SIZE > Game.TILES_IN_WIDTH - 3) {
+            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x - Game.TILES_SIZE, hitbox.y));
+            return;
+        }
+
+        // if the bubble does not conpenetrate with the perimeter walls, spawn waterFlow in the same position of the bubble
+        SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x, hitbox.y));
     }
 }

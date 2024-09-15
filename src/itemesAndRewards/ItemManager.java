@@ -104,6 +104,9 @@ public class ItemManager {
     private void checkCollisionWithPlayer(Item item) {
         Player player = playing.getPlayerOne();
 
+        if (!player.isActive())
+            return;
+
         if(item.getHitbox().intersects(player.getHitbox())){
             item.setActive(false);
             item.addPoints(player);
@@ -176,7 +179,7 @@ public class ItemManager {
         return deSpawnImages;
     }
 
-    public boolean areAllRewardsDeSpawned() {
-        return allRewardsDeSpawned;
+    public ArrayList<Item> getItems() {
+        return items;
     }
 }

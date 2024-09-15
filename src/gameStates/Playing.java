@@ -80,8 +80,10 @@ public class Playing extends State implements StateMethods {
             loadNextLevel();
 
         else if(!gameOver && !gameCompleted) {
+            if (playerOne.isActive())
+                playerOne.update();
+
             levelManager.update();
-            playerOne.update();
             playerBubblesManager.update();
             specialBubbleManager.update();
             enemyManager.update();
@@ -107,7 +109,8 @@ public class Playing extends State implements StateMethods {
         projectileManager.draw(g);
         rewardPointsManager.draw((Graphics2D) g);
 
-        playerOne.draw((Graphics2D) g);
+        if (playerOne.isActive())
+            playerOne.draw((Graphics2D) g);
 
         if (paused)
             pauseOverlay.draw(g);
@@ -149,17 +152,25 @@ public class Playing extends State implements StateMethods {
     }
 
     public void loadNextLevel() {
+        levelManager.loadNextLevel();
         enemyManager.resetAll();
         hurryUpManager.resetAll();
         playerBubblesManager.resetAll();
         specialBubbleManager.resetAll();
         projectileManager.resetNewLevel();
-        levelManager.loadNextLevel();
         playerOne.resetAll(false, false);
         itemManager.resetAll();
         rewardPointsManager.resetAll();
 
         levelCompleted = false;
+    }
+
+    public void startNewLevel() {
+        levelManager.increaseLevelIndex();
+        enemyManager.loadEnemies();
+        itemManager.resetForNewLevel();
+        specialBubbleManager.loadBubbleGenerator();
+        playerOne.loadLevelData();
     }
 
     private void loadStartLevel() {

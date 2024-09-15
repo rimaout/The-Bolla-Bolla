@@ -27,7 +27,7 @@ public class PowerUp extends Item {
 
 
     @Override
-    void draw(Graphics g) {
+    public void draw(Graphics g) {
         if (!deSpawning)
             g.drawImage(powerUpImages[GetPowerUpImageIndex(type)], x, y, W, H, null);
         else
@@ -35,12 +35,12 @@ public class PowerUp extends Item {
     }
 
     @Override
-    void addPoints(Player player) {
+    public void addPoints(Player player) {
         RewardPointsManager.getInstance(player).addSmallPoints(GetPoints(type));
     }
 
     @Override
-    void applyEffect(Player player) {
+    public void applyEffect(Player player) {
         switch (type) {
             case GREEN_CANDY -> powerUpManager.collectedGreenCandy();
             case BLUE_CANDY -> powerUpManager.collectedBlueCandy();

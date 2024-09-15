@@ -21,6 +21,8 @@ public abstract class SpecialBubble extends Bubble {
 
     @Override
     public void checkCollisionWithPlayer(Player player) {
+        if (!player.isActive())
+            return;
 
         if (isPlayerPoppingBubble(player)) {
             playerPop(player);

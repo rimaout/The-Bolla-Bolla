@@ -100,6 +100,22 @@ public class EnemyBubble extends EmptyBubble {
     }
 
     @Override
+    public void pop() {
+        if (state != POP_NORMAL && state != POP_RED) {
+            if (state == RED)
+                state = POP_RED;
+            else
+                state = POP_NORMAL;
+
+            animationIndex = 0;
+            animationTick = 0;
+        }
+
+        enemy.setAlive(false);
+    }
+
+
+    @Override
     public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
 
         if (!popped) {

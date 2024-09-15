@@ -155,8 +155,6 @@ public class Game implements Runnable {
         return home;
     }
 
-    ;
-
     public Menu getMenu() {
         return menu;
     }

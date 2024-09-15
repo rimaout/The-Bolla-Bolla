@@ -58,7 +58,8 @@ public class SkelMonsta extends Enemy{
     }
 
     private void checkPlayerHit(Player player) {
-        if (spawning || despawning)
+
+        if (spawning || despawning || !player.isActive())
             return;
 
         if (hitbox.intersects(player.getHitbox())) {

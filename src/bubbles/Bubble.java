@@ -46,7 +46,6 @@ public abstract class Bubble extends Entity {
     public abstract void draw(Graphics g);
     public abstract void checkCollisionWithPlayer(Player player);
 
-
     protected void initCollisionBoxes() {
         internalCollisionBox = new Rectangle2D.Float(hitbox.x + INTERNAL_BOX_OFFSET_X, hitbox.y + INTERNAL_BOX_OFFSET_Y, INTERNAL_BOX_W, INTERNAL_BOX_H);
         externalCollisionBox = new Ellipse2D.Float(hitbox.x + EXTERNAL_BOX_OFFSET_X, hitbox.y, EXTERNAL_BOX_W, EXTERNAL_BOX_H);
