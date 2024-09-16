@@ -406,6 +406,10 @@ public class Player extends Entity{
         lives++;
     }
 
+    public void setInAir(boolean inAir) {
+        this.inAir = inAir;
+    }
+
     public int getLives() {
         return lives;
     }

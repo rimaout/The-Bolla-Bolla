@@ -129,13 +129,14 @@ public class Constants {
         public static final int W = DEFAULT_W * Game.SCALE;
         public static final int H = DEFAULT_H * Game.SCALE;
 
-        public static final int HITBOX_W = 9 * Game.SCALE;
+        public static final int HITBOX_W = 6 * Game.SCALE;
         public static final int HITBOX_H = 12 * Game.SCALE;
         public static final int HITBOX_OFFSET_X = 5 * Game.SCALE;
-        public static final int HITBOX_OFFSET_Y = 4 * Game.SCALE;
+        public static final int HITBOX_OFFSET_Y = 5 * Game.SCALE;
 
         public static final float WATER_FLOW_SPEED = 1.5f * Game.SCALE;
-        public static final int ADD_WATER_DROP_INTERVAL = 65;
+        public static final int ADD_WATER_DROP_INTERVAL = 60;
+
     }
 
     public static class UI {
@@ -338,7 +339,7 @@ public class Constants {
         public static final int SPAWN_POWER_UP_TIMER = 12000;
 
         public enum BubbleRewardType {
-            APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA;
+            APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA, WATER_CRISTAL;
 
             public static int GetRewardImageIndex(BubbleRewardType bubbleRewardType) {
                 return switch (bubbleRewardType) {
@@ -349,6 +350,7 @@ public class Constants {
                     case CHERRY -> 4;
                     case MUSHROOM -> 5;
                     case BANANA -> 6;
+                    case WATER_CRISTAL -> 7;
                 };
             }
 
@@ -374,6 +376,7 @@ public class Constants {
                     case CHERRY -> 5000;
                     case MUSHROOM -> 6000;
                     case BANANA -> 7000;
+                    case WATER_CRISTAL -> 6000;
                 };
             }
         }

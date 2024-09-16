@@ -132,20 +132,20 @@ public class ItemManager {
     private void loadSprites() {
         // Load bubble reward sprites
         BufferedImage bubbleRewardsSprite = LoadSave.GetSprite(LoadSave.ITEM_BUBBLE_REWARD_SPRITE);
-        bubbleRewardImages = new BufferedImage[7];
-        for (int i = 0; i < 7; i++)
+        bubbleRewardImages = new BufferedImage[8];
+        for (int i = 0; i < bubbleRewardImages.length; i++)
             bubbleRewardImages[i] = bubbleRewardsSprite.getSubimage(i * DEFAULT_W, 0, DEFAULT_W, DEFAULT_H);
 
         // Load power-up sprites
         BufferedImage powerUpSprite = LoadSave.GetSprite(LoadSave.ITEM_POWER_UP_SPRITE);
         powerUpImages = new BufferedImage[10];
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < powerUpImages.length; i++)
             powerUpImages[i] = powerUpSprite.getSubimage(i * DEFAULT_W, 0, DEFAULT_W, DEFAULT_H);
 
         // Load de-spawn sprites
         BufferedImage deSpawnSprite = LoadSave.GetSprite(LoadSave.ITEM_DESPAWN_SPRITE);
         deSpawnImages = new BufferedImage[2];
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < deSpawnImages.length; i++)
             deSpawnImages[i] = deSpawnSprite.getSubimage(i * DEFAULT_W, 0, DEFAULT_W, DEFAULT_H);
     }
 
