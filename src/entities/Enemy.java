@@ -21,6 +21,8 @@ public abstract class Enemy extends Entity {
     protected EnemyType enemyType;
     protected boolean firstUpdate = true;
 
+    protected int directionChangeCounter = 0;
+
     // Enemy Movement Variables
     protected float xSpeed;
     protected float ySpeed;
@@ -30,6 +32,12 @@ public abstract class Enemy extends Entity {
     protected Direction walkingDir;
     protected Direction previousWalkingDir;
     protected Direction startWalkingDir;
+
+    // Vertical Movement Variables
+    protected boolean goUp = false;
+    protected boolean goDown = false;
+    protected boolean isFalling = false;
+    protected boolean isJumping = false;
 
     // Spawn Info
     protected float spawnY;
@@ -131,6 +139,8 @@ public abstract class Enemy extends Entity {
             walkingDir = RIGHT;
         else
             walkingDir = LEFT;
+
+        directionChangeCounter++;
     }
 
     protected int flipX() {
@@ -176,6 +186,21 @@ public abstract class Enemy extends Entity {
             return NONE;
     }
 
+    protected void checkIfStuck() {
+        // sometimes the enemy gets stuck in zone where it can't fall even if the player is under it (in this case the enemy will move back and forth)
+        // to prevent this we will check if the enemy is stuck and if so we will make it fly
+
+        if (directionChangeCounter >= DIRECTION_CHANGE_MAX_COUNTER) {
+            goUp = true;
+            directionChangeCounter = 0;
+        }
+    }
+
+    protected boolean canFall(){
+        // check if the under is not out of the level
+        return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
+    }
+
     public void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
@@ -201,6 +226,7 @@ public abstract class Enemy extends Entity {
         enemyState = DEAD_STATE;
         PlayerBubblesManager.getInstance().addDeadEnemy(this, player);
     }
+
 
     public void setActive(boolean active) {
         this.active = active;

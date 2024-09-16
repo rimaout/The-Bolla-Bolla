@@ -13,12 +13,6 @@ import static utilz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
 
-    // Movement Variables
-    private boolean goUp = false;
-    private boolean goDown = false;
-    private boolean isFalling = false;
-    private boolean isJumping = false;
-
     // Fly Variables
     private int flyDirectionChangeCounter = 0;
     private boolean isFlyingFirstUpdate = true;
@@ -54,6 +48,7 @@ public class ZenChan extends Enemy {
 
         updateTimers();
         updatePlayerInfo(player);
+        checkIfStuck();
         updateMove();
         updateStateVariables();
     }
@@ -235,11 +230,6 @@ public class ZenChan extends Enemy {
             isJumping = false;
             updateXPos(jumpXSpeed, levelData);
         }
-    }
-
-    private boolean canFall(){
-        // check if the under is not out of the level
-        return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
     }
 
     private void fall(int [][] levelData) {
