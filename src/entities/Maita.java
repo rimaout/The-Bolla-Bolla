@@ -122,20 +122,15 @@ public class Maita extends Enemy {
     }
 
     private void moveOnGround(int[][] levelData) {
-        float hitboxX = 0;
-
-        if (walkingDir == LEFT) {
+        if (walkingDir == LEFT)
             xSpeed = -walkSpeed;
-            hitboxX = hitbox.x;
-        }
-        else {
+        else
             xSpeed = walkSpeed;
-            hitboxX = hitbox.x + hitbox.width;
-        }
 
-        if (CanMoveHere(hitboxX + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
 
-            if (!IsSolid(hitboxX + xSpeed, hitbox.y + hitbox.height + 1, levelData)){
+            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelData)
+                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelData)) {
 
                 if(goDown){
 

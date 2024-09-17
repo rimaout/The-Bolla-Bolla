@@ -190,7 +190,7 @@ public abstract class Enemy extends Entity {
         // sometimes the enemy gets stuck in zone where it can't fall even if the player is under it (in this case the enemy will move back and forth)
         // to prevent this we will check if the enemy is stuck and if so we will make it fly
 
-        if (directionChangeCounter >= DIRECTION_CHANGE_MAX_COUNTER) {
+        if (directionChangeCounter >= DIRECTION_CHANGE_MAX_COUNTER && canFly()) {
             goUp = true;
             directionChangeCounter = 0;
         }
@@ -199,6 +199,11 @@ public abstract class Enemy extends Entity {
     protected boolean canFall(){
         // check if the under is not out of the level
         return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
+    }
+
+    protected boolean canFly() {
+        // check if enemy is trying to fly out of the level
+        return getTileY() > 8;
     }
 
     public void resetEnemy() {

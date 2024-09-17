@@ -145,7 +145,7 @@ public class WaterFlow extends Entity {
 
     private void fall() {
         float newY = hitbox.y + WATER_FLOW_SPEED;
-        float correction = 1 * Game.SCALE;     // correction value to prevent the water flow from getting stuck in the floor
+        float correction = 2 * Game.SCALE;     // correction value to prevent the water flow from getting stuck in the floor
 
         if (!IsSolid(hitbox.x, newY + hitbox.height - correction, level.getLevelData()))
             hitbox.y = newY;

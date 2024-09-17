@@ -108,20 +108,17 @@ public class ZenChan extends Enemy {
     }
 
     private void moveOnGround(int[][] levelData) {
-        float hitboxX = 0;
-
-        if (walkingDir == LEFT) {
+        if (walkingDir == LEFT)
             xSpeed = -walkSpeed;
-            hitboxX = hitbox.x;
-        }
-        else {
+        else
             xSpeed = walkSpeed;
-            hitboxX = hitbox.x + hitbox.width;
-        }
 
-        if (CanMoveHere(hitboxX + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+        // check if there is a solid tile in front of the enemy
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
 
-            if (!IsSolid(hitboxX + xSpeed, hitbox.y + hitbox.height + 1, levelData)){
+            // check if there is a solid tile below the enemy
+            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelData)
+                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelData)) {
 
                 if(goDown){
 
@@ -252,7 +249,7 @@ public class ZenChan extends Enemy {
     }
 
     private boolean canJump(int jumpDistance) {
-        return jumpDistance != -1;
+        return jumpDistance < -1;
     }
 
     private int calculateJumpDistance(int[][] levelData) {
