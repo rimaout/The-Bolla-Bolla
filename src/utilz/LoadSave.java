@@ -50,13 +50,14 @@ public class LoadSave {
     public static final String WATER_BUBBLE_SPRITE = "/sprites/water_bubble.png";
     public static final String LIGHTNING_BUBBLE_SPRITE = "/sprites/lightning_bubble.png";
     public static final String BUD_BUBBLE_PROJECTILE_SPRITE = "/sprites/bud_bubble_projectile.png";
+
     // IMAGES
     public static final String GAME_LOGO = "/images/logo.png";
-    public static final String PAUSE_BACKGROUND = "/images/pause_menu.png";
     public static final String HURRY_IMAGE = "/images/hurry_image.png";
 
     // FONTS
-    public static final String FONT = "/fonts/nintendo-nes-font.ttf";
+    public static final String NES_FONT = "/fonts/nintendo-nes-font.ttf";
+    public static final String RETRO_GAMING_FONT = "/fonts/retro-gaming.ttf";
 
     public static BufferedImage GetSprite(String spriteFile) {
         InputStream is = LoadSave.class.getResourceAsStream(spriteFile);
@@ -78,10 +79,10 @@ public class LoadSave {
         return img;
     }
 
-    public static Font getCustomFont() {
+    private static Font loadFont(String fontFile) {
         Font font = null;
         try {
-            InputStream is = LoadSave.class.getResourceAsStream(LoadSave.FONT);
+            InputStream is = LoadSave.class.getResourceAsStream(fontFile);
             font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
@@ -89,6 +90,14 @@ public class LoadSave {
             e.printStackTrace();
         }
         return font;
+    }
+
+    public static Font getNesFont() {
+        return loadFont(NES_FONT);
+    }
+
+    public static Font getRetroGamingFont() {
+        return loadFont(RETRO_GAMING_FONT);
     }
 
     public static BufferedImage[] GetAllLevels() {

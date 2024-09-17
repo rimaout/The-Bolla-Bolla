@@ -514,4 +514,9 @@ public class Constants {
             NONE, WATER_BUBBLE, LIGHTNING_BUBBLE
         }
     }
+
+    public static class Overlays {
+        public static final int BUD_GREEN_COLOR = 0x5ce634;
+        public static final int BUD_RED_COLOR = 0xfc8274;
+    }
 }

@@ -1,185 +1,97 @@
 package ui;
 
-import static utilz.Constants.UI.PauseButtons.*;
-import static utilz.Constants.UI.UrmButtons.*;
-import static utilz.Constants.UI.VolumeButton.*;
-
-import utilz.LoadSave;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyEvent;
 
-public class PauseOverlay {
-    private Playing playing;
-    private BufferedImage backgroundImg;
+import static utilz.Constants.Overlays.*;
 
-    private int bgX, bgY, bgWidth, bgHeight; // background position and size
-    private SoundButton musicButton, sfxButton;
-    private UrmButton menuButton, replayButton, unpauseButton;
-    private VolumeButton volumeButton;
-
-
+public class PauseOverlay extends Overlay {
     public PauseOverlay(Playing playing) {
-        this.playing = playing;
-        loadBackground();
-        createSoundButton();
-        createUrmButtons();
-        createVolumeButton();
+        super(playing);
     }
 
-    private void createVolumeButton() {
-        int volumeX = (int) (92 * Game.SCALE);  // volume buttons have the same x position
-        int musicY = (int) (130 * Game.SCALE);
-        volumeButton = new VolumeButton(volumeX, musicY, VOLUME_SLIDER_W, VOLUME_SLIDER_H);
+    @Override
+    protected void drawTitle(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.setFont(nesFont.deriveFont(50f));
+        FontMetrics fm = g.getFontMetrics(g.getFont());
+
+        String text = "PAUSE";
+        int textWidth = fm.stringWidth(text);
+        int x = (Game.GAME_WIDTH - textWidth) / 2;
+        int y = (Game.GAME_HEIGHT / 10) * 4;
+
+        g.drawString(text, x, y);
     }
 
-    private void createUrmButtons() {
-        int urmY = (int) (147 * Game.SCALE);    // urm buttons have the same x position
-        int menuX = (int) (88 * Game.SCALE);
-        int resumeX = (int) (116.5 * Game.SCALE);
-        int restartX = (int) (144.7 * Game.SCALE);
-        int ButtonsWidth = (int) (URM_BT_W * Game.SCALE / 3.6);
-        int ButtonsHeight = (int) (URM_BT_H * Game.SCALE / 3.6);
+    @Override
+    protected void drawControls(Graphics g) {
+        FontMetrics fm = g.getFontMetrics(retroFont.deriveFont(22f));
 
-        menuButton = new UrmButton(menuX, urmY, ButtonsWidth, ButtonsHeight, 2);
-        replayButton = new UrmButton(resumeX, urmY, ButtonsWidth, ButtonsHeight, 1);
-        unpauseButton = new UrmButton(restartX, urmY, ButtonsWidth, ButtonsHeight, 0);
+        // Text for QUIT
+        String text1Part1 = "Press ";
+        String text1Part2 = "Q";
+        String text1Part3 = " to ";
+        String text1Part4 = "QUIT!";
+        int text1WidthPart1 = fm.stringWidth(text1Part1);
+        int text1WidthPart2 = fm.stringWidth(text1Part2);
+        int text1WidthPart3 = fm.stringWidth(text1Part3);
+        int text1WidthPart4 = fm.stringWidth(text1Part4);
+        int x1 = (Game.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
+        int y1 = Game.GAME_HEIGHT / 2 - 3 * Game.SCALE;
+
+        // Text for RESUME
+        String text2Part1 = "Press ";
+        String text2Part2 = "ESC";
+        String text2Part3 = " to ";
+        String text2Part4 = "RESUME!";
+        int text2WidthPart1 = fm.stringWidth(text2Part1);
+        int text2WidthPart2 = fm.stringWidth(text2Part2);
+        int text2WidthPart3 = fm.stringWidth(text2Part3);
+        int text2WidthPart4 = fm.stringWidth(text2Part4);
+        int x2 = (Game.GAME_WIDTH - (text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4)) / 2;
+        int y2 = Game.GAME_HEIGHT / 2 + 10 * Game.SCALE;
+
+        g.setFont(retroFont.deriveFont(22f));
+
+        g.setColor(Color.WHITE);
+        g.drawString(text1Part1, x1, y1);
+
+        g.setColor(new Color(BUD_RED_COLOR));
+        g.drawString(text1Part2, x1 + text1WidthPart1, y1);
+
+        g.setColor(Color.WHITE);
+        g.drawString(text1Part3, x1 + text1WidthPart1 + text1WidthPart2, y1);
+
+        g.setColor(new Color(BUD_RED_COLOR));
+        g.drawString(text1Part4, x1 + text1WidthPart1 + text1WidthPart2 + text1WidthPart3, y1);
+
+        g.setColor(Color.WHITE);
+        g.drawString(text2Part1, x2, y2);
+
+        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.drawString(text2Part2, x2 + text2WidthPart1, y2);
+
+        g.setColor(Color.WHITE);
+        g.drawString(text2Part3, x2 + text2WidthPart1 + text2WidthPart2, y2);
+
+        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
-    private void createSoundButton() {
-        int soundX = (int) (141 * Game.SCALE);  // sound buttons have the same x position
-        int musicY = (int) (77 * Game.SCALE);
-        int sfY = (int) (95 * Game.SCALE);
-        int ButtonsWidth = (int) (SOUND_BT_W * Game.SCALE / 4);
-        int ButtonsHeight = (int) (SOUND_BT_H * Game.SCALE / 4);
-
-        musicButton = new SoundButton(soundX, musicY, ButtonsWidth, ButtonsHeight);
-        sfxButton = new SoundButton(soundX, sfY, ButtonsWidth, ButtonsHeight);
-
-    }
-
-    public void loadBackground() {
-        backgroundImg = LoadSave.GetSprite(LoadSave.PAUSE_BACKGROUND);
-        bgWidth = (int) (backgroundImg.getWidth() * Game.SCALE / 2.6);
-        bgHeight = (int) (backgroundImg.getHeight() * Game.SCALE / 2.6);
-        bgX = Game.GAME_WIDTH / 2 - bgWidth / 2;
-        bgY = 33 * Game.SCALE;
-    }
-
-    public void update() {
-        musicButton.update();
-        sfxButton.update();
-        menuButton.update();
-        replayButton.update();
-        unpauseButton.update();
-        volumeButton.update();
-    }
-
-    public void draw(Graphics g) {
-        // Draw background
-        g.drawImage(backgroundImg, bgX, bgY, bgWidth, bgHeight, null);
-
-        // Draw sound buttons
-        musicButton.draw(g);
-        sfxButton.draw(g);
-
-        // Draw urm buttons
-        menuButton.draw(g);
-        replayButton.draw(g);
-        unpauseButton.draw(g);
-
-        // Draw volume button
-        volumeButton.draw(g);
-    }
-
-    private boolean isMouseOverButton(MouseEvent e, PauseButton button) {
-        return button.getBounds().contains(e.getX(), e.getY());
-    }
-
-    public void mouseDragged(MouseEvent e) {
-        if(volumeButton.isMousePressed()){
-            volumeButton.changeX(e.getX());
-        }
-    }
-
-    public void mousePressed(MouseEvent e) {
-        if (isMouseOverButton(e, musicButton)) {
-            musicButton.setMousePressed(true);
-        }
-        else if (isMouseOverButton(e, sfxButton)) {
-            sfxButton.setMousePressed(true);
-        }
-        else if (isMouseOverButton(e, menuButton)) {
-            menuButton.setMousePressed(true);
-        }
-        else if (isMouseOverButton(e, replayButton)) {
-            replayButton.setMousePressed(true);
-        }
-        else if (isMouseOverButton(e, unpauseButton)) {
-            unpauseButton.setMousePressed(true);
-        }
-        else if (isMouseOverButton(e, volumeButton)) {
-            volumeButton.setMousePressed(true);
-        }
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        if (isMouseOverButton(e, musicButton)) {
-            musicButton.setMuted(!musicButton.isMuted());
-        }
-        else if (isMouseOverButton(e, sfxButton)) {
-            sfxButton.setMuted(!sfxButton.isMuted());
-        }
-        else if (isMouseOverButton(e, menuButton)) {
-            GameState.state = GameState.MENU;
-            playing.unpauseGame();
-        }
-        else if (isMouseOverButton(e, replayButton)) {
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_Q) {
             playing.resetAll();
+            GameState.state = GameState.MENU;
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             playing.unpauseGame();
         }
-        else if (isMouseOverButton(e, unpauseButton)) {
-            playing.unpauseGame();
-        }
-
-        resetButtons();
     }
-
-    public void mouseMoved(MouseEvent e) {
-        resetButtons();
-
-        if (isMouseOverButton(e, musicButton)) {
-            musicButton.setMouseOver(true);
-        }
-        else if (isMouseOverButton(e, sfxButton)) {
-            sfxButton.setMouseOver(true);
-        }
-        else if (isMouseOverButton(e, menuButton)) {
-            menuButton.setMouseOver(true);
-        }
-        else if (isMouseOverButton(e, replayButton)) {
-            replayButton.setMouseOver(true);
-        }
-        else if (isMouseOverButton(e, unpauseButton)) {
-            unpauseButton.setMouseOver(true);
-        }
-        else if (isMouseOverButton(e, volumeButton)) {
-            volumeButton.setMouseOver(true);
-        }
-
-    }
-
-    public void resetButtons() {
-        musicButton.resetBools();
-        sfxButton.resetBools();
-        menuButton.resetBools();
-        replayButton.resetBools();
-        unpauseButton.resetBools();
-        volumeButton.resetBools();
-    }
-
 }

@@ -11,10 +11,7 @@ import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import main.Game;
 import projectiles.ProjectileManager;
-import ui.GameCompletedOverlay;
-import ui.GameOverOverlay;
-import ui.PauseOverlay;
-import ui.PlayingHud;
+import ui.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -73,13 +70,11 @@ public class Playing extends State implements StateMethods {
     @Override
     public void update() {
 
-        if (paused)
-            pauseOverlay.update();
-
-        else if (levelCompleted)
+        if (levelCompleted)
             loadNextLevel();
 
-        else if(!gameOver && !gameCompleted) {
+        else if(!paused && !gameOver && !gameCompleted) {
+
             if (playerOne.isActive())
                 playerOne.update();
 
@@ -187,40 +182,35 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (!gameOver || !gameCompleted)
-            if (paused)
-                pauseOverlay.mouseDragged(e);
+        // not used
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (!gameOver || !gameCompleted) {
-            if (paused)
-                pauseOverlay.mousePressed(e);
-        }
+        // not used
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (!gameOver || !gameCompleted) {
-            if (paused)
-                pauseOverlay.mouseReleased(e);
-        }
+        // not used
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (!gameOver || !gameCompleted) {
-            if (paused)
-                pauseOverlay.mouseMoved(e);
-        }
+        // not used
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        if (gameOver)
+        if (paused)
+            pauseOverlay.keyPressed(e);
+
+        else if (gameOver)
             gameOverOverlay.keyPressed(e);
+
         else if (gameCompleted)
             gameCompletedOverlay.keyPressed(e);
+
         else {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_A:
@@ -244,7 +234,7 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (!gameOver || !gameCompleted) {
+        if (!paused || !gameOver || !gameCompleted) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_A:
                     playerOne.setLeft(false);

@@ -22,13 +22,13 @@ public class Home extends State implements StateMethods {
     private List<HomeScreenBackGroundStars> bubbles;
 
     private boolean isLogoInPosition = false;
-    private Font customFont;
+    private final Font nesFont;
 
     public Home(Game game) {
         super(game);
         loadLogo();
 
-        customFont = LoadSave.getCustomFont();
+        nesFont = LoadSave.getNesFont();
         loadTwinkleBubble();
         initializeBubbles();
     }
@@ -65,11 +65,10 @@ public class Home extends State implements StateMethods {
 
         if (isLogoInPosition) {
             g.setColor(Color.WHITE);
-            g.setFont(customFont);
+            g.setFont(nesFont);
             g.drawString("PRESS ENTER TO START!", Game.GAME_WIDTH / 2 - 75 * Game.SCALE, Game.GAME_HEIGHT / 2 + 50 * Game.SCALE);
 
-            Font smallerFont = customFont.deriveFont(15f);
-            g.setFont(smallerFont);
+            g.setFont(nesFont.deriveFont(15f));
             g.drawString("© 2024 RIMA CORPORATION", Game.GAME_WIDTH / 2 - 55 * Game.SCALE, Game.GAME_HEIGHT / 2 + 100 * Game.SCALE);
         }
     }
