@@ -4,6 +4,7 @@ import bubbles.playerBubbles.EmptyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;
 import entities.Entity;
+import entities.Player;
 import levels.LevelManager;
 import utilz.Constants.Direction;
 
@@ -22,14 +23,45 @@ public class PlayerBubbleProjectile extends Projectile {
         this.direction = direction;
     }
 
-    public void draw(Graphics g, BufferedImage[][] sprites) {
-        g.drawImage(sprites[0][animationIndex], (int) hitbox.x, (int) hitbox.y, W, H, null);
+    @Override
+    public void draw(Graphics g) {
+        g.drawImage(projectileManager.getSprites(PLAYER_BUBBLE)[0][animationIndex], (int) hitbox.x, (int) hitbox.y, W, H, null);
     }
 
-    public void update() {
+    @Override
+    protected void updatePos() {
 
-        updateAnimationTick();
-        updatePos();
+        float projectileSpeed = PLAYER_BUBBLE_SPEED * ProjectileManager.getInstance().getPlayerProjectileSpeedMultiplier();
+
+        float xSpeed;
+        if (direction == LEFT)
+            xSpeed = -projectileSpeed;
+        else
+            xSpeed = projectileSpeed;
+
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, currentLevel.getLevelData()))
+            hitbox.x += xSpeed;
+    }
+
+    @Override
+    protected void checkEnemyHit(Enemy enemy, Player player) {
+        // Parameters: enemy  = enemy that is being checked for collision with projectile
+        //             player = player to add score to if the enemy is killed (not used in this case)
+
+        if (!enemy.isActive() || enemy.isImmune())
+            return;
+
+        if (hitbox.intersects(enemy.getHitbox())) {
+            if (hitbox.intersects(enemy.getHitbox())) {
+                enemy.bubbleCapture(direction);
+                active = false;
+            }
+        }
+    }
+
+    @Override
+    protected void checkPlayerHit(Player player) {
+        // not used, playerBubbles can't hit players
     }
 
     @Override
@@ -48,31 +80,5 @@ public class PlayerBubbleProjectile extends Projectile {
                 PlayerBubblesManager.getInstance().addBubble(new EmptyBubble(hitbox.x, hitbox.y, direction));
             }
         }
-    }
-
-    protected void updatePos() {
-
-        int[][] levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
-        float projectileSpeed = PLAYER_BUBBLE_SPEED * ProjectileManager.getInstance().getPlayerProjectileSpeedMultiplier();
-
-        float xSpeed;
-        if (direction == LEFT)
-            xSpeed = -projectileSpeed;
-        else
-            xSpeed = projectileSpeed;
-
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData))
-            hitbox.x += xSpeed;
-    }
-
-    @Override
-    protected void checkEntityHit(Entity enemy) {
-
-        if (!(enemy instanceof Enemy e))
-            throw new IllegalArgumentException("PlayerBubbleProjectile can only hit enemies, use an Entity as parameter");
-
-        if (hitbox.intersects(e.getHitbox())) {
-            e.bubbleCapture(direction);
-            active = false;}
     }
 }

@@ -1,7 +1,6 @@
 package bubbles.specialBubbles;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
-import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
@@ -21,7 +20,7 @@ public class SpecialBubbleManager {
     private final Player player;
 
     private BufferedImage[][] waterBubbleSprites;
-    private BufferedImage[][] fireBubbleSprites;
+    private BufferedImage[][] lightningBubbleSprites;
 
     private LinkedList<SpecialBubble> bubbles;
     private LinkedList<WaterFlow> waterFlows;
@@ -77,7 +76,6 @@ public class SpecialBubbleManager {
             if (w.isActive()) {
                 w.update();
                 w.updateCollisions(player);
-
             }
         }
     }
@@ -91,6 +89,11 @@ public class SpecialBubbleManager {
         BufferedImage temp = LoadSave.GetSprite(LoadSave.WATER_BUBBLE_SPRITE);
         waterBubbleSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
         waterBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
+
+        lightningBubbleSprites = new BufferedImage[2][1];
+        temp = LoadSave.GetSprite(LoadSave.LIGHTNING_BUBBLE_SPRITE);
+        lightningBubbleSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
+        lightningBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
     }
 
     public void resetAll() {
@@ -112,8 +115,8 @@ public class SpecialBubbleManager {
         return waterBubbleSprites;
     }
 
-    public BufferedImage[][] getFireBubbleSprites() {
-        return fireBubbleSprites;
+    public BufferedImage[][] getLightningBubbleSprites() {
+        return lightningBubbleSprites;
     }
 
     public int getActiveBubblesCount() {

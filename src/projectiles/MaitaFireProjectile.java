@@ -7,7 +7,6 @@ import levels.LevelManager;
 import utilz.Constants.Direction;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Direction.*;
 import static utilz.Constants.Projectiles.*;
@@ -23,8 +22,8 @@ public class MaitaFireProjectile extends Projectile {
     }
 
     @Override
-    protected void draw(Graphics g, BufferedImage[][] sprites) {
-        g.drawImage(sprites[getAnimation(state)][animationIndex], (int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
+    protected void draw(Graphics g) {
+        g.drawImage(projectileManager.getSprites(MAITA_FIREBALL)[getAnimation(state)][animationIndex], (int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
     }
 
     @Override
@@ -38,8 +37,7 @@ public class MaitaFireProjectile extends Projectile {
             else
                 xSpeed = MAITA_FIREBALL_SPEED;
 
-            int[][] levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
-            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData))
+            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, currentLevel.getLevelData()))
                 hitbox.x += xSpeed;
             else {
                 state = IMPACT;
@@ -51,17 +49,20 @@ public class MaitaFireProjectile extends Projectile {
         }
     }
 
+    @Override
+    public void checkEnemyHit(Enemy enemy, Player player) {
+        // not used, MaitaFireProjectiles can't hit enemies
+    }
 
     @Override
-    public void checkEntityHit(Entity player) {
-        if (!player.isActive())
+    public void checkPlayerHit(Player player) {
+        // Parameters: player = player that is being checked for collision with projectile
+
+        if (!player.isActive() || player.isImmune())
             return;
 
-        if (!(player instanceof Player p))
-            throw new IllegalArgumentException("MaitaFireProjectile can only hit Player, use a Player has parameter");
-
-        if (hitbox.intersects(p.getHitbox()) && !p.isRespawning()) {
-            p.death();
+        if (hitbox.intersects(player.getHitbox()) && !player.isRespawning()) {
+            player.death();
             state = IMPACT;
 
             // Reset animation

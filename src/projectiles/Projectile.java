@@ -1,7 +1,10 @@
 package projectiles;
 
+import entities.Enemy;
 import entities.Entity;
 import entities.Player;
+import levels.Level;
+import levels.LevelManager;
 import utilz.Constants.Direction;
 import utilz.Constants.Projectiles.ProjectileState;
 
@@ -11,13 +14,15 @@ import static utilz.Constants.Projectiles.ProjectileState.MOVING;
 import static utilz.Constants.Projectiles.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 
 public abstract class Projectile extends Entity {
     protected ProjectileState state = MOVING;
     protected ProjectileType type;
     protected Direction direction;
+
+    protected ProjectileManager projectileManager = ProjectileManager.getInstance();
+    protected Level currentLevel = LevelManager.getInstance().getCurrentLevel();
 
     public Projectile(float x, float y, Direction direction, ProjectileType type) {
         super(x, y, H, W);
@@ -32,9 +37,10 @@ public abstract class Projectile extends Entity {
         updateAnimationTick();
     }
 
-    protected abstract void draw(Graphics g, BufferedImage[][] sprites);
+    protected abstract void draw(Graphics g);
     protected abstract void updatePos();
-    protected abstract void checkEntityHit(Entity entity);
+    protected abstract void checkEnemyHit(Enemy enemy, Player player);
+    protected abstract void checkPlayerHit(Player player);
 
     protected void updateAnimationTick() {
         animationTick++;

@@ -221,7 +221,7 @@ public abstract class Enemy extends Entity {
         animationTick = 0;
     }
 
-    public void death(Player player) {
+    public void instantKill(Player player) {
         active = false;
         enemyState = DEAD_STATE;
         PlayerBubblesManager.getInstance().addDeadEnemy(this, player);

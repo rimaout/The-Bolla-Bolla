@@ -450,13 +450,14 @@ public class Constants {
         public static final int PROJECTILE_ANIMATION_SPEED = 25;
         public static final float PLAYER_BUBBLE_SPEED = 1.2f * Game.SCALE;
         public static final float MAITA_FIREBALL_SPEED = 0.53f * Game.SCALE;
+        public static final float LIGHTNING_SPEED = 1f * Game.SCALE;
 
         public enum ProjectileState {
             MOVING, IMPACT
         }
 
         public enum ProjectileType {
-            PLAYER_BUBBLE, MAITA_FIREBALL
+            PLAYER_BUBBLE, MAITA_FIREBALL, LIGHTNING
         }
 
 

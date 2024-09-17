@@ -2,7 +2,7 @@ package entities;
 
 import levels.LevelManager;
 import utilz.LoadSave;
-import gameStates.Playing;
+
 import static utilz.Constants.EnemyConstants.*;
 
 import java.awt.*;
@@ -122,7 +122,7 @@ public class EnemyManager {
 
         if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive()) {
             if (playerInvincibleMode)
-                enemy.death(player);
+                enemy.instantKill(player);
             else {
                 player.death();
                 setAllNormal();

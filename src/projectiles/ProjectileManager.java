@@ -17,6 +17,7 @@ public class ProjectileManager {
 
     private BufferedImage[][] fireBallSprites;
     private BufferedImage[][] bubbleSprites;
+    private BufferedImage[][] lightingSprites;
 
     private final ArrayList<Projectile> projectiles = new ArrayList<>();
 
@@ -40,7 +41,7 @@ public class ProjectileManager {
     public void draw(Graphics g) {
         for (Projectile p : projectiles)
             if (p.isActive())
-                p.draw(g, getSprites(p.type));
+                p.draw(g);
     }
 
     public static ProjectileManager getInstance() {
@@ -54,23 +55,15 @@ public class ProjectileManager {
                 continue;
 
             p.update();
-            updateEntityHit(p);
+            updateEntityCollisions(p);
         }
     }
 
-    private void updateEntityHit(Projectile p) {
+    private void updateEntityCollisions(Projectile p) {
+        p.checkPlayerHit(player);
 
-        if (p.type != ProjectileType.PLAYER_BUBBLE) {
-            p.checkEntityHit(player);
-        }
-
-        else {
-            for (Enemy e : EnemyManager.getInstance().getEnemies()) {
-                if (!e.isActive() || e.isImmune())
-                    continue;
-                p.checkEntityHit(e);
-            }
-        }
+        for (Enemy enemy : EnemyManager.getInstance().getEnemies())
+            p.checkEnemyHit(enemy, player);
     }
 
     public void addProjectile(Projectile projectile) {
@@ -100,12 +93,18 @@ public class ProjectileManager {
         for (int i = 0; i < bubbleSprites.length; i++)
             for (int j = 0; j < bubbleSprites[i].length; j++)
                 bubbleSprites[i][j] = temp.getSubimage(j * DEFAULT_W, i * DEFAULT_H, DEFAULT_W, DEFAULT_H);
+
+        lightingSprites = new BufferedImage[2][1];
+        temp = LoadSave.GetSprite(LoadSave.LIGHTNING_BUBBLE_SPRITE);
+        lightingSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
+        lightingSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
     }
 
-    private BufferedImage[][] getSprites(ProjectileType type) {
+    public BufferedImage[][] getSprites(ProjectileType type) {
         return switch (type) {
             case MAITA_FIREBALL -> fireBallSprites;
             case PLAYER_BUBBLE -> bubbleSprites;
+            case LIGHTNING -> lightingSprites;
         };
     }
 
