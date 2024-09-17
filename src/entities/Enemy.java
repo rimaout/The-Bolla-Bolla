@@ -2,6 +2,7 @@ package entities;
 
 import bubbles.playerBubbles.EnemyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
+import levels.Level;
 import levels.LevelManager;
 import main.Game;
 
@@ -20,8 +21,6 @@ public abstract class Enemy extends Entity {
     protected int enemyState;
     protected EnemyType enemyType;
     protected boolean firstUpdate = true;
-
-    protected int directionChangeCounter = 0;
 
     // Enemy Movement Variables
     protected float xSpeed;
@@ -139,8 +138,6 @@ public abstract class Enemy extends Entity {
             walkingDir = RIGHT;
         else
             walkingDir = LEFT;
-
-        directionChangeCounter++;
     }
 
     protected int flipX() {
@@ -184,16 +181,6 @@ public abstract class Enemy extends Entity {
             return DOWN;
         else
             return NONE;
-    }
-
-    protected void checkIfStuck() {
-        // sometimes the enemy gets stuck in zone where it can't fall even if the player is under it (in this case the enemy will move back and forth)
-        // to prevent this we will check if the enemy is stuck and if so we will make it fly
-
-        if (directionChangeCounter >= DIRECTION_CHANGE_MAX_COUNTER && canFly()) {
-            goUp = true;
-            directionChangeCounter = 0;
-        }
     }
 
     protected boolean canFall(){

@@ -1,5 +1,6 @@
 package entities;
 
+import levels.Level;
 import levels.LevelManager;
 import main.Game;
 import utilz.Constants.Direction;
@@ -48,7 +49,6 @@ public class ZenChan extends Enemy {
 
         updateTimers();
         updatePlayerInfo(player);
-        checkIfStuck();
         updateMove();
         updateStateVariables();
     }
@@ -117,11 +117,9 @@ public class ZenChan extends Enemy {
         if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
 
             // check if there is a solid tile below the enemy
-            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelData)
-                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelData)) {
+            if (!isNextPosFloorSolid()) {
 
                 if(goDown){
-
                     if(!canFall()){
                         goDown = false;
                         return;
@@ -248,8 +246,30 @@ public class ZenChan extends Enemy {
         }
     }
 
+    private boolean isNextPosFloorSolid() {
+        // This method checks if the next two tiles in front of the enemy are solid or not
+        // It's used to check if the enemy can jump/fall or not
+        Level level = LevelManager.getInstance().getCurrentLevel();
+
+        float yPos =  hitbox.y + hitbox.height + 1;
+        float xPos1 = 0, xPos2 = 0;
+
+        //check if there are 2 solid tiles in front of the enemy
+        if (walkingDir == LEFT) {
+            xPos1 = hitbox.x - 1;
+            xPos2 = hitbox.x - Game.TILES_SIZE - 1;
+        }
+
+        else if (walkingDir == RIGHT) {
+            xPos1 = hitbox.x + hitbox.width + 1;
+            xPos2 = hitbox.x + hitbox.width + Game.TILES_SIZE + 1;
+        }
+
+        return IsSolid(xPos1, yPos, level.getLevelData()) && IsSolid(xPos2, yPos, level.getLevelData());
+    }
+
     private boolean canJump(int jumpDistance) {
-        return jumpDistance < -1;
+        return jumpDistance != -1;
     }
 
     private int calculateJumpDistance(int[][] levelData) {
