@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 public class HelpMethods {
 
     public static boolean IsTileRoof(int yTile) {
-        return yTile < 5;
+        return yTile < 4;
     }
 
     public static boolean IsWall(int xTile, int yTile, int[][] levelData) {
