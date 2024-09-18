@@ -19,6 +19,8 @@ public abstract class Item {
     protected boolean deSpawning = false;
     protected boolean active = true;
 
+    protected boolean playSound = false;
+
     public Item(int x, int y){
         this.x = x;
         this.y = y;
@@ -34,6 +36,7 @@ public abstract class Item {
     }
 
     public abstract void draw(Graphics g);
+    public abstract void audioEffects();
     public abstract void addPoints(Player player);
     public abstract void applyEffect(Player player);
 
@@ -82,8 +85,7 @@ public abstract class Item {
         this.active = active;
     }
 
-    public boolean isDeSpawning() {
-        return deSpawning;
+    public void setPlaySound(boolean playSound) {
+        this.playSound = playSound;
     }
-
 }

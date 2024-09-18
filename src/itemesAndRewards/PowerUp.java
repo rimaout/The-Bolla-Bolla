@@ -1,6 +1,8 @@
 package itemesAndRewards;
 
+import audio.AudioPlayer;
 import entities.Player;
+import utilz.Constants.AudioConstants;
 
 import static utilz.Constants.Items.*;
 import static utilz.Constants.Items.PowerUpType.*;
@@ -32,6 +34,14 @@ public class PowerUp extends Item {
             g.drawImage(powerUpImages[GetPowerUpImageIndex(type)], x, y, W, H, null);
         else
             g.drawImage(deSpawnImages[animationIndex], x, y, W, H, null);
+    }
+
+    @Override
+    public void audioEffects() {
+        if (playSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.POWER_UP_COLLECTED);
+            playSound = false;
+        }
     }
 
     @Override

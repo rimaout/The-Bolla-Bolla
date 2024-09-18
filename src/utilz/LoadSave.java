@@ -7,6 +7,7 @@ import entities.ZenChan;
 import main.Game;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -59,6 +60,8 @@ public class LoadSave {
     public static final String NES_FONT = "/fonts/nintendo-nes-font.ttf";
     public static final String RETRO_GAMING_FONT = "/fonts/retro-gaming.ttf";
 
+    // AUDIO
+
     public static BufferedImage GetSprite(String spriteFile) {
         InputStream is = LoadSave.class.getResourceAsStream(spriteFile);
         BufferedImage img = null;
@@ -79,7 +82,7 @@ public class LoadSave {
         return img;
     }
 
-    private static Font loadFont(String fontFile) {
+    private static Font LoadFont(String fontFile) {
         Font font = null;
         try {
             InputStream is = LoadSave.class.getResourceAsStream(fontFile);
@@ -92,12 +95,12 @@ public class LoadSave {
         return font;
     }
 
-    public static Font getNesFont() {
-        return loadFont(NES_FONT);
+    public static Font GetNesFont() {
+        return LoadFont(NES_FONT);
     }
 
-    public static Font getRetroGamingFont() {
-        return loadFont(RETRO_GAMING_FONT);
+    public static Font GetRetroGamingFont() {
+        return LoadFont(RETRO_GAMING_FONT);
     }
 
     public static BufferedImage[] GetAllLevels() {
@@ -126,6 +129,22 @@ public class LoadSave {
         }
 
         return levelImages;
+    }
+
+    public static Clip GetAudio(String audioName) {
+        URL url = LoadSave.class.getResource("/audio/" + audioName + ".wav");
+        AudioInputStream audio;
+
+        try {
+            audio = AudioSystem.getAudioInputStream(url);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            return clip;
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static int[][] GetLevelData(BufferedImage img) {

@@ -1,5 +1,6 @@
 package bubbles.playerBubbles;
 
+import audio.AudioPlayer;
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Player;
@@ -7,6 +8,7 @@ import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
 import levels.Level;
 import levels.LevelManager;
+import utilz.Constants.AudioConstants;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -27,6 +29,7 @@ public class EnemyBubble extends EmptyBubble {
     private boolean playerPopped;
     private float ySpeedDead;
     private float xSpeedDead;
+    private boolean playPopSound = false;
 
     private Random random = new Random();
 
@@ -53,6 +56,11 @@ public class EnemyBubble extends EmptyBubble {
             g.drawImage(enemySprites[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
         else if (state == DEAD)
             g.drawImage(enemySprites[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+
+        if (playPopSound) {
+            playPopSound = false;
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.ENEMY_BUBBLE_POP);
+        }
     }
 
 
@@ -146,6 +154,8 @@ public class EnemyBubble extends EmptyBubble {
         animationTick = 0;
 
         enemy.setAlive(false);
+
+        playPopSound = true;
     }
 
 

@@ -1,7 +1,9 @@
 package bubbles.specialBubbles;
 
+import audio.AudioPlayer;
 import entities.Player;
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.Direction;
 
 import java.awt.*;

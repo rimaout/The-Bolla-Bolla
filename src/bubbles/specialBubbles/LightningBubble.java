@@ -1,5 +1,6 @@
 package bubbles.specialBubbles;
 
+import audio.AudioPlayer;
 import entities.Player;
 import projectiles.LightingProjectile;
 import projectiles.ProjectileManager;
@@ -20,7 +21,6 @@ public class LightningBubble extends SpecialBubble {
     @Override
     public void draw(Graphics g) {
         g.drawImage(specialBubbleManager.getLightningBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
-
     }
 
     @Override

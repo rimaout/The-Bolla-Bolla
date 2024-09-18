@@ -1,6 +1,8 @@
 package entities;
 
+import audio.AudioPlayer;
 import main.Game;
+import utilz.Constants.AudioConstants;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -15,6 +17,9 @@ public class HurryUpManager {
     private float hurryImgX, hurryImgY;
 
     private boolean animationActive;
+
+    private boolean playSound = false;
+    private boolean alreadyPlayedSound = false;
 
     private boolean firstUpdate = true;
     private long lastTimerUpdate;
@@ -63,6 +68,12 @@ public class HurryUpManager {
 
         if (skelMonsta.isActive())
             skelMonsta.draw(g);
+
+        if (playSound) {
+            playSound = false;
+            alreadyPlayedSound = true;
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.HURRY_UP);
+        }
     }
 
     public void updateTimer() {
@@ -80,8 +91,11 @@ public class HurryUpManager {
         if (EnemyManager.getInstance().areAllEnemiesDead())
             restart();
 
-        if (startAnimationTimer <= 0)
+        if (startAnimationTimer <= 0) {
             animationActive = true;
+            if (!alreadyPlayedSound)
+                playSound = true;
+        }
 
         if (startHurryUpTimer <= 0)
             startHurryUp();
@@ -100,11 +114,15 @@ public class HurryUpManager {
 
     public void restart() {
         firstUpdate = true;
+        playSound = false;
+        alreadyPlayedSound = false;
         skelMonsta.despawn();
     }
 
     public void resetAll() {
         firstUpdate = true;
+        playSound = false;
+        alreadyPlayedSound = false;
         skelMonsta.reset();
     }
 

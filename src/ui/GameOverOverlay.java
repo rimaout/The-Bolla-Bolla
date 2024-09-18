@@ -1,9 +1,10 @@
 package ui;
 
+import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
-import utilz.LoadSave;
+import utilz.Constants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -95,14 +96,24 @@ public class GameOverOverlay extends Overlay {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             //TODO: Save the high score, game played ++
-            playing.resetAll();
+            playing.resetNewGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
             //TODO: Save the high score, game played ++
-            playing.resetAll();
+            playing.resetNewGame();
             GameState.state = GameState.PLAYING;
         }
+    }
+
+    @Override
+    protected void setAudio() {
+        if (!firstUpdate)
+            return;
+
+        AudioPlayer.getInstance().stopSong();
+        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.GAME_OVER);
+        firstUpdate = false;
     }
 }

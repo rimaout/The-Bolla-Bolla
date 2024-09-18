@@ -1,5 +1,6 @@
 package ui;
 
+import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
@@ -86,12 +87,18 @@ public class PauseOverlay extends Overlay {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playing.resetAll();
+            playing.resetNewGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             playing.unpauseGame();
+            AudioPlayer.getInstance().startSong();
         }
+    }
+
+    @Override
+    protected void setAudio() {
+        AudioPlayer.getInstance().stopSong();
     }
 }

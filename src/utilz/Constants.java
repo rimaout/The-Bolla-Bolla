@@ -43,7 +43,7 @@ public class Constants {
 
         // Logo Constants
         public static final int LOGO_END_Y = 15 * Game.SCALE;
-        public static final int LOGO_SPEED = 1;
+        public static final float LOGO_SPEED = 0.85f;
 
         // Twinkle Bubble Constants
         public static final int BUBBLE_DEFAULT_W = 8;
@@ -518,5 +518,27 @@ public class Constants {
     public static class Overlays {
         public static final int BUD_GREEN_COLOR = 0x5ce634;
         public static final int BUD_RED_COLOR = 0xfc8274;
+    }
+
+    public static class AudioConstants {
+        public static final float DEFAULT_VOLUME = 0.7f;
+
+        // Songs
+        public static final int INTO_AND_PLAYING_SONG = 0;
+        public static final int PLAYING_SONG = 1;
+
+        // Sound effects
+        public static final int HOME = 0;
+        public static final int JUMP = 1;
+        public static final int PLAYER_DEATH = 2;
+        public static final int BUUBBLE_SHOOT = 3;
+        public static final int ENEMY_BUBBLE_POP = 4;
+        public static final int WATER_FLOW = 5;
+        public static final int LIGHTNING = 6;
+        public static final int REWARD_COLLECTED = 7;
+        public static final int POWER_UP_COLLECTED = 8;
+        public static final int GAME_OVER = 9;
+        public static final int GAME_COMPLETED = 10;
+        public static final int HURRY_UP = 11;
     }
 }

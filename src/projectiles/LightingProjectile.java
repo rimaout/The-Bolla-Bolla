@@ -1,10 +1,11 @@
 package projectiles;
 
+import audio.AudioPlayer;
 import entities.Enemy;
-import entities.Entity;
 import entities.Player;
 import main.Game;
 import utilz.Constants.Direction;
+import utilz.Constants.AudioConstants;
 import utilz.Constants.Projectiles.ProjectileType;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ import static utilz.Constants.Projectiles.ProjectileType.LIGHTNING;
 import static utilz.HelpMethods.IsPerimeterWallTile;
 
 public class LightingProjectile extends Projectile{
+    private boolean playSound = true;
 
     public LightingProjectile(float x, float y, ProjectileType type) {
 
@@ -26,6 +28,11 @@ public class LightingProjectile extends Projectile{
     @Override
     protected void draw(Graphics g) {
        g.drawImage(projectileManager.getSprites(LIGHTNING)[1][0],(int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
+
+        if (playSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.LIGHTNING);
+            playSound = false;
+        }
     }
 
     @Override

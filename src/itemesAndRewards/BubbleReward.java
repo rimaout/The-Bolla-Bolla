@@ -1,6 +1,8 @@
 package itemesAndRewards;
 
+import audio.AudioPlayer;
 import entities.Player;
+import utilz.Constants.AudioConstants;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,6 +30,14 @@ public class BubbleReward extends Item{
             g.drawImage(itemImages[GetRewardImageIndex(type)], x, y, W, H, null);
         else
             g.drawImage(deSpawnImages[animationIndex], x, y, W, H, null);
+    }
+
+    @Override
+    public void audioEffects() {
+        if (playSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.REWARD_COLLECTED);
+            playSound = false;
+        }
     }
 
     @Override

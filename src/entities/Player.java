@@ -1,5 +1,6 @@
 package entities;
 
+import audio.AudioPlayer;
 import gameStates.Playing;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
@@ -49,6 +50,9 @@ public class Player extends Entity{
     private int walkPoints = 0;                // crystalRing
     private int bubbleShotPoints = 0;          // rubyRing
 
+    // Sound Variables
+    private boolean playJumpSound, playDeathSound;
+
     public Player(Playing playing) {
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
 
@@ -78,6 +82,16 @@ public class Player extends Entity{
         }
 
         g.drawImage(sprites[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
+
+        if (playJumpSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP);
+            playJumpSound = false;
+        }
+
+        if (playDeathSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH);
+            playDeathSound = false;
+        }
     }
 
     private boolean canAttack() {
@@ -201,6 +215,7 @@ public class Player extends Entity{
         if (jump && !inAir) {
             inAir = true;
             isJumping = true;
+            playJumpSound = true;
             
             if(!IsEntityInsideSolid(hitbox, levelData)) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
@@ -307,6 +322,7 @@ public class Player extends Entity{
             immune = true;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             respawning = true;
+            playDeathSound = true;
             resetMovements();
             resetInAir();
         }
@@ -368,6 +384,9 @@ public class Player extends Entity{
         flipX = 0;
         flipW = 1;
         playerAnimation = IDLE_ANIMATION;
+
+        playJumpSound = false;
+        playDeathSound = false;
 
         if (resetLives)
             lives = 3;

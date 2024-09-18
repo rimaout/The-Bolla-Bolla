@@ -34,7 +34,9 @@ public class Playing extends State implements StateMethods {
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
     private PlayingHud playingHud;
+    private Intro intro;
 
+    private boolean intoRunning = true;
     private boolean paused;
     private boolean gameOver;
     private boolean gameCompleted;
@@ -65,12 +67,16 @@ public class Playing extends State implements StateMethods {
         gameOverOverlay = new GameOverOverlay(this);
         gameCompletedOverlay = new GameCompletedOverlay(this);
         playingHud = new PlayingHud(playerOne, playerTwo);
+        intro = new Intro(this, playerOne);
     }
 
     @Override
     public void update() {
 
-        if (levelCompleted)
+        if (intoRunning)
+            intro.update();
+
+        else if (levelCompleted)
             loadNextLevel();
 
         else if(!paused && !gameOver && !gameCompleted) {
@@ -94,6 +100,11 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void draw(Graphics g) {
+        if (intoRunning) {
+            intro.draw(g);
+            return;
+        }
+
         levelManager.draw(g);
         itemManager.draw(g);
         playingHud.draw(g);
@@ -129,7 +140,8 @@ public class Playing extends State implements StateMethods {
             gameCompleted = true;
     }
 
-    public void resetAll() {
+    public void resetNewGame() {
+        intoRunning = true;
         paused = false;
         levelCompleted = false;
         gameOver = false;
@@ -144,6 +156,11 @@ public class Playing extends State implements StateMethods {
         itemManager.resetAll();
         powerUpManager.resetAll();
         rewardPointsManager.resetAll();
+
+        gameCompletedOverlay.resetNewGame();
+        gameOverOverlay.resetNewGame();
+        pauseOverlay.resetNewGame();
+        intro.resetNewGame();
     }
 
     public void loadNextLevel() {
@@ -250,6 +267,10 @@ public class Playing extends State implements StateMethods {
                     break;
             }
         }
+    }
+
+    public void endIntro() {
+        intoRunning = false;
     }
 
     public void unpauseGame() {

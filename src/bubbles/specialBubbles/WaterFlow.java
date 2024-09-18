@@ -1,5 +1,6 @@
 package bubbles.specialBubbles;
 
+import audio.AudioPlayer;
 import bubbles.playerBubbles.PlayerBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;
@@ -13,8 +14,9 @@ import itemesAndRewards.PowerUpManager;
 import levels.Level;
 import levels.LevelManager;
 import main.Game;
-import utilz.Constants;
+import utilz.Constants.AudioConstants;
 import utilz.Constants.Direction;
+import utilz.Constants;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -48,6 +50,8 @@ public class WaterFlow extends Entity {
 
     private List<Point> lastPositions = new LinkedList<>();
 
+    private boolean playSound = true;
+
     public WaterFlow(float x, float y) {
         super(x, y, W, H);
         this.direction = GetRandomHorizontalDirection();
@@ -76,7 +80,11 @@ public class WaterFlow extends Entity {
             g.drawImage(waterBubbleSprites[1][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), W, H, null);
 
         g2d.setComposite(originalComposite);
-        drawHitbox(g);
+
+        if (playSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.WATER_FLOW);
+            playSound = false;
+        }
     }
 
     public void update() {

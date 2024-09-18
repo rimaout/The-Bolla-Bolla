@@ -1,5 +1,6 @@
 package main;
 
+import audio.AudioPlayer;
 import gameStates.*;
 import gameStates.Menu;
 
@@ -11,8 +12,9 @@ public class Game implements Runnable {
     private GamePanel gamePanel;
     private Thread gameThread;
 
+    private AudioPlayer audioPlayer;
     private Home home;
-    private Intro intro;
+    private Intro introOverlay;
     private Menu menu;
     private Playing playing;
     private LevelTransition levelTransition;
@@ -45,10 +47,10 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
+        audioPlayer = AudioPlayer.getInstance();
         home = new Home(this);
         menu = new Menu(this);
         playing = new Playing(this);
-        intro = new Intro(this);
         levelTransition = new LevelTransition(this);
     }
 
@@ -58,9 +60,6 @@ public class Game implements Runnable {
         switch (GameState.state) {
             case HOME:
                 home.update();
-                break;
-            case INTRO:
-                intro.update();
                 break;
             case MENU:
                 menu.update();
@@ -83,9 +82,6 @@ public class Game implements Runnable {
         switch (GameState.state) {
             case HOME:
                 home.draw(g);
-                break;
-            case INTRO:
-                intro.draw(g);
                 break;
             case MENU:
                 menu.draw(g);

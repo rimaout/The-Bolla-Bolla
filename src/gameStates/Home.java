@@ -16,7 +16,7 @@ import java.util.Random;
 public class Home extends State implements StateMethods {
 
     private BufferedImage logoImg;
-    private int logoX, logoY, logoW, logoH;
+    private float logoX, logoY, logoW, logoH;
 
     private BufferedImage[] twinkleBubbleSprite;
     private List<HomeScreenBackGroundStars> bubbles;
@@ -28,16 +28,16 @@ public class Home extends State implements StateMethods {
         super(game);
         loadLogo();
 
-        nesFont = LoadSave.getNesFont();
+        nesFont = LoadSave.GetNesFont();
         loadTwinkleBubble();
         initializeBubbles();
     }
 
     private void loadLogo() {
         logoImg = LoadSave.GetSprite(LoadSave.GAME_LOGO);
-        logoW = (int) (logoImg.getWidth() * Game.SCALE);
-        logoH = (int) (logoImg.getHeight() * Game.SCALE);
-        logoX = Game.GAME_WIDTH / 2 - logoW / 2;
+        logoW = logoImg.getWidth() * Game.SCALE;
+        logoH = logoImg.getHeight() * Game.SCALE;
+        logoX = (float) Game.GAME_WIDTH / 2 - logoW / 2;
 
         logoY = (int) (- logoImg.getHeight() * Game.SCALE);
     }
@@ -129,7 +129,7 @@ public class Home extends State implements StateMethods {
 
         if (isLogoInPosition)
             if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                GameState.state = GameState.INTRO;
+                GameState.state = GameState.PLAYING;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package gameStates;
 
+import audio.AudioPlayer;
 import entities.Player;
 import levels.Level;
 import levels.LevelManager;
@@ -13,11 +14,11 @@ import static utilz.Constants.PlayerConstants.SPAWN_X;
 import static utilz.Constants.PlayerConstants.SPAWN_Y;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class Intro extends State implements StateMethods {
+public class Intro {
+    private Playing playing;
+    private Player player;
 
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
@@ -31,26 +32,24 @@ public class Intro extends State implements StateMethods {
     private boolean firstUpdate = true;
     private boolean transitionComplete = false;
 
-    private Player player;
     private int playerAnimationTick, playerAnimationIndex;
     private int lapsCompleted = 0;
     private float angle = 0;
 
     private float textY;
 
-    public Intro(Game game) {
-        super(game);
+    public Intro(Playing playing, Player player) {
+        this.playing = playing;
+        this.player = player;
 
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
-        player = game.getPlaying().getPlayerOne();
-        customFont = LoadSave.getNesFont();
+        customFont = LoadSave.GetNesFont();
         loadPlayerTransitionSprites();
 
         level = LevelManager.getInstance().getCurrentLevel();
     }
 
-    @Override
     public void update() {
 
         if (firstUpdate)
@@ -65,10 +64,9 @@ public class Intro extends State implements StateMethods {
         }
 
         if (introState == START_NEW_LEVEL)
-            GameState.state = GameState.PLAYING;
+            playing.endIntro();
     }
 
-    @Override
     public void draw(Graphics g) {
         if (introState == LEVEL_TRANSITION)
             drawLevel(g, level, (int) levelY);
@@ -78,6 +76,7 @@ public class Intro extends State implements StateMethods {
     }
 
     private void firstUpdate(){
+        AudioPlayer.getInstance().playIntroSong(); //TODO:
         player.getHitbox().x = PLAYER_START_X;
         player.getHitbox().y = PLAYER_START_Y;
         textY = TEXT_START_Y;
@@ -216,40 +215,13 @@ public class Intro extends State implements StateMethods {
         playerTransitionSprites[1] = img.getSubimage(31, 0, 31, 34);
     }
 
-    // ---------- Input Methods (not used) ----------
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // Not used
+    public void resetNewGame() {
+        firstUpdate = true;
+        transitionComplete = false;
+        introState = INTRO;
+        lapsCompleted = 0;
+        angle = 0;
+        textY = TEXT_START_Y;
+        levelY = Game.GAME_HEIGHT;
     }
 }

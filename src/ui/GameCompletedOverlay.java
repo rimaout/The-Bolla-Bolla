@@ -1,15 +1,18 @@
 package ui;
 
+import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
-import utilz.LoadSave;
+import utilz.Constants.AudioConstants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
+
+
 
 public class GameCompletedOverlay extends Overlay {
 
@@ -95,14 +98,24 @@ public class GameCompletedOverlay extends Overlay {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             //TODO: Save the high score, game played ++
-            playing.resetAll();
+            playing.resetNewGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
             //TODO: Save the high score, game played ++
-            playing.resetAll();
+            playing.resetNewGame();
             GameState.state = GameState.PLAYING;
         }
+    }
+
+    @Override
+    protected void setAudio() {
+        if (!firstUpdate)
+            return;
+
+        AudioPlayer.getInstance().stopSong();
+        AudioPlayer.getInstance().playSoundEffect(AudioConstants.GAME_COMPLETED);
+        firstUpdate = false;
     }
 }

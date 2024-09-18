@@ -111,6 +111,7 @@ public class ItemManager {
             item.setActive(false);
             item.addPoints(player);
             item.applyEffect(player);
+            item.setPlaySound(true);
             PowerUpManager.getInstance().increaseItemCollectCounter();
         }
     }
@@ -121,6 +122,7 @@ public class ItemManager {
         for (Item i : items) {
             if (i.isActive())
                 i.draw(g);
+            i.audioEffects();
         }
     }
 

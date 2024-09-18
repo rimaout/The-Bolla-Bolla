@@ -1,15 +1,14 @@
 package projectiles;
 
+import audio.AudioPlayer;
 import bubbles.playerBubbles.EmptyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;
-import entities.Entity;
 import entities.Player;
-import levels.LevelManager;
 import utilz.Constants.Direction;
+import utilz.Constants.AudioConstants;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Projectiles.*;
@@ -17,6 +16,7 @@ import static utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 import static utilz.HelpMethods.CanMoveHere;
 
 public class PlayerBubbleProjectile extends Projectile {
+    private boolean playSound = true;
 
     public PlayerBubbleProjectile(float x, float y, Direction direction) {
         super(x, y, direction, PLAYER_BUBBLE);
@@ -26,6 +26,11 @@ public class PlayerBubbleProjectile extends Projectile {
     @Override
     public void draw(Graphics g) {
         g.drawImage(projectileManager.getSprites(PLAYER_BUBBLE)[0][animationIndex], (int) hitbox.x, (int) hitbox.y, W, H, null);
+
+        if (playSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.BUUBBLE_SHOOT);
+            playSound = false;
+        }
     }
 
     @Override
