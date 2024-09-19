@@ -177,13 +177,13 @@ public class Constants {
 
     public static class INTRO {
 
-        public static final float TRANSITION_SPEED = 0.58f * Game.SCALE;
+        public static final float TRANSITION_SPEED = 0.53f * Game.SCALE;
         public static final float TEXT_START_Y = 20 * Game.SCALE;
         public static final float PLAYER_START_X = 9 * Game.TILES_SIZE;
         public static final float PLAYER_START_Y = 10 * Game.TILES_SIZE;
-        public static final int RADIUS = 70;
+        public static final int RADIUS = 75;
         public static final int TOTAL_LAPS = 3;
-        public static final float ANGLE_INCREMENT = 0.022f;
+        public static final float ANGLE_INCREMENT = 0.02f;
         public enum IntroState {
             INTRO, LEVEL_TRANSITION, START_NEW_LEVEL
         }
@@ -489,8 +489,8 @@ public class Constants {
     public static class HurryUpManager {
         public static final int HURRY_IMG_W = (int) (40 * Game.SCALE * 1.3);
         public static final int HURRY_IMG_H = (int) (11 * Game.SCALE * 1.3);
-        public static final int HURRY_IMG_X = (int) (Game.GAME_WIDTH / 2 - 40 * Game.SCALE * 1.3 / 2);
-        public static final int HURRY_IMG_Y = Game.GAME_HEIGHT - 5 * Game.SCALE;
+        public static final int STARTING_HURRY_IMG_X = (int) (Game.GAME_WIDTH / 2 - 40 * Game.SCALE * 1.3 / 2);
+        public static final int STARTING_HURRY_IMG_Y = Game.GAME_HEIGHT - 5 * Game.SCALE;
         public static final float HURRY_IMG_SPEED = 0.3f * Game.SCALE;
 
         public static final int START_ANIMATION_TIMER = 17000;
@@ -498,7 +498,9 @@ public class Constants {
     }
 
     public static class BubbleGenerator {
+
         public static final int BUBBLE_GENERATION_INTERVAL = 4000;
+        public static final int INITIAL_BUBBLE_GENERATIO_INTERVAL = 2000;
         public static final int MAX_SPECIAL_BUBBLES = 7;
 
         public static final int LEFT_GENERATOR_X = 10 * Game.TILES_SIZE;

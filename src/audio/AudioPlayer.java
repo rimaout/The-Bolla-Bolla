@@ -69,8 +69,7 @@ public class AudioPlayer {
     }
 
     public void stopSong() {
-        if (songs[currentSongID].isActive())
-            songs[currentSongID].stop();
+        songs[currentSongID].stop();
     }
 
     public void startSong() {

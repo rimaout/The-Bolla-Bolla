@@ -13,6 +13,7 @@ import static utilz.Constants.GRAVITY;
 import static utilz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
+    private boolean firstUpdate = true;
 
     // Fly Variables
     private int flyDirectionChangeCounter = 0;
@@ -22,7 +23,6 @@ public class ZenChan extends Enemy {
 
     // Player Info Update variables
     private int playerUpdateTimer;
-    private long lastTimerUpdate;
 
     // Jump Variables
     private int jumpDistance = 0;
@@ -57,15 +57,11 @@ public class ZenChan extends Enemy {
         if (!IsEntityOnFloor(hitbox, LevelManager.getInstance().getCurrentLevel().getLevelData()))
             goDown = true;
 
-        lastTimerUpdate = System.currentTimeMillis();
         firstUpdate = false;
     }
 
     private void updateTimers() {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        playerUpdateTimer -= timeDelta;
+        playerUpdateTimer -= (int) timer.getTimeDelta();
     }
 
     private void updateMove() {
@@ -370,7 +366,6 @@ public class ZenChan extends Enemy {
         flyStartTime = 0;
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
-        lastTimerUpdate = 0;
     }
 
     @Override
@@ -386,7 +381,6 @@ public class ZenChan extends Enemy {
         flyStartTime = 0;
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
-        lastTimerUpdate = 0;
     }
 
     @Override

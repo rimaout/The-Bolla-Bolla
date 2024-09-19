@@ -2,6 +2,7 @@ package itemesAndRewards;
 
 import entities.Player;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,16 +16,14 @@ import static utilz.Constants.PointsManager.PointsType.*;
 public class RewardPointsManager {
     private static RewardPointsManager instance;
     private Player player;
+    private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private BufferedImage[][] smallPointsSprites;
     private BufferedImage[] bigPointsSprites;
 
     private ArrayList<Points> pointsToDraw;
-
-    private boolean firstUpdate = true;
     private int consecutivePops;
     private int consecutivePopsTimer;
-    private long lastTimerUpdate;
 
     private RewardPointsManager(Player player) {
         this.player = player;
@@ -45,10 +44,6 @@ public class RewardPointsManager {
     }
 
     public void update() {
-        if (firstUpdate) {
-            firstUpdate = false;
-            lastTimerUpdate = System.currentTimeMillis();
-        }
 
         updateTimer();
         updateChainReactionReward();
@@ -60,25 +55,13 @@ public class RewardPointsManager {
 
     public void draw(Graphics2D g) {
         for (Points p : pointsToDraw) {
-            if (p.isActive()) {
-
-                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, p.alpha)); // Set transparency
-
-                if (p.type == SMALL )
-                    g.drawImage(getSmallPointsImage(p.value), (int) p.x, (int) p.y, SMALL_W, SMALL_H, null);
-                else if (p.type == BIG)
-                    g.drawImage(getBigPointsImage(p.value), (int) p.x, (int) p.y, BIG_W, BIG_H, null);
-
-                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)); // Reset transparency
-            }
+            if (p.isActive())
+                p.draw(g);
         }
     }
 
     private void updateTimer() {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        consecutivePopsTimer -= timeDelta;
+        consecutivePopsTimer -= (int) timer.getTimeDelta();
     }
 
     public void addSmallPoints(int value) {
@@ -107,8 +90,7 @@ public class RewardPointsManager {
         consecutivePopsTimer = CONSECUTIVE_POP_DELAY;
     }
 
-    private Image getSmallPointsImage(int value) {
-
+    public BufferedImage getSmallPointsImage(int value) {
         return switch (value) {
             case 100 -> smallPointsSprites[0][0];
             case 200 -> smallPointsSprites[0][1];
@@ -128,11 +110,11 @@ public class RewardPointsManager {
             case 7000 -> smallPointsSprites[1][6];
             case 8000 -> smallPointsSprites[1][7];
             case 9000 -> smallPointsSprites[1][8];
-            default -> smallPointsSprites[10][10]; //TODO: on this case, the game should crash (did this on purpose to see the values are correct)
+            default -> throw new IllegalStateException("Unexpected value: " + value);
         };
     }
 
-    private Image getBigPointsImage(int value) {
+    public BufferedImage getBigPointsImage(int value) {
         return switch (value) {
             case 1000 -> bigPointsSprites[0];
             case 2000 -> bigPointsSprites[1];
@@ -144,7 +126,7 @@ public class RewardPointsManager {
             case 16000 -> bigPointsSprites[7];
             case 32000 -> bigPointsSprites[8];
             case 64000 -> bigPointsSprites[9];
-            default -> bigPointsSprites[20]; //TODO: on this case, the game should crash (did this on purpose to see the values are correct)
+            default -> throw new IllegalStateException("Unexpected value: " + value);
         };
     }
 
@@ -163,12 +145,12 @@ public class RewardPointsManager {
         bigPointsSprites = new BufferedImage[10];
         for (int i = 0; i < bigPointsSprites.length; i++)
             bigPointsSprites[i] = imgBig.getSubimage(i * BIG_DEFAULT_W, 0, BIG_DEFAULT_W, BIG_DEFAULT_H);
-
     }
 
-    public void resetAll() {
+    public void newPlayReset() {
         pointsToDraw.clear();
         consecutivePops = 0;
         consecutivePopsTimer = 0;
+
     }
 }

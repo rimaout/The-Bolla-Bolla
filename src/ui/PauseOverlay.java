@@ -84,10 +84,12 @@ public class PauseOverlay extends Overlay {
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playing.resetNewGame();
+            playing.newPlayReset();
+            playing.restartGame();
             GameState.state = GameState.MENU;
         }
 

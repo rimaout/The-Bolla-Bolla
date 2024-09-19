@@ -2,6 +2,7 @@ package entities;
 
 import levels.LevelManager;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
 
 import static utilz.Constants.EnemyConstants.*;
 
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 
 public class EnemyManager {
     private static EnemyManager instance;
+    private PlayingTimer timer = PlayingTimer.getInstance();
 
     private Player player;
-    private int[][] levelData;
 
     private BufferedImage[][] zenChanSprites;
     private BufferedImage[][] maitaSprites;
@@ -32,14 +33,9 @@ public class EnemyManager {
     private boolean playerInvincibleMode = false;
     private int invincibleTimer;
 
-    private boolean firstUpdate = true;
-    private long lastTimerUpdate;
-
     private EnemyManager(Player player) {
         this.player = player;
         loadSprites();
-        loadEnemies();
-        loadLevelData();
     }
 
     public static EnemyManager getInstance(Player player) {
@@ -60,16 +56,9 @@ public class EnemyManager {
     }
 
     private void timersUpdate() {
-        if (firstUpdate) {
-            firstUpdate = false;
-            lastTimerUpdate = System.currentTimeMillis();
-        }
 
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        freezeTimer -= (int) timeDelta;
-        invincibleTimer -= (int) timeDelta;
+        freezeTimer -= (int) timer.getTimeDelta();
+        invincibleTimer -= (int) timer.getTimeDelta();
 
         if (freezeTimer <= 0)
             enemiesFreeze = false;
@@ -78,7 +67,7 @@ public class EnemyManager {
             playerInvincibleMode = false;
 
         if (allEnemiesDead)
-            allEnemiesDeadChronometer += (int) timeDelta;
+            allEnemiesDeadChronometer += (int) timer.getTimeDelta();
     }
 
     private void enemiesUpdate() {
@@ -144,10 +133,6 @@ public class EnemyManager {
         HurryUpManager.getInstance().restart();
     }
 
-    public void loadLevelData() {
-        levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
-    }
-
     public void loadEnemies() {
         enemies = LevelManager.getInstance().getCurrentLevel().getEnemies();
     }
@@ -173,19 +158,20 @@ public class EnemyManager {
                 skelMonstaSprites[j][i] = temp.getSubimage(i * ENEMY_DEFAULT_W, j * ENEMY_DEFAULT_H, ENEMY_DEFAULT_W, ENEMY_DEFAULT_H);
     }
 
-    public void resetAll() {
+    public void newLevelReset() {
         enemies.clear();
 
         allEnemiesReachedSpawn = false;
         allEnemiesDead = false;
         allEnemiesDeadChronometer = 0;
-
-        freezeTimer = 0;
         enemiesFreeze = false;
-        invincibleTimer = 0;
+        freezeTimer = 0;
         playerInvincibleMode = false;
+        invincibleTimer = 0;
+    }
 
-        firstUpdate = true;
+    public void newPlayReset() {
+        newLevelReset();
     }
 
     public BufferedImage[][] getEnemySprite(EnemyType enemyType) {
@@ -194,10 +180,6 @@ public class EnemyManager {
             case MAITA -> maitaSprites;
             case SKEL_MONSTA -> skelMonstaSprites;
         };
-    }
-
-    public int getEnemyCount() {
-        return enemies.size();
     }
 
     public int getActiveEnemiesCount() {

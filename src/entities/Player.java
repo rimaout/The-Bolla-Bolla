@@ -8,6 +8,7 @@ import main.Game;
 import projectiles.PlayerBubbleProjectile;
 import projectiles.ProjectileManager;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,8 +20,8 @@ import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
 public class Player extends Entity{
-    private int[][] levelData;
-    private boolean isFirstUpdate = true;
+    private final LevelManager levelManager = LevelManager.getInstance();
+    private final PlayingTimer timer = PlayingTimer.getInstance();
 
     // Animation values and variables
     private BufferedImage[][] sprites;
@@ -39,7 +40,6 @@ public class Player extends Entity{
     private int flipW = 1;
 
     // Timers
-    private long lastTimerUpdate;
     private int immuneTimer;
     private int attackTimer = 150;
 
@@ -162,21 +162,14 @@ public class Player extends Entity{
     }
 
     private void updateTimers() {
-        if (isFirstUpdate) {
-            isFirstUpdate = false;
-            lastTimerUpdate = System.currentTimeMillis();
-        }
-
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
 
         if (immune) {
-            immuneTimer -= timeDelta;
+            immuneTimer -= (int) timer.getTimeDelta();
             if (immuneTimer <= 0)
                 immune = false;
         }
 
-        attackTimer -= timeDelta;
+        attackTimer -= (int) timer.getTimeDelta();
         if (attackTimer > 0)
                 attacking = false;
 
@@ -199,7 +192,7 @@ public class Player extends Entity{
             pacManEffect();
 
         // MOVE
-        if (IsEntityInsideSolid(hitbox, levelData))
+        if (IsEntityInsideSolid(hitbox, levelManager.getLevelData()))
             handleMovementInsideSolid();
 
         else if (inAir)
@@ -217,7 +210,7 @@ public class Player extends Entity{
             isJumping = true;
             playJumpSound = true;
             
-            if(!IsEntityInsideSolid(hitbox, levelData)) {  // can't jump if is inside solid
+            if(!IsEntityInsideSolid(hitbox, levelManager.getLevelData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
                 PowerUpManager.getInstance().increaseJumpCounter();
                 addPoints(jumpPoints);  //emeraldRing powerUp
@@ -241,7 +234,7 @@ public class Player extends Entity{
         }
 
         if (!inAir)
-            if (!IsEntityOnFloor(hitbox, levelData))
+            if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
                 inAir = true;
     }
 
@@ -253,7 +246,7 @@ public class Player extends Entity{
     }
 
     private void handleOnFloorMovement(){
-        updateXPos(xSpeed, levelData);
+        updateXPos(xSpeed, levelManager.getLevelData());
         addPoints(walkPoints);  // crystalRing powerUp
         moving = true;          // Activate running animation
     }
@@ -263,50 +256,59 @@ public class Player extends Entity{
         if (airSpeed < 0) {
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed, levelData);
+            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
         }
         // FALLING
         else {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
             isJumping = false;
-            conpenetrationSafeUpdateXPos(xSpeed, levelData);
+            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
         }
     }
+
+    public void jumpOnBubble() {
+        airSpeed = JUMP_SPEED;
+        inAir = true;
+        isJumping = true;
+        playJumpSound = true;
+        PowerUpManager.getInstance().increaseJumpCounter();
+    }
+
     private void jumping(){
 
         // Going up
         if (airSpeed < 0){
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed, levelData);
+            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
         }
 
         // Going down
         else if (airSpeed <= -JUMP_SPEED){
-            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
-                updateXPos(xSpeed, levelData);
+                updateXPos(xSpeed, levelManager.getLevelData());
             } else {
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
                 resetInAir();
-                updateXPos(xSpeed, levelData);
+                updateXPos(xSpeed, levelManager.getLevelData());
             }
         } else {
             isJumping = false;
-            updateXPos(xSpeed, levelData);
+            updateXPos(xSpeed, levelManager.getLevelData());
         }
     }
 
     private void falling(){
-        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelData)) {
+        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed = FALL_SPEED;
-                updateXPos(xSpeed / 3, levelData);
+                updateXPos(xSpeed / 3, levelManager.getLevelData());
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelData);
-            updateXPos(xSpeed / 3, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
+            updateXPos(xSpeed / 3, levelManager.getLevelData());
             resetInAir();
         }
     }
@@ -338,7 +340,7 @@ public class Player extends Entity{
             hitbox.y = SPAWN_Y;
             lives--;
 
-            PowerUpManager.getInstance().resetAll();    // Reset all powerUps when player dies
+            PowerUpManager.getInstance().reset();    // Reset all powerUps when player dies
         }
     }
 
@@ -350,14 +352,6 @@ public class Player extends Entity{
             for (int i = 0; i < sprites[j].length; i++)
                 sprites[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
-
-    public void loadLevelData() {
-        this.levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
-
-        if (!IsEntityOnFloor(hitbox, levelData))
-            inAir = true;
-    }
-
 
     private void resetInAir() {
         inAir = false;
@@ -372,10 +366,20 @@ public class Player extends Entity{
         attacking = false;
     }
 
-    public void resetAll(Boolean resetLives, Boolean resetPoints) {
+    private void resetPowerUps() {
+        speedMultiplier = 1;
+        bubbleCadenceMultiplier = 1;
+        jumpPoints = 0;
+        walkPoints = 0;
+        bubbleShotPoints = 0;
+    }
+
+    public void reset(Boolean resetLives, Boolean resetPoints) {
         resetMovements();
         resetInAir();
-        isFirstUpdate = true;
+        resetPowerUps();
+
+        active = true;
         immune = false;
         immuneTimer = 0;
         attackTimer = 100;
@@ -394,15 +398,8 @@ public class Player extends Entity{
         if (resetPoints)
             points = 0;
 
-        if (!IsEntityOnFloor(hitbox, levelData))
+        if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
             inAir = true;
-    }
-
-    public void jumpOnBubble() {
-        airSpeed = JUMP_SPEED;
-        inAir = true;
-        isJumping = true;
-        PowerUpManager.getInstance().increaseJumpCounter();
     }
 
     public void setAttacking(boolean attacking) {
@@ -419,10 +416,6 @@ public class Player extends Entity{
 
     public void setJump(boolean jump) {
         this.jump = jump;
-    }
-
-    public void addLive() {
-        lives++;
     }
 
     public void setInAir(boolean inAir) {

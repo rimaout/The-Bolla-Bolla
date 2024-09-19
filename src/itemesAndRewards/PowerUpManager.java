@@ -131,7 +131,11 @@ public class PowerUpManager{
         return powerUps.get((int) (Math.random() * powerUps.size()));
     }
 
-    public void resetAll() {
+    public void newPlayReset() {
+        reset();
+    }
+
+    public void reset() {
         greenCandy = false;
         blueCandy = false;
         redCandy = false;

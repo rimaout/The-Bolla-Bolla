@@ -1,7 +1,5 @@
 package bubbles.specialBubbles;
 
-import bubbles.playerBubbles.PlayerBubblesManager;
-import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import utilz.LoadSave;
@@ -27,16 +25,12 @@ public class SpecialBubbleManager {
 
     private BubbleGenerator bubbleGenerator;
 
-    EnemyManager enemyManager = EnemyManager.getInstance();
-    PlayerBubblesManager playerBubbleManager = PlayerBubblesManager.getInstance();
-
     private SpecialBubbleManager(Player player) {
         this.player = player;
         bubbles = new LinkedList<>();
         waterFlows = new LinkedList<>();
 
         loadBubbleSprites();
-        loadBubbleGenerator();
     }
 
     public static SpecialBubbleManager getInstance(Player player) {
@@ -96,11 +90,13 @@ public class SpecialBubbleManager {
         lightningBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
     }
 
-    public void resetAll() {
+    public void newLevelReset() {
         bubbles.clear();
         waterFlows.clear();
-        loadBubbleGenerator();
-        player.setActive(true);
+    }
+
+    public void newPlayReset() {
+        newLevelReset();
     }
 
     public void addBubble(SpecialBubble bubble) {

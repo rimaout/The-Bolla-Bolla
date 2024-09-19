@@ -20,9 +20,7 @@ public class LightingProjectile extends Projectile{
     private boolean playSound = true;
 
     public LightingProjectile(float x, float y, ProjectileType type) {
-
-        Direction direction = CalculateLightingDirection(x);
-        super(x, y, direction, type);
+        super(x, y, CalculateLightingDirection(x), type);
     }
 
     @Override

@@ -12,6 +12,7 @@ import levels.LevelManager;
 import main.Game;
 import projectiles.ProjectileManager;
 import ui.*;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,7 @@ public class Playing extends State implements StateMethods {
     private Player playerOne;
     private final Player playerTwo = null;
 
+    private PlayingTimer playingTimer;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
     private HurryUpManager hurryUpManager;
@@ -45,14 +47,14 @@ public class Playing extends State implements StateMethods {
     public Playing(Game game) {
         super(game);
         initClasses();
-        loadStartLevel();
+        loadFirstLevel();
     }
 
     public void initClasses() {
+        playingTimer = PlayingTimer.getInstance();
         levelManager = LevelManager.getInstance(this);
 
         playerOne = new Player(this);
-        playerOne.loadLevelData();
 
         enemyManager = EnemyManager.getInstance(playerOne);
         hurryUpManager = HurryUpManager.getInstance();
@@ -73,13 +75,23 @@ public class Playing extends State implements StateMethods {
     @Override
     public void update() {
 
-        if (intoRunning)
-            intro.update();
 
-        else if (levelCompleted)
+        updateBooleans();
+
+        if (paused)
+            playingTimer.reset();
+        else
+            playingTimer.update();
+
+        if (levelCompleted)
             loadNextLevel();
 
         else if(!paused && !gameOver && !gameCompleted) {
+
+            if (intoRunning) {
+                intro.update();
+                return;
+            }
 
             if (playerOne.isActive())
                 playerOne.update();
@@ -94,29 +106,28 @@ public class Playing extends State implements StateMethods {
             rewardPointsManager.update();
             powerUpManager.update();
         }
-
-        updateBooleans();
     }
 
     @Override
     public void draw(Graphics g) {
+
         if (intoRunning) {
             intro.draw(g);
-            return;
         }
+        else {
+            levelManager.draw(g);
+            itemManager.draw(g);
+            playingHud.draw(g);
+            enemyManager.draw(g);
+            hurryUpManager.draw(g);
+            playerBubblesManager.draw(g);
+            specialBubbleManager.draw(g);
+            projectileManager.draw(g);
+            rewardPointsManager.draw((Graphics2D) g);
 
-        levelManager.draw(g);
-        itemManager.draw(g);
-        playingHud.draw(g);
-        enemyManager.draw(g);
-        hurryUpManager.draw(g);
-        playerBubblesManager.draw(g);
-        specialBubbleManager.draw(g);
-        projectileManager.draw(g);
-        rewardPointsManager.draw((Graphics2D) g);
-
-        if (playerOne.isActive())
-            playerOne.draw((Graphics2D) g);
+            if (playerOne.isActive())
+                playerOne.draw((Graphics2D) g);
+        }
 
         if (paused)
             pauseOverlay.draw(g);
@@ -126,6 +137,7 @@ public class Playing extends State implements StateMethods {
 
         else if (gameCompleted)
             gameCompletedOverlay.draw(g);
+
     }
 
 
@@ -140,39 +152,51 @@ public class Playing extends State implements StateMethods {
             gameCompleted = true;
     }
 
-    public void resetNewGame() {
+    public void newPlayReset() {
+
+        // reset booleans
         intoRunning = true;
-        paused = false;
         levelCompleted = false;
+
+        // reset classes
+        levelManager.newPlayReset();
+        enemyManager.newPlayReset();
+        hurryUpManager.newPlayReset();
+        projectileManager.newPlayReset();
+        playerBubblesManager.newPlayReset();
+        specialBubbleManager.newPlayReset();
+        itemManager.newPlayReset();
+        powerUpManager.newPlayReset();
+        rewardPointsManager.newPlayReset();
+
+        gameCompletedOverlay.newPlayReset();
+        gameOverOverlay.newPlayReset();
+        pauseOverlay.newPlayReset();
+        intro.newPlayReset();
+
+        playerOne.reset(true, true);
+
+        loadFirstLevel();
+    }
+
+    public void restartGame() {
+        // used at the end of game over or game completed
+
+        paused = false;
         gameOver = false;
         gameCompleted = false;
-        playerOne.resetAll(true, true);
-        levelManager.resetAll();
-        enemyManager.resetAll();
-        hurryUpManager.resetAll();
-        projectileManager.resetNewGame();
-        playerBubblesManager.resetAll();
-        specialBubbleManager.resetAll();
-        itemManager.resetAll();
-        powerUpManager.resetAll();
-        rewardPointsManager.resetAll();
-
-        gameCompletedOverlay.resetNewGame();
-        gameOverOverlay.resetNewGame();
-        pauseOverlay.resetNewGame();
-        intro.resetNewGame();
     }
 
     public void loadNextLevel() {
         levelManager.loadNextLevel();
-        enemyManager.resetAll();
-        hurryUpManager.resetAll();
-        playerBubblesManager.resetAll();
-        specialBubbleManager.resetAll();
-        projectileManager.resetNewLevel();
-        playerOne.resetAll(false, false);
-        itemManager.resetAll();
-        rewardPointsManager.resetAll();
+        enemyManager.newLevelReset();
+        hurryUpManager.newLevelReset();
+        playerBubblesManager.newLevelReset();
+        specialBubbleManager.newLevelReset();
+        projectileManager.newLevelReset();
+        playerOne.reset(false, false);
+        itemManager.newPlayReset();
+        rewardPointsManager.newPlayReset();
 
         levelCompleted = false;
     }
@@ -180,14 +204,13 @@ public class Playing extends State implements StateMethods {
     public void startNewLevel() {
         levelManager.increaseLevelIndex();
         enemyManager.loadEnemies();
-        itemManager.resetForNewLevel();
+        itemManager.newLevelReset();
         specialBubbleManager.loadBubbleGenerator();
-        playerOne.loadLevelData();
     }
 
-    private void loadStartLevel() {
+    private void loadFirstLevel() {
         enemyManager.loadEnemies();
-        enemyManager.loadLevelData();
+        specialBubbleManager.loadBubbleGenerator();
     }
 
     @Override

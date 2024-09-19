@@ -17,6 +17,7 @@ import main.Game;
 import utilz.Constants.AudioConstants;
 import utilz.Constants.Direction;
 import utilz.Constants;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -42,7 +43,7 @@ public class WaterFlow extends Entity {
     private Player capturedPlayer;
     private int capturedEnemiesCounter;
 
-    private long lastTimerUpdate;
+    private PlayingTimer timer = PlayingTimer.getInstance();
     private int addWaterDropTimer = ADD_WATER_DROP_INTERVAL;
 
     private long transparencyTimer = 0;
@@ -110,23 +111,17 @@ public class WaterFlow extends Entity {
     }
 
     private void firstUpdate() {
-        lastTimerUpdate = System.currentTimeMillis();
+        //  get starting position (if the water flow is inside a solid tile, move it up)
 
-        //  get starting position
-        if (IsEntityInsideSolid(hitbox, level.getLevelData())) {
+        if (IsEntityInsideSolid(hitbox, level.getLevelData()))
             hitbox.y += 1;
-        }
-        else {
-            lastTimerUpdate = System.currentTimeMillis();
+        else
             firstUpdate = false;
-        }
     }
 
     public void timersUpdate() {
 
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-        addWaterDropTimer -= (int) timeDelta;
+        addWaterDropTimer -= (int) timer.getTimeDelta(); ;
 
         // Update the transparency timer
         long currentTime = System.currentTimeMillis();
@@ -201,7 +196,7 @@ public class WaterFlow extends Entity {
     private void spawnPlayer() {
         // spawn player at the top of the screen
         capturedPlayer.setActive(true);
-        capturedPlayer.resetAll(false, false);
+        capturedPlayer.reset(false, false);
         capturedPlayer.setInAir(true);
         capturedPlayer.getHitbox().y = Game.TILES_IN_HEIGHT + 1;
     }

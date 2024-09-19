@@ -24,9 +24,9 @@ public class Maita extends Enemy {
     // Player Info Update variables
     private int playerUpdateTimer;
     private int fireBallTimer;
-    private long lastTimerUpdate;
 
     private boolean fireBallReady = false;
+    private boolean firstUpdate = true;
 
     // Jump Variables
     private int jumpDistance = 0;
@@ -63,19 +63,15 @@ public class Maita extends Enemy {
         if (!IsEntityOnFloor(hitbox, LevelManager.getInstance().getCurrentLevel().getLevelData()))
             goDown = true;
 
-        lastTimerUpdate = System.currentTimeMillis();
         fireBallTimer = FIREBALL_INITIAL_TIMER;
         firstUpdate = false;
     }
 
     private void updateTimers(Player player) {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        playerUpdateTimer -= timeDelta;
+        playerUpdateTimer -= (int) timer.getTimeDelta();
 
         if (player.getTileY() == getTileY())
-            fireBallTimer -= timeDelta;
+            fireBallTimer -= (int) timer.getTimeDelta();
 
         if (fireBallTimer <= 0)
             fireBallReady = true;
@@ -395,9 +391,10 @@ public class Maita extends Enemy {
         flyStartTime = 0;
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
-        lastTimerUpdate = 0;
         fireBallTimer = FIREBALL_INITIAL_TIMER;
         fireBallReady = false;
+
+        firstUpdate = true;
     }
 
     @Override
@@ -413,7 +410,6 @@ public class Maita extends Enemy {
         flyStartTime = 0;
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
-        lastTimerUpdate = 0;
     }
 
     @Override

@@ -23,8 +23,6 @@ public abstract class PlayerBubble extends Bubble {
 
     @Override
     public void update() {
-        if (isFirstUpdate)
-            firstUpdate();
 
         updateTimers();
         updateAnimationTick();
@@ -70,27 +68,16 @@ public abstract class PlayerBubble extends Bubble {
         }
     }
 
-    protected void firstUpdate() {
-        isFirstUpdate = false;
-
-        normalTimer = NORMAL_TIMER;
-        redTimer = RED_TIMER;
-        blinkingTimer = BLINKING_TIMER;
-        lastTimerUpdate = System.currentTimeMillis();
-    }
-
     private void updateTimers() {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
 
         if (state == NORMAL)
-            normalTimer -= timeDelta;
+            normalTimer -= (int) timer.getTimeDelta();
 
         if (state == RED)
-            redTimer -= timeDelta;
+            redTimer -= (int) timer.getTimeDelta();
 
         if (state == BLINKING)
-            blinkingTimer -= timeDelta;
+            blinkingTimer -= (int) timer.getTimeDelta();
     }
 
     private void setState() {

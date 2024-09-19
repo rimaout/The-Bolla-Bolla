@@ -2,19 +2,25 @@ package itemesAndRewards;
 
 import main.Game;
 import utilz.Constants.PointsManager.PointsType;
+import utilz.PlayingTimer;
+
+import java.awt.*;
+
+import static utilz.Constants.PointsManager.*;
+import static utilz.Constants.PointsManager.BIG_H;
+import static utilz.Constants.PointsManager.PointsType.SMALL;
 
 public class Points {
-    public int value;
-    public float x;
-    public float y;
-    public PointsType type;
+    private RewardPointsManager rewardPointsManager = RewardPointsManager.getInstance();
+    private PlayingTimer timer = PlayingTimer.getInstance();
 
-    public int drawTime = 1200;
-    private long lastTimerUpdate;
+    private int value;
+    private float x;
+    private float y;
+    private PointsType type;
 
-    public float alpha = 1.0f; // Initial alpha value (for transparency)
-
-    private boolean firstUpdate = true;
+    private int drawTime = 1200;
+    private float alpha = 1.0f; // Initial alpha value (for transparency)
     private boolean active = true;
 
     public Points(int value, float x, float y, PointsType type) {
@@ -24,27 +30,29 @@ public class Points {
         this.type = type;
     }
 
-    public void update() {
-        if (firstUpdate)
-            firstUpdate();
+    public void draw(Graphics2D g) {
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)); // Set transparency
 
+        if ( type == SMALL )
+            g.drawImage(rewardPointsManager.getSmallPointsImage(value), (int) x, (int) y, SMALL_W, SMALL_H, null);
+        else
+            g.drawImage(rewardPointsManager.getBigPointsImage(value), (int) x, (int) y, BIG_W, BIG_H, null);
+
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)); // Reset transparency
+    }
+
+    public void update() {
        updateTimers();
        move();
        fade();
     }
 
-    private void firstUpdate() {
-        lastTimerUpdate = System.currentTimeMillis();
-        firstUpdate = false;
-    }
-
     private void updateTimers() {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-        drawTime -= (int) timeDelta;
+        drawTime -= (int) timer.getTimeDelta();
 
-        if (drawTime <= 0)
+        if (drawTime <= 0) {
             active = false;
+        }
     }
 
     private void move() {

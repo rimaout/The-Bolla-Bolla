@@ -19,7 +19,7 @@ public class BubbleReward extends Item{
         super(x, y);
         this.type = type;
 
-        itemImages = ItemManager.getInstance().getBubbleRewardImages();
+        itemImages = ItemManager.getInstance().getBubbleRewardImages(); //TODO: use directly from ItemManager LIGHT
         deSpawnImages = ItemManager.getInstance().getDeSpawnImages();
     }
 

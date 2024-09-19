@@ -139,10 +139,14 @@ public class PlayerBubblesManager {
                 playerBubbleSprites[j][i] = img.getSubimage(i * DEFAULT_W, j*DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
-    public void resetAll() {
+    public void newLevelReset() {
         bubbles = new LinkedList<>();
         popTimer = 0;
         lastTimerUpdate = 0;
+    }
+
+    public void newPlayReset() {
+        newLevelReset();
     }
 
     public void addBubble(PlayerBubble bubble) {

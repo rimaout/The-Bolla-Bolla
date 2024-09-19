@@ -19,24 +19,22 @@ import java.awt.image.BufferedImage;
 public class Intro {
     private Playing playing;
     private Player player;
+    Level level;
 
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
     private BufferedImage[] playerTransitionSprites;
     private Font customFont;
 
-    Level level;
+    private boolean firstUpdate = true;
+    private IntroState introState = INTRO;
+    private float textY = TEXT_START_Y;
     float levelY = Game.GAME_HEIGHT;
 
-    private IntroState introState = INTRO;
-    private boolean firstUpdate = true;
-    private boolean transitionComplete = false;
-
+    private boolean transitionComplete;
     private int playerAnimationTick, playerAnimationIndex;
-    private int lapsCompleted = 0;
-    private float angle = 0;
-
-    private float textY;
+    private int lapsCompleted;
+    private float angle;
 
     public Intro(Playing playing, Player player) {
         this.playing = playing;
@@ -76,10 +74,10 @@ public class Intro {
     }
 
     private void firstUpdate(){
-        AudioPlayer.getInstance().playIntroSong(); //TODO:
+        AudioPlayer.getInstance().playIntroSong(); //TODO: Move in view when MVC is implemented
         player.getHitbox().x = PLAYER_START_X;
         player.getHitbox().y = PLAYER_START_Y;
-        textY = TEXT_START_Y;
+
         firstUpdate = false;
     }
 
@@ -215,13 +213,16 @@ public class Intro {
         playerTransitionSprites[1] = img.getSubimage(31, 0, 31, 34);
     }
 
-    public void resetNewGame() {
-        firstUpdate = true;
-        transitionComplete = false;
+    public void newPlayReset() {
         introState = INTRO;
+        transitionComplete = false;
+        playerAnimationTick = 0;
+        playerAnimationIndex = 0;
         lapsCompleted = 0;
         angle = 0;
         textY = TEXT_START_Y;
         levelY = Game.GAME_HEIGHT;
+
+        firstUpdate = true;
     }
 }

@@ -1,6 +1,7 @@
 package itemesAndRewards;
 
 import entities.Player;
+import utilz.PlayingTimer;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Items.*;
@@ -9,16 +10,15 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Item {
+    private final PlayingTimer timer = PlayingTimer.getInstance();
+
     protected int x, y;
     protected Rectangle2D.Float hitbox;
     protected int animationTick, animationIndex; // Only for de-spawning animation
 
-    protected long lastTimerUpdate = System.currentTimeMillis();
     protected int deSpawnTimer = DE_SPAWN_TIMER;
-
     protected boolean deSpawning = false;
     protected boolean active = true;
-
     protected boolean playSound = false;
 
     public Item(int x, int y){
@@ -28,17 +28,17 @@ public abstract class Item {
         initHitbox();
     }
 
+    public abstract void draw(Graphics g);
+    public abstract void audioEffects();
+    public abstract void addPoints(Player player);
+    public abstract void applyEffect(Player player);
+
     protected void update(){
         updateTimers();
 
         if (deSpawning)
             updateAnimationTick();
     }
-
-    public abstract void draw(Graphics g);
-    public abstract void audioEffects();
-    public abstract void addPoints(Player player);
-    public abstract void applyEffect(Player player);
 
     protected void updateAnimationTick() {
         animationTick++;
@@ -52,10 +52,7 @@ public abstract class Item {
     }
 
     private void updateTimers() {
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        deSpawnTimer -= timeDelta;
+        deSpawnTimer -= (int) timer.getTimeDelta();
 
         if (deSpawnTimer <= 0)
             deSpawning = true;

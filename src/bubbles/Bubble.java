@@ -4,6 +4,7 @@ import entities.Entity;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -17,16 +18,17 @@ import static utilz.HelpMethods.IsEntityInsideMap;
 
 public abstract class Bubble extends Entity {
 
+    protected PlayingTimer timer = PlayingTimer.getInstance();
     protected Rectangle2D.Float internalCollisionBox;
     protected Ellipse2D.Float externalCollisionBox;
 
-    protected boolean isFirstUpdate = true;
     protected boolean active = true;
     protected boolean popped = false;
     protected int state = NORMAL;
     protected int previousState = NORMAL;
-    protected int normalTimer, redTimer, blinkingTimer;
-    protected long lastTimerUpdate;
+    protected int normalTimer = NORMAL_TIMER;
+    protected int redTimer = RED_TIMER;
+    protected int blinkingTimer = BLINKING_TIMER;
 
     // Movement variables
     protected float xSpeed, ySpeed;

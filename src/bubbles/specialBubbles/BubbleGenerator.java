@@ -6,16 +6,16 @@ import java.util.Random;
 
 import static utilz.Constants.BubbleGenerator.*;
 import utilz.Constants.Direction;
+import utilz.PlayingTimer;
 
 public class BubbleGenerator {
     private GeneratorType generatorType;
     private GeneratorPosition generatorPosition;
 
-    private boolean firstUpdate = true;
-    private long lastTimerUpdate;
-    private int spawnTimer;
+    private int spawnTimer = INITIAL_BUBBLE_GENERATIO_INTERVAL;
 
     private Random random = new Random();
+    private PlayingTimer timer = PlayingTimer.getInstance();
 
     public BubbleGenerator(GeneratorType generatorType, GeneratorPosition generatorPosition) {
         this.generatorType = generatorType;
@@ -28,15 +28,7 @@ public class BubbleGenerator {
     }
 
     public void updateTimers() {
-        if (firstUpdate) {
-            lastTimerUpdate = System.currentTimeMillis();
-            spawnTimer = BUBBLE_GENERATION_INTERVAL/2;
-            firstUpdate = false;
-        }
-
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-        spawnTimer -= timeDelta;
+        spawnTimer -= (int) timer.getTimeDelta();
     }
 
     public void checkBubbleSpawn() {

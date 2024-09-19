@@ -5,6 +5,7 @@ import bubbles.playerBubbles.PlayerBubblesManager;
 import levels.Level;
 import levels.LevelManager;
 import main.Game;
+import utilz.PlayingTimer;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Direction;
@@ -14,13 +15,14 @@ import static utilz.HelpMethods.GetEntityYPosAboveFloor;
 import static utilz.HelpMethods.IsSightClear;
 
 public abstract class Enemy extends Entity {
+    protected PlayingTimer timer = PlayingTimer.getInstance();
+
     protected boolean active = true;
     protected boolean alive = true;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
     protected float animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
     protected int enemyState;
     protected EnemyType enemyType;
-    protected boolean firstUpdate = true;
 
     // Enemy Movement Variables
     protected float xSpeed;
@@ -198,7 +200,6 @@ public abstract class Enemy extends Entity {
         hitbox.y = y;
         animationIndex = 0;
         animationTick = 0;
-        firstUpdate = true;
         active = true;
         enemyState = NORMAL_STATE;
         walkingDir = startWalkingDir;

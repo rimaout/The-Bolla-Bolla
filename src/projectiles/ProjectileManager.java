@@ -25,7 +25,6 @@ public class ProjectileManager {
     private float playerProjectileSpeedMultiplier = 1;
     private float playerProjectileDistanceMultiplier = 1;
 
-
     private ProjectileManager(Player player) {
         loadSprites();
         this.player = player;
@@ -70,15 +69,14 @@ public class ProjectileManager {
         projectiles.add(projectile);
     }
 
+    public void newLevelReset() {
+        projectiles.clear();
+    }
 
-    public void resetNewGame() {
+    public void newPlayReset() {
         projectiles.clear();
         playerProjectileSpeedMultiplier = 1;
         playerProjectileDistanceMultiplier = 1;
-    }
-
-    public void resetNewLevel() {
-        projectiles.clear();
     }
 
     private void loadSprites() {
@@ -123,5 +121,4 @@ public class ProjectileManager {
     public void setPlayerProjectileDistanceMultiplier(float playerProjectileDistanceMultiplier) {
         this.playerProjectileDistanceMultiplier = playerProjectileDistanceMultiplier;
     }
-
 }

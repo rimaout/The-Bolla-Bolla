@@ -2,6 +2,7 @@ package levels;
 
 import gameStates.GameState;
 import gameStates.Playing;
+import utilz.Constants.Direction;
 import utilz.LoadSave;
 import main.Game;
 
@@ -104,11 +105,13 @@ public class LevelManager {
         }
     }
 
-    public void resetAll() {
-        // reset all levels (use only when game is restarted)
-
+    public void newPlayReset() {
         levelIndex = 0;
         allLevelsCompleted = false;
+
+        // reset all levels
+        for (Level level : levels)
+            level.newGameReset();
     }
 
     public BufferedImage[] getNumbersTiles() {
@@ -121,6 +124,14 @@ public class LevelManager {
 
     public Level getCurrentLevel() {
         return levels.get(levelIndex);
+    }
+
+    public int[][] getLevelData() {
+        return levels.get(levelIndex).getLevelData();
+    }
+
+    public Direction[][] getWindDirectionData() {
+        return levels.get(levelIndex).getWindDirectionData();
     }
 
     public Level getLevelWithIndex(int levelIndex) {

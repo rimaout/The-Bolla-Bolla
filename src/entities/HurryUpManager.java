@@ -4,6 +4,7 @@ import audio.AudioPlayer;
 import main.Game;
 import utilz.Constants.AudioConstants;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,17 +14,19 @@ import static utilz.Constants.HurryUpManager.*;
 public class HurryUpManager {
     private static HurryUpManager instance;
 
+    private PlayingTimer timer = PlayingTimer.getInstance();
+
     private final BufferedImage hurryImg;
-    private float hurryImgX, hurryImgY;
+    private float hurryImgX = STARTING_HURRY_IMG_X;
+    private float hurryImgY = STARTING_HURRY_IMG_Y;
 
     private boolean animationActive;
 
     private boolean playSound = false;
     private boolean alreadyPlayedSound = false;
 
-    private boolean firstUpdate = true;
-    private long lastTimerUpdate;
-    private int startAnimationTimer, startHurryUpTimer;
+    private int startAnimationTimer = START_ANIMATION_TIMER;
+    private int startHurryUpTimer = START_HURRY_UP_TIMER;
 
     private final SkelMonsta skelMonsta;
 
@@ -39,26 +42,11 @@ public class HurryUpManager {
     }
 
     public void update(Player player) {
-        if (firstUpdate)
-            firstUpdate();
-
         updateTimer();
         updateHurryPos();
 
         if (skelMonsta.isActive())
             skelMonsta.update(player);
-    }
-
-    public void firstUpdate(){
-        firstUpdate = false;
-
-        hurryImgX = HURRY_IMG_X;
-        hurryImgY = HURRY_IMG_Y;
-        animationActive = false;
-
-        startAnimationTimer = START_ANIMATION_TIMER;
-        startHurryUpTimer = START_HURRY_UP_TIMER;
-        lastTimerUpdate = System.currentTimeMillis();
     }
 
     public void draw(Graphics g) {
@@ -77,16 +65,9 @@ public class HurryUpManager {
     }
 
     public void updateTimer() {
-        if (firstUpdate) {
-            lastTimerUpdate = System.currentTimeMillis();
-            firstUpdate = false;
-        }
 
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-
-        startAnimationTimer -= (int) timeDelta;
-        startHurryUpTimer -= (int) timeDelta;
+        startAnimationTimer -= (int) timer.getTimeDelta();
+        startHurryUpTimer -= (int) timer.getTimeDelta();
 
         if (EnemyManager.getInstance().areAllEnemiesDead())
             restart();
@@ -113,17 +94,33 @@ public class HurryUpManager {
     }
 
     public void restart() {
-        firstUpdate = true;
+        hurryImgX = STARTING_HURRY_IMG_X;
+        hurryImgY = STARTING_HURRY_IMG_Y;
+        startAnimationTimer = START_ANIMATION_TIMER;
+        startHurryUpTimer = START_HURRY_UP_TIMER;
+
+        animationActive = false;
         playSound = false;
         alreadyPlayedSound = false;
+
         skelMonsta.despawn();
     }
 
-    public void resetAll() {
-        firstUpdate = true;
+    public void newLevelReset() {
+        hurryImgX = STARTING_HURRY_IMG_X;
+        hurryImgY = STARTING_HURRY_IMG_Y;
+        startAnimationTimer = START_ANIMATION_TIMER;
+        startHurryUpTimer = START_HURRY_UP_TIMER;
+
+        animationActive = false;
         playSound = false;
         alreadyPlayedSound = false;
+
         skelMonsta.reset();
+    }
+
+    public void newPlayReset() {
+        newLevelReset();
     }
 
     public void startHurryUp() {

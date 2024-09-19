@@ -59,4 +59,9 @@ public class Level {
     public ArrayList<Enemy> getEnemies() {
         return Enemies;
     }
+
+    public void newGameReset() {
+        createEnemies();
+        createBubbleGenerator();
+    }
 }

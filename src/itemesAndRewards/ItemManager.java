@@ -1,10 +1,11 @@
 package itemesAndRewards;
 
-import entities.EnemyManager;
 import entities.Player;
 import gameStates.Playing;
 import levels.LevelManager;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
+
 import static utilz.Constants.Items.*;
 import static utilz.HelpMethods.GetRandomPosition;
 
@@ -14,14 +15,11 @@ import java.util.ArrayList;
 
 public class ItemManager {
     private static ItemManager instance;
-    private Playing playing;
+    private final Playing playing;
+    private final PlayingTimer timer = PlayingTimer.getInstance();
 
-    private boolean firstUpdate = true;
-    private long lastTimerUpdate;
-    private int spawnPowerUpTimer;
-
+    private int  spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
     private boolean powerUpSpawned = false;
-    private boolean allRewardsDeSpawned = false;
     private ArrayList<Item> items;
 
     // Sprites
@@ -49,43 +47,20 @@ public class ItemManager {
     public void update() {
         updateTimers();
         updateItems();
-
         checkPowerUpSpawn();
     }
 
     private void updateItems() {
-
-        // Update Reward Bubble Items
-        int deSpawnCounter = 0;
-
         for (Item i : items) {
-
             if (i.isActive()) {
                 i.update();
                 checkCollisionWithPlayer(i);
-            }
-
-            else{
-                deSpawnCounter++;
-
-                if (deSpawnCounter == EnemyManager.getInstance().getEnemyCount())
-                    allRewardsDeSpawned = true;
             }
         }
     }
 
     private void updateTimers() {
-
-        if (firstUpdate) {
-            lastTimerUpdate = System.currentTimeMillis();
-            spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
-            powerUpSpawned = false;
-            firstUpdate = false;
-        }
-
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-        spawnPowerUpTimer -= timeDelta;
+        spawnPowerUpTimer -= (int) timer.getTimeDelta();
     }
 
     private void checkPowerUpSpawn() {
@@ -151,22 +126,14 @@ public class ItemManager {
             deSpawnImages[i] = deSpawnSprite.getSubimage(i * DEFAULT_W, 0, DEFAULT_W, DEFAULT_H);
     }
 
-    public void resetForNewLevel() {
-        // Reset all Items
+    public void newLevelReset() {
         items.clear();
-        allRewardsDeSpawned = false;
-        firstUpdate = true;
+        powerUpSpawned = false;
+        spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
     }
 
-    public void resetAll() {
-        // Only use when resetting the game
-        firstUpdate = true;
-
-        // Reset all Items
-        items.clear();
-        allRewardsDeSpawned = false;
-
-        //TODO: reset all variables
+    public void newPlayReset() {
+        newLevelReset();
     }
 
     public BufferedImage[] getBubbleRewardImages() {
