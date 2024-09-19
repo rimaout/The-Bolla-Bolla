@@ -3,7 +3,6 @@ package entities;
 import utilz.Constants.Direction;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Direction.*;
@@ -28,12 +27,13 @@ public class SkelMonsta extends Enemy{
     }
 
     public void draw(Graphics g) {
-        BufferedImage[][] sprites = EnemyManager.getInstance().getEnemySprite(SKEL_MONSTA);
-        g.drawImage(sprites[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
+        g.drawImage(EnemyManager.getInstance().getEnemySprite(SKEL_MONSTA)[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
     }
 
     @Override
     public void update(Player player) {
+        loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
+
         updateState();
         updateAnimationTick();
         updateTimer();

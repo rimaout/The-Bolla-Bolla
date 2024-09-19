@@ -9,13 +9,13 @@ import utilz.Constants.Direction;
 import utilz.PlayingTimer;
 
 public class BubbleGenerator {
-    private GeneratorType generatorType;
-    private GeneratorPosition generatorPosition;
+    private final Random random = new Random();
+    private final PlayingTimer timer = PlayingTimer.getInstance();
+
+    private final GeneratorType generatorType;
+    private final GeneratorPosition generatorPosition;
 
     private int spawnTimer = INITIAL_BUBBLE_GENERATIO_INTERVAL;
-
-    private Random random = new Random();
-    private PlayingTimer timer = PlayingTimer.getInstance();
 
     public BubbleGenerator(GeneratorType generatorType, GeneratorPosition generatorPosition) {
         this.generatorType = generatorType;

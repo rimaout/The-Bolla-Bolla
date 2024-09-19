@@ -20,7 +20,7 @@ public class ItemManager {
 
     private int  spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
     private boolean powerUpSpawned = false;
-    private ArrayList<Item> items;
+    private final ArrayList<Item> items;
 
     // Sprites
     private BufferedImage[] deSpawnImages;
@@ -67,7 +67,7 @@ public class ItemManager {
         if (spawnPowerUpTimer <= 0 && !powerUpSpawned) {
             powerUpSpawned = true;
 
-            Point spawnPoint = GetRandomPosition(LevelManager.getInstance().getCurrentLevel().getLevelData(), new Rectangle(0, 0, W, H));
+            Point spawnPoint = GetRandomPosition(LevelManager.getInstance().getLevelData(), new Rectangle(0, 0, W, H));
             PowerUpType powerUp = PowerUpManager.getInstance().getPowerUpToSpawn();
 
             if (powerUp != null) {

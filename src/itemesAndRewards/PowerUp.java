@@ -8,32 +8,22 @@ import static utilz.Constants.Items.*;
 import static utilz.Constants.Items.PowerUpType.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 
 public class PowerUp extends Item {
-    private PowerUpManager powerUpManager;
-
-    PowerUpType type;
-    BufferedImage[] powerUpImages;
-    BufferedImage[] deSpawnImages;
+    private final PowerUpManager powerUpManager = PowerUpManager.getInstance();
+    private final PowerUpType type;
 
     public PowerUp(int x, int y, PowerUpType type) {
         super(x, y);
         this.type = type;
-
-        powerUpManager = PowerUpManager.getInstance();
-        powerUpImages = ItemManager.getInstance().getPowerUpImages();
-        deSpawnImages = ItemManager.getInstance().getDeSpawnImages();
     }
-
 
     @Override
     public void draw(Graphics g) {
         if (!deSpawning)
-            g.drawImage(powerUpImages[GetPowerUpImageIndex(type)], x, y, W, H, null);
+            g.drawImage(itemManager.getPowerUpImages()[GetPowerUpImageIndex(type)], x, y, W, H, null);
         else
-            g.drawImage(deSpawnImages[animationIndex], x, y, W, H, null);
+            g.drawImage(itemManager.getDeSpawnImages()[animationIndex], x, y, W, H, null);
     }
 
     @Override

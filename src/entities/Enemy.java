@@ -2,10 +2,8 @@ package entities;
 
 import bubbles.playerBubbles.EnemyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
-import levels.Level;
 import levels.LevelManager;
 import main.Game;
-import utilz.PlayingTimer;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Direction;
@@ -15,7 +13,6 @@ import static utilz.HelpMethods.GetEntityYPosAboveFloor;
 import static utilz.HelpMethods.IsSightClear;
 
 public abstract class Enemy extends Entity {
-    protected PlayingTimer timer = PlayingTimer.getInstance();
 
     protected boolean active = true;
     protected boolean alive = true;
@@ -59,6 +56,14 @@ public abstract class Enemy extends Entity {
 
     public abstract void update(Player player);
 
+    protected void loadLevelManager() {
+        // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
+        // use this method at the beginning of the update method for each enemy class
+
+        if (levelManager == null)
+            levelManager = LevelManager.getInstance();
+    }
+
     protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED * animationSpeedMultiplier) {
@@ -79,7 +84,7 @@ public abstract class Enemy extends Entity {
         }
 
         else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , LevelManager.getInstance().getCurrentLevel().getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , levelManager.getLevelData());
             reachedSpawn = true;
             immune = false;
         }
@@ -118,12 +123,12 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    protected boolean canSeePlayer(int[][] levelData, Player player) {
+    protected boolean canSeePlayer(Player player) {
         int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
 
         return playerTileY == getTileY()                                             // Same row
                 && isPlayerInViewingRange(player)                               // Player is in range
-                && IsSightClear(levelData, hitbox, player.hitbox, getTileY());       // No obstacles in the way
+                && IsSightClear(levelManager.getLevelData(), hitbox, player.hitbox, getTileY());       // No obstacles in the way
     }
 
     protected boolean isPlayerInViewingRange(Player player) {
@@ -188,11 +193,6 @@ public abstract class Enemy extends Entity {
     protected boolean canFall(){
         // check if the under is not out of the level
         return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
-    }
-
-    protected boolean canFly() {
-        // check if enemy is trying to fly out of the level
-        return getTileY() > 8;
     }
 
     public void resetEnemy() {

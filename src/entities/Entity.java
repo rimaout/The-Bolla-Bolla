@@ -4,10 +4,16 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import itemesAndRewards.PowerUpManager;
+import levels.LevelManager;
 import main.Game;
+import utilz.PlayingTimer;
+
 import static utilz.HelpMethods.*;
 
 public abstract class Entity {
+    protected final PlayingTimer timer = PlayingTimer.getInstance();
+    protected LevelManager levelManager = LevelManager.getInstance();
+
     protected float x, y;
     protected int width, height;
     protected Rectangle2D.Float hitbox;
@@ -35,21 +41,21 @@ public abstract class Entity {
         g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
     }
 
-    protected void updateXPos(float xMovement, int[][] levelData) {
-        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+    protected void updateXPos(float xMovement) {
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData())) {
             hitbox.x += xMovement;
             PowerUpManager.getInstance().addDistance(xMovement);
         }
     }
 
-    protected void conpenetrationSafeUpdateXPos(float xMovement, int[][] levelData) {
+    protected void conpenetrationSafeUpdateXPos(float xMovement) {
 
         // Moving right
         if (xMovement > 0) {
             int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Game.TILES_SIZE);
             int yTile = (int) (hitbox.y / Game.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelData)) {
+            if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
                 hitbox.x += xMovement;
                 PowerUpManager.getInstance().addDistance(xMovement);
             }
@@ -60,7 +66,7 @@ public abstract class Entity {
             int xTile = (int) ((hitbox.x + xMovement) / Game.TILES_SIZE);
             int yTile = (int) (hitbox.y / Game.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelData)) {
+            if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
                 hitbox.x += xMovement;
                 PowerUpManager.getInstance().addDistance(xMovement);
             }

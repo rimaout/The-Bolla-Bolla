@@ -36,7 +36,7 @@ public class Player extends Entity{
     // General Variables
     private int lives = 3;
     private int points = 0;
-    private  int flipX = 0;
+    private int flipX = 0;
     private int flipW = 1;
 
     // Timers
@@ -53,7 +53,7 @@ public class Player extends Entity{
     // Sound Variables
     private boolean playJumpSound, playDeathSound;
 
-    public Player(Playing playing) {
+    public Player() {
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
 
         loadAnimation();
@@ -246,7 +246,7 @@ public class Player extends Entity{
     }
 
     private void handleOnFloorMovement(){
-        updateXPos(xSpeed, levelManager.getLevelData());
+        updateXPos(xSpeed);
         addPoints(walkPoints);  // crystalRing powerUp
         moving = true;          // Activate running animation
     }
@@ -256,14 +256,14 @@ public class Player extends Entity{
         if (airSpeed < 0) {
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
         // FALLING
         else {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
             isJumping = false;
-            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
     }
 
@@ -281,7 +281,7 @@ public class Player extends Entity{
         if (airSpeed < 0){
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
-            conpenetrationSafeUpdateXPos(xSpeed, levelManager.getLevelData());
+            conpenetrationSafeUpdateXPos(xSpeed);
         }
 
         // Going down
@@ -289,15 +289,15 @@ public class Player extends Entity{
             if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
-                updateXPos(xSpeed, levelManager.getLevelData());
+                updateXPos(xSpeed);
             } else {
                 hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
                 resetInAir();
-                updateXPos(xSpeed, levelManager.getLevelData());
+                updateXPos(xSpeed);
             }
         } else {
             isJumping = false;
-            updateXPos(xSpeed, levelManager.getLevelData());
+            updateXPos(xSpeed);
         }
     }
 
@@ -305,10 +305,10 @@ public class Player extends Entity{
         if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed = FALL_SPEED;
-                updateXPos(xSpeed / 3, levelManager.getLevelData());
+                updateXPos(xSpeed / 3);
         } else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
-            updateXPos(xSpeed / 3, levelManager.getLevelData());
+            updateXPos(xSpeed / 3);
             resetInAir();
         }
     }

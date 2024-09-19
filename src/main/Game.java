@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class Game implements Runnable {
 
-    private GameWindow gameWindow;
-    private GamePanel gamePanel;
+    private final GameWindow gameWindow;
+    private final GamePanel gamePanel;
     private Thread gameThread;
 
     private AudioPlayer audioPlayer;

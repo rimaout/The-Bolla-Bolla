@@ -1,9 +1,7 @@
 package projectiles;
 
 import entities.Enemy;
-import entities.Entity;
 import entities.Player;
-import levels.LevelManager;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -37,7 +35,7 @@ public class MaitaFireProjectile extends Projectile {
             else
                 xSpeed = MAITA_FIREBALL_SPEED;
 
-            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, currentLevel.getLevelData()))
+            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData()))
                 hitbox.x += xSpeed;
             else {
                 state = IMPACT;

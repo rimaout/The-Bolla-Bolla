@@ -6,13 +6,10 @@ import entities.EnemyManager;
 import entities.Player;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
-import levels.Level;
-import levels.LevelManager;
 import utilz.Constants.AudioConstants;
 import utilz.Constants.Direction;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import static utilz.Constants.Bubble.*;
@@ -23,15 +20,16 @@ import static utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
 import static utilz.HelpMethods.*;
 
 public class EnemyBubble extends EmptyBubble {
-    Enemy enemy;
+
+    private final Random random = new Random();
+    private final EnemyManager enemyManager = EnemyManager.getInstance();
+    private final Enemy enemy;
 
     private int consecutivePopsCounter;
     private boolean playerPopped;
     private float ySpeedDead;
     private float xSpeedDead;
     private boolean playPopSound = false;
-
-    private Random random = new Random();
 
     public EnemyBubble(Enemy enemy, float x, float y, Direction direction) {
         super(x, y, direction);
@@ -41,21 +39,20 @@ public class EnemyBubble extends EmptyBubble {
 
     @Override
     public void draw(Graphics g) {
-        BufferedImage[][] enemySprites = EnemyManager.getInstance().getEnemySprite(enemy.getEnemyType());
 
         if (state == NORMAL)
-            g.drawImage(enemySprites[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
 
         else if (state == RED || state == BLINKING)
-            g.drawImage(enemySprites[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
 
         else if (state == POP_NORMAL)
-            g.drawImage(enemySprites[BOBBLE_GREEN_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_GREEN_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
 
         else if (state == POP_RED)
-            g.drawImage(enemySprites[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
         else if (state == DEAD)
-            g.drawImage(enemySprites[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
 
         if (playPopSound) {
             playPopSound = false;
@@ -75,7 +72,6 @@ public class EnemyBubble extends EmptyBubble {
     }
 
     protected void updateDeadAnimation() {
-        Level level = LevelManager.getInstance().getCurrentLevel();
 
         ySpeed += GRAVITY;
 
@@ -94,12 +90,12 @@ public class EnemyBubble extends EmptyBubble {
             hitbox.x += xSpeed;
         }
         // Going down
-        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, level.getLevelData())) {
+        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, levelManager.getLevelData())) {
             hitbox.y += ySpeed;
-            updateXPos(xSpeed, level.getLevelData());
+            updateXPos(xSpeed);
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, level.getLevelData());
-            conpenetrationSafeUpdateXPos(xSpeed, level.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManager.getLevelData());
+            conpenetrationSafeUpdateXPos(xSpeed);
             active = false;
 
             // Spawn Reward

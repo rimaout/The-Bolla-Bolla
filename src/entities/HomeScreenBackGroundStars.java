@@ -12,7 +12,7 @@ import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Home.*;
 
 public class HomeScreenBackGroundStars extends Entity {
-    private Home home;
+    private final Home home;
 
     private BufferedImage[] sprite;
     private Direction direction;

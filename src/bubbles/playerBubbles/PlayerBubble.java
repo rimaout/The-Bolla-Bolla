@@ -9,6 +9,7 @@ import java.awt.*;
 import static utilz.Constants.Bubble.*;
 
 public abstract class PlayerBubble extends Bubble {
+    protected final PlayerBubblesManager bubbleManager = PlayerBubblesManager.getInstance();
 
     public PlayerBubble(float x, float y, Constants.Direction direction) {
         super(x, y, direction);
@@ -45,14 +46,13 @@ public abstract class PlayerBubble extends Bubble {
         if (!player.isActive())
             return;
 
-        PlayerBubblesManager manager = PlayerBubblesManager.getInstance();
 
         if (!active || state == DEAD)
             return;
 
         // check if bubble pop
-        if (manager.getPopTimer() <= 0 && isPlayerPoppingBubble(player)) {
-            manager.startChainExplosions(this);
+        if (bubbleManager.getPopTimer() <= 0 && isPlayerPoppingBubble(player)) {
+            bubbleManager.startChainExplosions(this);
             return;
         }
 

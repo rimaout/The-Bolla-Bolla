@@ -11,14 +11,10 @@ import java.util.TimerTask;
 import static utilz.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
-    private Player player;
-    private LinkedList<PlayerBubble> bubbles;
+    private final Timer timer = new Timer();
 
-    private Timer timer = new Timer();
-
-    // Constants and variables
-    private int delay = 150;
-    private final int CHAIN_REACTION_RADIUS = 15 * Game.SCALE;
+    private final Player player;
+    private final LinkedList<PlayerBubble> bubbles;
 
     int enemyBubblePopCounter = 0;
 
@@ -42,6 +38,9 @@ public class ChainExplosionManager {
             double distance = Math.sqrt(dx * dx + dy * dy);
 
             // check if the current bubble is within the chain reaction radius
+            // Constants and variables
+            int delay = 150;
+            int CHAIN_REACTION_RADIUS = 15 * Game.SCALE;
             if (distance < CHAIN_REACTION_RADIUS)
                 timer.schedule(new TimerTask() {
                     @Override public void run() {chainExplosion(b);}}, delay);

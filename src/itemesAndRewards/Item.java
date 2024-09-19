@@ -10,7 +10,8 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Item {
-    private final PlayingTimer timer = PlayingTimer.getInstance();
+    protected final ItemManager itemManager = ItemManager.getInstance();
+    protected final PlayingTimer timer = PlayingTimer.getInstance();
 
     protected int x, y;
     protected Rectangle2D.Float hitbox;

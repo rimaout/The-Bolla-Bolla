@@ -15,7 +15,7 @@ import static utilz.Constants.PointsManager.PointsType.*;
 
 public class RewardPointsManager {
     private static RewardPointsManager instance;
-    private Player player;
+    private final Player player;
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private BufferedImage[][] smallPointsSprites;

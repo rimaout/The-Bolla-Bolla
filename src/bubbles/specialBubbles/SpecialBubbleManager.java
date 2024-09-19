@@ -17,11 +17,11 @@ public class SpecialBubbleManager {
     private static SpecialBubbleManager instance;
     private final Player player;
 
+    private final LinkedList<SpecialBubble>  bubbles;
+    private final LinkedList<WaterFlow> waterFlows;
+
     private BufferedImage[][] waterBubbleSprites;
     private BufferedImage[][] lightningBubbleSprites;
-
-    private LinkedList<SpecialBubble> bubbles;
-    private LinkedList<WaterFlow> waterFlows;
 
     private BubbleGenerator bubbleGenerator;
 

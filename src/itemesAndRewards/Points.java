@@ -11,13 +11,13 @@ import static utilz.Constants.PointsManager.BIG_H;
 import static utilz.Constants.PointsManager.PointsType.SMALL;
 
 public class Points {
-    private RewardPointsManager rewardPointsManager = RewardPointsManager.getInstance();
-    private PlayingTimer timer = PlayingTimer.getInstance();
+    private final RewardPointsManager rewardPointsManager = RewardPointsManager.getInstance();
+    private final PlayingTimer timer = PlayingTimer.getInstance();
 
-    private int value;
+    private final int value;
     private float x;
     private float y;
-    private PointsType type;
+    private final PointsType type;
 
     private int drawTime = 1200;
     private float alpha = 1.0f; // Initial alpha value (for transparency)

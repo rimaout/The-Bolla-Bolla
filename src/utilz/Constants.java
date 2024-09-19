@@ -523,7 +523,7 @@ public class Constants {
     }
 
     public static class AudioConstants {
-        public static final float DEFAULT_VOLUME = 0.7f;
+        public static final float DEFAULT_VOLUME = 0.6f;
 
         // Songs
         public static final int INTO_AND_PLAYING_SONG = 0;

@@ -44,11 +44,11 @@ public class Level {
         return levelData[y][x];
     }
 
-    public int[][] getLevelData() {
+    protected int[][] getLevelData() {
         return levelData;
     }
 
-    public Direction[][] getWindDirectionData() {
+    protected Direction[][] getWindDirectionData() {
         return windDirectionData;
     }
 

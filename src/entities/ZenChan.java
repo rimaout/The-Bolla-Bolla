@@ -35,10 +35,11 @@ public class ZenChan extends Enemy {
 
     @Override
     public void update(Player player) {
+        loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         updateAnimationTick();
 
-        if (!EnemyManager.getInstance().getAllEnemiesReachedSpawn()) {
+        if (!EnemyManager.getInstance().didAllEnemiesReachedSpawn()) {
             if (!reachedSpawn)
                 updateSpawning();
             return;
@@ -54,7 +55,7 @@ public class ZenChan extends Enemy {
     }
 
     private void firstUpdate() {
-        if (!IsEntityOnFloor(hitbox, LevelManager.getInstance().getCurrentLevel().getLevelData()))
+        if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
             goDown = true;
 
         firstUpdate = false;
@@ -65,33 +66,32 @@ public class ZenChan extends Enemy {
     }
 
     private void updateMove() {
-        int[][] levelData = LevelManager.getInstance().getCurrentLevel().getLevelData();
 
-        if(!IsEntityOnFloor(hitbox, levelData) && !isJumping && !goUp && !goDown)
-            goOnFloor(levelData);
+        if(!IsEntityOnFloor(hitbox, levelManager.getLevelData()) && !isJumping && !goUp && !goDown)
+            goOnFloor();
 
         if (isFalling) {
-            fall(levelData);
+            fall();
             return;
         }
         if(goUp){
-            fly(levelData);
+            fly();
             return;
         }
         if(isJumping){
-            jump(levelData, jumpDistance);
+            jump(jumpDistance);
             return;
         }
 
         // enemy stuck in a wall
-        if(IsEntityInsideSolid(hitbox, levelData))
+        if(IsEntityInsideSolid(hitbox, levelManager.getLevelData()))
             hitbox.y += 1;
 
 
-        moveOnGround(levelData);
+        moveOnGround();
 
         //Go up
-        if (playerTileY < getTileY() && canFly(levelData)) {
+        if (playerTileY < getTileY() && canFly()) {
             goUp = true;
             goDown = false;
         }
@@ -103,14 +103,14 @@ public class ZenChan extends Enemy {
         }
     }
 
-    private void moveOnGround(int[][] levelData) {
+    private void moveOnGround() {
         if (walkingDir == LEFT)
             xSpeed = -walkSpeed;
         else
             xSpeed = walkSpeed;
 
         // check if there is a solid tile in front of the enemy
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData())) {
 
             // check if there is a solid tile below the enemy
             if (!isNextPosFloorSolid()) {
@@ -124,16 +124,16 @@ public class ZenChan extends Enemy {
                     hitbox.x += xSpeed;
                     isFalling = true;
                     goDown = false;
-                    fall(levelData);
+                    fall();
                     return;
                 }
 
-                jumpDistance = calculateJumpDistance(levelData);
+                jumpDistance = calculateJumpDistance();
 
                 if(canJump(jumpDistance)) {
                     isJumping = true;
                     ySpeed = JUMP_Y_SPEED;
-                    jump(levelData, jumpDistance);
+                    jump(jumpDistance);
                     return;
                 }
                 changeWalkingDir();
@@ -145,7 +145,7 @@ public class ZenChan extends Enemy {
             changeWalkingDir();
     }
 
-    private void fly(int[][] levelData) {
+    private void fly() {
 
         if(isFlyingFirstUpdate){
             // wait half a second before flying
@@ -166,14 +166,14 @@ public class ZenChan extends Enemy {
         if(System.currentTimeMillis() - flyStartTime < 1000)
             return;
 
-        if(IsEntityInsideSolid(hitbox, levelData)){
+        if(IsEntityInsideSolid(hitbox, levelManager.getLevelData())){
             didFlyInsideSolid = true;
             hitbox.y -= flySpeed;
         }
         else if(didFlyInsideSolid){
 
             // fly ended
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelData) - 1;
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelManager.getLevelData()) - 1;
             updateWalkingDir();
 
             // Reset fly variables
@@ -187,7 +187,7 @@ public class ZenChan extends Enemy {
         }
     }
 
-    private void jump(int[][] levelData, int jumpDistance) {
+    private void jump(int jumpDistance) {
         float jumpXSpeed;
 
         switch (walkingDir) {
@@ -203,41 +203,41 @@ public class ZenChan extends Enemy {
         if (ySpeed < 0){
             hitbox.y += ySpeed;
             ySpeed += GRAVITY;
-            updateXPos(jumpXSpeed, levelData);
+            updateXPos(jumpXSpeed);
         }
 
         // Going down
         else if (ySpeed <= -JUMP_Y_SPEED){
-            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelData)) {
+            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
                 hitbox.y += ySpeed;
                 ySpeed += GRAVITY;
-                updateXPos(jumpXSpeed, levelData);
+                updateXPos(jumpXSpeed);
             } else {
                 isJumping = false;
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelData);
-                updateXPos(jumpXSpeed, levelData);
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManager.getLevelData());
+                updateXPos(jumpXSpeed);
             }
         } else {
             isJumping = false;
-            updateXPos(jumpXSpeed, levelData);
+            updateXPos(jumpXSpeed);
         }
     }
 
-    private void fall(int [][] levelData) {
-        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
+    private void fall() {
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManager.getLevelData()))
             hitbox.y += fallSpeed;
         else {
             // fall ended
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManager.getLevelData());
             isFalling = false;
          }
     }
 
-    private void goOnFloor(int[][] levelData) {
-        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelData))
+    private void goOnFloor() {
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManager.getLevelData()))
             hitbox.y += fallSpeed;
         else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelData);
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManager.getLevelData());
             goDown = false;
         }
     }
@@ -245,7 +245,6 @@ public class ZenChan extends Enemy {
     private boolean isNextPosFloorSolid() {
         // This method checks if the next two tiles in front of the enemy are solid or not
         // It's used to check if the enemy can jump/fall or not
-        Level level = LevelManager.getInstance().getCurrentLevel();
 
         float yPos =  hitbox.y + hitbox.height + 1;
         float xPos1 = 0, xPos2 = 0;
@@ -261,14 +260,14 @@ public class ZenChan extends Enemy {
             xPos2 = hitbox.x + hitbox.width + Game.TILES_SIZE + 1;
         }
 
-        return IsSolid(xPos1, yPos, level.getLevelData()) && IsSolid(xPos2, yPos, level.getLevelData());
+        return IsSolid(xPos1, yPos,levelManager.getLevelData()) && IsSolid(xPos2, yPos, levelManager.getLevelData());
     }
 
     private boolean canJump(int jumpDistance) {
         return jumpDistance != -1;
     }
 
-    private int calculateJumpDistance(int[][] levelData) {
+    private int calculateJumpDistance() {
         int tileDistanceToPerimeterWall = -1;
         int tileDistanceToFloor = -1;
 
@@ -294,7 +293,7 @@ public class ZenChan extends Enemy {
         // check if between 2 and 6 tiles there is a floor
         if (walkingDir == LEFT) {
             for (int i = 2; i < 8; i++)
-                if (IsTileSolid(getTileX() - i, yFlorTile, levelData)) {
+                if (IsTileSolid(getTileX() - i, yFlorTile, levelManager.getLevelData())) {
                     tileDistanceToFloor = i;
                     break;
                 }
@@ -302,7 +301,7 @@ public class ZenChan extends Enemy {
 
         else if (walkingDir == RIGHT) {
             for (int i = 2; i  < 8 ; i++)
-                if (IsTileSolid(getTileX() + i +1 , yFlorTile, levelData)) {
+                if (IsTileSolid(getTileX() + i +1 , yFlorTile, levelManager.getLevelData())) {
                     tileDistanceToFloor = i + 1;
                     break;
                 }
@@ -322,25 +321,25 @@ public class ZenChan extends Enemy {
     }
 
 
-    private boolean canFly(int[][] levelData){
+    private boolean canFly(){
 
         // TODO: Refactor - this method checks fi there is a solid tile to fly on, ig there is checks if there is a empty tile on top
 
         // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
 
         int oneTileAbove = getTileY()-1;
-        boolean oneUpSolid = IsTileSolid(getTileX(), oneTileAbove, levelData) &&  IsTileSolid(getTileX()+1, oneTileAbove, levelData);
+        boolean oneUpSolid = IsTileSolid(getTileX(), oneTileAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, oneTileAbove, levelManager.getLevelData());
 
         int twoTilesAbove = getTileY()-2;
-        boolean twoUpSolid = IsTileSolid(getTileX(), twoTilesAbove, levelData) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelData);
-        boolean twoUpEmpty = !IsTileSolid(getTileX(), twoTilesAbove, levelData) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelData);
+        boolean twoUpSolid = IsTileSolid(getTileX(), twoTilesAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManager.getLevelData());
+        boolean twoUpEmpty = !IsTileSolid(getTileX(), twoTilesAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManager.getLevelData());
 
         int threeTilesAbove = getTileY()-3;
-        boolean threeUpSolid = IsTileSolid(getTileX(), threeTilesAbove, levelData) && IsTileSolid(getTileX()+1, threeTilesAbove, levelData);
-        boolean threeUpEmpty = !IsTileSolid(getTileX(), threeTilesAbove, levelData) || IsTileSolid(getTileX()+1, threeTilesAbove, levelData);
+        boolean threeUpSolid = IsTileSolid(getTileX(), threeTilesAbove, levelManager.getLevelData()) && IsTileSolid(getTileX()+1, threeTilesAbove, levelManager.getLevelData());
+        boolean threeUpEmpty = !IsTileSolid(getTileX(), threeTilesAbove, levelManager.getLevelData()) || IsTileSolid(getTileX()+1, threeTilesAbove, levelManager.getLevelData());
 
         int fourTilesAbove = getTileY()-4;
-        boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelData) || IsTileSolid(getTileX()+1, fourTilesAbove, levelData);
+        boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelManager.getLevelData()) || IsTileSolid(getTileX()+1, fourTilesAbove, levelManager.getLevelData());
 
         return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }

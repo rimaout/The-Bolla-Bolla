@@ -1,9 +1,7 @@
 package bubbles.specialBubbles;
 
-import audio.AudioPlayer;
 import entities.Player;
 import main.Game;
-import utilz.Constants;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -18,7 +16,7 @@ public class WaterBubble extends SpecialBubble {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(specialBubbleManager.getWaterBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
     }
 
     @Override

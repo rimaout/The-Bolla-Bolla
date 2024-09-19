@@ -1,6 +1,5 @@
 package bubbles.specialBubbles;
 
-import audio.AudioPlayer;
 import entities.Player;
 import projectiles.LightingProjectile;
 import projectiles.ProjectileManager;
@@ -12,7 +11,6 @@ import java.awt.*;
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Bubble.IMMAGE_H;
 
-
 public class LightningBubble extends SpecialBubble {
     public LightningBubble(float x, float y, Constants.Direction direction) {
         super(x, y, direction);
@@ -20,7 +18,7 @@ public class LightningBubble extends SpecialBubble {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(specialBubbleManager.getLightningBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getLightningBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
     }
 
     @Override

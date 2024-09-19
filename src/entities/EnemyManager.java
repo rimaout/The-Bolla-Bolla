@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class EnemyManager {
     private static EnemyManager instance;
-    private PlayingTimer timer = PlayingTimer.getInstance();
 
-    private Player player;
+    private final PlayingTimer timer = PlayingTimer.getInstance();
+    private final Player player;
 
     private BufferedImage[][] zenChanSprites;
     private BufferedImage[][] maitaSprites;
@@ -194,7 +194,7 @@ public class EnemyManager {
         return enemies;
     }
 
-    public boolean getAllEnemiesReachedSpawn() {
+    public boolean didAllEnemiesReachedSpawn() {
         return allEnemiesReachedSpawn;
     }
 

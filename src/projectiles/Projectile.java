@@ -3,8 +3,6 @@ package projectiles;
 import entities.Enemy;
 import entities.Entity;
 import entities.Player;
-import levels.Level;
-import levels.LevelManager;
 import utilz.Constants.Direction;
 import utilz.Constants.Projectiles.ProjectileState;
 
@@ -17,12 +15,11 @@ import java.awt.*;
 
 
 public abstract class Projectile extends Entity {
+    protected final ProjectileManager projectileManager = ProjectileManager.getInstance();
+
     protected ProjectileState state = MOVING;
     protected ProjectileType type;
     protected Direction direction;
-
-    protected ProjectileManager projectileManager = ProjectileManager.getInstance();
-    protected Level currentLevel = LevelManager.getInstance().getCurrentLevel();
 
     public Projectile(float x, float y, Direction direction, ProjectileType type) {
         super(x, y, H, W);

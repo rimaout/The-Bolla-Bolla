@@ -54,7 +54,7 @@ public class Playing extends State implements StateMethods {
         playingTimer = PlayingTimer.getInstance();
         levelManager = LevelManager.getInstance(this);
 
-        playerOne = new Player(this);
+        playerOne = new Player();
 
         enemyManager = EnemyManager.getInstance(playerOne);
         hurryUpManager = HurryUpManager.getInstance();

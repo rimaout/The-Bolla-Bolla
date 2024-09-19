@@ -18,7 +18,9 @@ import static utilz.HelpMethods.IsEntityInsideMap;
 
 public abstract class Bubble extends Entity {
 
-    protected PlayingTimer timer = PlayingTimer.getInstance();
+    protected final LevelManager levelManager = LevelManager.getInstance();
+    protected final PlayingTimer timer = PlayingTimer.getInstance();
+
     protected Rectangle2D.Float internalCollisionBox;
     protected Ellipse2D.Float externalCollisionBox;
 
@@ -87,7 +89,7 @@ public abstract class Bubble extends Entity {
         if (direction != NONE)
             previousDirection = direction;
 
-        direction = LevelManager.getInstance().getCurrentLevel().getWindDirectionData()[getTileY()][getTileX()];
+        direction = levelManager.getWindDirectionData()[getTileY()][getTileX()];
     }
 
     protected void updatePosition() {

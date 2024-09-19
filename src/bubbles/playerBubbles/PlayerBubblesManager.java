@@ -5,6 +5,7 @@ import entities.Enemy;
 import entities.Player;
 import main.Game;
 import utilz.LoadSave;
+import utilz.PlayingTimer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,19 +14,17 @@ import java.util.LinkedList;
 import static utilz.Constants.Bubble.*;
 
 public class PlayerBubblesManager {
-
     // This class is responsible for managing the bubbles that the player shoots
-
     private static PlayerBubblesManager instance;
+
     private final Player player;
+    private final PlayingTimer timer = PlayingTimer.getInstance();
+
+    private final LinkedList<PlayerBubble> bubbles;
+    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 200;
+    private int popTimer = 0;
 
     private BufferedImage[][] playerBubbleSprites;
-
-    private LinkedList<PlayerBubble> bubbles;
-
-    private long lastTimerUpdate;
-    private int popTimer = 0;
-    private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 200;
 
     private PlayerBubblesManager(Player player) {
         this.player = player;
@@ -65,13 +64,7 @@ public class PlayerBubblesManager {
     }
 
     private void updateTimers() {
-
-        if (lastTimerUpdate == 0)
-            lastTimerUpdate = System.currentTimeMillis();
-
-        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
-        lastTimerUpdate = System.currentTimeMillis();
-        popTimer -= (int) timeDelta;
+        popTimer -= (int) timer.getTimeDelta();
     }
 
    private void collisionBetweenBubbles() {
@@ -140,9 +133,8 @@ public class PlayerBubblesManager {
     }
 
     public void newLevelReset() {
-        bubbles = new LinkedList<>();
+        bubbles.clear();
         popTimer = 0;
-        lastTimerUpdate = 0;
     }
 
     public void newPlayReset() {

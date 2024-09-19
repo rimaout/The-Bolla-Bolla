@@ -13,20 +13,21 @@ import java.util.ArrayList;
 public class LevelManager {
     private static LevelManager instance;
 
-    private Playing playing;
+    private final Playing playing;
+
+    private final ArrayList<Level> levels;
+    private int levelIndex = 0;
+    private boolean allLevelsCompleted = false;
 
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
-    private ArrayList<Level> levels;
-    private int levelIndex = 0;
-
-    private boolean allLevelsCompleted = false;
 
     private LevelManager(Playing playing) {
         this.playing = playing;
 
-        loadSprites();
+
         levels = new ArrayList<>();
+        loadSprites();
         buildAllLevels();
     }
 

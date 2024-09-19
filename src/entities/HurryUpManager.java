@@ -14,7 +14,7 @@ import static utilz.Constants.HurryUpManager.*;
 public class HurryUpManager {
     private static HurryUpManager instance;
 
-    private PlayingTimer timer = PlayingTimer.getInstance();
+    private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private final BufferedImage hurryImg;
     private float hurryImgX = STARTING_HURRY_IMG_X;

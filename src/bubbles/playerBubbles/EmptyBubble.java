@@ -3,7 +3,6 @@ package bubbles.playerBubbles;
 import entities.Player;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Direction;
@@ -15,8 +14,7 @@ public class EmptyBubble extends PlayerBubble {
     }
 
     public void draw(Graphics g) {
-        BufferedImage[][] playerBubbleSprites = PlayerBubblesManager.getInstance().getPlayerBubbleSprites();
-        g.drawImage(playerBubbleSprites[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getPlayerBubbleSprites()[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
     }
 
     protected void updateDeadAnimation(){
