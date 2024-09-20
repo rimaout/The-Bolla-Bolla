@@ -11,7 +11,7 @@ import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import main.Game;
 import projectiles.ProjectileManager;
-import ui.*;
+import overlays.*;
 import utilz.PlayingTimer;
 
 import java.awt.*;
@@ -32,9 +32,9 @@ public class Playing extends State implements StateMethods {
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
     private PowerUpManager powerUpManager;
-    private PauseOverlay pauseOverlay;
-    private GameOverOverlay gameOverOverlay;
-    private GameCompletedOverlay gameCompletedOverlay;
+    private GamePauseOverlay gamePauseOverlay;
+    private GameOverGameOverlay gameOverOverlay;
+    private GameCompletedGameOverlay gameCompletedOverlay;
     private PlayingHud playingHud;
     private Intro intro;
 
@@ -65,9 +65,9 @@ public class Playing extends State implements StateMethods {
         rewardPointsManager = RewardPointsManager.getInstance(playerOne);
         powerUpManager = PowerUpManager.getInstance(playerOne);
 
-        pauseOverlay = new PauseOverlay(this);
-        gameOverOverlay = new GameOverOverlay(this);
-        gameCompletedOverlay = new GameCompletedOverlay(this);
+        gamePauseOverlay = new GamePauseOverlay(this);
+        gameOverOverlay = new GameOverGameOverlay(this);
+        gameCompletedOverlay = new GameCompletedGameOverlay(this);
         playingHud = new PlayingHud(playerOne, playerTwo);
         intro = new Intro(this, playerOne);
     }
@@ -130,7 +130,7 @@ public class Playing extends State implements StateMethods {
         }
 
         if (paused)
-            pauseOverlay.draw(g);
+            gamePauseOverlay.draw(g);
 
         else if (gameOver)
             gameOverOverlay.draw(g);
@@ -171,7 +171,7 @@ public class Playing extends State implements StateMethods {
 
         gameCompletedOverlay.newPlayReset();
         gameOverOverlay.newPlayReset();
-        pauseOverlay.newPlayReset();
+        gamePauseOverlay.newPlayReset();
         intro.newPlayReset();
 
         playerOne.reset(true, true);
@@ -243,7 +243,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void keyPressed(KeyEvent e) {
         if (paused)
-            pauseOverlay.keyPressed(e);
+            gamePauseOverlay.keyPressed(e);
 
         else if (gameOver)
             gameOverOverlay.keyPressed(e);

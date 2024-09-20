@@ -1,10 +1,10 @@
-package ui;
+package overlays;
 
 import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
-import utilz.Constants.AudioConstants;
+import utilz.Constants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,22 +12,20 @@ import java.awt.event.KeyEvent;
 import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
 
+public class GameOverGameOverlay extends GameOverlay {
 
-
-public class GameCompletedOverlay extends Overlay {
-
-    public GameCompletedOverlay(Playing playing) {
+    public GameOverGameOverlay(Playing playing) {
         super(playing);
     }
 
     @Override
     protected void drawTitle(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(nesFont.deriveFont(38f));
+        g.setFont(nesFont.deriveFont(42f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
         String text1 = "GAME";
-        String text2 = "COMPLETED";
+        String text2 = "OVER";
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
@@ -72,25 +70,25 @@ public class GameCompletedOverlay extends Overlay {
         g.setColor(Color.WHITE);
         g.drawString(text1Part1, x1, y1);
 
-        g.setColor(new Color(BUD_RED_COLOR));
+        g.setColor(BUD_RED_COLOR);
         g.drawString(text1Part2, x1 + text1WidthPart1, y1);
 
         g.setColor(Color.WHITE);
         g.drawString(text1Part3, x1 + text1WidthPart1 + text1WidthPart2, y1);
 
-        g.setColor(new Color(BUD_RED_COLOR));
+        g.setColor(BUD_RED_COLOR);
         g.drawString(text1Part4, x1 + text1WidthPart1 + text1WidthPart2 + text1WidthPart3, y1);
 
         g.setColor(Color.WHITE);
         g.drawString(text2Part1, x2, y2);
 
-        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part2, x2 + text2WidthPart1, y2);
 
         g.setColor(Color.WHITE);
         g.drawString(text2Part3, x2 + text2WidthPart1 + text2WidthPart2, y2);
 
-        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
@@ -114,7 +112,7 @@ public class GameCompletedOverlay extends Overlay {
         AudioPlayer.getInstance().stopSong();
 
         if (firstUpdate) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.GAME_COMPLETED);
+            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.GAME_OVER);
             firstUpdate = false;
         }
     }

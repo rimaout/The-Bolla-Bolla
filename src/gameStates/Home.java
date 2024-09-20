@@ -129,7 +129,7 @@ public class Home extends State implements StateMethods {
 
         if (isLogoInPosition)
             if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                GameState.state = GameState.PLAYING;
+                GameState.state = GameState.MENU;
     }
 
     @Override

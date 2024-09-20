@@ -1,40 +1,32 @@
-package ui;
+package overlays;
 
 import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
-import utilz.Constants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
-import static utilz.Constants.Overlays.BUD_RED_COLOR;
+import static utilz.Constants.Overlays.*;
 
-public class GameOverOverlay extends Overlay {
-
-    public GameOverOverlay(Playing playing) {
+public class GamePauseOverlay extends GameOverlay {
+    public GamePauseOverlay(Playing playing) {
         super(playing);
     }
 
     @Override
     protected void drawTitle(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(nesFont.deriveFont(42f));
+        g.setFont(nesFont.deriveFont(50f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
-        String text1 = "GAME";
-        String text2 = "OVER";
-        int textWidth1 = fm.stringWidth(text1);
-        int textWidth2 = fm.stringWidth(text2);
-        int totalWidth = textWidth1 + textWidth2;
-        int spacing = 4 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        String text = "PAUSE";
+        int textWidth = fm.stringWidth(text);
+        int x = (Game.GAME_WIDTH - textWidth) / 2;
         int y = (Game.GAME_HEIGHT / 10) * 4;
 
-        g.drawString(text1, x, y);
-        g.drawString(text2, x + textWidth1 + spacing, y);
+        g.drawString(text, x, y);
     }
 
     @Override
@@ -55,9 +47,9 @@ public class GameOverOverlay extends Overlay {
 
         // Text for RESUME
         String text2Part1 = "Press ";
-        String text2Part2 = "R";
+        String text2Part2 = "ESC";
         String text2Part3 = " to ";
-        String text2Part4 = "RESTART!";
+        String text2Part4 = "RESUME!";
         int text2WidthPart1 = fm.stringWidth(text2Part1);
         int text2WidthPart2 = fm.stringWidth(text2Part2);
         int text2WidthPart3 = fm.stringWidth(text2Part3);
@@ -70,27 +62,28 @@ public class GameOverOverlay extends Overlay {
         g.setColor(Color.WHITE);
         g.drawString(text1Part1, x1, y1);
 
-        g.setColor(new Color(BUD_RED_COLOR));
+        g.setColor(BUD_RED_COLOR);
         g.drawString(text1Part2, x1 + text1WidthPart1, y1);
 
         g.setColor(Color.WHITE);
         g.drawString(text1Part3, x1 + text1WidthPart1 + text1WidthPart2, y1);
 
-        g.setColor(new Color(BUD_RED_COLOR));
+        g.setColor(BUD_RED_COLOR);
         g.drawString(text1Part4, x1 + text1WidthPart1 + text1WidthPart2 + text1WidthPart3, y1);
 
         g.setColor(Color.WHITE);
         g.drawString(text2Part1, x2, y2);
 
-        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part2, x2 + text2WidthPart1, y2);
 
         g.setColor(Color.WHITE);
         g.drawString(text2Part3, x2 + text2WidthPart1 + text2WidthPart2, y2);
 
-        g.setColor(new Color(BUD_GREEN_COLOR));
+        g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -100,20 +93,14 @@ public class GameOverOverlay extends Overlay {
             GameState.state = GameState.MENU;
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            playing.newPlayReset();
-            playing.restartGame();
-            GameState.state = GameState.PLAYING;
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            playing.unpauseGame();
+            AudioPlayer.getInstance().startSong();
         }
     }
 
     @Override
     protected void setAudio() {
         AudioPlayer.getInstance().stopSong();
-
-        if (firstUpdate) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.GAME_OVER);
-            firstUpdate = false;
-        }
     }
 }

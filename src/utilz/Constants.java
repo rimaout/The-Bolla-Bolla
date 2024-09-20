@@ -2,6 +2,9 @@ package utilz;
 
 import main.Game;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Constants {
 
     public static final float GRAVITY = 0.0078f * Game.SCALE;
@@ -517,11 +520,6 @@ public class Constants {
         }
     }
 
-    public static class Overlays {
-        public static final int BUD_GREEN_COLOR = 0x5ce634;
-        public static final int BUD_RED_COLOR = 0xfc8274;
-    }
-
     public static class AudioConstants {
         public static final float DEFAULT_VOLUME = 0.6f;
 
@@ -542,5 +540,28 @@ public class Constants {
         public static final int GAME_OVER = 9;
         public static final int GAME_COMPLETED = 10;
         public static final int HURRY_UP = 11;
+    }
+
+    public static class Overlays {
+        public static final Color BUD_GREEN_COLOR = new Color(0x5ce634);
+        public static final Color BUD_RED_COLOR = new Color(0xfc8274);
+    }
+
+    public static class MenuConstants {
+
+        public static final float SUGGESTION_SPEED = 0.7f; // Adjust the speed as needed
+        public static final String[] SUGGESTIONS = {
+            "Use Arrows or WASD Keys to move in the menu.",                          // Index 0
+            "Press ENTER to select an option in the menu.",                          // Index 1
+            "Press ESC to pause the game while playing.",                            // Index 2
+            "Use WASD to move the player while playing.",                            // Index 3
+            "Press SPACE to jump.",                                                  // Index 4
+            "Press ENTER to shoot a magic bubble.",                                  // Index 5
+            "If you like VIM try the HJKL keys to move, Z to jump and X to shoot.",  // Index 6
+        };
+        public static final int[] SUGGESTIONS_WHIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
+
+        public static final String SPACE = "            ";
+        public static final int SPACE_WHIDTH = 108;
     }
 }
