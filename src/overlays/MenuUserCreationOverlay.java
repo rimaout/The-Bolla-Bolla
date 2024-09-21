@@ -67,6 +67,7 @@ public class MenuUserCreationOverlay extends MenuOverlay {
 
     private void drawBox(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+
         int rectWidth = (int) (Game.GAME_WIDTH * 0.7);
         int rectHeight = (int) (Game.GAME_HEIGHT * 0.465);
         int x = (Game.GAME_WIDTH - rectWidth) / 2;
@@ -218,43 +219,6 @@ public class MenuUserCreationOverlay extends MenuOverlay {
         questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
     }
 
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            menu.setUserSelectionOverlay(true);
-            menu.setUserCreationOverlay(false);
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_ENTER && !enterKeyDeactivated) {
-            usersManager.createUser(newUserName, newUserPictureIndex);
-            menu.setUserSelectionOverlay(false);
-            menu.setUserCreationOverlay(false);
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            upArrowIndex = 1; // animate the arrow
-
-            if (newUserPictureIndex + 1 == usersManager.getUserPicturesCount())
-                newUserPictureIndex = 0;
-            else
-                newUserPictureIndex++;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            downArrowIndex = 1; // animate the arrow
-
-            if (newUserPictureIndex - 1 == -1 || newUserPictureIndex - 1 == -2)
-                newUserPictureIndex = usersManager.getUserPicturesCount() - 1;
-            else
-                newUserPictureIndex--;
-        } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            if (!newUserName.isEmpty()) {
-                newUserName = newUserName.substring(0, newUserName.length() - 1);
-            }
-        } else {
-            char keyChar = Character.toLowerCase(e.getKeyChar());
-            if (Character.isLetterOrDigit(keyChar) && newUserName.length() < 8) {
-                newUserName += keyChar;
-            }
-        }
-    }
-
     private void drawSuggestions(Graphics g) {
 
         if (blink) return;
@@ -280,6 +244,43 @@ public class MenuUserCreationOverlay extends MenuOverlay {
             String text = "Username cannot be empty!";
             int x = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;
             g.drawString(text, x, y);
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            menu.setUserSelectionOverlayActive(true);
+            menu.setUserCreationOverlayActive(false);
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_ENTER && !enterKeyDeactivated) {
+            usersManager.createUser(newUserName, newUserPictureIndex);
+            menu.setUserSelectionOverlayActive(false);
+            menu.setUserCreationOverlayActive(false);
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            upArrowIndex = 1; // animate the arrow
+
+            if (newUserPictureIndex + 1 == usersManager.getUserPicturesCount())
+                newUserPictureIndex = 0;
+            else
+                newUserPictureIndex++;
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            downArrowIndex = 1; // animate the arrow
+
+            if (newUserPictureIndex - 1 == -1 || newUserPictureIndex - 1 == -2)
+                newUserPictureIndex = usersManager.getUserPicturesCount() - 1;
+            else
+                newUserPictureIndex--;
+        } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            if (!newUserName.isEmpty()) {
+                newUserName = newUserName.substring(0, newUserName.length() - 1);
+            }
+        } else {
+            char keyChar = Character.toLowerCase(e.getKeyChar());
+            if (Character.isLetterOrDigit(keyChar) && newUserName.length() < 8) {
+                newUserName += keyChar;
+            }
         }
     }
 

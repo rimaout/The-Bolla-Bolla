@@ -71,8 +71,6 @@ public class Home extends State implements StateMethods {
         }
     }
 
-
-
     public boolean IsLogoInPosition() {
         return isLogoInPosition;
     }

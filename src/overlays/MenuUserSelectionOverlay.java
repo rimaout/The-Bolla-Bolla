@@ -195,17 +195,17 @@ public class MenuUserSelectionOverlay extends MenuOverlay {
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE && usersManager.getCurrentUser() != null) {
-            menu.setUserSelectionOverlay(false);
+            menu.setUserSelectionOverlayActive(false);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             usersManager.setCurrentUser(selectedUser);
-            menu.setUserSelectionOverlay(false);
+            menu.setUserSelectionOverlayActive(false);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_C) {
-            menu.setUserSelectionOverlay(false);
-            menu.setUserCreationOverlay(true);
+            menu.setUserSelectionOverlayActive(false);
+            menu.setUserCreationOverlayActive(true);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
