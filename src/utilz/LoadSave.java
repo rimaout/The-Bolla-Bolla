@@ -37,9 +37,6 @@ public class LoadSave {
     public static final String LEVEL_TILES_SPRITE = "/sprites/level_tiles.png";
     public static final String NUMBERS_TILES_SPRITE = "/sprites/numbers_tiles.png";
     public static final String MENU_BUTTONS_SPRITE = "/sprites/menu_buttons.png";
-    public static final String SOUND_BUTTONS_SPRITE = "/sprites/sound_buttons.png";
-    public static final String URM_BUTTONS_SPRITE = "/sprites/urm_buttons.png";
-    public static final String VOLUME_BUTTON_SPRITE = "/sprites/volume_button.png";
     public static final String BUBBLE_BUD_SPRITE = "/sprites/Bud_bubble.png";
     public static final String BUBBLE_TWINKLE = "/sprites/bubble-twinkle.png";
     public static final String ITEM_BUBBLE_REWARD_SPRITE = "/sprites/item_bubble_reward.png";
@@ -51,10 +48,14 @@ public class LoadSave {
     public static final String WATER_BUBBLE_SPRITE = "/sprites/water_bubble.png";
     public static final String LIGHTNING_BUBBLE_SPRITE = "/sprites/lightning_bubble.png";
     public static final String BUD_BUBBLE_PROJECTILE_SPRITE = "/sprites/bud_bubble_projectile.png";
+    public static final String USER_PICTURES = "/sprites/user_pictures.png";
+    public static final String ARROWS_LEFT_RIGHT = "/sprites/arrows-left-right.png";
+    public static final String ARROWS_UP_DOWN = "/sprites/arrows-up-down.png";
 
     // IMAGES
     public static final String GAME_LOGO = "/images/logo.png";
     public static final String HURRY_IMAGE = "/images/hurry_image.png";
+    public static final String QUESTION_MARK_IMAGE = "/images/question-mark.png";
 
     // FONTS
     public static final String NES_FONT = "/fonts/nintendo-nes-font.ttf";

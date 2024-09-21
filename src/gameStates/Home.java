@@ -1,6 +1,7 @@
 package gameStates;
 
-import entities.HomeScreenBackGroundStars;
+import entities.TwinkleBubble;
+import entities.TwinkleBubbleManager;
 import main.Game;
 import utilz.LoadSave;
 import static utilz.Constants.Home.*;
@@ -15,11 +16,10 @@ import java.util.Random;
 
 public class Home extends State implements StateMethods {
 
+    private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance(this);
+
     private BufferedImage logoImg;
     private float logoX, logoY, logoW, logoH;
-
-    private BufferedImage[] twinkleBubbleSprite;
-    private List<HomeScreenBackGroundStars> bubbles;
 
     private boolean isLogoInPosition = false;
     private final Font nesFont;
@@ -29,8 +29,6 @@ public class Home extends State implements StateMethods {
         loadLogo();
 
         nesFont = LoadSave.GetNesFont();
-        loadTwinkleBubble();
-        initializeBubbles();
     }
 
     private void loadLogo() {
@@ -46,7 +44,7 @@ public class Home extends State implements StateMethods {
     public void update() {
 
         // Update Bubbles
-        bubbles.forEach(HomeScreenBackGroundStars::update);
+        twinkleBubbleManager.update();
 
         // Update Logo Position
         if (logoY < LOGO_END_Y)
@@ -58,8 +56,8 @@ public class Home extends State implements StateMethods {
     @Override
     public void draw(Graphics g) {
 
-        Graphics2D g2d = (Graphics2D) g;
-        bubbles.forEach(bubble -> bubble.draw(g2d));
+        // Draw Bubbles
+        twinkleBubbleManager.draw(g);
 
         g.drawImage(logoImg, (int) logoX, (int) logoY, (int) logoW, (int) logoH, null);
 
@@ -73,29 +71,9 @@ public class Home extends State implements StateMethods {
         }
     }
 
-    private void loadTwinkleBubble() {
-        BufferedImage img = LoadSave.GetSprite(LoadSave.BUBBLE_TWINKLE);
 
-        twinkleBubbleSprite = new BufferedImage[4];
-        for (int i = 0; i < 4; i++) {
-            twinkleBubbleSprite[i] = img.getSubimage(i * BUBBLE_DEFAULT_W, 0, BUBBLE_DEFAULT_W, BUBBLE_DEFAULT_H);
-        }
-    }
 
-    private void initializeBubbles() {
-        bubbles = new ArrayList<>();
-        int bubbleCount = 50;
-
-        Random random = new Random();
-
-        for (int i = 0; i < bubbleCount; i++) {
-            int x = random.nextInt(Game.GAME_WIDTH);
-            int y = random.nextInt(Game.GAME_HEIGHT);
-            bubbles.add(new HomeScreenBackGroundStars(twinkleBubbleSprite, x, y, this));
-        }
-    }
-
-    public boolean getIsLogoInPosition() {
+    public boolean IsLogoInPosition() {
         return isLogoInPosition;
     }
 

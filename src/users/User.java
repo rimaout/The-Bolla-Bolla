@@ -1,5 +1,6 @@
-package profiles;
+package users;
 
+import java.awt.*;
 import java.io.*;
 import java.time.LocalDateTime;
 
@@ -7,14 +8,13 @@ public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L; //It serves as a version control identifier for the Serializable class. If you do not explicitly declare it, Java will generate one at runtime based on various aspects of the class. However, this generated value can change if the class structure changes, which can lead to InvalidClassException during deserialization if the class has been modified. If you anticipate making changes to the class that are not backward-compatible, you can change the serialVersionUID to a different value to indicate a new version of the class. However, for most cases, a simple value like 1L is sufficient.
 
-    private String name;
-    private int profilePictureIndex;
-    private LocalDateTime lastSelectedTime;
+    private String name = "";
+    private int profilePictureIndex = 0;
 
-    private int bestScore;
-    private String bestScoreDate;
-    private int playedGames;
-    private int wonGames;
+    private int bestScore = 0;
+    private String bestScoreDate = "N/A";
+    private int playedGames = 0;
+    private int wonGames = 0;
 
     public User(String name, int profilePictureIndex) {
         this.name = name;
@@ -27,10 +27,6 @@ public class User implements Serializable {
 
     public int getProfilePictureIndex() {
         return profilePictureIndex;
-    }
-
-    public LocalDateTime getLastSelectedTime() {
-        return lastSelectedTime;
     }
 
     public int getBestScore() {
@@ -47,10 +43,6 @@ public class User implements Serializable {
 
     public int getWonGames() {
         return wonGames;
-    }
-
-    public void updateLastSelectedTime() {
-        lastSelectedTime = LocalDateTime.now();
     }
 
     public void setScore(int score, String date) {
@@ -80,7 +72,6 @@ public class User implements Serializable {
 
             oos.writeObject(name);
             oos.writeObject(profilePictureIndex);
-            oos.writeObject(lastSelectedTime);
             oos.writeObject(bestScore);
             oos.writeObject(bestScoreDate);
             oos.writeObject(playedGames);

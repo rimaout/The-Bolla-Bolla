@@ -11,16 +11,16 @@ import java.awt.image.BufferedImage;
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Home.*;
 
-public class HomeScreenBackGroundStars extends Entity {
-    private final Home home;
+public class TwinkleBubble extends Entity {
+    private final TwinkleBubbleManager manager;
 
     private BufferedImage[] sprite;
     private Direction direction;
 
-    public HomeScreenBackGroundStars(BufferedImage[] sprite, int startX, int startY, Home home) {
+    public TwinkleBubble(BufferedImage[] sprite, int startX, int startY, TwinkleBubbleManager manager) {
         super(startX, startY, BUBBLE_W, BUBBLE_H);
         this.sprite = sprite;
-        this.home = home;
+        this.manager = manager;
 
         // Randomize the animation index
         animationIndex = (int) (Math.random() * 4);
@@ -49,7 +49,7 @@ public class HomeScreenBackGroundStars extends Entity {
 
         y -= BUBBLE_SPEED;
 
-        if (home.getIsLogoInPosition()) {
+        if (manager.IsHomeLogoInPosition()) {
             if (direction == RIGHT)
                 x += BUBBLE_SPEED / 2;
             else

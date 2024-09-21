@@ -28,4 +28,13 @@ public class MenuLeaderBoardOverlay extends MenuOverlay {
             menu.setScoreBoardOverlay(false);
         }
     }
+
+    public void updateLeaderBoard() {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }

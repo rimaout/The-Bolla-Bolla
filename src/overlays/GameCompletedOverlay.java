@@ -14,9 +14,9 @@ import static utilz.Constants.Overlays.BUD_RED_COLOR;
 
 
 
-public class GameCompletedGameOverlay extends GameOverlay {
+public class GameCompletedOverlay extends GameOverlay {
 
-    public GameCompletedGameOverlay(Playing playing) {
+    public GameCompletedOverlay(Playing playing) {
         super(playing);
     }
 

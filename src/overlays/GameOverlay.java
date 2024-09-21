@@ -38,18 +38,6 @@ public abstract class GameOverlay {
         firstUpdate = true;
     }
 
-    protected void setGameStateWithDelay(GameState state, int delay) {
-        // Create a Timer to delay the state change
-        Timer timer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                GameState.state = state;
-            }
-        });
-        timer.setRepeats(false); // Ensure the timer only runs once
-        timer.start();
-    }
-
     protected abstract void drawTitle(Graphics g);
     protected abstract void drawControls(Graphics g);
     protected abstract void setAudio();

@@ -1,7 +1,9 @@
 package gameStates;
 
+import entities.TwinkleBubbleManager;
 import main.Game;
-import profiles.UsersManager;
+import overlays.MenuUserCreationOverlay;
+import users.UsersManager;
 import overlays.MenuLeaderBoardOverlay;
 import overlays.MenuUserSelectionOverlay;
 import utilz.LoadSave;
@@ -9,19 +11,20 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
 import static utilz.Constants.ANIMATION_SPEED;
+
 import static utilz.Constants.MenuConstants.*;
-import static utilz.Constants.Overlays.BUD_RED_COLOR;
 
 public class Menu extends State implements StateMethods {
     private final UsersManager usersManager;
+    private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance();
 
     private final Font nesFont;
     private final Font retroFont;
 
     private String[] dotAnimations = {"", ".", "..", "..."};
     private int dotAnimationIndex, animationTick;
+
 
     private float suggestionX = 0;
     private String suggestions;
@@ -30,10 +33,12 @@ public class Menu extends State implements StateMethods {
 
     // Overlays
     private final MenuUserSelectionOverlay menuUserSelectionOverlay = new MenuUserSelectionOverlay(this);
+    private final MenuUserCreationOverlay menuUserCreationOverlay = new MenuUserCreationOverlay(this);
     private final MenuLeaderBoardOverlay menuLeaderBoardOverlay = new MenuLeaderBoardOverlay(this);
 
     // Overlays Booleans
-    private boolean UserSelectionOverlay = false;
+    private boolean UserSelectionOverlay = true;
+    private boolean UserCreationOverlay = false;
     private boolean ScoreBoardOverlay = false;
 
     public Menu(Game game) {
@@ -47,31 +52,38 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void update() {
-        updateAnimationTick();
+        twinkleBubbleManager.update();
 
         if (UserSelectionOverlay)
             menuUserSelectionOverlay.update();
+        if (UserCreationOverlay)
+            menuUserCreationOverlay.update();
         else if (ScoreBoardOverlay)
             menuLeaderBoardOverlay.update();
+        else
+            updateAnimationTick();
     }
 
     @Override
     public void draw(Graphics g) {
+        twinkleBubbleManager.draw(g);
 
-        String text = SPACE;
-        g.setFont(retroFont.deriveFont(24f));
-        FontMetrics fm = g.getFontMetrics(g.getFont());
-        System.out.println(fm.stringWidth(text));
+        g.setColor(new Color(0, 0, 0, 40));
+        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 
-        drawTittle(g);
         drawGratings(g);
-        drawSelections(g);
-        drawSuggestions(g);
 
         if (UserSelectionOverlay)
             menuUserSelectionOverlay.draw(g);
+        else if (UserCreationOverlay)
+            menuUserCreationOverlay.draw(g);
         else if (ScoreBoardOverlay)
             menuLeaderBoardOverlay.draw(g);
+        else {
+            drawTittle(g);
+            drawSelections(g);
+            drawSuggestions(g);
+        }
     }
 
     private void updateAnimationTick() {
@@ -120,7 +132,7 @@ public class Menu extends State implements StateMethods {
         int textWidth2 = fm.stringWidth("...");
 
         if (usersManager.getCurrentUser() != null) {
-            text2 = usersManager.getCurrentUser().getName() + "!";
+            text2 = usersManager.getCurrentUser().getName().toUpperCase() + "!";
             textWidth2 = fm.stringWidth(text2);
         }
 
@@ -217,6 +229,11 @@ public class Menu extends State implements StateMethods {
             return;
         }
 
+        if (UserCreationOverlay) {
+            menuUserCreationOverlay.keyPressed(e);
+            return;
+        }
+
         if (ScoreBoardOverlay) {
             menuLeaderBoardOverlay.keyPressed(e);
             return;
@@ -243,11 +260,13 @@ public class Menu extends State implements StateMethods {
                         break;
                     case 1:
                         // Change User
+                        menuUserSelectionOverlay.updateUserList();
                         UserSelectionOverlay = true;
                         ScoreBoardOverlay = false;
                         break;
                     case 2:
                         // Score Board
+                        menuLeaderBoardOverlay.updateLeaderBoard();
                         UserSelectionOverlay = false;
                         ScoreBoardOverlay = true;
                         break;
@@ -262,13 +281,20 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (UserSelectionOverlay)
+            menuUserSelectionOverlay.keyReleased(e);
+        else if (UserCreationOverlay)
+            menuUserCreationOverlay.keyReleased(e);
     }
 
     // Getters and Setters
 
     public void setUserSelectionOverlay(boolean userSelectionOverlay) {
         UserSelectionOverlay = userSelectionOverlay;
+    }
+
+    public void setUserCreationOverlay(boolean userCreationOverlay) {
+        UserCreationOverlay = userCreationOverlay;
     }
 
     public void setScoreBoardOverlay(boolean scoreBoardOverlay) {

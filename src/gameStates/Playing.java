@@ -33,8 +33,8 @@ public class Playing extends State implements StateMethods {
     private RewardPointsManager rewardPointsManager;
     private PowerUpManager powerUpManager;
     private GamePauseOverlay gamePauseOverlay;
-    private GameOverGameOverlay gameOverOverlay;
-    private GameCompletedGameOverlay gameCompletedOverlay;
+    private GameOverOverlay gameOverOverlay;
+    private GameCompletedOverlay gameCompletedOverlay;
     private PlayingHud playingHud;
     private Intro intro;
 
@@ -66,8 +66,8 @@ public class Playing extends State implements StateMethods {
         powerUpManager = PowerUpManager.getInstance(playerOne);
 
         gamePauseOverlay = new GamePauseOverlay(this);
-        gameOverOverlay = new GameOverGameOverlay(this);
-        gameCompletedOverlay = new GameCompletedGameOverlay(this);
+        gameOverOverlay = new GameOverOverlay(this);
+        gameCompletedOverlay = new GameCompletedOverlay(this);
         playingHud = new PlayingHud(playerOne, playerTwo);
         intro = new Intro(this, playerOne);
     }
