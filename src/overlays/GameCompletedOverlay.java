@@ -4,6 +4,7 @@ import audio.AudioPlayer;
 import gameStates.GameState;
 import gameStates.Playing;
 import main.Game;
+import users.UsersManager;
 import utilz.Constants.AudioConstants;
 
 import java.awt.*;
@@ -96,12 +97,14 @@ public class GameCompletedOverlay extends GameOverlay {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
+            UsersManager.getInstance().updateCurrentUserInfo(true);
             playing.newPlayReset();
             playing.restartGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
+            UsersManager.getInstance().updateCurrentUserInfo(true);
             playing.newPlayReset();
             playing.restartGame();
             GameState.state = GameState.PLAYING;

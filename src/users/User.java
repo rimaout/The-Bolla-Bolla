@@ -12,9 +12,10 @@ public class User implements Serializable {
     private int profilePictureIndex = 0;
 
     private int bestScore = 0;
-    private String bestScoreDate = "N/A";
     private int playedGames = 0;
     private int wonGames = 0;
+
+    private long lastSelectedTime = System.currentTimeMillis();
 
     public User(String name, int profilePictureIndex) {
         this.name = name;
@@ -33,10 +34,6 @@ public class User implements Serializable {
         return bestScore;
     }
 
-    public String getBestScoreDate() {
-        return bestScoreDate;
-    }
-
     public int getPlayedGames() {
         return playedGames;
     }
@@ -45,11 +42,17 @@ public class User implements Serializable {
         return wonGames;
     }
 
-    public void setScore(int score, String date) {
-        if (score > bestScore) {
+    public long getLastSelectedTime() {
+        return lastSelectedTime;
+    }
+
+    public void updateLastSelectedTime() {
+        lastSelectedTime = System.currentTimeMillis();
+    }
+
+    public void setScore(int score) {
+        if (score > bestScore)
             bestScore = score;
-            bestScoreDate = date;
-        }
     }
 
     public void increaseGames() {
@@ -73,7 +76,6 @@ public class User implements Serializable {
             oos.writeObject(name);
             oos.writeObject(profilePictureIndex);
             oos.writeObject(bestScore);
-            oos.writeObject(bestScoreDate);
             oos.writeObject(playedGames);
             oos.writeObject(wonGames);
 
@@ -101,7 +103,6 @@ public class User implements Serializable {
             // Create the user
             User user = new User(name, profilePictureIndex);
             user.bestScore = bestScore;
-            user.bestScoreDate = bestScoreDate;
             user.playedGames = playedGames;
             user.wonGames = wonGames;
 

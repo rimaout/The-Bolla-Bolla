@@ -4,6 +4,7 @@ import audio.AudioPlayer;
 import gameStates.*;
 import gameStates.Menu;
 import gameStates.OldMenu;
+import users.UsersManager;
 
 import java.awt.*;
 
@@ -14,6 +15,7 @@ public class Game implements Runnable {
     private Thread gameThread;
 
     private AudioPlayer audioPlayer;
+    private UsersManager usersManager;
     private Home home;
     private Intro introOverlay;
     private Menu menu;
@@ -48,6 +50,7 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
+        usersManager = UsersManager.getInstance(this);
         audioPlayer = AudioPlayer.getInstance();
         home = new Home(this);
         menu = new Menu(this);

@@ -1,5 +1,6 @@
 package users;
 
+import main.Game;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -13,22 +14,28 @@ import java.util.stream.Collectors;
 
 public class UsersManager {
     private static UsersManager instance;
+    private final Game game;
 
     private final HashMap<String, User> users;
     private User currentUser;
 
     BufferedImage[] userPictures;
 
-    public UsersManager() {
-        users = new HashMap<>();
+    private UsersManager(Game game) {
+        this.users = new HashMap<>();
+        this.game = game;
         loadUsers();
         loadUserPictures();
     }
 
-    public static UsersManager getInstance() {
+    public static UsersManager getInstance(Game game) {
         if (instance == null) {
-            instance = new UsersManager();
+            instance = new UsersManager(game);
         }
+        return instance;
+    }
+
+    public static UsersManager getInstance() {
         return instance;
     }
 
@@ -44,6 +51,8 @@ public class UsersManager {
     public void selectProfile(String name) {
         if (users.containsKey(name)) {
             currentUser = users.get(name);
+            currentUser.updateLastSelectedTime();
+            saveUsers();
         }
     }
 
@@ -71,6 +80,17 @@ public class UsersManager {
         }
     }
 
+    public void updateCurrentUserInfo(boolean victory) {
+        currentUser.setScore(game.getPlaying().getPlayerOne().getPoints());
+
+        if (victory)
+            currentUser.increaseWins();
+        else
+            currentUser.increaseGames();
+
+        saveUsers();
+    }
+
     public void loadUserPictures() {
         userPictures = new BufferedImage[10];
         BufferedImage numbersSprite = LoadSave.GetSprite(LoadSave.USER_PICTURES);
@@ -88,7 +108,11 @@ public class UsersManager {
     }
 
     public ArrayList<User> getUsers() {
-        return new ArrayList<>(users.values());
+
+        // sort users by last selected time (used stream because of exam requirement)
+        return (ArrayList<User>) users.values().stream()
+                .sorted(Comparator.comparing(User::getLastSelectedTime).reversed())
+                .collect(Collectors.toList());
     }
 
     public User getCurrentUser() {
