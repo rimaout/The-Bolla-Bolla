@@ -46,8 +46,7 @@ public class GameOverOverlay extends GameOverlay {
         String text1Part1 = "Press ";
         String text1Part2 = "Q";
         String text1Part3 = " to ";
-        String text1Part4 = "rage";
-        String text1Part5 = "QUIT!";
+        String text1Part4 = "QUIT!";
         int text1WidthPart1 = fm.stringWidth(text1Part1);
         int text1WidthPart2 = fm.stringWidth(text1Part2);
         int text1WidthPart3 = fm.stringWidth(text1Part3);
@@ -55,18 +54,16 @@ public class GameOverOverlay extends GameOverlay {
         int x1 = (Game.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
         int y1 = Game.GAME_HEIGHT / 2 - 3 * Game.SCALE;
 
-        // Text for RESUME
+        // Text for RESTART
         String text2Part1 = "Press ";
-        String text2Part2 = "S";
+        String text2Part2 = "R";
         String text2Part3 = " to ";
-        String text2Part4 = "SAVE!";
-        String text2Part5 = "result";
+        String text2Part4 = "RESTART!";
         int text2WidthPart1 = fm.stringWidth(text2Part1);
         int text2WidthPart2 = fm.stringWidth(text2Part2);
         int text2WidthPart3 = fm.stringWidth(text2Part3);
         int text2WidthPart4 = fm.stringWidth(text2Part4);
-        int text2WidthPart5 = fm.stringWidth(text2Part5);
-        int x2 = (Game.GAME_WIDTH - (text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4 + text2WidthPart5)) / 2;
+        int x2 = (Game.GAME_WIDTH - (text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4)) / 2;
         int y2 = Game.GAME_HEIGHT / 2 + 10 * Game.SCALE;
 
         g.setFont(retroFont.deriveFont(22f));
@@ -94,11 +91,7 @@ public class GameOverOverlay extends GameOverlay {
 
         g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
-
-        g.setColor(Color.WHITE);
-        g.drawString(text2Part5, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4, y2);
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {

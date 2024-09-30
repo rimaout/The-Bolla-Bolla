@@ -259,7 +259,7 @@ public class Menu extends State implements StateMethods {
             case KeyEvent.VK_ENTER:
                 switch (selectionIndex) {
                     case 0:
-                        // Play
+                        GameState.state = GameState.PLAYING;
                         break;
                     case 1:
                         // Change User

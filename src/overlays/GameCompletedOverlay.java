@@ -55,7 +55,7 @@ public class GameCompletedOverlay extends GameOverlay {
         int x1 = (Game.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
         int y1 = Game.GAME_HEIGHT / 2 - 3 * Game.SCALE;
 
-        // Text for RESUME
+        // Text for RESTART
         String text2Part1 = "Press ";
         String text2Part2 = "R";
         String text2Part3 = " to ";
@@ -97,14 +97,14 @@ public class GameCompletedOverlay extends GameOverlay {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            UsersManager.getInstance().updateCurrentUserInfo(true);
+            UsersManager.getInstance().updateCurrentUserInfo(false);
             playing.newPlayReset();
             playing.restartGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
-            UsersManager.getInstance().updateCurrentUserInfo(true);
+            UsersManager.getInstance().updateCurrentUserInfo(false);
             playing.newPlayReset();
             playing.restartGame();
             GameState.state = GameState.PLAYING;

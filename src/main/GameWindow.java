@@ -1,17 +1,28 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+
+import static utilz.LoadSave.GAME_ICON;
 
 public class GameWindow extends JFrame {
 
     public GameWindow(GamePanel gamePanel){
 
-        //setSize(800, 600); // commented because we are using setPanelSize() in GamePanel, this will be used to set the size of the window, se explanation in https://www.youtube.com/watch?v=BT2jm74lLlg&list=PL4rzdwizLaxYmltJQRjq18a9gsSyEQQ-0&index=5 at 3.20
-        setTitle("BubleBubble"); // Set the title of the window
+        setTitle("BubbleBubble"); // Set the title of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the window and exit the application when the window is closed// }
         add(gamePanel);
+
+        Image icon = new ImageIcon("res/images/game-icon.png").getImage();
+
+        setIconImage(icon); // Set the icon of the window
+        try {
+            Taskbar.getTaskbar().setIconImage(icon);
+        } catch (UnsupportedOperationException e) {
+            System.out.println("TaskBar non supportata su Windows!");
+        }
 
         setResizable(false);
         pack(); // Adjust the size of the window to fit the preferred size of the panel (set in the setPanelSize() method of the GamePanel class)
@@ -29,7 +40,5 @@ public class GameWindow extends JFrame {
                 gamePanel.getGame().windowFocusLost();
             }
         });
-
-
     }
 }

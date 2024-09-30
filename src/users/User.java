@@ -96,7 +96,6 @@ public class User implements Serializable {
             String name = (String) ois.readObject();
             int profilePictureIndex = (int) ois.readObject();
             int bestScore = (int) ois.readObject();
-            String bestScoreDate = (String) ois.readObject();
             int playedGames = (int) ois.readObject();
             int wonGames = (int) ois.readObject();
 

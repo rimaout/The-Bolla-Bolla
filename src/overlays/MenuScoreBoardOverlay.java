@@ -182,8 +182,7 @@ public class MenuScoreBoardOverlay extends MenuOverlay {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            menu.setUserSelectionOverlayActive(true);
-            menu.setUserCreationOverlayActive(false);
+            menu.setScoreBoardOverlayActive(false);
         }
     }
 
