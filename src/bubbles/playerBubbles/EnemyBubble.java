@@ -21,14 +21,14 @@ import static utilz.HelpMethods.*;
 
 public class EnemyBubble extends EmptyBubble {
 
-    private final Random random = new Random();
     private final EnemyManager enemyManager = EnemyManager.getInstance();
+    private final Random random = new Random();
     private final Enemy enemy;
 
-    private int consecutivePopsCounter;
-    private boolean playerPopped;
     private float ySpeedDead;
     private float xSpeedDead;
+    private boolean playerPopped;
+    private int consecutivePopsCounter;
     private boolean playPopSound = false;
 
     public EnemyBubble(Enemy enemy, float x, float y, Direction direction) {
@@ -161,5 +161,4 @@ public class EnemyBubble extends EmptyBubble {
         else
             return IsPerimeterWallTile(hitbox.x + hitbox.width + xSpeed);
     }
-
 }

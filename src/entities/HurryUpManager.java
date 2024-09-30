@@ -1,13 +1,13 @@
 package entities;
 
-import audio.AudioPlayer;
-import main.Game;
-import utilz.Constants.AudioConstants;
-import utilz.LoadSave;
-import utilz.PlayingTimer;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import main.Game;
+import utilz.LoadSave;
+import audio.AudioPlayer;
+import utilz.PlayingTimer;
+import utilz.Constants.AudioConstants;
 
 import static utilz.Constants.HurryUpManager.*;
 

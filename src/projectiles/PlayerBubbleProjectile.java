@@ -1,19 +1,19 @@
 package projectiles;
 
-import audio.AudioPlayer;
-import bubbles.playerBubbles.EmptyBubble;
-import bubbles.playerBubbles.PlayerBubblesManager;
+import java.awt.*;
+
 import entities.Enemy;
 import entities.Player;
+import audio.AudioPlayer;
 import utilz.Constants.Direction;
 import utilz.Constants.AudioConstants;
-
-import java.awt.*;
+import bubbles.playerBubbles.EmptyBubble;
+import bubbles.playerBubbles.PlayerBubblesManager;
 
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Projectiles.*;
-import static utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 import static utilz.HelpMethods.CanMoveHere;
+import static utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectile extends Projectile {
     private boolean playSound = true;

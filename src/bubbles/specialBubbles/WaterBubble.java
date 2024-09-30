@@ -1,7 +1,8 @@
 package bubbles.specialBubbles;
 
-import entities.Player;
+import itemesAndRewards.PowerUpManager;
 import main.Game;
+import entities.Player;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -32,6 +33,8 @@ public class WaterBubble extends SpecialBubble {
     public void playerPop(Player player) {
         active = false;
         spawnWaterFlow();
+
+        PowerUpManager.getInstance().increaseWaterBubblePopCounter();
     }
 
     private void spawnWaterFlow() {
@@ -49,7 +52,7 @@ public class WaterBubble extends SpecialBubble {
             return;
         }
 
-        // if the bubble does not conpenetrate with the perimeter walls, spawn waterFlow in the same position of the bubble
+        // if the bubble does not concentrate with the perimeter walls, spawn waterFlow in the same position of the bubble
         SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x, hitbox.y));
     }
 }

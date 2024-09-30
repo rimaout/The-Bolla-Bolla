@@ -1,17 +1,17 @@
 package projectiles;
 
+import java.awt.*;
+
 import entities.Enemy;
 import entities.Player;
 import utilz.Constants.Direction;
 
-import java.awt.*;
-
 import static utilz.Constants.Direction.*;
+import static utilz.HelpMethods.CanMoveHere;
 import static utilz.Constants.Projectiles.*;
 import static utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static utilz.Constants.Projectiles.ProjectileState.MOVING;
 import static utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
-import static utilz.HelpMethods.CanMoveHere;
 
 public class MaitaFireProjectile extends Projectile {
 
@@ -68,5 +68,4 @@ public class MaitaFireProjectile extends Projectile {
             animationTick = 0;
         }
     }
-
 }

@@ -1,18 +1,14 @@
 package gameStates;
 
-import entities.TwinkleBubble;
-import entities.TwinkleBubbleManager;
 import main.Game;
 import utilz.LoadSave;
+import entities.TwinkleBubbleManager;
 import static utilz.Constants.Home.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Home extends State implements StateMethods {
 
@@ -110,6 +106,6 @@ public class Home extends State implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        // Not used
     }
 }

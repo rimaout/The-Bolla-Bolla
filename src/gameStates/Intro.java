@@ -1,20 +1,20 @@
 package gameStates;
 
-import audio.AudioPlayer;
-import entities.Player;
-import levels.Level;
-import levels.LevelManager;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import main.Game;
+import levels.Level;
 import utilz.LoadSave;
+import entities.Player;
+import audio.AudioPlayer;
+import levels.LevelManager;
 
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.INTRO.IntroState.*;
 import static utilz.Constants.INTRO.*;
 import static utilz.Constants.PlayerConstants.SPAWN_X;
 import static utilz.Constants.PlayerConstants.SPAWN_Y;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Intro {
     private Playing playing;
@@ -74,7 +74,7 @@ public class Intro {
     }
 
     private void firstUpdate(){
-        AudioPlayer.getInstance().playIntroSong(); //TODO: Move in view when MVC is implemented
+        AudioPlayer.getInstance().playIntroSong();
         player.getHitbox().x = PLAYER_START_X;
         player.getHitbox().y = PLAYER_START_Y;
 

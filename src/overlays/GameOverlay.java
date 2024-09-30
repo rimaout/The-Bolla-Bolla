@@ -1,14 +1,10 @@
 package overlays;
 
-import gameStates.GameState;
-import gameStates.Playing;
 import main.Game;
 import utilz.LoadSave;
+import gameStates.Playing;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public abstract class GameOverlay {

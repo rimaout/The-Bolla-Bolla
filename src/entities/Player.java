@@ -1,23 +1,22 @@
 package entities;
 
-import audio.AudioPlayer;
-import gameStates.Playing;
-import itemesAndRewards.PowerUpManager;
-import levels.LevelManager;
-import main.Game;
-import projectiles.PlayerBubbleProjectile;
-import projectiles.ProjectileManager;
-import utilz.LoadSave;
-import utilz.PlayingTimer;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import main.Game;
+import utilz.LoadSave;
+import audio.AudioPlayer;
+import utilz.PlayingTimer;
+import levels.LevelManager;
+import projectiles.ProjectileManager;
+import itemesAndRewards.PowerUpManager;
+import projectiles.PlayerBubbleProjectile;
+
 import static utilz.Constants.*;
+import static utilz.HelpMethods.*;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.PlayerConstants.*;
-import static utilz.HelpMethods.*;
 
 public class Player extends Entity{
     private final LevelManager levelManager = LevelManager.getInstance();
@@ -172,8 +171,6 @@ public class Player extends Entity{
         attackTimer -= (int) timer.getTimeDelta();
         if (attackTimer > 0)
                 attacking = false;
-
-        
     }
 
     private void updatePosition() {

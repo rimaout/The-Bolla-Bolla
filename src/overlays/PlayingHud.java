@@ -1,7 +1,7 @@
 package overlays;
 
-import entities.Player;
 import main.Game;
+import entities.Player;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -68,8 +68,6 @@ public class PlayingHud {
     private void drawPlayerTwoLives(Graphics g) {
        if (playerTwo == null)
            return;
-
-       // draw lives for player two (still need to implement player two)
     }
 
     private void drawNumber(Graphics g, int number, int xPos, int yPos, int size) {

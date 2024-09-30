@@ -1,9 +1,8 @@
 package main;
 
-import audio.AudioPlayer;
 import gameStates.*;
 import gameStates.Menu;
-import gameStates.OldMenu;
+import audio.AudioPlayer;
 import users.UsersManager;
 
 import java.awt.*;
@@ -17,7 +16,6 @@ public class Game implements Runnable {
     private AudioPlayer audioPlayer;
     private UsersManager usersManager;
     private Home home;
-    private Intro introOverlay;
     private Menu menu;
     private Playing playing;
     private LevelTransition levelTransition;

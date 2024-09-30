@@ -3,10 +3,10 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import itemesAndRewards.PowerUpManager;
-import levels.LevelManager;
 import main.Game;
 import utilz.PlayingTimer;
+import levels.LevelManager;
+import itemesAndRewards.PowerUpManager;
 
 import static utilz.HelpMethods.*;
 

@@ -1,19 +1,19 @@
 package gameStates;
 
-import entities.TwinkleBubbleManager;
+import static utilz.Constants.MenuConstants.*;
+
 import main.Game;
-import overlays.MenuUserCreationOverlay;
-import users.UsersManager;
-import overlays.MenuScoreBoardOverlay;
-import overlays.MenuUserSelectionOverlay;
 import utilz.LoadSave;
+import users.UsersManager;
+import entities.TwinkleBubbleManager;
+import overlays.MenuScoreBoardOverlay;
+import overlays.MenuUserCreationOverlay;
+import overlays.MenuUserSelectionOverlay;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import static utilz.Constants.ANIMATION_SPEED;
-
-import static utilz.Constants.MenuConstants.*;
 
 public class Menu extends State implements StateMethods {
     private final UsersManager usersManager;
@@ -24,7 +24,6 @@ public class Menu extends State implements StateMethods {
 
     private String[] dotAnimations = {"", ".", "..", "..."};
     private int dotAnimationIndex, animationTick;
-
 
     private float suggestionX = 0;
     private String suggestions;
@@ -175,14 +174,13 @@ public class Menu extends State implements StateMethods {
             g.setColor(new Color(0xCCCCCC)); // Light Gray
             g.setFont(retroFont.deriveFont(32f));
         }
-        FontMetrics fm = g.getFontMetrics(g.getFont());
 
+        FontMetrics fm = g.getFontMetrics(g.getFont());
         int textX = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;   // center in the screen
         int textY = lineY + fm.getHeight()/2;                           // center in the line
 
         g.drawString(text, textX, textY);
     }
-
 
     private void drawSuggestions(Graphics g) {
         g.setColor(Color.WHITE);
@@ -292,7 +290,7 @@ public class Menu extends State implements StateMethods {
             menuScoreBoardOverlay.keyReleased(e);
     }
 
-    // Getters and Setters
+    // ------------ Getters and Setters ------------
 
     public void setUserSelectionOverlayActive(boolean userSelectionOverlayActive) {
         this.userSelectionOverlayActive = userSelectionOverlayActive;

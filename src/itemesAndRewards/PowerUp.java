@@ -1,13 +1,13 @@
 package itemesAndRewards;
 
-import audio.AudioPlayer;
+import java.awt.*;
+
 import entities.Player;
+import audio.AudioPlayer;
 import utilz.Constants.AudioConstants;
 
 import static utilz.Constants.Items.*;
 import static utilz.Constants.Items.PowerUpType.*;
-
-import java.awt.*;
 
 public class PowerUp extends Item {
     private final PowerUpManager powerUpManager = PowerUpManager.getInstance();

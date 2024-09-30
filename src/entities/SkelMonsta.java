@@ -4,18 +4,19 @@ import utilz.Constants.Direction;
 
 import java.awt.*;
 
-import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Direction.*;
+import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
 public class SkelMonsta extends Enemy{
 
     private int nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
+    private float walkedDistance = 0;
+
     private boolean spawning = true;
     private boolean moving = false;
     private boolean despawning = false;
-    private float walkedDistance = 0;
 
     public SkelMonsta() {
         super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_W, ENEMY_H, SKEL_MONSTA, RIGHT);

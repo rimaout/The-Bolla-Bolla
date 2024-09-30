@@ -1,14 +1,14 @@
 package bubbles;
 
-import entities.Entity;
-import entities.Player;
-import levels.LevelManager;
-import main.Game;
-import utilz.PlayingTimer;
-
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+
+import main.Game;
+import entities.Entity;
+import entities.Player;
+import levels.LevelManager;
+import utilz.PlayingTimer;
 
 import static java.lang.Math.abs;
 import static utilz.Constants.Bubble.*;
@@ -26,13 +26,14 @@ public abstract class Bubble extends Entity {
 
     protected boolean active = true;
     protected boolean popped = false;
+
     protected int state = NORMAL;
     protected int previousState = NORMAL;
+
     protected int normalTimer = NORMAL_TIMER;
     protected int redTimer = RED_TIMER;
     protected int blinkingTimer = BLINKING_TIMER;
 
-    // Movement variables
     protected float xSpeed, ySpeed;
     protected Direction direction;
     protected Direction previousDirection;
@@ -114,13 +115,11 @@ public abstract class Bubble extends Entity {
     }
 
     protected void pacManEffect() {
-        if (direction == DOWN && getTileY() == Game.TILES_IN_HEIGHT + 1) {
+        if (direction == DOWN && getTileY() == Game.TILES_IN_HEIGHT + 1)
             hitbox.y = -2 * Game.TILES_SIZE;
-        }
 
-        if (direction == UP && getTileY() == - 1) {
+        if (direction == UP && getTileY() == - 1)
             hitbox.y = (Game.TILES_IN_HEIGHT + 2) * Game.TILES_SIZE;
-        }
     }
 
     public void bounceDown() {
@@ -205,14 +204,6 @@ public abstract class Bubble extends Entity {
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public Rectangle2D.Float getInternalCollisionBox() {
-        return internalCollisionBox;
-    }
-
-    public Ellipse2D.Float getExternalCollisionBox() {
-        return externalCollisionBox;
     }
 
     protected void changeDirection() {

@@ -1,24 +1,22 @@
 package gameStates;
 
-import entities.EnemyManager;
-import entities.Player;
-import itemesAndRewards.ItemManager;
-import levels.Level;
-import levels.LevelManager;
-import main.Game;
-import utilz.LoadSave;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import main.Game;
+import levels.Level;
+import utilz.LoadSave;
+import entities.Player;
+import levels.LevelManager;
+
 import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
-import static utilz.Constants.LevelTransition.TransitionState;
-import static utilz.Constants.LevelTransition.TransitionState.*;
 import static utilz.Constants.PlayerConstants.SPAWN_X;
 import static utilz.Constants.PlayerConstants.SPAWN_Y;
+import static utilz.Constants.LevelTransition.TransitionState;
+import static utilz.Constants.LevelTransition.TransitionState.*;
+import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
 public class LevelTransition extends State implements StateMethods{
     Playing playing;

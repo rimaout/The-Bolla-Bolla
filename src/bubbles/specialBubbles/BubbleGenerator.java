@@ -1,8 +1,8 @@
 package bubbles.specialBubbles;
 
-import utilz.Constants;
-
 import java.util.Random;
+
+import utilz.Constants;
 
 import static utilz.Constants.BubbleGenerator.*;
 import utilz.Constants.Direction;

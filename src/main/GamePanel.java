@@ -1,7 +1,7 @@
 package main;
 
-import javax.swing.JPanel;
 import java.awt.*;
+import javax.swing.JPanel;
 
 import inputs.KeyBoardInputs;
 import inputs.MouseKeyInputs;
@@ -27,7 +27,6 @@ public class GamePanel extends JPanel {
         setPreferredSize(size);
 
         System.out.println("Size: " + GAME_WIDTH + " | " + GAME_HEIGHT);
-
     }
 
     public void paintComponent(Graphics g) {

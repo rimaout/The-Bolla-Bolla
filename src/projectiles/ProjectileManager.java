@@ -1,13 +1,13 @@
 package projectiles;
 
-import entities.Enemy;
-import entities.EnemyManager;
-import entities.Player;
-import utilz.LoadSave;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import entities.Enemy;
+import utilz.LoadSave;
+import entities.Player;
+import entities.EnemyManager;
 
 import static utilz.Constants.Projectiles.*;
 

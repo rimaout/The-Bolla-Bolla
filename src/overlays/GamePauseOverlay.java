@@ -1,9 +1,9 @@
 package overlays;
 
-import audio.AudioPlayer;
-import gameStates.GameState;
-import gameStates.Playing;
 import main.Game;
+import audio.AudioPlayer;
+import gameStates.Playing;
+import gameStates.GameState;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -83,7 +83,6 @@ public class GamePauseOverlay extends GameOverlay {
         g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
-
 
     @Override
     public void keyPressed(KeyEvent e) {

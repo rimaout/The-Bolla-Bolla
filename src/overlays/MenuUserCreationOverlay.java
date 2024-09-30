@@ -1,12 +1,12 @@
 package overlays;
 
-import gameStates.Menu;
 import main.Game;
-import users.UsersManager;
 import utilz.LoadSave;
+import gameStates.Menu;
+import users.UsersManager;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

@@ -1,8 +1,6 @@
 package users;
 
-import java.awt.*;
 import java.io.*;
-import java.time.LocalDateTime;
 
 public class User implements Serializable {
     @Serial

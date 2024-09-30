@@ -37,8 +37,8 @@ public class WaterFlow extends Entity {
     private final LevelManager levelManager = LevelManager.getInstance();
     private final SpecialBubbleManager bubbleManager = SpecialBubbleManager.getInstance();
 
-    private boolean firstUpdate = true;
     private Direction direction;
+    private boolean firstUpdate = true;
     private Direction previousDirection;
 
     private Player capturedPlayer;

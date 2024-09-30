@@ -1,15 +1,14 @@
 package itemesAndRewards;
 
+import static java.lang.Math.abs;
 
-import entities.EnemyManager;
-import entities.Player;
 import main.Game;
+import entities.Player;
+import entities.EnemyManager;
 import projectiles.ProjectileManager;
 import utilz.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
-
-import static java.lang.Math.abs;
 
 public class PowerUpManager{
     private static PowerUpManager instance;
@@ -115,16 +114,16 @@ public class PowerUpManager{
 
         ArrayList<PowerUpType> powerUps = new ArrayList<>();
 
-        if (bubbleShootCounter >= 10 ) powerUps.add(PowerUpType.GREEN_CANDY);       // Working // TODO: change to 35
-        if (bubblePopCounter >= 10) powerUps.add(PowerUpType.BLUE_CANDY);           // Working // TODO: change to 35
-        if (jumpCounter >= 10) powerUps.add(PowerUpType.RED_CANDY);                 // Working // TODO: change to 35
-        if (walkedDistance >= Game.GAME_WIDTH * 5) powerUps.add(PowerUpType.SHOE);  // Working // TODO: change to * 15
-        if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);  // TODO: not implemented water bubble yet
-        if (waterBubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);    // TODO: not implemented water bubble yet
-        if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // TODO: change to 55
-        if (blueCandyCounter >= 1) powerUps.add(PowerUpType.CRYSTAL_RING);          // Working // TODO: change to 3
-        if (greenCandyCounter >= 1) powerUps.add(PowerUpType.EMERALD_RING);         // Working // TODO: change to 3
-        if (redCandyCounter >= 1) powerUps.add(PowerUpType.RUBY_RING);              // Working // TODO: change to 3
+        if (bubbleShootCounter >= 20 ) powerUps.add(PowerUpType.GREEN_CANDY);       // Working // Original game value = 35
+        if (bubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_CANDY);           // Working // Original game value = 35
+        if (jumpCounter >= 20) powerUps.add(PowerUpType.RED_CANDY);                 // Working // Original game value = 35
+        if (walkedDistance >= Game.GAME_WIDTH * 6) powerUps.add(PowerUpType.SHOE);  // Working // Original game value * 15
+        if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);
+        if (waterBubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);
+        if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // Original game value = 55
+        if (blueCandyCounter >= 1) powerUps.add(PowerUpType.CRYSTAL_RING);          // Working // Original game value = 3
+        if (greenCandyCounter >= 1) powerUps.add(PowerUpType.EMERALD_RING);         // Working // Original game value = 3
+        if (redCandyCounter >= 1) powerUps.add(PowerUpType.RUBY_RING);              // Working // Original game value = 3
 
         if (powerUps.isEmpty()) return null;
 
@@ -174,7 +173,6 @@ public class PowerUpManager{
         walkedDistance += abs(distance);
     }
 
-    // TODO
     public void increaseWaterBubblePopCounter() {
         waterBubblePopCounter++;
     }

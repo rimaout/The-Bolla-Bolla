@@ -1,16 +1,14 @@
 package entities;
 
-import levels.Level;
-import levels.LevelManager;
 import main.Game;
 import utilz.Constants.Direction;
 
+import static utilz.HelpMethods.*;
+import static utilz.Constants.GRAVITY;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
-import static utilz.Constants.GRAVITY;
-import static utilz.HelpMethods.*;
 
 public class ZenChan extends Enemy {
     private boolean firstUpdate = true;

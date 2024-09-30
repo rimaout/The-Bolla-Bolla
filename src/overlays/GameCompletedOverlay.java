@@ -1,19 +1,18 @@
 package overlays;
 
-import audio.AudioPlayer;
-import gameStates.GameState;
-import gameStates.Playing;
+
 import main.Game;
+import audio.AudioPlayer;
+import gameStates.Playing;
 import users.UsersManager;
+import gameStates.GameState;
 import utilz.Constants.AudioConstants;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
-
-
+import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
 public class GameCompletedOverlay extends GameOverlay {
 

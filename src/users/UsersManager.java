@@ -4,13 +4,12 @@ import main.Game;
 import utilz.LoadSave;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.awt.image.BufferedImage;
 
 public class UsersManager {
     private static UsersManager instance;

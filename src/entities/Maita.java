@@ -1,17 +1,16 @@
 package entities;
 
-import levels.LevelManager;
 import main.Game;
-import projectiles.MaitaFireProjectile;
-import projectiles.ProjectileManager;
 import utilz.Constants.Direction;
+import projectiles.ProjectileManager;
+import projectiles.MaitaFireProjectile;
 
+import static utilz.HelpMethods.*;
+import static utilz.Constants.GRAVITY;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.EnemyConstants.EnemyType.MAITA;
-import static utilz.Constants.GRAVITY;
-import static utilz.HelpMethods.*;
 
 public class Maita extends Enemy {
 

@@ -1,15 +1,14 @@
 package entities;
 
-import gameStates.Home;
 import main.Game;
 import utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
 
+import static utilz.Constants.Home.*;
+import static utilz.Constants.ANIMATION_SPEED;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.Home.*;
 
 public class TwinkleBubble extends Entity {
     private final TwinkleBubbleManager manager;
@@ -66,14 +65,9 @@ public class TwinkleBubble extends Entity {
             y = Game.GAME_HEIGHT - BUBBLE_H;
         else if (y > Game.GAME_HEIGHT - BUBBLE_H)
             y = 0;
-
     }
 
     public void draw(Graphics2D g) {
         g.drawImage(sprite[animationIndex], (int) x, (int) y, BUBBLE_W , BUBBLE_H ,  null);
-    }
-
-    public boolean isOutOfScreen() {
-        return y < -BUBBLE_H;
     }
 }

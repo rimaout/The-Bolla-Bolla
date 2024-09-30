@@ -1,10 +1,10 @@
 package bubbles.specialBubbles;
 
+import java.awt.*;
+
 import bubbles.Bubble;
 import entities.Player;
 import utilz.Constants;
-
-import java.awt.*;
 
 import static utilz.Constants.Bubble.BUBBLE;
 

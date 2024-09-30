@@ -1,15 +1,15 @@
 package bubbles.playerBubbles;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+
 import bubbles.Bubble;
 import entities.Enemy;
 import entities.Player;
 import main.Game;
 import utilz.LoadSave;
 import utilz.PlayingTimer;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 import static utilz.Constants.Bubble.*;
 

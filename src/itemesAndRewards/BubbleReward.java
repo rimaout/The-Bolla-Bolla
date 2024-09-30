@@ -1,10 +1,10 @@
 package itemesAndRewards;
 
-import audio.AudioPlayer;
-import entities.Player;
-import utilz.Constants.AudioConstants;
-
 import java.awt.*;
+
+import entities.Player;
+import audio.AudioPlayer;
+import utilz.Constants.AudioConstants;
 
 import static utilz.Constants.Items.*;
 import static utilz.Constants.Items.BubbleRewardType.*;

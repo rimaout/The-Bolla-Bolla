@@ -1,16 +1,16 @@
 package overlays;
 
-import gameStates.Menu;
 import main.Game;
 import users.User;
-import users.UsersManager;
 import utilz.LoadSave;
+import gameStates.Menu;
+import users.UsersManager;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.stream.Collectors;
 
 public class MenuScoreBoardOverlay extends MenuOverlay {
@@ -27,7 +27,7 @@ public class MenuScoreBoardOverlay extends MenuOverlay {
 
     @Override
     public void update() {
-
+        // not used
     }
 
     @Override
@@ -188,6 +188,6 @@ public class MenuScoreBoardOverlay extends MenuOverlay {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        // not used
     }
 }

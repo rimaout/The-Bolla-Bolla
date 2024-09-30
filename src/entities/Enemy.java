@@ -1,16 +1,16 @@
 package entities;
 
-import bubbles.playerBubbles.EnemyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
+import bubbles.playerBubbles.EnemyBubble;
 import levels.LevelManager;
 import main.Game;
 
-import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
+import static utilz.HelpMethods.IsSightClear;
+import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.GetEntityYPosAboveFloor;
-import static utilz.HelpMethods.IsSightClear;
 
 public abstract class Enemy extends Entity {
 
@@ -121,14 +121,6 @@ public abstract class Enemy extends Entity {
                 animationSpeedMultiplier = NORMAL_ANIMATION_SPEED_MULTIPLIER;
                 break;
         }
-    }
-
-    protected boolean canSeePlayer(Player player) {
-        int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
-
-        return playerTileY == getTileY()                                             // Same row
-                && isPlayerInViewingRange(player)                               // Player is in range
-                && IsSightClear(levelManager.getLevelData(), hitbox, player.hitbox, getTileY());       // No obstacles in the way
     }
 
     protected boolean isPlayerInViewingRange(Player player) {

@@ -1,10 +1,10 @@
 package bubbles.playerBubbles;
 
+import java.awt.*;
+
 import bubbles.Bubble;
 import entities.Player;
 import utilz.Constants;
-
-import java.awt.*;
 
 import static utilz.Constants.Bubble.*;
 
@@ -24,7 +24,6 @@ public abstract class PlayerBubble extends Bubble {
 
     @Override
     public void update() {
-
         updateTimers();
         updateAnimationTick();
         setState();
@@ -45,7 +44,6 @@ public abstract class PlayerBubble extends Bubble {
     public void checkCollisionWithPlayer(Player player) {
         if (!player.isActive())
             return;
-
 
         if (!active || state == DEAD)
             return;
@@ -101,9 +99,10 @@ public abstract class PlayerBubble extends Bubble {
                 ((EnemyBubble) this).respawnEnemy();
         }
 
-        if (state == POP_RED || state == POP_NORMAL)
+        if (state == POP_RED || state == POP_NORMAL) {
             if (animationIndex == 2)
                 active = false;
+        }
 
         if (startAnimation != state) {
             animationTick = 0;

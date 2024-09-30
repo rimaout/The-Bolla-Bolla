@@ -1,12 +1,12 @@
 package bubbles.specialBubbles;
 
-import entities.Player;
-import projectiles.LightingProjectile;
-import projectiles.ProjectileManager;
-import utilz.Constants.Projectiles.ProjectileType;
-import utilz.Constants;
-
 import java.awt.*;
+
+import entities.Player;
+import utilz.Constants;
+import projectiles.ProjectileManager;
+import projectiles.LightingProjectile;
+import utilz.Constants.Projectiles.ProjectileType;
 
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Bubble.IMMAGE_H;

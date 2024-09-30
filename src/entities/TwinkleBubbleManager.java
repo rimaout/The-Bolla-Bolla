@@ -1,13 +1,13 @@
 package entities;
 
-import gameStates.Home;
 import main.Game;
 import utilz.LoadSave;
+import gameStates.Home;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Home.BUBBLE_DEFAULT_H;
 import static utilz.Constants.Home.BUBBLE_DEFAULT_W;

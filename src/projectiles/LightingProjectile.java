@@ -1,20 +1,20 @@
 package projectiles;
 
-import audio.AudioPlayer;
+import java.awt.*;
+
+import main.Game;
 import entities.Enemy;
 import entities.Player;
-import main.Game;
+import audio.AudioPlayer;
 import utilz.Constants.Direction;
 import utilz.Constants.AudioConstants;
 import utilz.Constants.Projectiles.ProjectileType;
 
-import java.awt.*;
-
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Projectiles.*;
 import static utilz.Constants.Projectiles.H;
-import static utilz.Constants.Projectiles.ProjectileType.LIGHTNING;
 import static utilz.HelpMethods.IsPerimeterWallTile;
+import static utilz.Constants.Projectiles.ProjectileType.LIGHTNING;
 
 public class LightingProjectile extends Projectile{
     private boolean playSound = true;

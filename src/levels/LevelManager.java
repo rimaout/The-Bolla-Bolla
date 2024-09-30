@@ -1,14 +1,15 @@
 package levels;
 
-import gameStates.GameState;
-import gameStates.Playing;
-import utilz.Constants.Direction;
-import utilz.LoadSave;
+
 import main.Game;
+import utilz.LoadSave;
+import gameStates.Playing;
+import gameStates.GameState;
+import utilz.Constants.Direction;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public class LevelManager {
     private static LevelManager instance;

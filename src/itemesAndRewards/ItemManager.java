@@ -1,17 +1,17 @@
 package itemesAndRewards;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+
+import utilz.LoadSave;
 import entities.Player;
 import gameStates.Playing;
-import levels.LevelManager;
-import utilz.LoadSave;
 import utilz.PlayingTimer;
+import levels.LevelManager;
 
 import static utilz.Constants.Items.*;
 import static utilz.HelpMethods.GetRandomPosition;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class ItemManager {
     private static ItemManager instance;

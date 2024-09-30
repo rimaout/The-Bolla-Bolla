@@ -1,14 +1,14 @@
 package overlays;
 
-import audio.AudioPlayer;
-import gameStates.GameState;
-import gameStates.Playing;
-import main.Game;
-import users.UsersManager;
-import utilz.Constants;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
+import main.Game;
+import utilz.Constants;
+import audio.AudioPlayer;
+import gameStates.Playing;
+import users.UsersManager;
+import gameStates.GameState;
 
 import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
@@ -92,6 +92,7 @@ public class GameOverOverlay extends GameOverlay {
         g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {

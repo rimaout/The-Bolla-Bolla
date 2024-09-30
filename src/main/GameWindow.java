@@ -1,11 +1,9 @@
 package main;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-
-import static utilz.LoadSave.GAME_ICON;
 
 public class GameWindow extends JFrame {
 

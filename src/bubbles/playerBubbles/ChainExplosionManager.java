@@ -1,22 +1,21 @@
 package bubbles.playerBubbles;
 
-import entities.Player;
-import itemesAndRewards.PowerUpManager;
-import main.Game;
-
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import main.Game;
+import entities.Player;
+import itemesAndRewards.PowerUpManager;
+
 import static utilz.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
-    private final Timer timer = new Timer();
-
     private final Player player;
+    private final Timer timer = new Timer();
     private final LinkedList<PlayerBubble> bubbles;
 
-    int enemyBubblePopCounter = 0;
+    private int enemyBubblePopCounter = 0;
 
     public ChainExplosionManager(Player player, PlayerBubble firstPoppedBubble, LinkedList<PlayerBubble> bubbles) {
         this.player = player;

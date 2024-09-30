@@ -1,12 +1,12 @@
 package bubbles.specialBubbles;
 
+import utilz.LoadSave;
 import entities.Player;
 import levels.LevelManager;
-import utilz.LoadSave;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Bubble.*;
 

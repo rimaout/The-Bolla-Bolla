@@ -1,17 +1,16 @@
 package itemesAndRewards;
 
-import entities.Player;
 import utilz.LoadSave;
+import entities.Player;
 import utilz.PlayingTimer;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 import static utilz.Constants.PointsManager.*;
-import static utilz.Constants.PointsManager.BIG_DEFAULT_H;
 import static utilz.Constants.PointsManager.PointsType.*;
-
+import static utilz.Constants.PointsManager.BIG_DEFAULT_H;
 
 public class RewardPointsManager {
     private static RewardPointsManager instance;
@@ -48,9 +47,10 @@ public class RewardPointsManager {
         updateTimer();
         updateChainReactionReward();
 
-        for (Points p : pointsToDraw)
+        for (Points p : pointsToDraw) {
             if (p.isActive())
                 p.update();
+        }
     }
 
     public void draw(Graphics2D g) {
@@ -151,6 +151,5 @@ public class RewardPointsManager {
         pointsToDraw.clear();
         consecutivePops = 0;
         consecutivePopsTimer = 0;
-
     }
 }

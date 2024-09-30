@@ -1,7 +1,7 @@
 package overlays;
 
-import gameStates.Menu;
 import utilz.LoadSave;
+import gameStates.Menu;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

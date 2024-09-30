@@ -1,8 +1,8 @@
 package bubbles.playerBubbles;
 
-import entities.Player;
-
 import java.awt.*;
+
+import entities.Player;
 
 import static utilz.Constants.Bubble.*;
 import static utilz.Constants.Direction;

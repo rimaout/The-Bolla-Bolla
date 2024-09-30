@@ -1,7 +1,7 @@
 package inputs;
 
-import gameStates.GameState;
 import main.GamePanel;
+import gameStates.GameState;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -50,11 +50,11 @@ public class MouseKeyInputs implements MouseListener{
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // not used
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // not used
     }
 }

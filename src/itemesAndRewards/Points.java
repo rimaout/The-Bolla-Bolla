@@ -1,10 +1,10 @@
 package itemesAndRewards;
 
-import main.Game;
-import utilz.Constants.PointsManager.PointsType;
-import utilz.PlayingTimer;
-
 import java.awt.*;
+
+import main.Game;
+import utilz.PlayingTimer;
+import utilz.Constants.PointsManager.PointsType;
 
 import static utilz.Constants.PointsManager.*;
 import static utilz.Constants.PointsManager.BIG_H;
