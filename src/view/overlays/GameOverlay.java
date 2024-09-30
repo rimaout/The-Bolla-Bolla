@@ -1,4 +1,4 @@
-package overlays;
+package view.overlays;
 
 import main.Game;
 import utilz.LoadSave;

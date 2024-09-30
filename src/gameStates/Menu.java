@@ -6,9 +6,9 @@ import main.Game;
 import utilz.LoadSave;
 import users.UsersManager;
 import entities.TwinkleBubbleManager;
-import overlays.MenuScoreBoardOverlay;
-import overlays.MenuUserCreationOverlay;
-import overlays.MenuUserSelectionOverlay;
+import view.overlays.MenuScoreBoardOverlay;
+import view.overlays.MenuUserCreationOverlay;
+import view.overlays.MenuUserSelectionOverlay;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

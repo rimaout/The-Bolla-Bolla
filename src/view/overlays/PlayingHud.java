@@ -1,5 +1,6 @@
-package overlays;
+package view.overlays;
 
+import gameStates.Playing;
 import main.Game;
 import entities.Player;
 import utilz.LoadSave;
@@ -14,9 +15,9 @@ public class PlayingHud {
     private Player playerTwo;
     private BufferedImage[] numbersTiles;
 
-    public PlayingHud(Player playerOne, Player playerTwo) {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+    public PlayingHud(Playing playing) {
+        this.playerOne = playing.getPlayerOne();
+        this.playerTwo = playing.getPlayerTwo();
         loadNumberTiles();
     }
 

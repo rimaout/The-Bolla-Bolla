@@ -1,4 +1,4 @@
-package overlays;
+package view.overlays;
 
 import utilz.LoadSave;
 import gameStates.Menu;

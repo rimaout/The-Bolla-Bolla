@@ -11,7 +11,7 @@ import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import main.Game;
 import projectiles.ProjectileManager;
-import overlays.*;
+import view.overlays.*;
 import utilz.PlayingTimer;
 
 import java.awt.*;
@@ -20,7 +20,7 @@ import java.awt.event.MouseEvent;
 
 public class Playing extends State implements StateMethods {
     private Player playerOne;
-    private final Player playerTwo = null;
+    private Player playerTwo = null;
 
     private PlayingTimer playingTimer;
     private LevelManager levelManager;
@@ -31,12 +31,15 @@ public class Playing extends State implements StateMethods {
     private ProjectileManager projectileManager;
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
+    private Intro intro;
+
+    // todo: Remove this (move to view)
     private PowerUpManager powerUpManager;
     private GamePauseOverlay gamePauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private GameCompletedOverlay gameCompletedOverlay;
     private PlayingHud playingHud;
-    private Intro intro;
+
 
     private boolean intoRunning = true;
     private boolean paused;
@@ -68,8 +71,8 @@ public class Playing extends State implements StateMethods {
         gamePauseOverlay = new GamePauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
         gameCompletedOverlay = new GameCompletedOverlay(this);
-        playingHud = new PlayingHud(playerOne, playerTwo);
-        intro = new Intro(this, playerOne);
+        playingHud = new PlayingHud(this);
+        intro = new Intro(this);
     }
 
     @Override
@@ -309,4 +312,7 @@ public class Playing extends State implements StateMethods {
         return playerOne;
     }
 
+    public Player getPlayerTwo() {
+        return playerTwo;
+    }
 }

@@ -36,9 +36,9 @@ public class Intro {
     private int lapsCompleted;
     private float angle;
 
-    public Intro(Playing playing, Player player) {
+    public Intro(Playing playing) {
         this.playing = playing;
-        this.player = player;
+        this.player = playing.getPlayerOne();
 
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
