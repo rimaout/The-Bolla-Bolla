@@ -22,13 +22,9 @@ public class Player extends Entity{
     private final LevelManager levelManager = LevelManager.getInstance();
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
-    // Animation values and variables
-    private BufferedImage[][] sprites;
-    private int playerAnimation = IDLE_ANIMATION;
-
     // Movement values and variables
     private boolean left, right, jump, isJumping, inAir;
-    private boolean moving, attacking, attackingAnimation, respawning;
+    private boolean moving, attacking, attackingAnimation, respawning, canRespawn;
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
 
@@ -54,43 +50,17 @@ public class Player extends Entity{
 
     public Player() {
         super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
-
-        loadAnimation();
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
     public void update() {
 
         updateTimers();
-        setAnimation();
         updatePosition();
-        updateAnimationTick();
+        updateSounds();
 
         if (attacking && canAttack())
             attack();
-    }
-
-    public void draw(Graphics2D g) {
-        if (immune && !respawning) {
-            if (immuneTimer % 100 < 40) { // Transparency blink effect
-                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55F)); // Set transparency
-                g.drawImage(sprites[playerAnimation][animationIndex], (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
-                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F)); // Set transparency
-                return;
-            }
-        }
-
-        g.drawImage(sprites[playerAnimation][animationIndex],  (int) (hitbox.x - OFFSET_X) + flipX, (int) (hitbox.y - OFFSET_Y), width * flipW, height, null);
-
-        if (playJumpSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP);
-            playJumpSound = false;
-        }
-
-        if (playDeathSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH);
-            playDeathSound = false;
-        }
     }
 
     private boolean canAttack() {
@@ -118,46 +88,6 @@ public class Player extends Entity{
 
         PowerUpManager.getInstance().increaseBubbleShootCounter();
         addPoints(bubbleShotPoints);     // rubyRing powerUp
-    }
-
-    private void setAnimation() {
-        int startAnimation = playerAnimation;
-
-        if (moving)
-            playerAnimation = RUNNING_ANIMATION;
-        else
-            playerAnimation = IDLE_ANIMATION;
-
-        if (inAir) {
-            if (airSpeed < 0)
-                playerAnimation = JUMPING_ANIMATION;
-            else
-                playerAnimation = FALLING_ANIMATION;
-        }
-
-        if (attackingAnimation)
-            playerAnimation = ATTACK_ANIMATION;
-
-        if (respawning)
-            playerAnimation = DEAD_ANIMATION;
-
-        if (startAnimation != playerAnimation){
-            animationTick = 0;
-            animationIndex = 0;
-        }
-    }
-
-    private void updateAnimationTick() {
-        animationTick++;
-        if (animationTick > ANIMATION_SPEED) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= getSpriteAmount(playerAnimation)) {
-                animationIndex = 0;
-                attackingAnimation = false;
-                respawning = false;
-            }
-        }
     }
 
     private void updateTimers() {
@@ -327,11 +257,23 @@ public class Player extends Entity{
         }
     }
 
+    private void updateSounds() {
+        if (playJumpSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP);
+            playJumpSound = false;
+        }
+
+        if (playDeathSound) {
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH);
+            playDeathSound = false;
+        }
+    }
+
     private void respawn() {
 
-        if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1) { // Last frame of the dying animation
+        // todo: aiutoooooo (vedi player view)
+        if (canRespawn) { // Last frame of the dying animation
             respawning = false;
-            playerAnimation = IDLE_ANIMATION;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             hitbox.x = SPAWN_X;
             hitbox.y = SPAWN_Y;
@@ -339,15 +281,6 @@ public class Player extends Entity{
 
             PowerUpManager.getInstance().reset();    // Reset all powerUps when player dies
         }
-    }
-
-    private void loadAnimation() {
-        BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
-
-        sprites = new BufferedImage[6][7];
-        for (int j = 0; j < sprites.length; j++)
-            for (int i = 0; i < sprites[j].length; i++)
-                sprites[j][i] = img.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
     private void resetInAir() {
@@ -384,7 +317,6 @@ public class Player extends Entity{
         airSpeed = 0.0f;
         flipX = 0;
         flipW = 1;
-        playerAnimation = IDLE_ANIMATION;
 
         playJumpSound = false;
         playDeathSound = false;
@@ -475,7 +407,51 @@ public class Player extends Entity{
         this.bubbleShotPoints = bubbleShotPoints;
     }
 
-    public BufferedImage[][] getSprites() {
-        return sprites;
+    public int getImmuneTimer() {
+        return immuneTimer;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getFlipX() {
+        return flipX;
+    }
+
+    public int getFlipW() {
+        return flipW;
+    }
+
+    public void setAttackingAnimation(boolean attackingAnimation) {
+        this.attackingAnimation = attackingAnimation;
+    }
+
+    public void setRespawning(boolean respawning) {
+        this.respawning = respawning;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public boolean isInAir() {
+        return inAir;
+    }
+
+    public float getAirSpeed() {
+        return airSpeed;
+    }
+
+    public boolean isAttackingAnimation() {
+        return attackingAnimation;
+    }
+
+    public void setCanRespawn(boolean canRespawn) {
+        this.canRespawn = canRespawn;
     }
 }

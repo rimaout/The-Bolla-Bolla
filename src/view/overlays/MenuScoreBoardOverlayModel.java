@@ -3,24 +3,23 @@ package view.overlays;
 import main.Game;
 import users.User;
 import utilz.LoadSave;
-import gameStates.Menu;
+import gameStates.MenuModel;
 import users.UsersManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.stream.Collectors;
 
-public class MenuScoreBoardOverlay extends MenuOverlay {
+public class MenuScoreBoardOverlayModel extends MenuOverlay {
     private final UsersManager usersManager = UsersManager.getInstance();
     private ArrayList<User> orderedUsers;
 
     private BufferedImage questionMark;
 
-    public MenuScoreBoardOverlay(Menu menu) {
-        super(menu);
+    public MenuScoreBoardOverlayModel(MenuModel menuModel) {
+        super(menuModel);
         updateUserScores();
         loadImages();
     }
@@ -178,16 +177,5 @@ public class MenuScoreBoardOverlay extends MenuOverlay {
 
     private void loadImages(){
         questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            menu.setScoreBoardOverlayActive(false);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // not used
     }
 }

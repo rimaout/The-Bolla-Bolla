@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.Bubble.*;
+import static utilz.Constants.PlayerConstants.DEFAULT_H;
+import static utilz.Constants.PlayerConstants.DEFAULT_W;
 
 public class SpecialBubbleManager {
 
@@ -22,6 +24,7 @@ public class SpecialBubbleManager {
 
     private BufferedImage[][] waterBubbleSprites;
     private BufferedImage[][] lightningBubbleSprites;
+    private BufferedImage[][] playerSprites;
 
     private BubbleGenerator bubbleGenerator;
 
@@ -88,6 +91,12 @@ public class SpecialBubbleManager {
         temp = LoadSave.GetSprite(LoadSave.LIGHTNING_BUBBLE_SPRITE);
         lightningBubbleSprites[0][0] = temp.getSubimage(0 , 0, DEFAULT_W, DEFAULT_H);
         lightningBubbleSprites[1][0] = temp.getSubimage(DEFAULT_W , 0, DEFAULT_W, DEFAULT_H);
+
+        temp = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
+        playerSprites = new BufferedImage[6][7];
+        for (int j = 0; j < playerSprites.length; j++)
+            for (int i = 0; i < playerSprites[j].length; i++)
+                playerSprites[j][i] = temp.getSubimage(i * DEFAULT_W, j* DEFAULT_H, DEFAULT_W, DEFAULT_H);
     }
 
     public void newLevelReset() {
@@ -122,5 +131,9 @@ public class SpecialBubbleManager {
                 count++;
         }
         return count;
+    }
+
+    public Image[][] getPlayerSprites() {
+        return playerSprites;
     }
 }

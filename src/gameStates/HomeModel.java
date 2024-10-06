@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class Home extends State implements StateMethods {
+public class HomeModel extends State implements StateMethods {
 
     private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance(this);
 
@@ -20,7 +20,7 @@ public class Home extends State implements StateMethods {
     private boolean isLogoInPosition = false;
     private final Font nesFont;
 
-    public Home(Game game) {
+    public HomeModel(Game game) {
         super(game);
         loadLogo();
 
@@ -49,7 +49,6 @@ public class Home extends State implements StateMethods {
             isLogoInPosition = true;
     }
 
-    @Override
     public void draw(Graphics g) {
 
         // Draw Bubbles
@@ -69,43 +68,5 @@ public class Home extends State implements StateMethods {
 
     public boolean IsLogoInPosition() {
         return isLogoInPosition;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-      // Not used
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        if (isLogoInPosition)
-            if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                GameState.state = GameState.MENU;
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // Not used
     }
 }

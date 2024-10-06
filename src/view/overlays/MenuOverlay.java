@@ -1,24 +1,22 @@
 package view.overlays;
 
 import utilz.LoadSave;
-import gameStates.Menu;
+import gameStates.MenuModel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public abstract class MenuOverlay {
-    protected Menu menu;
+    protected MenuModel menuModel;
     protected final Font nesFont;
     protected final Font retroFont;
 
-    public MenuOverlay(Menu menu) {
-        this.menu = menu;
+    public MenuOverlay(MenuModel menuModel) {
+        this.menuModel = menuModel;
         this.nesFont = LoadSave.GetNesFont();
         this.retroFont = LoadSave.GetRetroGamingFont();
     }
 
     public abstract void update();
     public abstract void draw(Graphics g);
-    public abstract void keyPressed(KeyEvent e);
-    public abstract void keyReleased(KeyEvent e);
 }

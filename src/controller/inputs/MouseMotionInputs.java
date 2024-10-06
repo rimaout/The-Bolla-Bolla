@@ -1,4 +1,4 @@
-package inputs;
+package controller.inputs;
 
 import main.GamePanel;
 import gameStates.GameState;
@@ -17,7 +17,7 @@ public class MouseMotionInputs implements MouseMotionListener {
         switch (GameState.state) {
 
             case PLAYING:
-                gamePanel.getGame().getPlaying().mouseDragged(e);
+                gamePanel.getGame().getPlayingController().mouseDragged(e);
                 break;
         }
     }
@@ -26,10 +26,10 @@ public class MouseMotionInputs implements MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         switch (GameState.state) {
             case MENU:
-                gamePanel.getGame().getMenu().mouseMoved(e);
+                gamePanel.getGame().getMenuController().mouseMoved(e);
                 break;
             case PLAYING:
-                gamePanel.getGame().getPlaying().mouseMoved(e);
+                gamePanel.getGame().getPlayingController().mouseMoved(e);
                 break;
         }
     }

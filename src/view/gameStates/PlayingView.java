@@ -1,17 +1,28 @@
 package view.gameStates;
 
-import gameStates.Playing;
+import bubbles.playerBubbles.PlayerBubblesManager;
+import bubbles.specialBubbles.SpecialBubbleManager;
+import entities.EnemyManager;
+import entities.HurryUpManager;
+import gameStates.PlayingModel;
+import itemesAndRewards.ItemManager;
+import itemesAndRewards.RewardPointsManager;
+import levels.LevelManager;
+import projectiles.ProjectileManager;
+import view.entities.PlayerView;
 import view.overlays.GameCompletedOverlay;
 import view.overlays.GameOverOverlay;
 import view.overlays.GamePauseOverlay;
 import view.overlays.PlayingHud;
 
-public class PlayingView {
-    private static Playing playing;
+import java.awt.*;
 
-//    private PlayerView playerOneView;
-//    private PlayerView playerTwoView = null;
-//
+public class PlayingView {
+    private static PlayingModel playingModel;
+
+    private PlayerView playerOneView;
+    private PlayerView playerTwoView = null;
+
 //    private EnemyManagerView enemyManagerView;
 //    private HurryUpManagerView hurryUpManagerView;
 //    private PlayerBubblesManagerView playerBubblesManagerView;
@@ -22,19 +33,57 @@ public class PlayingView {
 //    private PowerUpManagerView powerUpManagerView;
 //    private IntroView introView;
 
-    private GamePauseOverlay gamePauseOverlayView;
-    private GameOverOverlay gameOverOverlayView;
-    private GameCompletedOverlay gameCompletedOverlayView;
-    private PlayingHud playingHudView;
+    private GamePauseOverlay gamePauseOverlay;
+    private GameOverOverlay gameOverOverlay;
+    private GameCompletedOverlay gameCompletedOverlay;
+    private PlayingHud playingHud;
 
-    public PlayingView(Playing playing) {
-        this.playing = playing;
+    public PlayingView(PlayingModel playingModel) {
+        this.playingModel = playingModel;
 
         initClasses();
     }
 
+    public void draw(Graphics g) {
+
+        if (playingModel.isIntoRunning()) {
+            playingModel.getIntro().draw(g);
+        }
+        else {
+            LevelManager.getInstance().draw(g);
+            ItemManager.getInstance().draw(g);
+            playingHud.draw(g);
+            EnemyManager.getInstance().draw(g);
+            HurryUpManager.getInstance().draw(g);
+            PlayerBubblesManager.getInstance().draw(g);
+            SpecialBubbleManager.getInstance().draw(g);
+            ProjectileManager.getInstance().draw(g);
+            RewardPointsManager.getInstance().draw((Graphics2D) g);
+
+            if (playingModel.getPlayerOne().isActive())
+                playerOneView.draw((Graphics2D) g);
+        }
+
+        if (playingModel.isPaused())
+            gamePauseOverlay.draw(g);
+
+        else if (playingModel.isGameOver())
+            gameOverOverlay.draw(g);
+
+        else if (playingModel.isGameCompleted())
+            gameCompletedOverlay.draw(g);
+    }
+
+    private void resetNewLevel() {
+
+    }
+
+    private void resetNewGame() {
+
+    }
+
     public void initClasses() {
-//        playerOneView = new PlayerView();
+        playerOneView = new PlayerView(playingModel.getPlayerOne());
 
 //        enemyManagerView = new EnemyManagerView();
 //        hurryUpManagerView = new HurryUpManagerView();
@@ -46,11 +95,13 @@ public class PlayingView {
 //        powerUpManagerView = new PowerUpManagerView();
 //        introView = new IntroView();
 
-        gamePauseOverlayView = new GamePauseOverlay(playing);           // todo: use singleton
-        gameOverOverlayView = new GameOverOverlay(playing);             // todo: use singleton
-        gameCompletedOverlayView = new GameCompletedOverlay(playing);   // todo: use singleton
-        playingHudView = new PlayingHud(playing);
+        gamePauseOverlay = GamePauseOverlay.getInstance(playingModel);
+        gameOverOverlay = GameOverOverlay.getInstance(playingModel);
+        gameCompletedOverlay = GameCompletedOverlay.getInstance(playingModel);
+        playingHud = PlayingHud.getInstance(playingModel);
     }
 
-
+    public void update() {
+        playerOneView.update();
+    }
 }

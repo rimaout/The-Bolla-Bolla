@@ -1,9 +1,14 @@
 package main;
 
+import controller.*;
 import gameStates.*;
-import gameStates.Menu;
+import gameStates.MenuModel;
 import audio.AudioPlayer;
 import users.UsersManager;
+import view.gameStates.PlayingView;
+import view.overlays.MenuScoreBoardOverlayModel;
+import view.overlays.MenuUserCreationOverlayModel;
+import view.overlays.MenuUserSelectionOverlayModel;
 
 import java.awt.*;
 
@@ -15,9 +20,29 @@ public class Game implements Runnable {
 
     private AudioPlayer audioPlayer;
     private UsersManager usersManager;
-    private Home home;
-    private Menu menu;
-    private Playing playing;
+
+    private HomeModel homeModel;
+    //private HomeView homeView;
+    private HomeController homeController;
+
+    private MenuModel menuModel;
+    //private MenuView menuView;
+    private MenuController menuController;
+
+    private MenuUserCreationOverlayModel menuUserCreationOverlayModel;
+    private MenuUserCreationOverlayController menuUserCreationOverlayController;
+
+    private MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
+    private MenuUserSelectionOverlayController menuUserSelectionOverlayController;
+
+    private MenuScoreBoardOverlayModel menuScoreBoardOverlayModel;
+    private MenuScoreBoardOverlayController menuScoreBoardOverlayController;
+
+    private PlayingModel playingModel;
+    private PlayingView playingView;
+    private PlayingController playingController;
+
+
     private LevelTransition levelTransition;
 
     private final int FPS_SET = 60;
@@ -50,9 +75,26 @@ public class Game implements Runnable {
     private void initClasses() {
         usersManager = UsersManager.getInstance(this);
         audioPlayer = AudioPlayer.getInstance();
-        home = new Home(this);
-        menu = new Menu(this);
-        playing = new Playing(this);
+
+        homeModel = new HomeModel(this);
+        homeController = new HomeController(homeModel);
+
+        menuModel = new MenuModel(this);
+        menuController = new MenuController(this, menuModel);
+
+        menuUserCreationOverlayModel = new MenuUserCreationOverlayModel(menuModel);
+        menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuUserCreationOverlayModel);
+
+        menuUserSelectionOverlayModel = new MenuUserSelectionOverlayModel(menuModel);
+        menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuUserSelectionOverlayModel);
+
+        menuScoreBoardOverlayModel = new MenuScoreBoardOverlayModel(menuModel);
+        menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
+
+        playingModel = new PlayingModel(this);
+        playingView = new PlayingView(playingModel);
+        playingController = new PlayingController(playingModel);
+
         levelTransition = new LevelTransition(this);
     }
 
@@ -61,13 +103,14 @@ public class Game implements Runnable {
 
         switch (GameState.state) {
             case HOME:
-                home.update();
+                homeModel.update();
                 break;
             case MENU:
-                menu.update();
+                menuModel.update();
                 break;
             case PLAYING:
-                playing.update();
+                playingModel.update();
+                playingView.update();
                 break;
             case OPTIONS:
             case QUIT:
@@ -83,13 +126,13 @@ public class Game implements Runnable {
 
         switch (GameState.state) {
             case HOME:
-                home.draw(g);
+                homeModel.draw(g);
                 break;
             case MENU:
-                menu.draw(g);
+                menuModel.draw(g);
                 break;
             case PLAYING:
-                playing.draw(g);
+                playingView.draw(g);
                 break;
             case LEVEL_TRANSITION:
                 levelTransition.draw(g);
@@ -145,23 +188,59 @@ public class Game implements Runnable {
         // If the game is in the playing state, call the windowFocusLost method in the playing class.
         // If in the menu state, do nothing.
         if (GameState.state == GameState.PLAYING) {
-            playing.windowFocusLost();
+            playingModel.windowFocusLost();
         }
     }
 
-    public Home getHome() {
-        return home;
+    public HomeModel getHome() {
+        return homeModel;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public MenuModel getMenu() {
+        return menuModel;
     }
 
-    public Playing getPlaying() {
-        return playing;
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
+    public PlayingModel getPlaying() {
+        return playingModel;
+    }
+
+    public PlayingController getPlayingController() {
+        return playingController;
     }
 
     public LevelTransition getLevelTransition() {
         return levelTransition;
+    }
+
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
+    public MenuUserCreationOverlayModel getMenuUserCreationOverlayModel() {
+        return menuUserCreationOverlayModel;
+    }
+
+    public MenuUserCreationOverlayController getMenuUserCreationOverlayController() {
+        return menuUserCreationOverlayController;
+    }
+
+    public MenuUserSelectionOverlayModel getMenuUserSelectionOverlayModel() {
+        return menuUserSelectionOverlayModel;
+    }
+
+    public MenuUserSelectionOverlayController getMenuUserSelectionOverlayController() {
+        return menuUserSelectionOverlayController;
+    }
+
+    public MenuScoreBoardOverlayModel getMenuScoreBoardOverlayModel() {
+        return menuScoreBoardOverlayModel;
+    }
+
+    public MenuScoreBoardOverlayController getMenuScoreBoardOverlayController() {
+        return menuScoreBoardOverlayController;
     }
 }

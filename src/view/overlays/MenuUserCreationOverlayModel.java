@@ -2,17 +2,16 @@ package view.overlays;
 
 import main.Game;
 import utilz.LoadSave;
-import gameStates.Menu;
+import gameStates.MenuModel;
 import users.UsersManager;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class MenuUserCreationOverlay extends MenuOverlay {
+public class MenuUserCreationOverlayModel extends MenuOverlay {
     private final UsersManager usersManager = UsersManager.getInstance();
 
     private String newUserName = "";
@@ -27,8 +26,8 @@ public class MenuUserCreationOverlay extends MenuOverlay {
     private boolean userNameAlreadyExists = false;
     private boolean enterKeyDeactivated = true;
 
-    public MenuUserCreationOverlay(Menu menu) {
-        super(menu);
+    public MenuUserCreationOverlayModel(MenuModel menuModel) {
+        super(menuModel);
         loadImages();
 
         // Initialize the timer for blinking animation
@@ -247,49 +246,39 @@ public class MenuUserCreationOverlay extends MenuOverlay {
         }
     }
 
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            menu.setUserSelectionOverlayActive(true);
-            menu.setUserCreationOverlayActive(false);
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_ENTER && !enterKeyDeactivated) {
-            usersManager.createUser(newUserName, newUserPictureIndex);
-            menu.setUserSelectionOverlayActive(false);
-            menu.setUserCreationOverlayActive(false);
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            upArrowIndex = 1; // animate the arrow
-
-            if (newUserPictureIndex + 1 == usersManager.getUserPicturesCount())
-                newUserPictureIndex = 0;
-            else
-                newUserPictureIndex++;
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            downArrowIndex = 1; // animate the arrow
-
-            if (newUserPictureIndex - 1 == -1 || newUserPictureIndex - 1 == -2)
-                newUserPictureIndex = usersManager.getUserPicturesCount() - 1;
-            else
-                newUserPictureIndex--;
-        } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            if (!newUserName.isEmpty()) {
-                newUserName = newUserName.substring(0, newUserName.length() - 1);
-            }
-        } else {
-            char keyChar = Character.toLowerCase(e.getKeyChar());
-            if (Character.isLetterOrDigit(keyChar) && newUserName.length() < 8) {
-                newUserName += keyChar;
-            }
-        }
+    public void setUpArrowIndex(int index){
+        upArrowIndex = index;
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP)
-            upArrowIndex = 0; // stop animating the arrow
+    public void setDownArrowIndex(int index){
+        downArrowIndex = index;
+    }
 
-        if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            downArrowIndex = 0; // stop animating the arrow
+    public void setNewUserPictureIndex(int index){
+        newUserPictureIndex = index;
+    }
+
+    public void increasNewUserPictureIndex(){
+        newUserPictureIndex++;
+    }
+
+    public void decreaseNewUserPictureIndex(){
+        newUserPictureIndex--;
+    }
+
+    public String getNewUserName(){
+        return newUserName;
+    }
+
+    public void setNewUserName(String name){
+        newUserName = name;
+    }
+
+    public boolean isEnterKeyDeactivated() {
+        return enterKeyDeactivated;
+    }
+
+    public int getNewUserPictureIndex(){
+        return newUserPictureIndex;
     }
 }

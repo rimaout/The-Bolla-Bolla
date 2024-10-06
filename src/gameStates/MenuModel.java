@@ -6,16 +6,15 @@ import main.Game;
 import utilz.LoadSave;
 import users.UsersManager;
 import entities.TwinkleBubbleManager;
-import view.overlays.MenuScoreBoardOverlay;
-import view.overlays.MenuUserCreationOverlay;
-import view.overlays.MenuUserSelectionOverlay;
+import view.overlays.MenuScoreBoardOverlayModel;
+import view.overlays.MenuUserCreationOverlayModel;
+import view.overlays.MenuUserSelectionOverlayModel;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+
 import static utilz.Constants.ANIMATION_SPEED;
 
-public class Menu extends State implements StateMethods {
+public class MenuModel extends State implements StateMethods {
     private final UsersManager usersManager;
     private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance();
 
@@ -30,17 +29,12 @@ public class Menu extends State implements StateMethods {
     private int suggestionsWidth;
     private int selectionIndex = 0;
 
-    // Overlays
-    private final MenuUserSelectionOverlay menuUserSelectionOverlay = new MenuUserSelectionOverlay(this);
-    private final MenuUserCreationOverlay menuUserCreationOverlay = new MenuUserCreationOverlay(this);
-    private final MenuScoreBoardOverlay menuScoreBoardOverlay = new MenuScoreBoardOverlay(this);
-
     // Overlays Booleans
     private boolean userSelectionOverlayActive = true;
     private boolean userCreationOverlayActive = false;
     private boolean scoreBoardOverlayActive = false;
 
-    public Menu(Game game) {
+    public MenuModel(Game game) {
         super(game);
         this.usersManager = UsersManager.getInstance();
         this.nesFont = LoadSave.GetNesFont();
@@ -54,16 +48,15 @@ public class Menu extends State implements StateMethods {
         twinkleBubbleManager.update();
 
         if (userSelectionOverlayActive)
-            menuUserSelectionOverlay.update();
+            game.getMenuUserSelectionOverlayModel().update();
         if (userCreationOverlayActive)
-            menuUserCreationOverlay.update();
+            game.getMenuUserCreationOverlayModel().update();
         else if (scoreBoardOverlayActive)
-            menuScoreBoardOverlay.update();
+            game.getMenuScoreBoardOverlayModel().update();
         else
             updateAnimationTick();
     }
 
-    @Override
     public void draw(Graphics g) {
         twinkleBubbleManager.draw(g);
 
@@ -71,16 +64,16 @@ public class Menu extends State implements StateMethods {
         g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 
         if (scoreBoardOverlayActive) {
-            menuScoreBoardOverlay.draw(g);
+            game.getMenuScoreBoardOverlayModel().draw(g);
             return;
         }
 
         drawGratings(g);
 
         if (userSelectionOverlayActive)
-            menuUserSelectionOverlay.draw(g);
+            game.getMenuUserSelectionOverlayModel().draw(g);
         else if (userCreationOverlayActive)
-            menuUserCreationOverlay.draw(g);
+            game.getMenuUserCreationOverlayModel().draw(g);
         else {
             drawTittle(g);
             drawSelections(g);
@@ -197,99 +190,6 @@ public class Menu extends State implements StateMethods {
         suggestions = sb.toString();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        if (userSelectionOverlayActive) {
-            menuUserSelectionOverlay.keyPressed(e);
-            return;
-        }
-
-        if (userCreationOverlayActive) {
-            menuUserCreationOverlay.keyPressed(e);
-            return;
-        }
-
-        if (scoreBoardOverlayActive) {
-            menuScoreBoardOverlay.keyPressed(e);
-            return;
-        }
-
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP, KeyEvent.VK_W:
-                selectionIndex--;
-                if (selectionIndex < 0) {
-                    selectionIndex = 3;
-                }
-                break;
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S:
-                selectionIndex++;
-                if (selectionIndex > 3) {
-                    selectionIndex = 0;
-                }
-                break;
-
-            case KeyEvent.VK_ENTER:
-                switch (selectionIndex) {
-                    case 0:
-                        GameState.state = GameState.PLAYING;
-                        break;
-                    case 1:
-                        // Change User
-                        menuUserSelectionOverlay.updateUserList();
-                        userSelectionOverlayActive = true;
-                        scoreBoardOverlayActive = false;
-                        break;
-                    case 2:
-                        // Score Board
-                        menuScoreBoardOverlay.updateUserScores();
-                        userSelectionOverlayActive = false;
-                        scoreBoardOverlayActive = true;
-                        break;
-                    case 3:
-                        // Quit
-                        System.exit(0);
-                        break;
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (userSelectionOverlayActive)
-            menuUserSelectionOverlay.keyReleased(e);
-        else if (userCreationOverlayActive)
-            menuUserCreationOverlay.keyReleased(e);
-        else if (scoreBoardOverlayActive)
-            menuScoreBoardOverlay.keyReleased(e);
-    }
-
     // ------------ Getters and Setters ------------
 
     public void setUserSelectionOverlayActive(boolean userSelectionOverlayActive) {
@@ -302,5 +202,34 @@ public class Menu extends State implements StateMethods {
 
     public void setScoreBoardOverlayActive(boolean scoreBoardOverlayActive) {
         this.scoreBoardOverlayActive = scoreBoardOverlayActive;
+    }
+
+    public boolean isUserSelectionOverlayActive() {
+        return userSelectionOverlayActive;
+    }
+
+    public boolean isUserCreationOverlayActive() {
+        return userCreationOverlayActive;
+    }
+
+    public boolean isScoreBoardOverlayActive() {
+        return scoreBoardOverlayActive;
+    }
+
+
+    public int getSelectionIndex() {
+        return selectionIndex;
+    }
+
+    public void setSelectionIndex(int selectionIndex) {
+        this.selectionIndex = selectionIndex;
+    }
+
+    public void increaseSelectionIndex() {
+        selectionIndex++;
+    }
+
+    public void decreaseSelectionIndex() {
+        selectionIndex--;
     }
 }

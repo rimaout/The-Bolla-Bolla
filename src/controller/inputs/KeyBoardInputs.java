@@ -1,4 +1,4 @@
-package inputs;
+package controller.inputs;
 
 import main.GamePanel;
 import gameStates.GameState;
@@ -21,13 +21,13 @@ public class KeyBoardInputs implements KeyListener {
     public void keyPressed(java.awt.event.KeyEvent e) {
         switch (GameState.state) {
             case HOME:
-                gamePanel.getGame().getHome().keyPressed(e);
+                gamePanel.getGame().getHomeController().keyPressed(e);
                 break;
             case MENU:
-                gamePanel.getGame().getMenu().keyPressed(e);
+                gamePanel.getGame().getMenuController().keyPressed(e);
                 break;
             case PLAYING:
-                gamePanel.getGame().getPlaying().keyPressed(e);
+                gamePanel.getGame().getPlayingController().keyPressed(e);
                 break;
         }
     }
@@ -36,13 +36,13 @@ public class KeyBoardInputs implements KeyListener {
     public void keyReleased(java.awt.event.KeyEvent e) {
         switch (GameState.state) {
             case HOME:
-                gamePanel.getGame().getHome().keyReleased(e);
+                gamePanel.getGame().getHomeController().keyReleased(e);
                 break;
             case MENU:
-                gamePanel.getGame().getMenu().keyReleased(e);
+                gamePanel.getGame().getMenuController().keyReleased(e);
                 break;
             case PLAYING:
-                gamePanel.getGame().getPlaying().keyReleased(e);
+                gamePanel.getGame().getPlayingController().keyReleased(e);
                 break;
         }
     }

@@ -2,7 +2,7 @@ package view.overlays;
 
 import main.Game;
 import audio.AudioPlayer;
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import gameStates.GameState;
 
 import java.awt.*;
@@ -11,8 +11,17 @@ import java.awt.event.KeyEvent;
 import static utilz.Constants.Overlays.*;
 
 public class GamePauseOverlay extends GameOverlay {
-    public GamePauseOverlay(Playing playing) {
-        super(playing);
+    private static GamePauseOverlay instance;
+
+    private GamePauseOverlay(PlayingModel playingModel) {
+        super(playingModel);
+    }
+
+    public static GamePauseOverlay getInstance(PlayingModel playingModel) {
+        if (instance == null) {
+            instance = new GamePauseOverlay(playingModel);
+        }
+        return instance;
     }
 
     @Override
@@ -87,13 +96,13 @@ public class GamePauseOverlay extends GameOverlay {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playing.newPlayReset();
-            playing.restartGame();
+            playingModel.newPlayReset();
+            playingModel.restartGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            playing.unpauseGame();
+            playingModel.unpauseGame();
             AudioPlayer.getInstance().startSong();
         }
     }

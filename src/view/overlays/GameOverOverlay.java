@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import main.Game;
 import utilz.Constants;
 import audio.AudioPlayer;
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import users.UsersManager;
 import gameStates.GameState;
 
@@ -14,9 +14,17 @@ import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
 
 public class GameOverOverlay extends GameOverlay {
+    private static GameOverOverlay instance;
 
-    public GameOverOverlay(Playing playing) {
-        super(playing);
+    private GameOverOverlay(PlayingModel playingModel) {
+        super(playingModel);
+    }
+
+    public static GameOverOverlay getInstance(PlayingModel playingModel) {
+        if (instance == null) {
+            instance = new GameOverOverlay(playingModel);
+        }
+        return instance;
     }
 
     @Override
@@ -97,15 +105,15 @@ public class GameOverOverlay extends GameOverlay {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             UsersManager.getInstance().updateCurrentUserInfo(false);
-            playing.newPlayReset();
-            playing.restartGame();
+            playingModel.newPlayReset();
+            playingModel.restartGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
             UsersManager.getInstance().updateCurrentUserInfo(false);
-            playing.newPlayReset();
-            playing.restartGame();
+            playingModel.newPlayReset();
+            playingModel.restartGame();
             GameState.state = GameState.PLAYING;
         }
     }

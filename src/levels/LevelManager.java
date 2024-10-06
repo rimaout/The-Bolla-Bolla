@@ -3,7 +3,7 @@ package levels;
 
 import main.Game;
 import utilz.LoadSave;
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import gameStates.GameState;
 import utilz.Constants.Direction;
 
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 public class LevelManager {
     private static LevelManager instance;
 
-    private final Playing playing;
+    private final PlayingModel playingModel;
 
     private final ArrayList<Level> levels;
     private int levelIndex = 0;
@@ -23,8 +23,8 @@ public class LevelManager {
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
 
-    private LevelManager(Playing playing) {
-        this.playing = playing;
+    private LevelManager(PlayingModel playingModel) {
+        this.playingModel = playingModel;
 
 
         levels = new ArrayList<>();
@@ -32,9 +32,9 @@ public class LevelManager {
         buildAllLevels();
     }
 
-    public static LevelManager getInstance(Playing playing) {
+    public static LevelManager getInstance(PlayingModel playingModel) {
         if (instance == null) {
-            instance = new LevelManager(playing);
+            instance = new LevelManager(playingModel);
         }
         return instance;
     }
@@ -50,8 +50,8 @@ public class LevelManager {
             return;
         }
 
-        playing.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
-        playing.getGame().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
+        playingModel.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
+        playingModel.getGame().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
         GameState.state = GameState.LEVEL_TRANSITION;
     }
 

@@ -3,15 +3,14 @@ package view.overlays;
 import main.Game;
 import users.User;
 import utilz.LoadSave;
-import gameStates.Menu;
+import gameStates.MenuModel;
 import users.UsersManager;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class MenuUserSelectionOverlay extends MenuOverlay {
+public class MenuUserSelectionOverlayModel extends MenuOverlay {
     private final UsersManager usersManager = UsersManager.getInstance();
     private User selectedUser;
     private ArrayList<User> users;
@@ -20,8 +19,8 @@ public class MenuUserSelectionOverlay extends MenuOverlay {
     private int leftArrowIndex = 0;
     private int rightArrowIndex = 0;
 
-    public MenuUserSelectionOverlay(Menu menu) {
-        super(menu);
+    public MenuUserSelectionOverlayModel(MenuModel menuModel) {
+        super(menuModel);
         updateUserList();
         loadArrows();
     }
@@ -191,50 +190,28 @@ public class MenuUserSelectionOverlay extends MenuOverlay {
         selectedUser = users.getFirst();
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE && usersManager.getCurrentUser() != null) {
-            menu.setUserSelectionOverlayActive(false);
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            usersManager.setCurrentUser(selectedUser);
-            menu.setUserSelectionOverlayActive(false);
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_C) {
-            menu.setUserSelectionOverlayActive(false);
-            menu.setUserCreationOverlayActive(true);
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            leftArrowIndex = 1; // animate the arrow
-            int index = users.indexOf(selectedUser);
-            if (index == 0) {
-                selectedUser = users.getLast();
-            } else {
-                selectedUser = users.get(index - 1);
-            }
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            rightArrowIndex = 1; // animate the arrow
-            int index = users.indexOf(selectedUser);
-            if (index == users.size() - 1) {
-                selectedUser = users.getFirst();
-            } else {
-                selectedUser = users.get(index + 1);
-            }
-        }
+    // -------------- Getters and Setters --------------
+    public User getSelectedUser() {
+        return selectedUser;
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT)
-            leftArrowIndex = 0; // stop animating the arrow
+    public void setSelectedUser(User selectedUser) {
+        this.selectedUser = selectedUser;
+    }
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-            rightArrowIndex = 0; // stop animating the arrow
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setLeftArrowIndex(int leftArrowIndex) {
+        this.leftArrowIndex = leftArrowIndex;
+    }
+
+    public void setRightArrowIndex(int rightArrowIndex) {
+        this.rightArrowIndex = rightArrowIndex;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
 }

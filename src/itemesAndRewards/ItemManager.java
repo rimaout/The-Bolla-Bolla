@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import utilz.LoadSave;
 import entities.Player;
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import utilz.PlayingTimer;
 import levels.LevelManager;
 
@@ -15,7 +15,7 @@ import static utilz.HelpMethods.GetRandomPosition;
 
 public class ItemManager {
     private static ItemManager instance;
-    private final Playing playing;
+    private final PlayingModel playingModel;
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private int  spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
@@ -27,16 +27,16 @@ public class ItemManager {
     private BufferedImage[] bubbleRewardImages;
     private BufferedImage[] powerUpImages;
 
-    private ItemManager(Playing playing) {
+    private ItemManager(PlayingModel playingModel) {
         items = new ArrayList<>();
-        this.playing = playing;
+        this.playingModel = playingModel;
 
         loadSprites();
     }
 
-    public static ItemManager getInstance(Playing playing) {
+    public static ItemManager getInstance(PlayingModel playingModel) {
         if (instance == null)
-            instance = new ItemManager(playing);
+            instance = new ItemManager(playingModel);
         return instance;
     }
 
@@ -77,7 +77,7 @@ public class ItemManager {
     }
 
     private void checkCollisionWithPlayer(Item item) {
-        Player player = playing.getPlayerOne();
+        Player player = playingModel.getPlayerOne();
 
         if (!player.isActive())
             return;

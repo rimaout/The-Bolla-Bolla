@@ -17,7 +17,7 @@ import static utilz.Constants.PlayerConstants.SPAWN_X;
 import static utilz.Constants.PlayerConstants.SPAWN_Y;
 
 public class Intro {
-    private Playing playing;
+    private PlayingModel playingModel;
     private Player player;
     Level level;
 
@@ -36,9 +36,9 @@ public class Intro {
     private int lapsCompleted;
     private float angle;
 
-    public Intro(Playing playing) {
-        this.playing = playing;
-        this.player = playing.getPlayerOne();
+    public Intro(PlayingModel playingModel) {
+        this.playingModel = playingModel;
+        this.player = playingModel.getPlayerOne();
 
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
@@ -62,7 +62,7 @@ public class Intro {
         }
 
         if (introState == START_NEW_LEVEL)
-            playing.endIntro();
+            playingModel.endIntro();
     }
 
     public void draw(Graphics g) {

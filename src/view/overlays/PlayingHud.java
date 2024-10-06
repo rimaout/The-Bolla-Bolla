@@ -1,6 +1,6 @@
 package view.overlays;
 
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import main.Game;
 import entities.Player;
 import utilz.LoadSave;
@@ -10,15 +10,23 @@ import java.awt.image.BufferedImage;
 
 public class PlayingHud {
     // This class will be used to display: The Player Score and Lives and Powerups
+    private static PlayingHud instance;
 
     private Player playerOne;
     private Player playerTwo;
     private BufferedImage[] numbersTiles;
 
-    public PlayingHud(Playing playing) {
-        this.playerOne = playing.getPlayerOne();
-        this.playerTwo = playing.getPlayerTwo();
+    private PlayingHud(PlayingModel playingModel) {
+        this.playerOne = playingModel.getPlayerOne();
+        this.playerTwo = playingModel.getPlayerTwo();
         loadNumberTiles();
+    }
+
+    public static PlayingHud getInstance(PlayingModel playingModel) {
+        if (instance == null) {
+            instance = new PlayingHud(playingModel);
+        }
+        return instance;
     }
 
     public void draw(Graphics g) {

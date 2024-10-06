@@ -3,9 +3,9 @@ package main;
 import java.awt.*;
 import javax.swing.JPanel;
 
-import inputs.KeyBoardInputs;
-import inputs.MouseKeyInputs;
-import inputs.MouseMotionInputs;
+import controller.inputs.KeyBoardInputs;
+import controller.inputs.MouseKeyInputs;
+import controller.inputs.MouseMotionInputs;
 
 import static main.Game.GAME_WIDTH;
 import static main.Game.GAME_HEIGHT;
@@ -17,6 +17,8 @@ public class GamePanel extends JPanel {
         this.game = game;
         setBackground(Color.BLACK);
         setPanelSize();
+
+        // Input Listeners
         addKeyListener(new KeyBoardInputs(this));
         addMouseListener(new MouseKeyInputs(this));
         addMouseMotionListener(new MouseMotionInputs(this));

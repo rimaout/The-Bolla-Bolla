@@ -3,7 +3,7 @@ package view.overlays;
 
 import main.Game;
 import audio.AudioPlayer;
-import gameStates.Playing;
+import gameStates.PlayingModel;
 import users.UsersManager;
 import gameStates.GameState;
 import utilz.Constants.AudioConstants;
@@ -15,9 +15,17 @@ import static utilz.Constants.Overlays.BUD_RED_COLOR;
 import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
 public class GameCompletedOverlay extends GameOverlay {
+    private static GameCompletedOverlay instance;
 
-    public GameCompletedOverlay(Playing playing) {
-        super(playing);
+    private GameCompletedOverlay(PlayingModel playingModel) {
+        super(playingModel);
+    }
+
+    public static GameCompletedOverlay getInstance(PlayingModel playingModel) {
+        if (instance == null) {
+            instance = new GameCompletedOverlay(playingModel);
+        }
+        return instance;
     }
 
     @Override
@@ -97,15 +105,15 @@ public class GameCompletedOverlay extends GameOverlay {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             UsersManager.getInstance().updateCurrentUserInfo(false);
-            playing.newPlayReset();
-            playing.restartGame();
+            playingModel.newPlayReset();
+            playingModel.restartGame();
             GameState.state = GameState.MENU;
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
             UsersManager.getInstance().updateCurrentUserInfo(false);
-            playing.newPlayReset();
-            playing.restartGame();
+            playingModel.newPlayReset();
+            playingModel.restartGame();
             GameState.state = GameState.PLAYING;
         }
     }

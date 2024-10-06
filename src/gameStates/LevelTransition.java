@@ -19,7 +19,7 @@ import static utilz.Constants.LevelTransition.TransitionState.*;
 import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
 public class LevelTransition extends State implements StateMethods{
-    Playing playing;
+    PlayingModel playingModel;
 
     private BufferedImage[] levelTiles;
     private BufferedImage[] numbersTiles;
@@ -39,7 +39,7 @@ public class LevelTransition extends State implements StateMethods{
     public LevelTransition(Game game) {
         super(game);
 
-        this.playing = game.getPlaying();
+        this.playingModel = game.getPlaying();
         levelTiles = LevelManager.getInstance().getLevelTiles();
         numbersTiles = LevelManager.getInstance().getNumbersTiles();
         player = game.getPlaying().getPlayerOne();
@@ -106,7 +106,6 @@ public class LevelTransition extends State implements StateMethods{
         }
     }
 
-    @Override
     public void draw(Graphics g) {
 
         drawLevel(g, newLevel, (int) newLevelY);
@@ -143,7 +142,7 @@ public class LevelTransition extends State implements StateMethods{
     }
 
     private void loadNewLevel() {
-        playing.startNewLevel();
+        playingModel.startNewLevel();
     }
 
     public void endTransition() {
@@ -166,42 +165,5 @@ public class LevelTransition extends State implements StateMethods{
 
     public void setNewLevel(Level newLevel) {
         this.newLevel = newLevel;
-    }
-
-  // --------------------------- PLAYER INPUT (not used) ---------------------------
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // Not used
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // Not used
     }
 }

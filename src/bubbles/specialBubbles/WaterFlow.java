@@ -74,7 +74,7 @@ public class WaterFlow extends Entity {
         }
 
         if (capturedPlayer != null)
-            g.drawImage(capturedPlayer.getSprites()[IDLE_ANIMATION][0], (int) (hitbox.x - HITBOX_OFFSET_X) + flipX(), (int) (hitbox.y - HITBOX_OFFSET_Y), W * flipW(), H, null);
+            g.drawImage(bubbleManager.getPlayerSprites()[IDLE_ANIMATION][0], (int) (hitbox.x - HITBOX_OFFSET_X) + flipX(), (int) (hitbox.y - HITBOX_OFFSET_Y), W * flipW(), H, null);
         else
             g.drawImage(bubbleManager.getWaterBubbleSprites()[1][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), W, H, null);
 

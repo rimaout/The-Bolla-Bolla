@@ -14,11 +14,7 @@ import projectiles.ProjectileManager;
 import view.overlays.*;
 import utilz.PlayingTimer;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
-public class Playing extends State implements StateMethods {
+public class PlayingModel extends State implements StateMethods {
     private Player playerOne;
     private Player playerTwo = null;
 
@@ -31,15 +27,8 @@ public class Playing extends State implements StateMethods {
     private ProjectileManager projectileManager;
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
-    private Intro intro;
-
-    // todo: Remove this (move to view)
     private PowerUpManager powerUpManager;
-    private GamePauseOverlay gamePauseOverlay;
-    private GameOverOverlay gameOverOverlay;
-    private GameCompletedOverlay gameCompletedOverlay;
-    private PlayingHud playingHud;
-
+    private Intro intro;
 
     private boolean intoRunning = true;
     private boolean paused;
@@ -47,7 +36,7 @@ public class Playing extends State implements StateMethods {
     private boolean gameCompleted;
     private boolean levelCompleted;
 
-    public Playing(Game game) {
+    public PlayingModel(Game game) {
         super(game);
         initClasses();
         loadFirstLevel();
@@ -67,18 +56,11 @@ public class Playing extends State implements StateMethods {
         itemManager = ItemManager.getInstance(this);
         rewardPointsManager = RewardPointsManager.getInstance(playerOne);
         powerUpManager = PowerUpManager.getInstance(playerOne);
-
-        gamePauseOverlay = new GamePauseOverlay(this);
-        gameOverOverlay = new GameOverOverlay(this);
-        gameCompletedOverlay = new GameCompletedOverlay(this);
-        playingHud = new PlayingHud(this);
         intro = new Intro(this);
     }
 
     @Override
     public void update() {
-
-
         updateBooleans();
 
         if (paused)
@@ -111,39 +93,6 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    @Override
-    public void draw(Graphics g) {
-
-        if (intoRunning) {
-            intro.draw(g);
-        }
-        else {
-            levelManager.draw(g);
-            itemManager.draw(g);
-            playingHud.draw(g);
-            enemyManager.draw(g);
-            hurryUpManager.draw(g);
-            playerBubblesManager.draw(g);
-            specialBubbleManager.draw(g);
-            projectileManager.draw(g);
-            rewardPointsManager.draw((Graphics2D) g);
-
-            if (playerOne.isActive())
-                playerOne.draw((Graphics2D) g);
-        }
-
-        if (paused)
-            gamePauseOverlay.draw(g);
-
-        else if (gameOver)
-            gameOverOverlay.draw(g);
-
-        else if (gameCompleted)
-            gameCompletedOverlay.draw(g);
-
-    }
-
-
     private void updateBooleans(){
         if (playerOne.getLives() == 0)
             gameOver = true;
@@ -171,13 +120,15 @@ public class Playing extends State implements StateMethods {
         itemManager.newPlayReset();
         powerUpManager.newPlayReset();
         rewardPointsManager.newPlayReset();
-
-        gameCompletedOverlay.newPlayReset();
-        gameOverOverlay.newPlayReset();
-        gamePauseOverlay.newPlayReset();
         intro.newPlayReset();
 
         playerOne.reset(true, true);
+
+        // todo: remove this (doesn't respect mvc) use observer pattern to notify the views to reset
+        // Oppure sposta suoni in controlle e non in view, cosi non devi fare il reset (puoi rimuovere first update)
+        GameCompletedOverlay.getInstance(this).newPlayReset();
+        GameOverOverlay.getInstance(this).newPlayReset();
+        GamePauseOverlay.getInstance(this).newPlayReset();
 
         loadFirstLevel();
     }
@@ -216,83 +167,9 @@ public class Playing extends State implements StateMethods {
         specialBubbleManager.loadBubbleGenerator();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (!gameOver || !paused || !levelCompleted)
-            if (e.getButton() == MouseEvent.BUTTON1)
-                playerOne.setAttacking(true);
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // not used
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // not used
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // not used
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        // not used
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (paused)
-            gamePauseOverlay.keyPressed(e);
-
-        else if (gameOver)
-            gameOverOverlay.keyPressed(e);
-
-        else if (gameCompleted)
-            gameCompletedOverlay.keyPressed(e);
-
-        else {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_A:
-                    playerOne.setLeft(true);
-                    break;
-                case KeyEvent.VK_D:
-                    playerOne.setRight(true);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    playerOne.setJump(true);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    playerOne.setAttacking(true);
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    paused = !paused;
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (!paused || !gameOver || !gameCompleted) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_A:
-                    playerOne.setLeft(false);
-                    break;
-                case KeyEvent.VK_D:
-                    playerOne.setRight(false);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    playerOne.setJump(false);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    playerOne.setAttacking(false);
-                    break;
-            }
-        }
+    public void windowFocusLost() {
+        playerOne.resetMovements();
+        paused = true;
     }
 
     public void endIntro() {
@@ -303,9 +180,8 @@ public class Playing extends State implements StateMethods {
         paused = false;
     }
 
-    public void windowFocusLost() {
-        playerOne.resetMovements();
-        paused = true;
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public Player getPlayerOne() {
@@ -314,5 +190,30 @@ public class Playing extends State implements StateMethods {
 
     public Player getPlayerTwo() {
         return playerTwo;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean isGameCompleted() {
+        return gameCompleted;
+    }
+
+    public boolean isLevelCompleted() {
+        return levelCompleted;
+    }
+
+    public boolean isIntoRunning() {
+        return intoRunning;
+    }
+
+    // todo: remove this when mvc is complete
+    public Intro getIntro() {
+        return intro;
     }
 }
