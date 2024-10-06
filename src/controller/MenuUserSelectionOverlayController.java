@@ -2,18 +2,21 @@ package controller;
 
 import gameStates.MenuModel;
 import users.UsersManager;
-import view.overlays.MenuUserSelectionOverlayModel;
+import model.overlays.MenuUserSelectionOverlayModel;
+import view.overlays.MenuUserSelectionOverlayView;
 
 import java.awt.event.KeyEvent;
 
 public class MenuUserSelectionOverlayController {
-    private MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
+    private final MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
+    private final MenuUserSelectionOverlayView menuUserSelectionOverlayView;
     private final MenuModel menuModel;
     private final UsersManager usersManager = UsersManager.getInstance();
 
-    public MenuUserSelectionOverlayController(MenuModel menuModel, MenuUserSelectionOverlayModel menuUserSelectionOverlayModel) {
+    public MenuUserSelectionOverlayController(MenuModel menuModel, MenuUserSelectionOverlayModel menuUserSelectionOverlayModel, MenuUserSelectionOverlayView menuUserSelectionOverlayView) {
         this.menuModel = menuModel;
         this.menuUserSelectionOverlayModel = menuUserSelectionOverlayModel;
+        this.menuUserSelectionOverlayView = menuUserSelectionOverlayView;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -33,7 +36,7 @@ public class MenuUserSelectionOverlayController {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            menuUserSelectionOverlayModel.setLeftArrowIndex(1); // animate the arrow
+            menuUserSelectionOverlayView.setLeftArrowIndex(1); // animate the arrow
             int index = menuUserSelectionOverlayModel.getUsers().indexOf(menuUserSelectionOverlayModel.getSelectedUser());
             if (index == 0) {
                 menuUserSelectionOverlayModel.setSelectedUser(menuUserSelectionOverlayModel.getUsers().getLast());
@@ -43,7 +46,7 @@ public class MenuUserSelectionOverlayController {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            menuUserSelectionOverlayModel.setRightArrowIndex(1); // animate the arrow
+            menuUserSelectionOverlayView.setRightArrowIndex(1); // animate the arrow
             int index = menuUserSelectionOverlayModel.getUsers().indexOf(menuUserSelectionOverlayModel.getSelectedUser());
             if (index == menuUserSelectionOverlayModel.getUsers().size() - 1) {
                 menuUserSelectionOverlayModel.setSelectedUser(menuUserSelectionOverlayModel.getUsers().getFirst());
@@ -55,9 +58,9 @@ public class MenuUserSelectionOverlayController {
 
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT)
-            menuUserSelectionOverlayModel.setLeftArrowIndex(0); // stop animating the arrow
+            menuUserSelectionOverlayView.setLeftArrowIndex(0); // stop animating the arrow
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-            menuUserSelectionOverlayModel.setRightArrowIndex(0); // stop animating the arrow
+            menuUserSelectionOverlayView.setRightArrowIndex(0); // stop animating the arrow
     }
 }

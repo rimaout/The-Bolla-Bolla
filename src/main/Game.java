@@ -6,11 +6,14 @@ import gameStates.MenuModel;
 import audio.AudioPlayer;
 import users.UsersManager;
 import view.gameStates.PlayingView;
-import view.overlays.MenuScoreBoardOverlayModel;
-import view.overlays.MenuUserCreationOverlayModel;
-import view.overlays.MenuUserSelectionOverlayModel;
+import model.overlays.MenuScoreBoardOverlayModel;
+import model.overlays.MenuUserCreationOverlayModel;
+import model.overlays.MenuUserSelectionOverlayModel;
 
 import utilz.Constants;
+import view.overlays.MenuScoreBoardOverlayView;
+import view.overlays.MenuUserCreationOverlayView;
+import view.overlays.MenuUserSelectionOverlayView;
 
 import java.awt.*;
 
@@ -32,12 +35,15 @@ public class Game implements Runnable {
     private MenuController menuController;
 
     private MenuUserCreationOverlayModel menuUserCreationOverlayModel;
+    private MenuUserCreationOverlayView menuUserCreationOverlayView;
     private MenuUserCreationOverlayController menuUserCreationOverlayController;
 
     private MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
+    private MenuUserSelectionOverlayView menuUserSelectionOverlayView;
     private MenuUserSelectionOverlayController menuUserSelectionOverlayController;
 
     private MenuScoreBoardOverlayModel menuScoreBoardOverlayModel;
+    private MenuScoreBoardOverlayView menuScoreBoardOverlayView;
     private MenuScoreBoardOverlayController menuScoreBoardOverlayController;
 
     private PlayingModel playingModel;
@@ -74,15 +80,15 @@ public class Game implements Runnable {
         menuController = new MenuController(this, menuModel);
 
         menuUserCreationOverlayModel = new MenuUserCreationOverlayModel(menuModel);
-        //menuUserCreationOverlayView = new MenuUserCreationOverlayView(menuUserCreationOverlayModel);
-        menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuUserCreationOverlayModel);
+        menuUserCreationOverlayView = new MenuUserCreationOverlayView(menuUserCreationOverlayModel);
+        menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuUserCreationOverlayModel, menuUserCreationOverlayView);
 
         menuUserSelectionOverlayModel = new MenuUserSelectionOverlayModel(menuModel);
-        //menuUserSelectionOverlayView = new MenuUserSelectionOverlayView(menuUserSelectionOverlayModel);
-        menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuUserSelectionOverlayModel);
+        menuUserSelectionOverlayView = new MenuUserSelectionOverlayView(menuUserSelectionOverlayModel);
+        menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuUserSelectionOverlayModel, menuUserSelectionOverlayView);
 
         menuScoreBoardOverlayModel = new MenuScoreBoardOverlayModel(menuModel);
-        //menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
+        menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
         menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
 
         playingModel = new PlayingModel(this);
@@ -186,6 +192,8 @@ public class Game implements Runnable {
         }
     }
 
+    // ----------------- Getters -----------------
+
     public HomeModel getHome() {
         return homeModel;
     }
@@ -236,5 +244,17 @@ public class Game implements Runnable {
 
     public MenuScoreBoardOverlayController getMenuScoreBoardOverlayController() {
         return menuScoreBoardOverlayController;
+    }
+
+    public MenuUserSelectionOverlayView getMenuUserSelectionOverlayView() {
+        return menuUserSelectionOverlayView;
+    }
+
+    public MenuUserCreationOverlayView getMenuUserCreationOverlayView() {
+        return menuUserCreationOverlayView;
+    }
+
+    public MenuScoreBoardOverlayView getMenuScoreBoardOverlayView() {
+        return menuScoreBoardOverlayView;
     }
 }

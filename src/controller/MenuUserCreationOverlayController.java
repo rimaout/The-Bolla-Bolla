@@ -2,18 +2,21 @@ package controller;
 
 import gameStates.MenuModel;
 import users.UsersManager;
-import view.overlays.MenuUserCreationOverlayModel;
+import model.overlays.MenuUserCreationOverlayModel;
+import view.overlays.MenuUserCreationOverlayView;
 
 import java.awt.event.KeyEvent;
 
 public class MenuUserCreationOverlayController {
-    private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
     private final MenuModel menuModel;
     private final UsersManager usersManager = UsersManager.getInstance();
+    private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
+    private final MenuUserCreationOverlayView menuUserCreationOverlayView;
 
-    public MenuUserCreationOverlayController(MenuModel menuModel, MenuUserCreationOverlayModel menuUserCreationOverlayModel) {
+    public MenuUserCreationOverlayController(MenuModel menuModel, MenuUserCreationOverlayModel menuUserCreationOverlayModel, MenuUserCreationOverlayView menuUserCreationOverlayView) {
         this.menuModel = menuModel;
         this.menuUserCreationOverlayModel = menuUserCreationOverlayModel;
+        this.menuUserCreationOverlayView = menuUserCreationOverlayView;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -27,7 +30,7 @@ public class MenuUserCreationOverlayController {
             menuModel.setUserCreationOverlayActive(false);
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            menuUserCreationOverlayModel.setUpArrowIndex(1); // animate the arrow
+            menuUserCreationOverlayView.setUpArrowIndex(1); // animate the arrow
 
             if (menuUserCreationOverlayModel.getNewUserPictureIndex() + 1 == usersManager.getUserPicturesCount())
                 menuUserCreationOverlayModel.setNewUserPictureIndex(0);
@@ -35,7 +38,7 @@ public class MenuUserCreationOverlayController {
                 menuUserCreationOverlayModel.increasNewUserPictureIndex();
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            menuUserCreationOverlayModel.setDownArrowIndex(1); // animate the arrow
+            menuUserCreationOverlayView.setDownArrowIndex(1); // animate the arrow
 
             if (menuUserCreationOverlayModel.getNewUserPictureIndex() - 1 == -1 || menuUserCreationOverlayModel.getNewUserPictureIndex() - 1 == -2)
                 menuUserCreationOverlayModel.setNewUserPictureIndex(usersManager.getUserPicturesCount() - 1);
@@ -55,9 +58,9 @@ public class MenuUserCreationOverlayController {
 
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP)
-            menuUserCreationOverlayModel.setUpArrowIndex(0); // stop animating the arrow
+            menuUserCreationOverlayView.setUpArrowIndex(0); // stop animating the arrow
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            menuUserCreationOverlayModel.setDownArrowIndex(0); // stop animating the arrow
+            menuUserCreationOverlayView.setDownArrowIndex(0); // stop animating the arrow
     }
 }

@@ -62,16 +62,16 @@ public class MenuModel extends State implements StateMethods {
         g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         if (scoreBoardOverlayActive) {
-            game.getMenuScoreBoardOverlayModel().draw(g);
+            game.getMenuScoreBoardOverlayView().draw(g);
             return;
         }
 
         drawGratings(g);
 
         if (userSelectionOverlayActive)
-            game.getMenuUserSelectionOverlayModel().draw(g);
+            game.getMenuUserSelectionOverlayView().draw(g);
         else if (userCreationOverlayActive)
-            game.getMenuUserCreationOverlayModel().draw(g);
+            game.getMenuUserCreationOverlayView().draw(g);
         else {
             drawTittle(g);
             drawSelections(g);

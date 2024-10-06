@@ -1,33 +1,21 @@
 package view.overlays;
 
-import main.Game;
-import users.User;
+import model.overlays.MenuScoreBoardOverlayModel;
+import users.UsersManager;
 import utilz.Constants;
 import utilz.LoadSave;
-import gameStates.MenuModel;
-import users.UsersManager;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.awt.image.BufferedImage;
-import java.util.stream.Collectors;
 
-public class MenuScoreBoardOverlayModel extends MenuOverlay {
+public class MenuScoreBoardOverlayView extends MenuOverlayView {
+    private final MenuScoreBoardOverlayModel menuSoreBoardOverlayModel;
     private final UsersManager usersManager = UsersManager.getInstance();
-    private ArrayList<User> orderedUsers;
-
     private BufferedImage questionMark;
 
-    public MenuScoreBoardOverlayModel(MenuModel menuModel) {
-        super(menuModel);
-        updateUserScores();
-        loadImages();
-    }
-
-    @Override
-    public void update() {
-        // not used
+    public MenuScoreBoardOverlayView(MenuScoreBoardOverlayModel menuScoreBoardOverlayModel) {
+        this.menuSoreBoardOverlayModel = menuScoreBoardOverlayModel;
+        questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
     }
 
     @Override
@@ -118,18 +106,18 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         int x = (Constants.GAME_WIDTH - rectWidth) / 2;
         int y = startingY + positionIndex * rectHeight;
 
-        if (positionIndex >= orderedUsers.size())
+        if (positionIndex >= menuSoreBoardOverlayModel.getOrderedUsers().size())
             g.drawImage(questionMark, x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
         else
-            g.drawImage(usersManager.getUserPicture(orderedUsers.get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
+            g.drawImage(usersManager.getUserPicture(menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
     }
 
     private void drawUserName(Graphics g, int positionIndex, int startingY) {
 
         String text = "________"; // Empty User
 
-        if (positionIndex < orderedUsers.size())
-            text = orderedUsers.get(positionIndex).getName().toUpperCase();
+        if (positionIndex < menuSoreBoardOverlayModel.getOrderedUsers().size())
+            text = menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getName().toUpperCase();
 
         int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
         int rectHeight = 30 * Constants.SCALE;
@@ -150,8 +138,8 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
 
     private void drawUserScore(Graphics g, int positionIndex, int startingY) {
         String text = "0"; // Empty User
-        if (positionIndex < orderedUsers.size())
-            text = String.valueOf(orderedUsers.get(positionIndex).getBestScore());
+        if (positionIndex < menuSoreBoardOverlayModel.getOrderedUsers().size())
+            text = String.valueOf(menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getBestScore());
 
         int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
         int rectHeight = 30 * Constants.SCALE;
@@ -168,15 +156,5 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         int textY = y + (rectHeight + textHeight) / 2;
 
         g.drawString(text, textX, textY);
-    }
-
-    public void updateUserScores() {
-        orderedUsers = (ArrayList<User>) usersManager.getUsers().stream()
-                .sorted(Comparator.comparingInt(User::getBestScore).reversed())
-                .collect(Collectors.toList());
-    }
-
-    private void loadImages(){
-        questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
     }
 }

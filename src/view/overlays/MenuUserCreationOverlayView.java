@@ -1,22 +1,19 @@
 package view.overlays;
 
-import main.Game;
+import model.overlays.MenuUserCreationOverlayModel;
+import users.UsersManager;
 import utilz.Constants;
 import utilz.LoadSave;
-import gameStates.MenuModel;
-import users.UsersManager;
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class MenuUserCreationOverlayModel extends MenuOverlay {
+public class MenuUserCreationOverlayView extends MenuOverlayView {
+    private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
     private final UsersManager usersManager = UsersManager.getInstance();
-
-    private String newUserName = "";
-    private int newUserPictureIndex = -1;
     private boolean blink = true;
 
     private BufferedImage questionMark;
@@ -24,11 +21,8 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
     private int upArrowIndex = 0;
     private int downArrowIndex = 0;
 
-    private boolean userNameAlreadyExists = false;
-    private boolean enterKeyDeactivated = true;
-
-    public MenuUserCreationOverlayModel(MenuModel menuModel) {
-        super(menuModel);
+    public MenuUserCreationOverlayView(MenuUserCreationOverlayModel menuUserCreationOverlayModel) {
+        this.menuUserCreationOverlayModel = menuUserCreationOverlayModel;
         loadImages();
 
         // Initialize the timer for blinking animation
@@ -39,19 +33,6 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
             }
         });
         timer.start();
-    }
-
-    @Override
-    public void update() {
-
-        // Check if the username already exists
-        userNameAlreadyExists = usersManager.doesUserAlreadyExist(newUserName);
-
-        // update enterKeyStatus
-        if (newUserName.isEmpty() || newUserPictureIndex == -1 || userNameAlreadyExists)
-            enterKeyDeactivated = true;
-        else
-            enterKeyDeactivated = false;
     }
 
     @Override
@@ -119,11 +100,11 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
     }
 
     private void drawUserName(Graphics g) {
-        g.setColor(usersManager.getUserColor1(newUserPictureIndex));
+        g.setColor(usersManager.getUserColor1(menuUserCreationOverlayModel.getNewUserPictureIndex()));
         g.setFont(retroFont.deriveFont(50f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
-        String text = newUserName.toUpperCase();
+        String text = menuUserCreationOverlayModel.getNewUserName().toUpperCase();
         int x = 100 * Constants.SCALE;
         int y = 85 * Constants.SCALE + fm.getHeight();
 
@@ -149,13 +130,13 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         g.setColor(Color.WHITE);
         g.drawRect(x, y, rectSize, rectSize);
 
-        if (newUserPictureIndex == -1)
+        if (menuUserCreationOverlayModel.getNewUserPictureIndex() == -1)
             // draw question mark
             g.drawImage(questionMark, x + 1, y + 1, rectSize - 1, rectSize - 1, null);
 
         else
             // draw the picture
-            g.drawImage(usersManager.getUserPicture(newUserPictureIndex), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
+            g.drawImage(usersManager.getUserPicture(menuUserCreationOverlayModel.getNewUserPictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
     }
 
     private void drawControls(Graphics g) {
@@ -172,19 +153,19 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         int x = 40 * Constants.SCALE + fm.getHeight();
         int y = 108  * Constants.SCALE + 4 * fm.getHeight();
 
-        if (enterKeyDeactivated) {
+        if (menuUserCreationOverlayModel.isEnterKeyDeactivated()) {
             // Draw first suggestion light grey (inactive)
             g.setColor(new Color(0x888888));
             g.drawString("Press ENTER to confirm", x, y);
         }
 
-        if (!enterKeyDeactivated) {
+        if (!menuUserCreationOverlayModel.isEnterKeyDeactivated()) {
             // Draw first suggestion (active)
             g.setColor(Color.WHITE);
             g.drawString(text1Part1, x, y);
             int width1 = fm.stringWidth(text1Part1);
 
-            g.setColor(usersManager.getUserColor2(newUserPictureIndex));
+            g.setColor(usersManager.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
             g.drawString(text1Part2, x + width1, y);
             int width2 = fm.stringWidth(text1Part2);
 
@@ -197,12 +178,40 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         g.drawString(text2Part1, x, y + fm.getHeight());
         int width3 = fm.stringWidth(text2Part1);
 
-        g.setColor(usersManager.getUserColor2(newUserPictureIndex));
+        g.setColor(usersManager.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
         g.drawString(text2Part2, x + width3, y + fm.getHeight());
         int width4 = fm.stringWidth(text2Part2);
 
         g.setColor(Color.WHITE);
         g.drawString(text2Part3, x + width3 + width4, y + fm.getHeight());
+    }
+
+    private void drawSuggestions(Graphics g) {
+
+        if (blink) return;
+
+        g.setColor(new Color(0xFF6961));
+        g.setFont(retroFont.deriveFont(26f));
+        FontMetrics fm = g.getFontMetrics(g.getFont());
+        int y = 170 * Constants.SCALE + fm.getHeight();
+
+        if (menuUserCreationOverlayModel.doesUserNameAlreadyExists()) {
+            String text = "User already exists!";
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            g.drawString(text, x, y);
+        }
+
+        else if (menuUserCreationOverlayModel.getNewUserPictureIndex() == -1) {
+            String text = "Please select a picture!";
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            g.drawString(text, x, y);
+        }
+
+        else if (menuUserCreationOverlayModel.getNewUserName().isEmpty()) {
+            String text = "Username cannot be empty!";
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            g.drawString(text, x, y);
+        }
     }
 
     private void loadImages(){
@@ -219,67 +228,12 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
     }
 
-    private void drawSuggestions(Graphics g) {
-
-        if (blink) return;
-
-        g.setColor(new Color(0xFF6961));
-        g.setFont(retroFont.deriveFont(26f));
-        FontMetrics fm = g.getFontMetrics(g.getFont());
-        int y = 170 * Constants.SCALE + fm.getHeight();
-
-        if (userNameAlreadyExists) {
-            String text = "User already exists!";
-            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
-            g.drawString(text, x, y);
-        }
-
-        else if (newUserPictureIndex == -1) {
-            String text = "Please select a picture!";
-            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
-            g.drawString(text, x, y);
-        }
-
-        else if (newUserName.isEmpty()) {
-            String text = "Username cannot be empty!";
-            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
-            g.drawString(text, x, y);
-        }
+    // -------- Getters and Setters --------
+    public void setUpArrowIndex(int upArrowIndex) {
+        this.upArrowIndex = upArrowIndex;
     }
 
-    public void setUpArrowIndex(int index){
-        upArrowIndex = index;
-    }
-
-    public void setDownArrowIndex(int index){
-        downArrowIndex = index;
-    }
-
-    public void setNewUserPictureIndex(int index){
-        newUserPictureIndex = index;
-    }
-
-    public void increasNewUserPictureIndex(){
-        newUserPictureIndex++;
-    }
-
-    public void decreaseNewUserPictureIndex(){
-        newUserPictureIndex--;
-    }
-
-    public String getNewUserName(){
-        return newUserName;
-    }
-
-    public void setNewUserName(String name){
-        newUserName = name;
-    }
-
-    public boolean isEnterKeyDeactivated() {
-        return enterKeyDeactivated;
-    }
-
-    public int getNewUserPictureIndex(){
-        return newUserPictureIndex;
+    public void setDownArrowIndex(int downArrowIndex) {
+        this.downArrowIndex = downArrowIndex;
     }
 }

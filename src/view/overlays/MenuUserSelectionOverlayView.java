@@ -1,34 +1,25 @@
 package view.overlays;
 
-import main.Game;
-import users.User;
+import model.overlays.MenuUserSelectionOverlayModel;
+import users.UsersManager;
 import utilz.Constants;
 import utilz.LoadSave;
-import gameStates.MenuModel;
-import users.UsersManager;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-public class MenuUserSelectionOverlayModel extends MenuOverlay {
+public class MenuUserSelectionOverlayView extends MenuOverlayView {
+    private final MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
     private final UsersManager usersManager = UsersManager.getInstance();
-    private User selectedUser;
-    private ArrayList<User> users;
 
     private BufferedImage[][] arrows;
     private int leftArrowIndex = 0;
     private int rightArrowIndex = 0;
 
-    public MenuUserSelectionOverlayModel(MenuModel menuModel) {
-        super(menuModel);
-        updateUserList();
-        loadArrows();
-    }
+    public MenuUserSelectionOverlayView(MenuUserSelectionOverlayModel menuUserSelectionOverlayModel) {
+        this.menuUserSelectionOverlayModel = menuUserSelectionOverlayModel;
 
-    @Override
-    public void update() {
-        // not used
+        loadArrows();
     }
 
     @Override
@@ -95,11 +86,11 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
     }
 
     private void drawUserName(Graphics g){
-        g.setColor(usersManager.getUserColor1(selectedUser.getProfilePictureIndex()));
+        g.setColor(usersManager.getUserColor1(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()));
         g.setFont(retroFont.deriveFont(50f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
-        String text = selectedUser.getName().toUpperCase();
+        String text = menuUserSelectionOverlayModel.getSelectedUser().getName().toUpperCase();
         int x = 100 * Constants.SCALE;
         int y = 60 * Constants.SCALE + fm.getHeight();
 
@@ -117,7 +108,7 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         g.drawRect(x, y, rectSize, rectSize);
 
         //draw the picture
-        g.drawImage(usersManager.getUserPicture(selectedUser.getProfilePictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
+        g.drawImage(usersManager.getUserPicture(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
     }
 
     private void drawUserDetails(Graphics g){
@@ -126,9 +117,9 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         g.setFont(retroFont.deriveFont(22f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
-        String text1 = "- Best Score: " + selectedUser.getBestScore();
-        String text2 = "- Played Games: " + selectedUser.getPlayedGames();
-        String text3 = "- Won Games: " + selectedUser.getWonGames();
+        String text1 = "- Best Score: " + menuUserSelectionOverlayModel.getSelectedUser().getBestScore();
+        String text2 = "- Played Games: " + menuUserSelectionOverlayModel.getSelectedUser().getPlayedGames();
+        String text3 = "- Won Games: " + menuUserSelectionOverlayModel.getSelectedUser().getWonGames();
         int x = 95 * Constants.SCALE + fm.getHeight();
         int y = 95 * Constants.SCALE;
 
@@ -156,7 +147,7 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         g.drawString(text1Part1, x, y);
         int width1 = fm.stringWidth(text1Part1);
 
-        g.setColor(usersManager.getUserColor2(selectedUser.getProfilePictureIndex()));
+        g.setColor(usersManager.getUserColor2(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()));
         g.drawString(text1Part2, x + width1, y);
         int width2 = fm.stringWidth(text1Part2);
 
@@ -168,7 +159,7 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         g.drawString(text2Part1, x, y + fm.getHeight());
         int width3 = fm.stringWidth(text2Part1);
 
-        g.setColor(usersManager.getUserColor2(selectedUser.getProfilePictureIndex()));
+        g.setColor(usersManager.getUserColor2(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()));
         g.drawString(text2Part2, x + width3, y + fm.getHeight());
         int width4 = fm.stringWidth(text2Part2);
 
@@ -186,33 +177,12 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         arrows[1][1] = img.getSubimage(10, 10, 10, 10);
     }
 
-    public void updateUserList(){
-        users = usersManager.getUsers();
-        selectedUser = users.getFirst();
-    }
-
-    // -------------- Getters and Setters --------------
-    public User getSelectedUser() {
-        return selectedUser;
-    }
-
-    public void setSelectedUser(User selectedUser) {
-        this.selectedUser = selectedUser;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
+    // ----------- Getters and Setters -----------
     public void setLeftArrowIndex(int leftArrowIndex) {
         this.leftArrowIndex = leftArrowIndex;
     }
 
     public void setRightArrowIndex(int rightArrowIndex) {
         this.rightArrowIndex = rightArrowIndex;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
     }
 }
