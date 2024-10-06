@@ -2,6 +2,7 @@ package view.overlays;
 
 import main.Game;
 import users.User;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.MenuModel;
 import users.UsersManager;
@@ -34,7 +35,7 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         drawTitle(g);
         drawCommand(g);
 
-        int startingY = 55 * Game.SCALE;
+        int startingY = 55 * Constants.SCALE;
         for (int i = 0; i < 4; i++) {   // draw the top 5 users
             drawUser(g, i, startingY);
         }
@@ -50,9 +51,9 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 5 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = 23 * Game.SCALE + fm.getHeight();
+        int spacing = 5 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = 23 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
@@ -71,8 +72,8 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         int width3 = fm.stringWidth(textPart3);
         int totalWidth = width1 + width2 + width3;
 
-        int y = Game.GAME_HEIGHT - 25 * Game.SCALE;
-        int x = (Game.GAME_WIDTH - totalWidth) / 2;
+        int y = Constants.GAME_HEIGHT - 25 * Constants.SCALE;
+        int x = (Constants.GAME_WIDTH - totalWidth) / 2;
 
         g.setColor(Color.WHITE);
         g.drawString(textPart1, x, y);
@@ -94,14 +95,14 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
     private void drawUserBox(Graphics g, int positionIndex, int startingY) {
         Graphics2D g2d = (Graphics2D) g;
 
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.6);
-        int rectHeight = 30 * Game.SCALE;
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
+        int rectHeight = 30 * Constants.SCALE;
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
         int y = startingY + positionIndex * rectHeight;
 
         // Set the thickness of the border
         // Set the thickness of the border
-        int borderThickness = (int) 1 * Game.SCALE;
+        int borderThickness = (int) 1 * Constants.SCALE;
         g2d.setStroke(new BasicStroke(borderThickness));
         g.setColor(Color.WHITE);
         g.drawRect(x, y, rectWidth, rectHeight);
@@ -112,15 +113,15 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
     }
 
     private void drawUserPicture(Graphics g, int positionIndex, int startingY) {
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.6);
-        int rectHeight = 30 * Game.SCALE;
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
+        int rectHeight = 30 * Constants.SCALE;
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
         int y = startingY + positionIndex * rectHeight;
 
         if (positionIndex >= orderedUsers.size())
-            g.drawImage(questionMark, x + 10 * Game.SCALE, y + 5 * Game.SCALE, 20 * Game.SCALE, 20 * Game.SCALE, null);
+            g.drawImage(questionMark, x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
         else
-            g.drawImage(usersManager.getUserPicture(orderedUsers.get(positionIndex).getProfilePictureIndex()), x + 10 * Game.SCALE, y + 5 * Game.SCALE, 20 * Game.SCALE, 20 * Game.SCALE, null);
+            g.drawImage(usersManager.getUserPicture(orderedUsers.get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
     }
 
     private void drawUserName(Graphics g, int positionIndex, int startingY) {
@@ -130,9 +131,9 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         if (positionIndex < orderedUsers.size())
             text = orderedUsers.get(positionIndex).getName().toUpperCase();
 
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.6);
-        int rectHeight = 30 * Game.SCALE;
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
+        int rectHeight = 30 * Constants.SCALE;
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
         int y = startingY + positionIndex * rectHeight;
 
         g.setColor(Color.WHITE);
@@ -152,9 +153,9 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
         if (positionIndex < orderedUsers.size())
             text = String.valueOf(orderedUsers.get(positionIndex).getBestScore());
 
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.6);
-        int rectHeight = 30 * Game.SCALE;
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
+        int rectHeight = 30 * Constants.SCALE;
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
         int y = startingY + positionIndex * rectHeight;
 
         g.setColor(Color.WHITE);
@@ -163,7 +164,7 @@ public class MenuScoreBoardOverlayModel extends MenuOverlay {
 
         int textWidth = fm.stringWidth(text);
         int textHeight = fm.getHeight();
-        int textX = x + rectWidth - textWidth - 10 * Game.SCALE;
+        int textX = x + rectWidth - textWidth - 10 * Constants.SCALE;
         int textY = y + (rectHeight + textHeight) / 2;
 
         g.drawString(text, textX, textY);

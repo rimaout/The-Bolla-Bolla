@@ -10,6 +10,8 @@ import view.overlays.MenuScoreBoardOverlayModel;
 import view.overlays.MenuUserCreationOverlayModel;
 import view.overlays.MenuUserSelectionOverlayModel;
 
+import utilz.Constants;
+
 import java.awt.*;
 
 public class Game implements Runnable {
@@ -45,17 +47,6 @@ public class Game implements Runnable {
 
     private LevelTransition levelTransition;
 
-    private final int FPS_SET = 60;
-    private final int UPS_SET = 180;
-
-    public final static int TILES_DEFAULT_SIZE = 8;
-    public final static int SCALE = 3;
-    public final static int TILES_IN_WIDTH = 32;
-    public final static int TILES_IN_HEIGHT = 28;
-    public final static int TILES_SIZE = TILES_DEFAULT_SIZE * SCALE;
-    public final static int GAME_WIDTH = TILES_IN_WIDTH * TILES_SIZE;
-    public final static int GAME_HEIGHT = TILES_IN_HEIGHT * TILES_SIZE;
-
     public Game() {
         initClasses();
 
@@ -83,12 +74,15 @@ public class Game implements Runnable {
         menuController = new MenuController(this, menuModel);
 
         menuUserCreationOverlayModel = new MenuUserCreationOverlayModel(menuModel);
+        //menuUserCreationOverlayView = new MenuUserCreationOverlayView(menuUserCreationOverlayModel);
         menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuUserCreationOverlayModel);
 
         menuUserSelectionOverlayModel = new MenuUserSelectionOverlayModel(menuModel);
+        //menuUserSelectionOverlayView = new MenuUserSelectionOverlayView(menuUserSelectionOverlayModel);
         menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuUserSelectionOverlayModel);
 
         menuScoreBoardOverlayModel = new MenuScoreBoardOverlayModel(menuModel);
+        //menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
         menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
 
         playingModel = new PlayingModel(this);
@@ -143,12 +137,12 @@ public class Game implements Runnable {
     @Override
     public void run() {
 
-        double timePerFrame = 1000000000.0 / FPS_SET;
+        double timePerFrame = 1000000000.0 / Constants.FPS_SET;
         long lastFrameTime = System.currentTimeMillis();
         int frames = 0;
         double deltaF = 0; // Delta Frame
 
-        double timePerUpdate = 1000000000.0 / UPS_SET;
+        double timePerUpdate = 1000000000.0 / Constants.UPS_SET;
         long lastUpdateTime = System.nanoTime();
         int updates = 0;
         double deltaU = 0; // Delta Update

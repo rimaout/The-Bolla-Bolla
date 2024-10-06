@@ -9,7 +9,7 @@ import projectiles.LightingProjectile;
 import utilz.Constants.Projectiles.ProjectileType;
 
 import static utilz.Constants.Bubble.*;
-import static utilz.Constants.Bubble.IMMAGE_H;
+import static utilz.Constants.Bubble.IMAGE_H;
 
 public class LightningBubble extends SpecialBubble {
     public LightningBubble(float x, float y, Constants.Direction direction) {
@@ -18,7 +18,7 @@ public class LightningBubble extends SpecialBubble {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getLightningBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getLightningBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
     }
 
     @Override

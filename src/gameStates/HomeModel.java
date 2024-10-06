@@ -1,13 +1,12 @@
 package gameStates;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import entities.TwinkleBubbleManager;
 import static utilz.Constants.Home.*;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class HomeModel extends State implements StateMethods {
@@ -29,11 +28,11 @@ public class HomeModel extends State implements StateMethods {
 
     private void loadLogo() {
         logoImg = LoadSave.GetSprite(LoadSave.GAME_LOGO);
-        logoW = logoImg.getWidth() * Game.SCALE;
-        logoH = logoImg.getHeight() * Game.SCALE;
-        logoX = (float) Game.GAME_WIDTH / 2 - logoW / 2;
+        logoW = logoImg.getWidth() * Constants.SCALE;
+        logoH = logoImg.getHeight() * Constants.SCALE;
+        logoX = (float) Constants.GAME_WIDTH / 2 - logoW / 2;
 
-        logoY = (int) (- logoImg.getHeight() * Game.SCALE);
+        logoY = (int) (- logoImg.getHeight() * Constants.SCALE);
     }
 
     @Override
@@ -59,10 +58,10 @@ public class HomeModel extends State implements StateMethods {
         if (isLogoInPosition) {
             g.setColor(Color.WHITE);
             g.setFont(nesFont);
-            g.drawString("PRESS ENTER TO START!", Game.GAME_WIDTH / 2 - 75 * Game.SCALE, Game.GAME_HEIGHT / 2 + 50 * Game.SCALE);
+            g.drawString("PRESS ENTER TO START!", Constants.GAME_WIDTH / 2 - 75 * Constants.SCALE, Constants.GAME_HEIGHT / 2 + 50 * Constants.SCALE);
 
             g.setFont(nesFont.deriveFont(15f));
-            g.drawString("© 2024 RIMA CORPORATION", Game.GAME_WIDTH / 2 - 55 * Game.SCALE, Game.GAME_HEIGHT / 2 + 100 * Game.SCALE);
+            g.drawString("© 2024 RIMA CORPORATION", Constants.GAME_WIDTH / 2 - 55 * Constants.SCALE, Constants.GAME_HEIGHT / 2 + 100 * Constants.SCALE);
         }
     }
 

@@ -1,6 +1,7 @@
 package view.overlays;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.MenuModel;
 import users.UsersManager;
@@ -67,13 +68,13 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
     private void drawBox(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.7);
-        int rectHeight = (int) (Game.GAME_HEIGHT * 0.465);
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
-        int y = 60 * Game.SCALE; // Fixed y-coordinate, adjust as needed
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.7);
+        int rectHeight = (int) (Constants.GAME_HEIGHT * 0.465);
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
+        int y = 60 * Constants.SCALE; // Fixed y-coordinate, adjust as needed
 
         // Set the thickness of the border
-        int borderThickness = (int) 1 * Game.SCALE; // Adjust the thickness as needed
+        int borderThickness = (int) 1 * Constants.SCALE; // Adjust the thickness as needed
         g2d.setStroke(new BasicStroke(borderThickness));
 
         // Set the color to white for the border
@@ -87,15 +88,15 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
 
     private void drawArrows(Graphics g){
 
-        int x = 61 * Game.SCALE;
-        int size = 18 * Game.SCALE;
+        int x = 61 * Constants.SCALE;
+        int size = 18 * Constants.SCALE;
 
         //draw left arrow
-        int yUp = 76 * Game.SCALE - size;
+        int yUp = 76 * Constants.SCALE - size;
         g.drawImage(arrows[0][upArrowIndex], x, yUp, size, size, null);
 
         //draw right arrow
-        int yDown = 119 * Game.SCALE;
+        int yDown = 119 * Constants.SCALE;
         g.drawImage(arrows[1][downArrowIndex], x, yDown, size, size, null);
     }
 
@@ -109,9 +110,9 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 5 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = 23 * Game.SCALE + fm.getHeight();
+        int spacing = 5 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = 23 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
@@ -123,26 +124,26 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
         String text = newUserName.toUpperCase();
-        int x = 100 * Game.SCALE;
-        int y = 85 * Game.SCALE + fm.getHeight();
+        int x = 100 * Constants.SCALE;
+        int y = 85 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text, x, y);
 
         // Draw the blinking cursor
         if (blink) {
-            int cursorX = x + fm.stringWidth(text) + 3 * Game.SCALE;
+            int cursorX = x + fm.stringWidth(text) + 3 * Constants.SCALE;
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setStroke(new BasicStroke(3 * Game.SCALE));
-            g2d.drawLine(cursorX, y - 13 * Game.SCALE, cursorX, y + 1 * Game.SCALE);
+            g2d.setStroke(new BasicStroke(3 * Constants.SCALE));
+            g2d.drawLine(cursorX, y - 13 * Constants.SCALE, cursorX, y + 1 * Constants.SCALE);
         }
     }
 
     private void drawUserPicture(Graphics g){
 
         //draw border for the picture
-        int x = 45 * Game.SCALE;
-        int y = 73 * Game.SCALE;
-        int rectSize = (int) ((18 * 2.8 + 1) * Game.SCALE);
+        int x = 45 * Constants.SCALE;
+        int y = 73 * Constants.SCALE;
+        int rectSize = (int) ((18 * 2.8 + 1) * Constants.SCALE);
 
 
         g.setColor(Color.WHITE);
@@ -168,8 +169,8 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         String text2Part2 = "ESC";
         String text2Part3 = " to go back";
 
-        int x = 40 * Game.SCALE + fm.getHeight();
-        int y = 108  * Game.SCALE + 4 * fm.getHeight();
+        int x = 40 * Constants.SCALE + fm.getHeight();
+        int y = 108  * Constants.SCALE + 4 * fm.getHeight();
 
         if (enterKeyDeactivated) {
             // Draw first suggestion light grey (inactive)
@@ -225,23 +226,23 @@ public class MenuUserCreationOverlayModel extends MenuOverlay {
         g.setColor(new Color(0xFF6961));
         g.setFont(retroFont.deriveFont(26f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
-        int y = 170 * Game.SCALE + fm.getHeight();
+        int y = 170 * Constants.SCALE + fm.getHeight();
 
         if (userNameAlreadyExists) {
             String text = "User already exists!";
-            int x = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
             g.drawString(text, x, y);
         }
 
         else if (newUserPictureIndex == -1) {
             String text = "Please select a picture!";
-            int x = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
             g.drawString(text, x, y);
         }
 
         else if (newUserName.isEmpty()) {
             String text = "Username cannot be empty!";
-            int x = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;
+            int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
             g.drawString(text, x, y);
         }
     }

@@ -13,9 +13,9 @@ import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.AudioConstants;
 import utilz.Constants.Direction;
-import utilz.Constants;
 import utilz.PlayingTimer;
 
 import java.awt.*;
@@ -146,7 +146,7 @@ public class WaterFlow extends Entity {
 
     private void fall() {
         float newY = hitbox.y + WATER_FLOW_SPEED;
-        float correction = 2 * Game.SCALE;     // correction value to prevent the water flow from getting stuck in the floor
+        float correction = 2 * Constants.SCALE;     // correction value to prevent the water flow from getting stuck in the floor
 
         if (!IsSolid(hitbox.x, newY + hitbox.height - correction, levelManager.getLevelData()))
             hitbox.y = newY;
@@ -179,7 +179,7 @@ public class WaterFlow extends Entity {
     }
 
     private void updateOutOfScreen() {
-        if (getTileY() == Game.TILES_IN_HEIGHT + 1) {
+        if (getTileY() == Constants.TILES_IN_HEIGHT + 1) {
 
             if (capturedPlayer != null)
                 spawnPlayer();
@@ -196,7 +196,7 @@ public class WaterFlow extends Entity {
         capturedPlayer.setActive(true);
         capturedPlayer.reset(false, false);
         capturedPlayer.setInAir(true);
-        capturedPlayer.getHitbox().y = Game.TILES_IN_HEIGHT + 1;
+        capturedPlayer.getHitbox().y = Constants.TILES_IN_HEIGHT + 1;
     }
 
     private void spawnEnemiesDrops() {
@@ -210,18 +210,18 @@ public class WaterFlow extends Entity {
     private int calculateEnemyDropX(int spawnPoint, int i) {
         // This method calculates the x position of the enemy drop, randomly spreading them in a range around the spawn point
         Random random = new Random();
-        int offsetRange = 18 * Game.SCALE;
+        int offsetRange = 18 * Constants.SCALE;
 
         return spawnPoint + (i * offsetRange) + random.nextInt(offsetRange);
     }
 
     private int calculateEnemyDropY() {
         // This method calculates the y position of the enemy drop, by finding the first solid tile below the top of the map
-        int dropY = 4 * Game.TILES_SIZE; // start from the top of the screen
+        int dropY = 4 * Constants.TILES_SIZE; // start from the top of the screen
 
-        for (int i = -1; i < Game.TILES_IN_HEIGHT * Game.TILES_SIZE; i++) {
+        for (int i = -1; i < Constants.TILES_IN_HEIGHT * Constants.TILES_SIZE; i++) {
             if (IsSolid(hitbox.x, dropY, levelManager.getLevelData())) {
-                dropY -= Constants.Items.H;
+                dropY -= utilz.Constants.Items.H;
                 break;
             }
             dropY += 1;

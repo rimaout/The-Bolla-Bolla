@@ -2,6 +2,7 @@ package levels;
 
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.PlayingModel;
 import gameStates.GameState;
@@ -67,8 +68,8 @@ public class LevelManager {
         int index;
         BufferedImage tile;
 
-        for (int y = 0; y < Game.TILES_IN_HEIGHT; y++) {
-            for (int x = 0; x < Game.TILES_IN_WIDTH; x++) {
+        for (int y = 0; y < Constants.TILES_IN_HEIGHT; y++) {
+            for (int x = 0; x < Constants.TILES_IN_WIDTH; x++) {
                 index = levels.get(levelIndex).getSpriteIndex(x, y);
 
                 if (index >= 120)
@@ -76,7 +77,7 @@ public class LevelManager {
                 else
                     tile = levelTiles[index];
 
-                g.drawImage(tile, x * Game.TILES_SIZE, y * Game.TILES_SIZE, Game.TILES_SIZE, Game.TILES_SIZE, null);
+                g.drawImage(tile, x * Constants.TILES_SIZE, y * Constants.TILES_SIZE, Constants.TILES_SIZE, Constants.TILES_SIZE, null);
             }
         }
     }

@@ -6,6 +6,7 @@ import main.Game;
 import entities.Player;
 import entities.EnemyManager;
 import projectiles.ProjectileManager;
+import utilz.Constants;
 import utilz.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
@@ -117,7 +118,7 @@ public class PowerUpManager{
         if (bubbleShootCounter >= 20 ) powerUps.add(PowerUpType.GREEN_CANDY);       // Working // Original game value = 35
         if (bubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_CANDY);           // Working // Original game value = 35
         if (jumpCounter >= 20) powerUps.add(PowerUpType.RED_CANDY);                 // Working // Original game value = 35
-        if (walkedDistance >= Game.GAME_WIDTH * 6) powerUps.add(PowerUpType.SHOE);  // Working // Original game value * 15
+        if (walkedDistance >= Constants.GAME_WIDTH * 6) powerUps.add(PowerUpType.SHOE);  // Working // Original game value * 15
         if (waterBubblePopCounter >= 15) powerUps.add(PowerUpType.ORANGE_PARASOL);
         if (waterBubblePopCounter >= 20) powerUps.add(PowerUpType.BLUE_PARASOL);
         if (itemCollectCounter >= 4) powerUps.add(PowerUpType.CHACKN_HEART);        // Working // Original game value = 55

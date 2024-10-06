@@ -1,12 +1,11 @@
 package gameStates;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import main.Game;
 import levels.Level;
+import utilz.Constants;
 import utilz.LoadSave;
 import entities.Player;
 import levels.LevelManager;
@@ -73,7 +72,7 @@ public class LevelTransition extends State implements StateMethods{
         playerStartY = player.getHitbox().y;
 
         oldLevelY = 0;
-        newLevelY = Game.GAME_HEIGHT;
+        newLevelY = Constants.GAME_HEIGHT;
 
         firstUpdate = false;
     }
@@ -90,8 +89,8 @@ public class LevelTransition extends State implements StateMethods{
     private void updatePlayer() {
 
         // player position
-        float playerTransitionSpeedX = (SPAWN_X - playerStartX) / (Game.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
-        float playerTransitionSpeedY = (SPAWN_Y - playerStartY) / (Game.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
+        float playerTransitionSpeedX = (SPAWN_X - playerStartX) / (Constants.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
+        float playerTransitionSpeedY = (SPAWN_Y - playerStartY) / (Constants.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
         player.getHitbox().x += playerTransitionSpeedX;
         player.getHitbox().y += playerTransitionSpeedY;
 
@@ -115,10 +114,10 @@ public class LevelTransition extends State implements StateMethods{
 
     private void drawPlayer(Graphics g) {
 
-        float xOffSet = 5 * Game.SCALE;
-        float yOffSet = 12 * Game.SCALE;
+        float xOffSet = 5 * Constants.SCALE;
+        float yOffSet = 12 * Constants.SCALE;
 
-        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Game.SCALE, 34 * Game.SCALE, null);
+        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Constants.SCALE, 34 * Constants.SCALE, null);
     }
 
     private void drawLevel(Graphics g, Level level, int yOffSet) {
@@ -126,8 +125,8 @@ public class LevelTransition extends State implements StateMethods{
         int index;
         BufferedImage tile;
 
-        for (int y = 0; y < Game.TILES_IN_HEIGHT; y++) {
-            for (int x = 0; x < Game.TILES_IN_WIDTH; x++) {
+        for (int y = 0; y < Constants.TILES_IN_HEIGHT; y++) {
+            for (int x = 0; x < Constants.TILES_IN_WIDTH; x++) {
 
                 index = level.getSpriteIndex(x, y);
 
@@ -136,7 +135,7 @@ public class LevelTransition extends State implements StateMethods{
                 else
                     tile = levelTiles[index];
 
-                g.drawImage(tile, x * Game.TILES_SIZE, y * Game.TILES_SIZE + yOffSet, Game.TILES_SIZE, Game.TILES_SIZE, null);
+                g.drawImage(tile, x * Constants.TILES_SIZE, y * Constants.TILES_SIZE + yOffSet, Constants.TILES_SIZE, Constants.TILES_SIZE, null);
             }
         }
     }

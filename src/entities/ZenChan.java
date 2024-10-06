@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.Direction;
 
 import static utilz.HelpMethods.*;
@@ -250,12 +251,12 @@ public class ZenChan extends Enemy {
         //check if there are 2 solid tiles in front of the enemy
         if (walkingDir == LEFT) {
             xPos1 = hitbox.x - 1;
-            xPos2 = hitbox.x - Game.TILES_SIZE - 1;
+            xPos2 = hitbox.x - Constants.TILES_SIZE - 1;
         }
 
         else if (walkingDir == RIGHT) {
             xPos1 = hitbox.x + hitbox.width + 1;
-            xPos2 = hitbox.x + hitbox.width + Game.TILES_SIZE + 1;
+            xPos2 = hitbox.x + hitbox.width + Constants.TILES_SIZE + 1;
         }
 
         return IsSolid(xPos1, yPos,levelManager.getLevelData()) && IsSolid(xPos2, yPos, levelManager.getLevelData());
@@ -269,7 +270,7 @@ public class ZenChan extends Enemy {
         int tileDistanceToPerimeterWall = -1;
         int tileDistanceToFloor = -1;
 
-        int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
+        int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
 
         // Find the distance to the perimeter wall (max distance 5 tiles)
         if (walkingDir == LEFT) {

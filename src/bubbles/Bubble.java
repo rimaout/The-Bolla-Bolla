@@ -8,6 +8,7 @@ import main.Game;
 import entities.Entity;
 import entities.Player;
 import levels.LevelManager;
+import utilz.Constants;
 import utilz.PlayingTimer;
 
 import static java.lang.Math.abs;
@@ -39,7 +40,7 @@ public abstract class Bubble extends Entity {
     protected Direction previousDirection;
 
     public Bubble(float x, float y, Direction direction) {
-        super(x, y, IMMAGE_W, IMMAGE_H);
+        super(x, y, IMAGE_W, IMAGE_H);
         this.direction = direction;
         this.previousDirection = direction;
 
@@ -115,16 +116,16 @@ public abstract class Bubble extends Entity {
     }
 
     protected void pacManEffect() {
-        if (direction == DOWN && getTileY() == Game.TILES_IN_HEIGHT + 1)
-            hitbox.y = -2 * Game.TILES_SIZE;
+        if (direction == DOWN && getTileY() == Constants.TILES_IN_HEIGHT + 1)
+            hitbox.y = -2 * Constants.TILES_SIZE;
 
         if (direction == UP && getTileY() == - 1)
-            hitbox.y = (Game.TILES_IN_HEIGHT + 2) * Game.TILES_SIZE;
+            hitbox.y = (Constants.TILES_IN_HEIGHT + 2) * Constants.TILES_SIZE;
     }
 
     public void bounceDown() {
         // Make the bubble bounce down, used when the player jumps on the bubble
-        hitbox.y += 2 * Game.SCALE;
+        hitbox.y += 2 * Constants.SCALE;
     }
 
     protected void bubbleShaking() {
@@ -172,7 +173,7 @@ public abstract class Bubble extends Entity {
     }
 
     protected void handlePlayerPush(Player player) {
-        int correctionOffset = 5 * Game.SCALE;
+        int correctionOffset = 5 * Constants.SCALE;
 
         // left push
         if (hitbox.x + hitbox.width - correctionOffset <= player.getHitbox().x)

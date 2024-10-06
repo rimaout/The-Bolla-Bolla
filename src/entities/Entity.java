@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import main.Game;
+import utilz.Constants;
 import utilz.PlayingTimer;
 import levels.LevelManager;
 import itemesAndRewards.PowerUpManager;
@@ -52,8 +53,8 @@ public abstract class Entity {
 
         // Moving right
         if (xMovement > 0) {
-            int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Game.TILES_SIZE);
-            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+            int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Constants.TILES_SIZE);
+            int yTile = (int) (hitbox.y / Constants.TILES_SIZE);
 
             if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
                 hitbox.x += xMovement;
@@ -63,8 +64,8 @@ public abstract class Entity {
 
         // Moving left
         else {
-            int xTile = (int) ((hitbox.x + xMovement) / Game.TILES_SIZE);
-            int yTile = (int) (hitbox.y / Game.TILES_SIZE);
+            int xTile = (int) ((hitbox.x + xMovement) / Constants.TILES_SIZE);
+            int yTile = (int) (hitbox.y / Constants.TILES_SIZE);
 
             if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
                 hitbox.x += xMovement;
@@ -74,11 +75,11 @@ public abstract class Entity {
     }
 
     public int getTileX() {
-        return (int) (hitbox.x / Game.TILES_SIZE);
+        return (int) (hitbox.x / Constants.TILES_SIZE);
     }
 
     public int getTileY() {
-        return (int) (hitbox.y / Game.TILES_SIZE);
+        return (int) (hitbox.y / Constants.TILES_SIZE);
     }
 
     public Rectangle2D.Float getHitbox() {

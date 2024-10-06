@@ -153,7 +153,7 @@ public class LoadSave {
 
         // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
-        int levelData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+        int levelData[][] = new int[Constants.TILES_IN_HEIGHT][Constants.TILES_IN_WIDTH];
 
         for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {
@@ -190,10 +190,10 @@ public class LoadSave {
                     green = 0;
 
                 switch (green) {
-                    case ZEN_CHAN_LEFT -> list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
-                    case ZEN_CHAN_RIGHT -> list.add(new ZenChan(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
-                    case MAITA_LEFT -> list.add(new Maita(y * Game.TILES_SIZE, x * Game.TILES_SIZE, LEFT));
-                    case MAITA_RIGHT -> list.add(new Maita(y * Game.TILES_SIZE, x * Game.TILES_SIZE, RIGHT));
+                    case ZEN_CHAN_LEFT -> list.add(new ZenChan(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
+                    case ZEN_CHAN_RIGHT -> list.add(new ZenChan(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
+                    case MAITA_LEFT -> list.add(new Maita(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
+                    case MAITA_RIGHT -> list.add(new Maita(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
                 }
             }
         return list;
@@ -209,7 +209,7 @@ public class LoadSave {
         //      3 or 103 -> wind up
         //      4 or 104 -> wind down
 
-        Direction[][] windDirectionData = new Direction[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+        Direction[][] windDirectionData = new Direction[Constants.TILES_IN_HEIGHT][Constants.TILES_IN_WIDTH];
 
         for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {

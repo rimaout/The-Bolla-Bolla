@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
 
@@ -57,13 +58,13 @@ public class TwinkleBubble extends Entity {
 
         // Pacman effect
         if (x < 0)
-            x = Game.GAME_WIDTH - BUBBLE_W;
-        else if (x > Game.GAME_WIDTH - BUBBLE_W)
+            x = Constants.GAME_WIDTH - BUBBLE_W;
+        else if (x > Constants.GAME_WIDTH - BUBBLE_W)
             x = 0;
 
         if (y < 0)
-            y = Game.GAME_HEIGHT - BUBBLE_H;
-        else if (y > Game.GAME_HEIGHT - BUBBLE_H)
+            y = Constants.GAME_HEIGHT - BUBBLE_H;
+        else if (y > Constants.GAME_HEIGHT - BUBBLE_H)
             y = 0;
     }
 

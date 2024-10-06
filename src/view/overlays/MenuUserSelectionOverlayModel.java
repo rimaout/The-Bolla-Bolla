@@ -2,6 +2,7 @@ package view.overlays;
 
 import main.Game;
 import users.User;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.MenuModel;
 import users.UsersManager;
@@ -43,13 +44,13 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
 
     private void drawBox(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        int rectWidth = (int) (Game.GAME_WIDTH * 0.7);
-        int rectHeight = (int) (Game.GAME_HEIGHT * 0.4);
-        int x = (Game.GAME_WIDTH - rectWidth) / 2;
-        int y = 60 * Game.SCALE; // Fixed y-coordinate, adjust as needed
+        int rectWidth = (int) (Constants.GAME_WIDTH * 0.7);
+        int rectHeight = (int) (Constants.GAME_HEIGHT * 0.4);
+        int x = (Constants.GAME_WIDTH - rectWidth) / 2;
+        int y = 60 * Constants.SCALE; // Fixed y-coordinate, adjust as needed
 
         // Set the thickness of the border
-        int borderThickness = (int) 1 * Game.SCALE; // Adjust the thickness as needed
+        int borderThickness = (int) 1 * Constants.SCALE; // Adjust the thickness as needed
         g2d.setStroke(new BasicStroke(borderThickness));
 
         // Set the color to white for the border
@@ -63,15 +64,15 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
 
     private void drawArrows(Graphics g){
 
-        int y = 93 * Game.SCALE;
-        int size = 18 * Game.SCALE;
+        int y = 93 * Constants.SCALE;
+        int size = 18 * Constants.SCALE;
 
         //draw left arrow
-        int xLeft = 41 * Game.SCALE - size;
+        int xLeft = 41 * Constants.SCALE - size;
         g.drawImage(arrows[0][leftArrowIndex], xLeft, y, size, size, null);
 
         //draw right arrow
-        int xRight = 215 * Game.SCALE;
+        int xRight = 215 * Constants.SCALE;
         g.drawImage(arrows[1][rightArrowIndex], xRight, y, size, size, null);
     }
 
@@ -85,9 +86,9 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 5 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = 23 * Game.SCALE + fm.getHeight();
+        int spacing = 5 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = 23 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
@@ -99,17 +100,17 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
         String text = selectedUser.getName().toUpperCase();
-        int x = 100 * Game.SCALE;
-        int y = 60 * Game.SCALE + fm.getHeight();
+        int x = 100 * Constants.SCALE;
+        int y = 60 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text, x, y);
     }
 
     private void drawUserPicture(Graphics g){
 
-        int x = 45 * Game.SCALE;
-        int y = 67 * Game.SCALE;
-        int rectSize = (int) ((18 * 2.8 + 1) * Game.SCALE);
+        int x = 45 * Constants.SCALE;
+        int y = 67 * Constants.SCALE;
+        int rectSize = (int) ((18 * 2.8 + 1) * Constants.SCALE);
 
         //draw border for the picture
         g.setColor(Color.WHITE);
@@ -128,8 +129,8 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         String text1 = "- Best Score: " + selectedUser.getBestScore();
         String text2 = "- Played Games: " + selectedUser.getPlayedGames();
         String text3 = "- Won Games: " + selectedUser.getWonGames();
-        int x = 95 * Game.SCALE + fm.getHeight();
-        int y = 95 * Game.SCALE;
+        int x = 95 * Constants.SCALE + fm.getHeight();
+        int y = 95 * Constants.SCALE;
 
         g.drawString(text1, x, y);
         g.drawString(text2, x, y + fm.getHeight());
@@ -147,8 +148,8 @@ public class MenuUserSelectionOverlayModel extends MenuOverlay {
         String text2Part2 = "C";
         String text2Part3 = " to create a new user";
 
-        int x = 40 * Game.SCALE + fm.getHeight();
-        int y = 95 * Game.SCALE + 4 * fm.getHeight();
+        int x = 40 * Constants.SCALE + fm.getHeight();
+        int y = 95 * Constants.SCALE + 4 * fm.getHeight();
 
         // Draw first suggestion
         g.setColor(Color.WHITE);

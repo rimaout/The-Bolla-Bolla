@@ -3,6 +3,7 @@ package itemesAndRewards;
 import java.awt.*;
 
 import main.Game;
+import utilz.Constants;
 import utilz.PlayingTimer;
 import utilz.Constants.PointsManager.PointsType;
 
@@ -56,7 +57,7 @@ public class Points {
     }
 
     private void move() {
-        y -= (float) (0.1 * Game.SCALE);
+        y -= (float) (0.1 * Constants.SCALE);
     }
 
     private void fade() {

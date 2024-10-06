@@ -15,7 +15,7 @@ public class BubbleGenerator {
     private final GeneratorType generatorType;
     private final GeneratorPosition generatorPosition;
 
-    private int spawnTimer = INITIAL_BUBBLE_GENERATIO_INTERVAL;
+    private int spawnTimer = INITIAL_BUBBLE_GENERATOR_INTERVAL;
 
     public BubbleGenerator(GeneratorType generatorType, GeneratorPosition generatorPosition) {
         this.generatorType = generatorType;

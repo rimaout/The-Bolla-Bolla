@@ -7,9 +7,6 @@ import controller.inputs.KeyBoardInputs;
 import controller.inputs.MouseKeyInputs;
 import controller.inputs.MouseMotionInputs;
 
-import static main.Game.GAME_WIDTH;
-import static main.Game.GAME_HEIGHT;
-
 public class GamePanel extends JPanel {
     private final Game game;
 
@@ -25,10 +22,10 @@ public class GamePanel extends JPanel {
     }
 
      private void setPanelSize() {
-        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
+        Dimension size = new Dimension(utilz.Constants.GAME_WIDTH, utilz.Constants.GAME_HEIGHT);
         setPreferredSize(size);
 
-        System.out.println("Size: " + GAME_WIDTH + " | " + GAME_HEIGHT);
+        System.out.println("Size: " + utilz.Constants.GAME_WIDTH + " | " + utilz.Constants.GAME_HEIGHT);
     }
 
     public void paintComponent(Graphics g) {

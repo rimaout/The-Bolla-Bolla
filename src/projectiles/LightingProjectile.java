@@ -6,6 +6,7 @@ import main.Game;
 import entities.Enemy;
 import entities.Player;
 import audio.AudioPlayer;
+import utilz.Constants;
 import utilz.Constants.Direction;
 import utilz.Constants.AudioConstants;
 import utilz.Constants.Projectiles.ProjectileType;
@@ -69,7 +70,7 @@ public class LightingProjectile extends Projectile{
 
     private static Direction CalculateLightingDirection(float x) {
         // if lighting is on the left side of the screen, go right
-        if (x < Game.GAME_WIDTH / 2f)  return Direction.RIGHT;
+        if (x < Constants.GAME_WIDTH / 2f)  return Direction.RIGHT;
 
         // if lighting is on the right side of the screen, go left
         else return Direction.LEFT;

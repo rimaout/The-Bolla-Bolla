@@ -3,6 +3,7 @@ package view.overlays;
 import gameStates.PlayingModel;
 import main.Game;
 import entities.Player;
+import utilz.Constants;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -43,11 +44,11 @@ public class PlayingHud {
             score = "0" + score;
         }
 
-        int yPos = Game.TILES_SIZE;
-        int size = 8 * Game.SCALE;
+        int yPos = Constants.TILES_SIZE;
+        int size = 8 * Constants.SCALE;
 
         for (int i = 0; i < score.length(); i++) {
-            int xPos = (8 - i) * Game.TILES_SIZE;
+            int xPos = (8 - i) * Constants.TILES_SIZE;
             int number = Integer.parseInt(String.valueOf(score.charAt(score.length() - 1 - i)));
             drawNumber(g, number, xPos, yPos, size);
         }
@@ -56,10 +57,10 @@ public class PlayingHud {
     private void drawPlayerTwoPoints(Graphics g) {
 
         if (playerTwo == null) {
-            int yPos = Game.TILES_SIZE;
-            int size = 8 * Game.SCALE;
-            int xPos1 = Game.GAME_WIDTH - 9 * Game.TILES_SIZE;
-            int xPos2 = Game.GAME_WIDTH - 8 * Game.TILES_SIZE;
+            int yPos = Constants.TILES_SIZE;
+            int size = 8 * Constants.SCALE;
+            int xPos1 = Constants.GAME_WIDTH - 9 * Constants.TILES_SIZE;
+            int xPos2 = Constants.GAME_WIDTH - 8 * Constants.TILES_SIZE;
 
             drawNumber(g, 0, xPos1, yPos, size);
             drawNumber(g, 0, xPos2, yPos, size);
@@ -67,9 +68,9 @@ public class PlayingHud {
     }
 
     private void drawPlayerOneLives(Graphics g) {
-        int xPos = Game.TILES_SIZE;
-        int yPos = 26 * Game.TILES_SIZE;
-        int size = 8 * Game.SCALE;
+        int xPos = Constants.TILES_SIZE;
+        int yPos = 26 * Constants.TILES_SIZE;
+        int size = 8 * Constants.SCALE;
 
         drawNumber(g, playerOne.getLives(), xPos, yPos, size);
     }

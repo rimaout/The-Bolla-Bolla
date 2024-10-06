@@ -3,12 +3,10 @@ package gameStates;
 import static utilz.Constants.MenuConstants.*;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import users.UsersManager;
 import entities.TwinkleBubbleManager;
-import view.overlays.MenuScoreBoardOverlayModel;
-import view.overlays.MenuUserCreationOverlayModel;
-import view.overlays.MenuUserSelectionOverlayModel;
 
 import java.awt.*;
 
@@ -61,7 +59,7 @@ public class MenuModel extends State implements StateMethods {
         twinkleBubbleManager.draw(g);
 
         g.setColor(new Color(0, 0, 0, 40));
-        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+        g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         if (scoreBoardOverlayActive) {
             game.getMenuScoreBoardOverlayModel().draw(g);
@@ -94,7 +92,7 @@ public class MenuModel extends State implements StateMethods {
         // Update the x-coordinate for the moving text
         suggestionX -= SUGGESTION_SPEED;
         if (suggestionX < - suggestionsWidth)
-            suggestionX = Game.GAME_WIDTH + 10 * Game.SCALE;
+            suggestionX = Constants.GAME_WIDTH + 10 * Constants.SCALE;
     }
 
     private void drawTittle(Graphics g) {
@@ -107,9 +105,9 @@ public class MenuModel extends State implements StateMethods {
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 5 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = 23 * Game.SCALE + fm.getHeight();
+        int spacing = 5 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = 23 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
@@ -132,9 +130,9 @@ public class MenuModel extends State implements StateMethods {
         }
 
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 0 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = 40 * Game.SCALE + fm.getHeight();
+        int spacing = 0 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = 40 * Constants.SCALE + fm.getHeight();
 
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
@@ -147,10 +145,10 @@ public class MenuModel extends State implements StateMethods {
         String text2 = "Score Board";     // selectionIndex = 2
         String text3 = "Quit";            // selectionIndex = 3
 
-        int text1Y = 75 * Game.SCALE;
-        int text2Y = 100 * Game.SCALE;
-        int text3Y = 125 * Game.SCALE;
-        int text4Y = 150 * Game.SCALE;
+        int text1Y = 75 * Constants.SCALE;
+        int text2Y = 100 * Constants.SCALE;
+        int text3Y = 125 * Constants.SCALE;
+        int text4Y = 150 * Constants.SCALE;
 
         drawSelectionText(g, text0, text1Y, selectionIndex == 0);
         drawSelectionText(g, text1, text2Y, selectionIndex == 1);
@@ -169,7 +167,7 @@ public class MenuModel extends State implements StateMethods {
         }
 
         FontMetrics fm = g.getFontMetrics(g.getFont());
-        int textX = (Game.GAME_WIDTH - fm.stringWidth(text)) / 2;   // center in the screen
+        int textX = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;   // center in the screen
         int textY = lineY + fm.getHeight()/2;                           // center in the line
 
         g.drawString(text, textX, textY);
@@ -178,7 +176,7 @@ public class MenuModel extends State implements StateMethods {
     private void drawSuggestions(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(retroFont.deriveFont(24f));
-        g.drawString(suggestions, (int) suggestionX, Game.GAME_HEIGHT - 4 * Game.SCALE);
+        g.drawString(suggestions, (int) suggestionX, Constants.GAME_HEIGHT - 4 * Constants.SCALE);
     }
 
     private void generateSuggestions() {

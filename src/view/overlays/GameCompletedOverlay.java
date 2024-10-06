@@ -6,6 +6,7 @@ import audio.AudioPlayer;
 import gameStates.PlayingModel;
 import users.UsersManager;
 import gameStates.GameState;
+import utilz.Constants;
 import utilz.Constants.AudioConstants;
 
 import java.awt.*;
@@ -39,9 +40,9 @@ public class GameCompletedOverlay extends GameOverlay {
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
-        int spacing = 4 * Game.SCALE; // Adjust this value to change the spacing between the words
-        int x = (Game.GAME_WIDTH - (totalWidth + spacing)) / 2;
-        int y = (Game.GAME_HEIGHT / 10) * 4;
+        int spacing = 4 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
+        int y = (Constants.GAME_HEIGHT / 10) * 4;
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
@@ -59,8 +60,8 @@ public class GameCompletedOverlay extends GameOverlay {
         int text1WidthPart2 = fm.stringWidth(text1Part2);
         int text1WidthPart3 = fm.stringWidth(text1Part3);
         int text1WidthPart4 = fm.stringWidth(text1Part4);
-        int x1 = (Game.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
-        int y1 = Game.GAME_HEIGHT / 2 - 3 * Game.SCALE;
+        int x1 = (Constants.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
+        int y1 = Constants.GAME_HEIGHT / 2 - 3 * Constants.SCALE;
 
         // Text for RESTART
         String text2Part1 = "Press ";
@@ -71,8 +72,8 @@ public class GameCompletedOverlay extends GameOverlay {
         int text2WidthPart2 = fm.stringWidth(text2Part2);
         int text2WidthPart3 = fm.stringWidth(text2Part3);
         int text2WidthPart4 = fm.stringWidth(text2Part4);
-        int x2 = (Game.GAME_WIDTH - (text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4)) / 2;
-        int y2 = Game.GAME_HEIGHT / 2 + 10 * Game.SCALE;
+        int x2 = (Constants.GAME_WIDTH - (text2WidthPart1 + text2WidthPart2 + text2WidthPart3 + text2WidthPart4)) / 2;
+        int y2 = Constants.GAME_HEIGHT / 2 + 10 * Constants.SCALE;
 
         g.setFont(retroFont.deriveFont(22f));
 

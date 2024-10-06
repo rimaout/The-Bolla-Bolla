@@ -14,7 +14,7 @@ public class EmptyBubble extends PlayerBubble {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getPlayerBubbleSprites()[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getPlayerBubbleSprites()[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
     }
 
     protected void updateDeadAnimation(){

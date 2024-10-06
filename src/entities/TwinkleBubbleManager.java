@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.HomeModel;
 
@@ -62,8 +63,8 @@ public class TwinkleBubbleManager {
         Random random = new Random();
 
         for (int i = 0; i < bubbleCount; i++) {
-            int x = random.nextInt(Game.GAME_WIDTH);
-            int y = random.nextInt(Game.GAME_HEIGHT);
+            int x = random.nextInt(Constants.GAME_WIDTH);
+            int y = random.nextInt(Constants.GAME_HEIGHT);
             bubbles.add(new TwinkleBubble(twinkleBubbleSprite, x, y, this));
         }
     }

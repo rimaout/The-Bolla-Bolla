@@ -22,16 +22,16 @@ public class HelpMethods {
     }
 
     public static boolean IsTilePerimeterWall(int xTile) {
-        return xTile < 2 || xTile > Game.TILES_IN_WIDTH - 3;
+        return xTile < 2 || xTile > Constants.TILES_IN_WIDTH - 3;
     }
 
     public static boolean IsPerimeterWallTile(float x) {
-        int tileX = (int) (x / Game.TILES_SIZE);
+        int tileX = (int) (x / Constants.TILES_SIZE);
         return IsTilePerimeterWall(tileX);
     }
 
     public static boolean IsTileInsideMap(int xTile, int yTile) {
-        return xTile >= 0 && xTile < Game.TILES_IN_WIDTH && yTile >= 0 && yTile < Game.TILES_IN_HEIGHT;
+        return xTile >= 0 && xTile < Constants.TILES_IN_WIDTH && yTile >= 0 && yTile < Constants.TILES_IN_HEIGHT;
     }
 
     public static boolean IsTileSolid(int xTile, int yTile, int[][] levelData) {
@@ -54,14 +54,14 @@ public class HelpMethods {
 
     public static boolean IsSolid(float x, float y, int[][] lvlData) {
 
-        float xIndex = x / Game.TILES_SIZE;
-        float yIndex = y / Game.TILES_SIZE;
+        float xIndex = x / Constants.TILES_SIZE;
+        float yIndex = y / Constants.TILES_SIZE;
         return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
     }
 
     public static boolean IsEntityInsideMap(Rectangle2D.Float hitbox) {
-        return hitbox.x >= 0 && hitbox.x + hitbox.width < Game.TILES_IN_WIDTH * Game.TILES_SIZE &&
-                hitbox.y >= 0 && hitbox.y + hitbox.height < Game.TILES_IN_HEIGHT * Game.TILES_SIZE;
+        return hitbox.x >= 0 && hitbox.x + hitbox.width < Constants.TILES_IN_WIDTH * Constants.TILES_SIZE &&
+                hitbox.y >= 0 && hitbox.y + hitbox.height < Constants.TILES_IN_HEIGHT * Constants.TILES_SIZE;
     }
 
     public static boolean IsEntityInsideSolid(Rectangle2D.Float hitbox, int[][] levelData) {
@@ -161,11 +161,11 @@ public class HelpMethods {
 
         // Calculate the horizontal index of the tile at the left and right side of the hitbox
         float newX = hitbox.x + xSpeed ;
-        float horizontalTileLeftIndex = newX / Game.TILES_SIZE;
-        float horizontalTileRightIndex = (newX + hitbox.width) / Game.TILES_SIZE;
+        float horizontalTileLeftIndex = newX / Constants.TILES_SIZE;
+        float horizontalTileRightIndex = (newX + hitbox.width) / Constants.TILES_SIZE;
 
         // Check if the hitbox is touching the leftmost or rightmost tiles in the game grid
-        return horizontalTileLeftIndex < 2 || horizontalTileRightIndex > Game.TILES_IN_WIDTH - 2;
+        return horizontalTileLeftIndex < 2 || horizontalTileRightIndex > Constants.TILES_IN_WIDTH - 2;
     }
 
     public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
@@ -179,8 +179,8 @@ public class HelpMethods {
     }
 
     public static boolean IsSightClear(int[][] levelData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
-        int tileX1 = (int) (firstHitbox.x / Game.TILES_SIZE);
-        int tileX2 = (int) (secondHitbox.x / Game.TILES_SIZE);
+        int tileX1 = (int) (firstHitbox.x / Constants.TILES_SIZE);
+        int tileX2 = (int) (secondHitbox.x / Constants.TILES_SIZE);
 
         if (tileX1 > tileX2)
             return IsAllTilesWalkable(tileX2, tileX1, yTile, levelData);
@@ -191,11 +191,11 @@ public class HelpMethods {
 
     public static Point GetRandomPosition(int[][] levelData, Rectangle hitbox) {
         //This method find a random position in the level where the hitbox is not colliding with a solid tile
-        int xRangeStart = (Game.TILES_IN_WIDTH + 3)  * Game.TILES_SIZE;
-        int xRangeEnd = (Game.TILES_IN_WIDTH - 3 * Game.TILES_SIZE) - hitbox.width;
+        int xRangeStart = (Constants.TILES_IN_WIDTH + 3)  * Constants.TILES_SIZE;
+        int xRangeEnd = (Constants.TILES_IN_WIDTH - 3 * Constants.TILES_SIZE) - hitbox.width;
 
-        int yRangeStart = 4 * Game.TILES_SIZE;
-        int yRangeEnd = (Game.TILES_IN_HEIGHT - 3) * Game.TILES_SIZE - hitbox.height;
+        int yRangeStart = 4 * Constants.TILES_SIZE;
+        int yRangeEnd = (Constants.TILES_IN_HEIGHT - 3) * Constants.TILES_SIZE - hitbox.height;
 
         hitbox.x = (int) (Math.random() * (xRangeEnd - xRangeStart) + xRangeStart);
         hitbox.y = (int) (Math.random() * (yRangeEnd - yRangeStart) + yRangeStart);

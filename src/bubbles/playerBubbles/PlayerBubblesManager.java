@@ -8,6 +8,7 @@ import bubbles.Bubble;
 import entities.Enemy;
 import entities.Player;
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import utilz.PlayingTimer;
 
@@ -88,7 +89,7 @@ public class PlayerBubblesManager {
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         // Defines allowed overlap between bubbles
-        double overlapAllowed = 5.0 * Game.SCALE;        // Allow this much overlap
+        double overlapAllowed = 5.0 * Constants.SCALE;        // Allow this much overlap
         double totalRadius = bubble1.getHitbox().width;  // Sum of both bubble radii
 
         if (distance < totalRadius - overlapAllowed) {

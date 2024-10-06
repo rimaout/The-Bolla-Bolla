@@ -4,10 +4,10 @@ import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.playerBubbles.EnemyBubble;
 import levels.LevelManager;
 import main.Game;
+import utilz.Constants;
 
 import static utilz.Constants.Direction;
 import static utilz.Constants.Direction.*;
-import static utilz.HelpMethods.IsSightClear;
 import static utilz.Constants.ANIMATION_SPEED;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.GetEntityYPosAboveFloor;
@@ -128,8 +128,8 @@ public abstract class Enemy extends Entity {
     }
 
     protected void calculatePlayersPos(Player player) {
-        playerTileX = (int) (player.getHitbox().x / Game.TILES_SIZE);
-        playerTileY = (int)(player.getHitbox().y / Game.TILES_SIZE);
+        playerTileX = (int) (player.getHitbox().x / Constants.TILES_SIZE);
+        playerTileY = (int)(player.getHitbox().y / Constants.TILES_SIZE);
     }
 
     protected void changeWalkingDir() {
@@ -184,7 +184,7 @@ public abstract class Enemy extends Entity {
 
     protected boolean canFall(){
         // check if the under is not out of the level
-        return getTileY() + 1 < Game.TILES_IN_HEIGHT - 1;
+        return getTileY() + 1 < Constants.TILES_IN_HEIGHT - 1;
     }
 
     public void resetEnemy() {

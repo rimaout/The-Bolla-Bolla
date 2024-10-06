@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import audio.AudioPlayer;
 import utilz.PlayingTimer;
@@ -86,7 +87,7 @@ public class HurryUpManager {
         if (animationActive) {
 
             // If image is at center of screen, stop moving
-            if (hurryImgY <= Game.GAME_HEIGHT / 2 - HURRY_IMG_H / 2)
+            if (hurryImgY <= Constants.GAME_HEIGHT / 2 - HURRY_IMG_H / 2)
                 return;
 
             hurryImgY -= HURRY_IMG_SPEED;

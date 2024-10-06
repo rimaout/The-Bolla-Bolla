@@ -1,6 +1,7 @@
 package view.overlays;
 
 import main.Game;
+import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.PlayingModel;
 
@@ -22,7 +23,7 @@ public abstract class GameOverlay {
 
     public void draw(Graphics g) {
         g.setColor(new Color(0, 0, 0, 220));
-        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+        g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         setAudio();
         drawTitle(g);

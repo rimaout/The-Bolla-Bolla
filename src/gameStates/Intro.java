@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import levels.Level;
+import utilz.Constants;
 import utilz.LoadSave;
 import entities.Player;
 import audio.AudioPlayer;
@@ -29,7 +30,7 @@ public class Intro {
     private boolean firstUpdate = true;
     private IntroState introState = INTRO;
     private float textY = TEXT_START_Y;
-    float levelY = Game.GAME_HEIGHT;
+    float levelY = Constants.GAME_HEIGHT;
 
     private boolean transitionComplete;
     private int playerAnimationTick, playerAnimationIndex;
@@ -127,9 +128,9 @@ public class Intro {
         }
 
         if (introState == LEVEL_TRANSITION) {
-            float xOffSet = 20 * Game.SCALE;
-            float playerTransitionSpeedX = (SPAWN_X - PLAYER_START_X - xOffSet) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
-            float playerTransitionSpeedY = (SPAWN_Y - PLAYER_START_Y) / (Game.GAME_HEIGHT / TRANSITION_SPEED);
+            float xOffSet = 20 * Constants.SCALE;
+            float playerTransitionSpeedX = (SPAWN_X - PLAYER_START_X - xOffSet) / (Constants.GAME_HEIGHT / TRANSITION_SPEED);
+            float playerTransitionSpeedY = (SPAWN_Y - PLAYER_START_Y) / (Constants.GAME_HEIGHT / TRANSITION_SPEED);
             player.getHitbox().x += playerTransitionSpeedX;
             player.getHitbox().y += playerTransitionSpeedY;
         }
@@ -147,10 +148,10 @@ public class Intro {
 
     private void drawPlayer(Graphics g) {
 
-        float xOffSet = 5 * Game.SCALE;
-        float yOffSet = 12 * Game.SCALE;
+        float xOffSet = 5 * Constants.SCALE;
+        float yOffSet = 12 * Constants.SCALE;
 
-        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Game.SCALE, 34 * Game.SCALE, null);
+        g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( player.getHitbox().x - xOffSet ), (int) ( player.getHitbox().y - yOffSet ) , 31 * Constants.SCALE, 34 * Constants.SCALE, null);
     }
 
     private void drawText(Graphics g) {
@@ -168,20 +169,20 @@ public class Intro {
         String lastLine = "GOOD LUCK!";
 
         int lineHeight = metrics.getHeight();
-        int extraSpace = 7 * Game.SCALE;
+        int extraSpace = 7 * Constants.SCALE;
         int y = (int) textY;
 
         for (String line : lines) {
             int lineWidth = metrics.stringWidth(line);
-            int x = (Game.GAME_WIDTH - lineWidth) / 2;
+            int x = (Constants.GAME_WIDTH - lineWidth) / 2;
             g.drawString(line, x, y);
             y += lineHeight + extraSpace;
         }
 
         // Draw last line
         int lastLineWidth = metrics.stringWidth(lastLine);
-        int x = (Game.GAME_WIDTH - lastLineWidth) / 2;
-        int extraExtraSpace = 6 * Game.SCALE;
+        int x = (Constants.GAME_WIDTH - lastLineWidth) / 2;
+        int extraExtraSpace = 6 * Constants.SCALE;
         g.drawString(lastLine, x, y + extraExtraSpace);
     }
 
@@ -190,8 +191,8 @@ public class Intro {
         int index;
         BufferedImage tile;
 
-        for (int y = 0; y < Game.TILES_IN_HEIGHT; y++) {
-            for (int x = 0; x < Game.TILES_IN_WIDTH; x++) {
+        for (int y = 0; y < Constants.TILES_IN_HEIGHT; y++) {
+            for (int x = 0; x < Constants.TILES_IN_WIDTH; x++) {
 
                 index = level.getSpriteIndex(x, y);
 
@@ -200,7 +201,7 @@ public class Intro {
                 else
                     tile = levelTiles[index];
 
-                g.drawImage(tile, x * Game.TILES_SIZE, y * Game.TILES_SIZE + yOffSet, Game.TILES_SIZE, Game.TILES_SIZE, null);
+                g.drawImage(tile, x * Constants.TILES_SIZE, y * Constants.TILES_SIZE + yOffSet, Constants.TILES_SIZE, Constants.TILES_SIZE, null);
             }
         }
     }
@@ -221,7 +222,7 @@ public class Intro {
         lapsCompleted = 0;
         angle = 0;
         textY = TEXT_START_Y;
-        levelY = Game.GAME_HEIGHT;
+        levelY = Constants.GAME_HEIGHT;
 
         firstUpdate = true;
     }

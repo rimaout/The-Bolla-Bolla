@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import utilz.Constants;
 import utilz.Constants.Direction;
 import projectiles.ProjectileManager;
 import projectiles.MaitaFireProjectile;
@@ -261,14 +262,14 @@ public class Maita extends Enemy {
 
         //check if there are 2 solid tiles in front of the enemy
         if (walkingDir == LEFT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
-            xTile1 = (int) hitbox.x / Game.TILES_SIZE;
+            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
+            xTile1 = (int) hitbox.x / Constants.TILES_SIZE;
             xTile2 = xTile1 - 1;
         }
 
         else if (walkingDir == RIGHT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
-            xTile1 = (int) (hitbox.x + hitbox.width) / Game.TILES_SIZE;
+            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
+            xTile1 = (int) (hitbox.x + hitbox.width) / Constants.TILES_SIZE;
             xTile2 = xTile1 + 1;
         }
 
@@ -284,7 +285,7 @@ public class Maita extends Enemy {
         int tileDistanceToPerimeterWall = -1;
         int tileDistanceToFloor = -1;
 
-        int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Game.TILES_SIZE;
+        int yFlorTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
 
         // Find the distance to the perimeter wall (max distance 5 tiles)
         if (walkingDir == LEFT) {

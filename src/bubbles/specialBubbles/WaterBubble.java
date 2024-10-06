@@ -3,6 +3,7 @@ package bubbles.specialBubbles;
 import itemesAndRewards.PowerUpManager;
 import main.Game;
 import entities.Player;
+import utilz.Constants;
 import utilz.Constants.Direction;
 
 import java.awt.*;
@@ -17,7 +18,7 @@ public class WaterBubble extends SpecialBubble {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMMAGE_W, IMMAGE_H, null);
+        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
     }
 
     @Override
@@ -41,14 +42,14 @@ public class WaterBubble extends SpecialBubble {
 
         // if waterBubble conpenetrates with left perimeter wall, spawn waterFlow not in the wall
         if (getTileX() < 2) {
-            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x + Game.TILES_SIZE, hitbox.y));
+            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x + Constants.TILES_SIZE, hitbox.y));
             return;
         }
 
 
         // if waterBubble conpenetrates with right perimeter wall, spawn waterFlow not in the wall
-        if ( getTileX() + Game.TILES_SIZE > Game.TILES_IN_WIDTH - 3) {
-            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x - Game.TILES_SIZE, hitbox.y));
+        if ( getTileX() + Constants.TILES_SIZE > Constants.TILES_IN_WIDTH - 3) {
+            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x - Constants.TILES_SIZE, hitbox.y));
             return;
         }
 

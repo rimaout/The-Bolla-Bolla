@@ -1,11 +1,8 @@
 package entities;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import main.Game;
-import utilz.LoadSave;
 import audio.AudioPlayer;
+import utilz.Constants;
 import utilz.PlayingTimer;
 import levels.LevelManager;
 import projectiles.ProjectileManager;
@@ -49,7 +46,7 @@ public class Player extends Entity{
     private boolean playJumpSound, playDeathSound;
 
     public Player() {
-        super(-3* Game.TILES_SIZE, -3 * Game.TILES_SIZE, IMMAGE_W, IMMAGE_H); // Set the player outside the map (so it doesn't get drawn)
+        super(-3* Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
@@ -64,7 +61,7 @@ public class Player extends Entity{
     }
 
     private boolean canAttack() {
-        return !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Game.TILES_SIZE);
+        return !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Constants.TILES_SIZE);
     }
 
     private void attack() {
@@ -75,8 +72,8 @@ public class Player extends Entity{
         else
             direction = RIGHT;
 
-        int xOffset = 10 * Game.SCALE;
-        int yOffset = 3 * Game.SCALE;
+        int xOffset = 10 * Constants.SCALE;
+        int yOffset = 3 * Constants.SCALE;
 
         if (direction == LEFT)
             ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x - xOffset, hitbox.y - yOffset, direction));
@@ -241,8 +238,8 @@ public class Player extends Entity{
     }
 
     private void pacManEffect() {
-        if (hitbox.y > Game.TILES_SIZE * Game.TILES_IN_HEIGHT)
-            hitbox.y = -2 * Game.TILES_SIZE;
+        if (hitbox.y > Constants.TILES_SIZE * Constants.TILES_IN_HEIGHT)
+            hitbox.y = -2 * Constants.TILES_SIZE;
     }
 
     public void death() {
