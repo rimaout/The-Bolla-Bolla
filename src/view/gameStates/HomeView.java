@@ -1,5 +1,6 @@
-package gameStates;
+package view.gameStates;
 
+import gameStates.State;
 import main.Game;
 import utilz.Constants;
 import utilz.LoadSave;
@@ -9,7 +10,7 @@ import static utilz.Constants.Home.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HomeModel extends State implements StateMethods {
+public class HomeView extends State {
 
     private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance(this);
 
@@ -19,7 +20,7 @@ public class HomeModel extends State implements StateMethods {
     private boolean isLogoInPosition = false;
     private final Font nesFont;
 
-    public HomeModel(Game game) {
+    public HomeView(Game game) {
         super(game);
         loadLogo();
 
@@ -35,8 +36,7 @@ public class HomeModel extends State implements StateMethods {
         logoY = (int) (- logoImg.getHeight() * Constants.SCALE);
     }
 
-    @Override
-    public void update() {
+    public void updatePositions() {
 
         // Update Bubbles
         twinkleBubbleManager.update();
@@ -49,6 +49,9 @@ public class HomeModel extends State implements StateMethods {
     }
 
     public void draw(Graphics g) {
+
+        // update entities positions
+        updatePositions();
 
         // Draw Bubbles
         twinkleBubbleManager.draw(g);

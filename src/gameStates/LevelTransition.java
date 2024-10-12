@@ -17,7 +17,7 @@ import static utilz.Constants.LevelTransition.TransitionState;
 import static utilz.Constants.LevelTransition.TransitionState.*;
 import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
-public class LevelTransition extends State implements StateMethods{
+public class LevelTransition extends State {
     PlayingModel playingModel;
 
     private BufferedImage[] levelTiles;
@@ -45,7 +45,6 @@ public class LevelTransition extends State implements StateMethods{
         loadPlayerTransitionSprites();
     }
 
-    @Override
     public void update() {
 
         if (firstUpdate)

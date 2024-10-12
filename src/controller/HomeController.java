@@ -2,16 +2,16 @@ package controller;
 
 import controller.inputs.InputMethods;
 import gameStates.GameState;
-import gameStates.HomeModel;
+import view.gameStates.HomeView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class HomeController implements InputMethods {
-    private final HomeModel homeModel;
+    private final HomeView homeView;
 
-    public HomeController(HomeModel homeModel) {
-        this.homeModel = homeModel;
+    public HomeController(HomeView homeView) {
+        this.homeView = homeView;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class HomeController implements InputMethods {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (homeModel.IsLogoInPosition())
+        if (homeView.IsLogoInPosition())
             if (e.getKeyCode() == KeyEvent.VK_ENTER)
                 GameState.state = GameState.MENU;
     }

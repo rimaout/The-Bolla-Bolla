@@ -5,6 +5,8 @@ import gameStates.*;
 import gameStates.MenuModel;
 import audio.AudioPlayer;
 import users.UsersManager;
+import view.gameStates.HomeView;
+import view.gameStates.MenuView;
 import view.gameStates.PlayingView;
 import model.overlays.MenuScoreBoardOverlayModel;
 import model.overlays.MenuUserCreationOverlayModel;
@@ -26,12 +28,11 @@ public class Game implements Runnable {
     private AudioPlayer audioPlayer;
     private UsersManager usersManager;
 
-    private HomeModel homeModel;
-    //private HomeView homeView;
+    private HomeView homeView;
     private HomeController homeController;
 
     private MenuModel menuModel;
-    //private MenuView menuView;
+    private MenuView menuView;
     private MenuController menuController;
 
     private MenuUserCreationOverlayModel menuUserCreationOverlayModel;
@@ -73,10 +74,11 @@ public class Game implements Runnable {
         usersManager = UsersManager.getInstance(this);
         audioPlayer = AudioPlayer.getInstance();
 
-        homeModel = new HomeModel(this);
-        homeController = new HomeController(homeModel);
+        homeView = new HomeView(this);
+        homeController = new HomeController(homeView);
 
         menuModel = new MenuModel(this);
+        menuView = new MenuView(menuModel, this);
         menuController = new MenuController(this, menuModel);
 
         menuUserCreationOverlayModel = new MenuUserCreationOverlayModel(menuModel);
@@ -91,22 +93,32 @@ public class Game implements Runnable {
         menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
         menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
 
+        //gameCompletedOverlayView = new GameCompletedOverlayView(gameCompletedOverlayModel);
+        //gameCompletedOverlayController = new GameCompletedOverlayController(gameCompletedOverlayModel, gameCompletedOverlayView);
+
+        //gameOverOverlayView = new GameOverOverlayView(gameOverOverlayModel);
+        //gameOverOverlayController = new GameOverOverlayController(gameOverOverlayModel, gameOverOverlayView);
+
+        //gamePausedOverlayView = new GamePausedOverlayView(gamePausedOverlayModel);
+        //gamePausedOverlayController = new GamePausedOverlayController(gamePausedOverlayModel, gamePausedOverlayView);
+
         playingModel = new PlayingModel(this);
         playingView = new PlayingView(playingModel);
         playingController = new PlayingController(playingModel);
 
         levelTransition = new LevelTransition(this);
+        //levelTransitionModel = new LevelTransition(this);
+        //levelTransitionView = new LevelTransitionView(levelTransitionModel);
+
     }
 
 
     public void update() {
 
         switch (GameState.state) {
-            case HOME:
-                homeModel.update();
-                break;
             case MENU:
                 menuModel.update();
+                menuView.update();
                 break;
             case PLAYING:
                 playingModel.update();
@@ -126,10 +138,10 @@ public class Game implements Runnable {
 
         switch (GameState.state) {
             case HOME:
-                homeModel.draw(g);
+                homeView.draw(g);
                 break;
             case MENU:
-                menuModel.draw(g);
+                menuView.draw(g);
                 break;
             case PLAYING:
                 playingView.draw(g);
@@ -194,8 +206,8 @@ public class Game implements Runnable {
 
     // ----------------- Getters -----------------
 
-    public HomeModel getHome() {
-        return homeModel;
+    public HomeView getHome() {
+        return homeView;
     }
 
     public MenuModel getMenu() {

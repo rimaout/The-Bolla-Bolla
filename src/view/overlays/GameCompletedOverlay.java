@@ -1,7 +1,6 @@
 package view.overlays;
 
 
-import main.Game;
 import audio.AudioPlayer;
 import gameStates.PlayingModel;
 import users.UsersManager;

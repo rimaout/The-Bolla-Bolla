@@ -1,9 +1,8 @@
 package entities;
 
-import main.Game;
 import utilz.Constants;
 import utilz.LoadSave;
-import gameStates.HomeModel;
+import view.gameStates.HomeView;
 
 import java.util.List;
 import java.util.Random;
@@ -16,21 +15,21 @@ import static utilz.Constants.Home.BUBBLE_DEFAULT_W;
 public class TwinkleBubbleManager {
     private static TwinkleBubbleManager instance;
 
-    private final HomeModel homeModel;
+    private final HomeView homeView;
 
     private BufferedImage[] twinkleBubbleSprite;
     private List<TwinkleBubble> bubbles;
 
-    private TwinkleBubbleManager(HomeModel homeModel) {
-        this.homeModel = homeModel;
+    private TwinkleBubbleManager(HomeView homeView) {
+        this.homeView = homeView;
 
         loadTwinkleBubble();
         initializeBubbles();
     }
 
-    public static TwinkleBubbleManager getInstance(HomeModel homeModel) {
+    public static TwinkleBubbleManager getInstance(HomeView homeView) {
         if (instance == null) {
-            instance = new TwinkleBubbleManager(homeModel);
+            instance = new TwinkleBubbleManager(homeView);
         }
         return instance;
     }
@@ -70,6 +69,6 @@ public class TwinkleBubbleManager {
     }
 
     public boolean IsHomeLogoInPosition() {
-        return homeModel.IsLogoInPosition();
+        return homeView.IsLogoInPosition();
     }
 }

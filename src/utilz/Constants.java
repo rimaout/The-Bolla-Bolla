@@ -53,7 +53,7 @@ public class Constants {
 
         // Logo Constants
         public static final int LOGO_END_Y = 15 * SCALE;
-        public static final float LOGO_SPEED = 0.85f;
+        public static final float LOGO_SPEED = 0.85f * 3;
 
         // Twinkle Bubble Constants
         public static final int BUBBLE_DEFAULT_W = 8;
@@ -61,7 +61,7 @@ public class Constants {
         public static final int BUBBLE_W = BUBBLE_DEFAULT_W * SCALE;
         public static final int BUBBLE_H = BUBBLE_DEFAULT_H * SCALE;
 
-        public static final float BUBBLE_SPEED = 0.0666f * SCALE;
+        public static final float BUBBLE_SPEED = 0.0664f * 3 * SCALE;
     }
 
     public static class LevelTransition {

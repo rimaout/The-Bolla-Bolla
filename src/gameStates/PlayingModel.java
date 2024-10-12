@@ -14,7 +14,7 @@ import projectiles.ProjectileManager;
 import view.overlays.*;
 import utilz.PlayingTimer;
 
-public class PlayingModel extends State implements StateMethods {
+public class PlayingModel extends State {
     private Player playerOne;
     private Player playerTwo = null;
 
@@ -59,7 +59,6 @@ public class PlayingModel extends State implements StateMethods {
         intro = new Intro(this);
     }
 
-    @Override
     public void update() {
         updateBooleans();
 
