@@ -2,17 +2,22 @@ package controller;
 
 import controller.inputs.InputMethods;
 import gameStates.PlayingModel;
-import view.overlays.GameCompletedOverlay;
-import view.overlays.GameOverOverlay;
-import view.overlays.GamePauseOverlay;
+import view.overlays.GameCompletedOverlayView;
+import view.overlays.GameOverOverlayView;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class PlayingController implements InputMethods {
     private final PlayingModel playingModel;
 
+    private final GamePausedOverlayController gamePausedOverlayController;
+    //private final GameCompletedOverlayController gameCompletedOverlayController;
+    //private final GameOverOverlayController gameOverOverlayController;
+
     public PlayingController(PlayingModel playingModel) {
         this.playingModel = playingModel;
+        gamePausedOverlayController = new GamePausedOverlayController(playingModel);
     }
 
     @Override
@@ -45,13 +50,13 @@ public class PlayingController implements InputMethods {
     @Override
     public void keyPressed(KeyEvent e) {
         if (playingModel.isPaused())
-            GamePauseOverlay.getInstance(playingModel).keyPressed(e);
+            gamePausedOverlayController.keyPressed(e);
 
         else if (playingModel.isGameOver())
-            GameOverOverlay.getInstance(playingModel).keyPressed(e);
+            GameOverOverlayView.getInstance(playingModel).keyPressed(e);
 
         else if (playingModel.isGameCompleted())
-            GameCompletedOverlay.getInstance(playingModel).keyPressed(e);
+            GameCompletedOverlayView.getInstance(playingModel).keyPressed(e);
 
         else {
             switch (e.getKeyCode()) {

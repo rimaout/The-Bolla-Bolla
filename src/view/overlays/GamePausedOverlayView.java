@@ -1,26 +1,23 @@
 package view.overlays;
 
-import main.Game;
 import audio.AudioPlayer;
 import gameStates.PlayingModel;
-import gameStates.GameState;
 import utilz.Constants;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 import static utilz.Constants.Overlays.*;
 
-public class GamePauseOverlay extends GameOverlay {
-    private static GamePauseOverlay instance;
+public class GamePausedOverlayView extends GameOverlayView {
+    private static GamePausedOverlayView instance;
 
-    private GamePauseOverlay(PlayingModel playingModel) {
+    private GamePausedOverlayView(PlayingModel playingModel) {
         super(playingModel);
     }
 
-    public static GamePauseOverlay getInstance(PlayingModel playingModel) {
+    public static GamePausedOverlayView getInstance(PlayingModel playingModel) {
         if (instance == null) {
-            instance = new GamePauseOverlay(playingModel);
+            instance = new GamePausedOverlayView(playingModel);
         }
         return instance;
     }
@@ -92,20 +89,6 @@ public class GamePauseOverlay extends GameOverlay {
 
         g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_Q) {
-            playingModel.newPlayReset();
-            playingModel.restartGame();
-            GameState.state = GameState.MENU;
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            playingModel.unpauseGame();
-            AudioPlayer.getInstance().startSong();
-        }
     }
 
     @Override

@@ -10,9 +10,9 @@ import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
 import projectiles.ProjectileManager;
 import view.entities.PlayerView;
-import view.overlays.GameCompletedOverlay;
-import view.overlays.GameOverOverlay;
-import view.overlays.GamePauseOverlay;
+import view.overlays.GameCompletedOverlayView;
+import view.overlays.GameOverOverlayView;
+import view.overlays.GamePausedOverlayView;
 import view.overlays.PlayingHud;
 
 import java.awt.*;
@@ -33,9 +33,9 @@ public class PlayingView {
 //    private PowerUpManagerView powerUpManagerView;
 //    private IntroView introView;
 
-    private GamePauseOverlay gamePauseOverlay;
-    private GameOverOverlay gameOverOverlay;
-    private GameCompletedOverlay gameCompletedOverlay;
+    private GamePausedOverlayView gamePauseOverlayView;
+    private GameOverOverlayView gameOverOverlayView;
+    private GameCompletedOverlayView gameCompletedOverlayView;
     private PlayingHud playingHud;
 
     public PlayingView(PlayingModel playingModel) {
@@ -65,13 +65,13 @@ public class PlayingView {
         }
 
         if (playingModel.isPaused())
-            gamePauseOverlay.draw(g);
+            gamePauseOverlayView.draw(g);
 
         else if (playingModel.isGameOver())
-            gameOverOverlay.draw(g);
+            gameOverOverlayView.draw(g);
 
         else if (playingModel.isGameCompleted())
-            gameCompletedOverlay.draw(g);
+            gameCompletedOverlayView.draw(g);
     }
 
     private void resetNewLevel() {
@@ -79,9 +79,9 @@ public class PlayingView {
     }
 
     private void resetNewGame() {
-
+        gamePauseOverlayView.reset();
     }
-
+     
     public void initClasses() {
         playerOneView = new PlayerView(playingModel.getPlayerOne());
 
@@ -95,9 +95,9 @@ public class PlayingView {
 //        powerUpManagerView = new PowerUpManagerView();
 //        introView = new IntroView();
 
-        gamePauseOverlay = GamePauseOverlay.getInstance(playingModel);
-        gameOverOverlay = GameOverOverlay.getInstance(playingModel);
-        gameCompletedOverlay = GameCompletedOverlay.getInstance(playingModel);
+        gamePauseOverlayView = GamePausedOverlayView.getInstance(playingModel);
+        gameOverOverlayView = GameOverOverlayView.getInstance(playingModel);
+        gameCompletedOverlayView = GameCompletedOverlayView.getInstance(playingModel);
         playingHud = PlayingHud.getInstance(playingModel);
     }
 

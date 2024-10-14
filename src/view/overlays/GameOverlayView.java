@@ -1,21 +1,19 @@
 package view.overlays;
 
-import main.Game;
 import utilz.Constants;
 import utilz.LoadSave;
 import gameStates.PlayingModel;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
-public abstract class GameOverlay {
+public abstract class GameOverlayView {
     protected final PlayingModel playingModel;
     protected final Font nesFont;
     protected final Font retroFont;
 
     protected boolean firstUpdate = true;
 
-    public GameOverlay(PlayingModel playingModel) {
+    public GameOverlayView(PlayingModel playingModel) {
         this.playingModel = playingModel;
         this.nesFont = LoadSave.GetNesFont();
         this.retroFont = LoadSave.GetRetroGamingFont();
@@ -28,15 +26,13 @@ public abstract class GameOverlay {
         setAudio();
         drawTitle(g);
         drawControls(g);
-        setAudio();
     }
 
-    public void newPlayReset() {
+    public void reset() {
         firstUpdate = true;
     }
 
     protected abstract void drawTitle(Graphics g);
     protected abstract void drawControls(Graphics g);
     protected abstract void setAudio();
-    public abstract void keyPressed(KeyEvent e);
 }

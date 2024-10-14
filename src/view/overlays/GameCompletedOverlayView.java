@@ -1,28 +1,29 @@
 package view.overlays;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
-import main.Game;
 import audio.AudioPlayer;
 import gameStates.PlayingModel;
 import users.UsersManager;
 import gameStates.GameState;
 import utilz.Constants;
+import utilz.Constants.AudioConstants;
 
-import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 import static utilz.Constants.Overlays.BUD_RED_COLOR;
+import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
-public class GameOverOverlay extends GameOverlay {
-    private static GameOverOverlay instance;
+public class GameCompletedOverlayView extends GameOverlayView {
+    private static GameCompletedOverlayView instance;
 
-    private GameOverOverlay(PlayingModel playingModel) {
+    private GameCompletedOverlayView(PlayingModel playingModel) {
         super(playingModel);
     }
 
-    public static GameOverOverlay getInstance(PlayingModel playingModel) {
+    public static GameCompletedOverlayView getInstance(PlayingModel playingModel) {
         if (instance == null) {
-            instance = new GameOverOverlay(playingModel);
+            instance = new GameCompletedOverlayView(playingModel);
         }
         return instance;
     }
@@ -30,18 +31,17 @@ public class GameOverOverlay extends GameOverlay {
     @Override
     protected void drawTitle(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(nesFont.deriveFont(42f));
+        g.setFont(nesFont.deriveFont(38f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
         String text1 = "GAME";
-        String text2 = "OVER";
+        String text2 = "COMPLETED";
         int textWidth1 = fm.stringWidth(text1);
         int textWidth2 = fm.stringWidth(text2);
         int totalWidth = textWidth1 + textWidth2;
         int spacing = 4 * Constants.SCALE; // Adjust this value to change the spacing between the words
         int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
         int y = (Constants.GAME_HEIGHT / 10) * 4;
-
         g.drawString(text1, x, y);
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
@@ -101,7 +101,6 @@ public class GameOverOverlay extends GameOverlay {
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             UsersManager.getInstance().updateCurrentUserInfo(false);
@@ -123,7 +122,7 @@ public class GameOverOverlay extends GameOverlay {
         AudioPlayer.getInstance().stopSong();
 
         if (firstUpdate) {
-            AudioPlayer.getInstance().playSoundEffect(utilz.Constants.AudioConstants.GAME_OVER);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.GAME_COMPLETED);
             firstUpdate = false;
         }
     }

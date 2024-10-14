@@ -13,9 +13,7 @@ import model.overlays.MenuUserCreationOverlayModel;
 import model.overlays.MenuUserSelectionOverlayModel;
 
 import utilz.Constants;
-import view.overlays.MenuScoreBoardOverlayView;
-import view.overlays.MenuUserCreationOverlayView;
-import view.overlays.MenuUserSelectionOverlayView;
+import view.overlays.*;
 
 import java.awt.*;
 
@@ -50,7 +48,6 @@ public class Game implements Runnable {
     private PlayingModel playingModel;
     private PlayingView playingView;
     private PlayingController playingController;
-
 
     private LevelTransition levelTransition;
 
@@ -98,9 +95,6 @@ public class Game implements Runnable {
 
         //gameOverOverlayView = new GameOverOverlayView(gameOverOverlayModel);
         //gameOverOverlayController = new GameOverOverlayController(gameOverOverlayModel, gameOverOverlayView);
-
-        //gamePausedOverlayView = new GamePausedOverlayView(gamePausedOverlayModel);
-        //gamePausedOverlayController = new GamePausedOverlayController(gamePausedOverlayModel, gamePausedOverlayView);
 
         playingModel = new PlayingModel(this);
         playingView = new PlayingView(playingModel);

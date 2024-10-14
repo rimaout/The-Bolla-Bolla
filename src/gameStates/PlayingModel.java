@@ -125,9 +125,9 @@ public class PlayingModel extends State {
 
         // todo: remove this (doesn't respect mvc) use observer pattern to notify the views to reset
         // Oppure sposta suoni in controlle e non in view, cosi non devi fare il reset (puoi rimuovere first update)
-        GameCompletedOverlay.getInstance(this).newPlayReset();
-        GameOverOverlay.getInstance(this).newPlayReset();
-        GamePauseOverlay.getInstance(this).newPlayReset();
+        GameCompletedOverlayView.getInstance(this).newPlayReset();
+        GameOverOverlayView.getInstance(this).newPlayReset();
+        GamePauseOverlayView.getInstance(this).newPlayReset();
 
         loadFirstLevel();
     }
