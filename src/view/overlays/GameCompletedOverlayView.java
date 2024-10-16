@@ -15,17 +15,9 @@ import static utilz.Constants.Overlays.BUD_RED_COLOR;
 import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
 public class GameCompletedOverlayView extends GameOverlayView {
-    private static GameCompletedOverlayView instance;
 
-    private GameCompletedOverlayView(PlayingModel playingModel) {
+    public GameCompletedOverlayView(PlayingModel playingModel) {
         super(playingModel);
-    }
-
-    public static GameCompletedOverlayView getInstance(PlayingModel playingModel) {
-        if (instance == null) {
-            instance = new GameCompletedOverlayView(playingModel);
-        }
-        return instance;
     }
 
     @Override
@@ -99,22 +91,6 @@ public class GameCompletedOverlayView extends GameOverlayView {
 
         g.setColor(BUD_GREEN_COLOR);
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_Q) {
-            UsersManager.getInstance().updateCurrentUserInfo(false);
-            playingModel.newPlayReset();
-            playingModel.restartGame();
-            GameState.state = GameState.MENU;
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            UsersManager.getInstance().updateCurrentUserInfo(false);
-            playingModel.newPlayReset();
-            playingModel.restartGame();
-            GameState.state = GameState.PLAYING;
-        }
     }
 
     @Override

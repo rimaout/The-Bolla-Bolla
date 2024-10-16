@@ -2,6 +2,7 @@ package view.gameStates;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
+import controller.PlayingController;
 import entities.EnemyManager;
 import entities.HurryUpManager;
 import gameStates.PlayingModel;
@@ -38,8 +39,12 @@ public class PlayingView {
     private GameCompletedOverlayView gameCompletedOverlayView;
     private PlayingHud playingHud;
 
-    public PlayingView(PlayingModel playingModel) {
+    public PlayingView(PlayingModel playingModel, GamePausedOverlayView gamePausedOverlayView,
+                       GameOverOverlayView gameOverOverlayView, GameCompletedOverlayView gameCompletedOverlayView) {
         this.playingModel = playingModel;
+        this.gamePauseOverlayView = gamePausedOverlayView;
+        this.gameOverOverlayView = gameOverOverlayView;
+        this.gameCompletedOverlayView = gameCompletedOverlayView;
 
         initClasses();
     }
@@ -95,9 +100,6 @@ public class PlayingView {
 //        powerUpManagerView = new PowerUpManagerView();
 //        introView = new IntroView();
 
-        gamePauseOverlayView = GamePausedOverlayView.getInstance(playingModel);
-        gameOverOverlayView = GameOverOverlayView.getInstance(playingModel);
-        gameCompletedOverlayView = GameCompletedOverlayView.getInstance(playingModel);
         playingHud = PlayingHud.getInstance(playingModel);
     }
 

@@ -45,6 +45,16 @@ public class Game implements Runnable {
     private MenuScoreBoardOverlayView menuScoreBoardOverlayView;
     private MenuScoreBoardOverlayController menuScoreBoardOverlayController;
 
+    private GamePausedOverlayView gamePausedOverlayView;
+    private GamePausedOverlayController gamePausedOverlayController;
+
+    private GameOverOverlayView gameOverOverlayView;
+    private GameOverOverlayController gameOverOverlayController;
+
+    private GameCompletedOverlayView gameCompletedOverlayView;
+    private GameCompletedOverlayController gameCompletedOverlayController;
+
+
     private PlayingModel playingModel;
     private PlayingView playingView;
     private PlayingController playingController;
@@ -90,22 +100,25 @@ public class Game implements Runnable {
         menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
         menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
 
-        //gameCompletedOverlayView = new GameCompletedOverlayView(gameCompletedOverlayModel);
-        //gameCompletedOverlayController = new GameCompletedOverlayController(gameCompletedOverlayModel, gameCompletedOverlayView);
-
-        //gameOverOverlayView = new GameOverOverlayView(gameOverOverlayModel);
-        //gameOverOverlayController = new GameOverOverlayController(gameOverOverlayModel, gameOverOverlayView);
-
         playingModel = new PlayingModel(this);
-        playingView = new PlayingView(playingModel);
-        playingController = new PlayingController(playingModel);
+
+        gamePausedOverlayView = new GamePausedOverlayView(playingModel);
+        gamePausedOverlayController = new GamePausedOverlayController(playingModel);
+
+        gameCompletedOverlayView = new GameCompletedOverlayView(playingModel);
+        gameCompletedOverlayController = new GameCompletedOverlayController(gameCompletedOverlayView, playingModel);
+
+        gameOverOverlayView = new GameOverOverlayView(playingModel);
+        gameOverOverlayController = new GameOverOverlayController(gameOverOverlayView, playingModel);
+
+        playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView);
+        playingController = new PlayingController(playingModel, gamePausedOverlayController, gameCompletedOverlayController, gameOverOverlayController);
 
         levelTransition = new LevelTransition(this);
         //levelTransitionModel = new LevelTransition(this);
         //levelTransitionView = new LevelTransitionView(levelTransitionModel);
 
     }
-
 
     public void update() {
 

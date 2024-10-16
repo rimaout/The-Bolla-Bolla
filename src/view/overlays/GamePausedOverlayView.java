@@ -9,17 +9,9 @@ import java.awt.*;
 import static utilz.Constants.Overlays.*;
 
 public class GamePausedOverlayView extends GameOverlayView {
-    private static GamePausedOverlayView instance;
 
-    private GamePausedOverlayView(PlayingModel playingModel) {
+    public GamePausedOverlayView(PlayingModel playingModel) {
         super(playingModel);
-    }
-
-    public static GamePausedOverlayView getInstance(PlayingModel playingModel) {
-        if (instance == null) {
-            instance = new GamePausedOverlayView(playingModel);
-        }
-        return instance;
     }
 
     @Override

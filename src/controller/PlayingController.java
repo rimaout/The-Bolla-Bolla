@@ -2,8 +2,6 @@ package controller;
 
 import controller.inputs.InputMethods;
 import gameStates.PlayingModel;
-import view.overlays.GameCompletedOverlayView;
-import view.overlays.GameOverOverlayView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,12 +10,16 @@ public class PlayingController implements InputMethods {
     private final PlayingModel playingModel;
 
     private final GamePausedOverlayController gamePausedOverlayController;
-    //private final GameCompletedOverlayController gameCompletedOverlayController;
-    //private final GameOverOverlayController gameOverOverlayController;
+    private final GameCompletedOverlayController gameCompletedOverlayController;
+    private final GameOverOverlayController gameOverOverlayController;
 
-    public PlayingController(PlayingModel playingModel) {
+    public PlayingController(PlayingModel playingModel, GamePausedOverlayController gamePausedOverlayController,
+                             GameCompletedOverlayController gameCompletedOverlayController,
+                             GameOverOverlayController gameOverOverlayController) {
         this.playingModel = playingModel;
-        gamePausedOverlayController = new GamePausedOverlayController(playingModel);
+        this.gamePausedOverlayController = gamePausedOverlayController;
+        this.gameCompletedOverlayController = gameCompletedOverlayController;
+        this.gameOverOverlayController = gameOverOverlayController;
     }
 
     @Override
@@ -53,10 +55,10 @@ public class PlayingController implements InputMethods {
             gamePausedOverlayController.keyPressed(e);
 
         else if (playingModel.isGameOver())
-            GameOverOverlayView.getInstance(playingModel).keyPressed(e);
+            gameOverOverlayController.keyPressed(e);
 
         else if (playingModel.isGameCompleted())
-            GameCompletedOverlayView.getInstance(playingModel).keyPressed(e);
+            gameCompletedOverlayController.keyPressed(e);
 
         else {
             switch (e.getKeyCode()) {
