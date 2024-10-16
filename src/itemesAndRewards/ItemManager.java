@@ -4,14 +4,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 import entities.Player;
 import gameStates.PlayingModel;
-import utilz.PlayingTimer;
+import model.utilz.PlayingTimer;
 import levels.LevelManager;
 
-import static utilz.Constants.Items.*;
-import static utilz.HelpMethods.GetRandomPosition;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.HelpMethods.GetRandomPosition;
 
 public class ItemManager {
     private static ItemManager instance;

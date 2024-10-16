@@ -1,15 +1,14 @@
 package entities;
 
-import main.Game;
-import utilz.Constants;
-import utilz.Constants.Direction;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
 
-import static utilz.HelpMethods.*;
-import static utilz.Constants.GRAVITY;
-import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.Direction.RIGHT;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
+import static model.utilz.HelpMethods.*;
+import static model.utilz.Constants.GRAVITY;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Direction.RIGHT;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
 
 public class ZenChan extends Enemy {
     private boolean firstUpdate = true;

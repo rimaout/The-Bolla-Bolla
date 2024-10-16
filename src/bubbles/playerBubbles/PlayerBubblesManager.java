@@ -7,12 +7,11 @@ import java.util.LinkedList;
 import bubbles.Bubble;
 import entities.Enemy;
 import entities.Player;
-import main.Game;
-import utilz.Constants;
-import utilz.LoadSave;
-import utilz.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
+import model.utilz.PlayingTimer;
 
-import static utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.*;
 
 public class PlayerBubblesManager {
     // This class is responsible for managing the bubbles that the player shoots

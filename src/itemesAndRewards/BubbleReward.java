@@ -4,10 +4,10 @@ import java.awt.*;
 
 import entities.Player;
 import audio.AudioPlayer;
-import utilz.Constants.AudioConstants;
+import model.utilz.Constants.AudioConstants;
 
-import static utilz.Constants.Items.*;
-import static utilz.Constants.Items.BubbleRewardType.*;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.Constants.Items.BubbleRewardType.*;
 
 public class BubbleReward extends Item{
 

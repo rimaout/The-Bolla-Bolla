@@ -4,10 +4,10 @@ import java.awt.*;
 
 import entities.Player;
 import audio.AudioPlayer;
-import utilz.Constants.AudioConstants;
+import model.utilz.Constants.AudioConstants;
 
-import static utilz.Constants.Items.*;
-import static utilz.Constants.Items.PowerUpType.*;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.Constants.Items.PowerUpType.*;
 
 public class PowerUp extends Item {
     private final PowerUpManager powerUpManager = PowerUpManager.getInstance();

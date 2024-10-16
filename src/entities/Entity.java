@@ -3,13 +3,12 @@ package entities;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import main.Game;
-import utilz.Constants;
-import utilz.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import levels.LevelManager;
 import itemesAndRewards.PowerUpManager;
 
-import static utilz.HelpMethods.*;
+import static model.utilz.HelpMethods.*;
 
 public abstract class Entity {
     protected final PlayingTimer timer = PlayingTimer.getInstance();

@@ -6,18 +6,18 @@ import entities.EnemyManager;
 import entities.Player;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
-import utilz.Constants.AudioConstants;
-import utilz.Constants.Direction;
+import model.utilz.Constants.AudioConstants;
+import model.utilz.Constants.Direction;
 
 import java.awt.*;
 import java.util.Random;
 
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.GRAVITY;
-import static utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
-import static utilz.HelpMethods.*;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.GRAVITY;
+import static model.utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
+import static model.utilz.HelpMethods.*;
 
 public class EnemyBubble extends EmptyBubble {
 

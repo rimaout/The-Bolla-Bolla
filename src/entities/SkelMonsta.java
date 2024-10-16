@@ -1,13 +1,13 @@
 package entities;
 
-import utilz.Constants.Direction;
+import model.utilz.Constants.Direction;
 
 import java.awt.*;
 
-import static utilz.Constants.Direction.*;
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
 public class SkelMonsta extends Enemy{
 

@@ -4,12 +4,11 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import main.Game;
 import entities.Player;
 import itemesAndRewards.PowerUpManager;
-import utilz.Constants;
+import model.utilz.Constants;
 
-import static utilz.Constants.Bubble.DEAD;
+import static model.utilz.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
     private final Player player;

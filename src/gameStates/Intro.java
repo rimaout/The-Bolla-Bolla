@@ -3,19 +3,18 @@ package gameStates;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import main.Game;
 import levels.Level;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import entities.Player;
 import audio.AudioPlayer;
 import levels.LevelManager;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.INTRO.IntroState.*;
-import static utilz.Constants.INTRO.*;
-import static utilz.Constants.PlayerConstants.SPAWN_X;
-import static utilz.Constants.PlayerConstants.SPAWN_Y;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.INTRO.IntroState.*;
+import static model.utilz.Constants.INTRO.*;
+import static model.utilz.Constants.PlayerConstants.SPAWN_X;
+import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
 
 public class Intro {
     private PlayingModel playingModel;

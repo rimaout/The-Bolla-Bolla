@@ -1,10 +1,9 @@
-package utilz;
+package model.utilz;
 
 import bubbles.specialBubbles.BubbleGenerator;
 import entities.Enemy;
 import entities.Maita;
 import entities.ZenChan;
-import main.Game;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -19,13 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.Constants.BubbleGenerator.GeneratorType;
-import static utilz.Constants.BubbleGenerator.GeneratorType.*;
-import static utilz.Constants.BubbleGenerator.GeneratorPosition;
-import static utilz.Constants.BubbleGenerator.GeneratorPosition.*;
+import static model.utilz.Constants.Direction;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.BubbleGenerator.GeneratorType;
+import static model.utilz.Constants.BubbleGenerator.GeneratorType.*;
+import static model.utilz.Constants.BubbleGenerator.GeneratorPosition;
+import static model.utilz.Constants.BubbleGenerator.GeneratorPosition.*;
 
 public class LoadSave {
     // Sprites

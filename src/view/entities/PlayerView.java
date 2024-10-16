@@ -1,14 +1,14 @@
 package view.entities;
 
 import entities.Player;
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.PlayerConstants.*;
-import static utilz.Constants.PlayerConstants.DEFAULT_H;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.PlayerConstants.*;
+import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
 
 public class PlayerView {
     private final Player player;

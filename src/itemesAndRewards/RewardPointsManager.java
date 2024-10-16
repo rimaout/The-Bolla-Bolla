@@ -1,16 +1,16 @@
 package itemesAndRewards;
 
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 import entities.Player;
-import utilz.PlayingTimer;
+import model.utilz.PlayingTimer;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.PointsManager.*;
-import static utilz.Constants.PointsManager.PointsType.*;
-import static utilz.Constants.PointsManager.BIG_DEFAULT_H;
+import static model.utilz.Constants.PointsManager.*;
+import static model.utilz.Constants.PointsManager.PointsType.*;
+import static model.utilz.Constants.PointsManager.BIG_DEFAULT_H;
 
 public class RewardPointsManager {
     private static RewardPointsManager instance;

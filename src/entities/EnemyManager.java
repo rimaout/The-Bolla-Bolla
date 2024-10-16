@@ -1,10 +1,10 @@
 package entities;
 
 import levels.LevelManager;
-import utilz.LoadSave;
-import utilz.PlayingTimer;
+import model.utilz.LoadSave;
+import model.utilz.PlayingTimer;
 
-import static utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

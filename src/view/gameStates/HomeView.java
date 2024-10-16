@@ -2,10 +2,10 @@ package view.gameStates;
 
 import gameStates.State;
 import main.Game;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import entities.TwinkleBubbleManager;
-import static utilz.Constants.Home.*;
+import static model.utilz.Constants.Home.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

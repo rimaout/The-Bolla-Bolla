@@ -1,12 +1,11 @@
 package entities;
 
-import main.Game;
-import utilz.Constants;
-import utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
+import static model.utilz.Constants.Direction.*;
 
-import static utilz.Constants.Home.*;
-import static utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.Home.*;
+import static model.utilz.Constants.ANIMATION_SPEED;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

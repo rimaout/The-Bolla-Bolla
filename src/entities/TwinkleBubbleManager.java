@@ -1,7 +1,7 @@
 package entities;
 
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import view.gameStates.HomeView;
 
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.Home.BUBBLE_DEFAULT_H;
-import static utilz.Constants.Home.BUBBLE_DEFAULT_W;
+import static model.utilz.Constants.Home.BUBBLE_DEFAULT_H;
+import static model.utilz.Constants.Home.BUBBLE_DEFAULT_W;
 
 public class TwinkleBubbleManager {
     private static TwinkleBubbleManager instance;

@@ -3,14 +3,13 @@ package entities;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import main.Game;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import audio.AudioPlayer;
-import utilz.PlayingTimer;
-import utilz.Constants.AudioConstants;
+import model.utilz.PlayingTimer;
+import model.utilz.Constants.AudioConstants;
 
-import static utilz.Constants.HurryUpManager.*;
+import static model.utilz.Constants.HurryUpManager.*;
 
 public class HurryUpManager {
     private static HurryUpManager instance;

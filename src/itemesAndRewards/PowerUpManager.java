@@ -2,12 +2,11 @@ package itemesAndRewards;
 
 import static java.lang.Math.abs;
 
-import main.Game;
 import entities.Player;
 import entities.EnemyManager;
 import projectiles.ProjectileManager;
-import utilz.Constants;
-import utilz.Constants.Items.PowerUpType;
+import model.utilz.Constants;
+import model.utilz.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
 

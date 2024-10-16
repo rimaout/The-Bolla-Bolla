@@ -4,14 +4,14 @@ import java.awt.*;
 
 import entities.Enemy;
 import entities.Player;
-import utilz.Constants.Direction;
+import model.utilz.Constants.Direction;
 
-import static utilz.Constants.Direction.*;
-import static utilz.HelpMethods.CanMoveHere;
-import static utilz.Constants.Projectiles.*;
-import static utilz.Constants.Projectiles.ProjectileState.IMPACT;
-import static utilz.Constants.Projectiles.ProjectileState.MOVING;
-import static utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.HelpMethods.CanMoveHere;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
+import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
+import static model.utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
 
 public class MaitaFireProjectile extends Projectile {
 

@@ -2,11 +2,11 @@ package view.overlays;
 
 import audio.AudioPlayer;
 import gameStates.PlayingModel;
-import utilz.Constants;
+import model.utilz.Constants;
 
 import java.awt.*;
 
-import static utilz.Constants.Overlays.*;
+import static model.utilz.Constants.Overlays.*;
 
 public class GamePausedOverlayView extends GameOverlayView {
 

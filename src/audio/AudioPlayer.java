@@ -2,8 +2,8 @@ package audio;
 
 import javax.sound.sampled.*;
 
-import static utilz.LoadSave.GetAudio;
-import static utilz.Constants.AudioConstants.*;
+import static model.utilz.LoadSave.GetAudio;
+import static model.utilz.Constants.AudioConstants.*;
 
 public class AudioPlayer {
     private static AudioPlayer instance;

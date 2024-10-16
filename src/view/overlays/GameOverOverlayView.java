@@ -1,16 +1,13 @@
 package view.overlays;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 import audio.AudioPlayer;
 import gameStates.PlayingModel;
-import users.UsersManager;
-import gameStates.GameState;
-import utilz.Constants;
+import model.utilz.Constants;
 
-import static utilz.Constants.Overlays.BUD_GREEN_COLOR;
-import static utilz.Constants.Overlays.BUD_RED_COLOR;
+import static model.utilz.Constants.Overlays.BUD_GREEN_COLOR;
+import static model.utilz.Constants.Overlays.BUD_RED_COLOR;
 
 public class GameOverOverlayView extends GameOverlayView {
 
@@ -97,7 +94,7 @@ public class GameOverOverlayView extends GameOverlayView {
         AudioPlayer.getInstance().stopSong();
 
         if (firstUpdate) {
-            AudioPlayer.getInstance().playSoundEffect(utilz.Constants.AudioConstants.GAME_OVER);
+            AudioPlayer.getInstance().playSoundEffect(model.utilz.Constants.AudioConstants.GAME_OVER);
             firstUpdate = false;
         }
     }

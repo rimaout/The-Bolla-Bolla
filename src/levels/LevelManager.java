@@ -1,12 +1,11 @@
 package levels;
 
 
-import main.Game;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import gameStates.PlayingModel;
 import gameStates.GameState;
-import utilz.Constants.Direction;
+import model.utilz.Constants.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;

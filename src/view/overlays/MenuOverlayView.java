@@ -1,6 +1,6 @@
 package view.overlays;
 
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 
 import java.awt.*;
 

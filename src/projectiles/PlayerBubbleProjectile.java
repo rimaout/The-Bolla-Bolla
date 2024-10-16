@@ -5,15 +5,15 @@ import java.awt.*;
 import entities.Enemy;
 import entities.Player;
 import audio.AudioPlayer;
-import utilz.Constants.Direction;
-import utilz.Constants.AudioConstants;
+import model.utilz.Constants.Direction;
+import model.utilz.Constants.AudioConstants;
 import bubbles.playerBubbles.EmptyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
 
-import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.Projectiles.*;
-import static utilz.HelpMethods.CanMoveHere;
-import static utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.HelpMethods.CanMoveHere;
+import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectile extends Projectile {
     private boolean playSound = true;

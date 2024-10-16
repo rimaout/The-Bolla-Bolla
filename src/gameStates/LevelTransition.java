@@ -5,17 +5,17 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import levels.Level;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import entities.Player;
 import levels.LevelManager;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.PlayerConstants.SPAWN_X;
-import static utilz.Constants.PlayerConstants.SPAWN_Y;
-import static utilz.Constants.LevelTransition.TransitionState;
-import static utilz.Constants.LevelTransition.TransitionState.*;
-import static utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.PlayerConstants.SPAWN_X;
+import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
+import static model.utilz.Constants.LevelTransition.TransitionState;
+import static model.utilz.Constants.LevelTransition.TransitionState.*;
+import static model.utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
 public class LevelTransition extends State {
     PlayingModel playingModel;

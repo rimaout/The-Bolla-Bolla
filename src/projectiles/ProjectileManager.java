@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entities.Enemy;
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 import entities.Player;
 import entities.EnemyManager;
 
-import static utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.*;
 
 public class ProjectileManager {
     private static ProjectileManager instance;

@@ -4,8 +4,8 @@ import java.awt.*;
 
 import entities.Player;
 
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.Direction;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Direction;
 
 public class EmptyBubble extends PlayerBubble {
 

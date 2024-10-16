@@ -22,10 +22,10 @@ public class GamePanel extends JPanel {
     }
 
      private void setPanelSize() {
-        Dimension size = new Dimension(utilz.Constants.GAME_WIDTH, utilz.Constants.GAME_HEIGHT);
+        Dimension size = new Dimension(model.utilz.Constants.GAME_WIDTH, model.utilz.Constants.GAME_HEIGHT);
         setPreferredSize(size);
 
-        System.out.println("Size: " + utilz.Constants.GAME_WIDTH + " | " + utilz.Constants.GAME_HEIGHT);
+        System.out.println("Size: " + model.utilz.Constants.GAME_WIDTH + " | " + model.utilz.Constants.GAME_HEIGHT);
     }
 
     public void paintComponent(Graphics g) {

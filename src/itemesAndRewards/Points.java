@@ -2,14 +2,13 @@ package itemesAndRewards;
 
 import java.awt.*;
 
-import main.Game;
-import utilz.Constants;
-import utilz.PlayingTimer;
-import utilz.Constants.PointsManager.PointsType;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
+import model.utilz.Constants.PointsManager.PointsType;
 
-import static utilz.Constants.PointsManager.*;
-import static utilz.Constants.PointsManager.BIG_H;
-import static utilz.Constants.PointsManager.PointsType.SMALL;
+import static model.utilz.Constants.PointsManager.*;
+import static model.utilz.Constants.PointsManager.BIG_H;
+import static model.utilz.Constants.PointsManager.PointsType.SMALL;
 
 public class Points {
     private final RewardPointsManager rewardPointsManager = RewardPointsManager.getInstance();

@@ -4,14 +4,14 @@ import entities.TwinkleBubbleManager;
 import gameStates.MenuModel;
 import main.Game;
 import users.UsersManager;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 
 import java.awt.*;
 
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.MenuConstants.*;
-import static utilz.Constants.MenuConstants.SPACE_WHIDTH;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.MenuConstants.*;
+import static model.utilz.Constants.MenuConstants.SPACE_WHIDTH;
 
 public class MenuView {
     private final MenuModel menuModel;

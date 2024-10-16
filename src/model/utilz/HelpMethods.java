@@ -1,6 +1,4 @@
-package utilz;
-
-import main.Game;
+package model.utilz;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

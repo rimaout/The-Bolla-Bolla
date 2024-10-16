@@ -1,10 +1,10 @@
 package itemesAndRewards;
 
 import entities.Player;
-import utilz.PlayingTimer;
+import model.utilz.PlayingTimer;
 
-import static utilz.Constants.Items.*;
-import static utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.Constants.ANIMATION_SPEED;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

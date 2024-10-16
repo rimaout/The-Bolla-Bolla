@@ -1,6 +1,6 @@
 package bubbles.specialBubbles;
 
-import utilz.LoadSave;
+import model.utilz.LoadSave;
 import entities.Player;
 import levels.LevelManager;
 
@@ -8,9 +8,8 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.PlayerConstants.DEFAULT_H;
-import static utilz.Constants.PlayerConstants.DEFAULT_W;
+import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
+import static model.utilz.Constants.PlayerConstants.DEFAULT_W;
 
 public class SpecialBubbleManager {
 

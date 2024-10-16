@@ -3,14 +3,13 @@ package entities;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.playerBubbles.EnemyBubble;
 import levels.LevelManager;
-import main.Game;
-import utilz.Constants;
+import model.utilz.Constants;
 
-import static utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.HelpMethods.GetEntityYPosAboveFloor;
+import static model.utilz.Constants.Direction;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.HelpMethods.GetEntityYPosAboveFloor;
 
 public abstract class Enemy extends Entity {
 

@@ -12,22 +12,21 @@ import itemesAndRewards.Item;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import levels.LevelManager;
-import main.Game;
-import utilz.Constants;
-import utilz.Constants.AudioConstants;
-import utilz.Constants.Direction;
-import utilz.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.Constants.AudioConstants;
+import model.utilz.Constants.Direction;
+import model.utilz.PlayingTimer;
 
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static utilz.Constants.PlayerConstants.IDLE_ANIMATION;
-import static utilz.Constants.WaterFLow.*;
-import static utilz.Constants.Direction.*;
-import static utilz.HelpMethods.*;
-import static utilz.Constants.Items.BubbleRewardType.WATER_CRISTAL;
+import static model.utilz.Constants.PlayerConstants.IDLE_ANIMATION;
+import static model.utilz.Constants.WaterFLow.*;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.HelpMethods.*;
+import static model.utilz.Constants.Items.BubbleRewardType.WATER_CRISTAL;
 
 
 public class WaterFlow extends Entity {
@@ -221,7 +220,7 @@ public class WaterFlow extends Entity {
 
         for (int i = -1; i < Constants.TILES_IN_HEIGHT * Constants.TILES_SIZE; i++) {
             if (IsSolid(hitbox.x, dropY, levelManager.getLevelData())) {
-                dropY -= utilz.Constants.Items.H;
+                dropY -= model.utilz.Constants.Items.H;
                 break;
             }
             dropY += 1;

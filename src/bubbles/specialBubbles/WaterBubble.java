@@ -1,14 +1,13 @@
 package bubbles.specialBubbles;
 
 import itemesAndRewards.PowerUpManager;
-import main.Game;
 import entities.Player;
-import utilz.Constants;
-import utilz.Constants.Direction;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
 
 import java.awt.*;
 
-import static utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.*;
 
 public class WaterBubble extends SpecialBubble {
 

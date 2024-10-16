@@ -1,19 +1,18 @@
 package entities;
 
-import main.Game;
 import audio.AudioPlayer;
-import utilz.Constants;
-import utilz.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import levels.LevelManager;
 import projectiles.ProjectileManager;
 import itemesAndRewards.PowerUpManager;
 import projectiles.PlayerBubbleProjectile;
 
-import static utilz.Constants.*;
-import static utilz.HelpMethods.*;
-import static utilz.Constants.Direction.LEFT;
-import static utilz.Constants.Direction.RIGHT;
-import static utilz.Constants.PlayerConstants.*;
+import static model.utilz.Constants.*;
+import static model.utilz.HelpMethods.*;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Direction.RIGHT;
+import static model.utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
     private final LevelManager levelManager = LevelManager.getInstance();

@@ -4,18 +4,17 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-import main.Game;
 import entities.Entity;
 import entities.Player;
 import levels.LevelManager;
-import utilz.Constants;
-import utilz.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 
 import static java.lang.Math.abs;
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.Direction;
-import static utilz.Constants.Direction.*;
-import static utilz.HelpMethods.IsEntityInsideMap;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Direction;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.HelpMethods.IsEntityInsideMap;
 
 public abstract class Bubble extends Entity {
 

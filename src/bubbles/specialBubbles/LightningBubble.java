@@ -3,13 +3,13 @@ package bubbles.specialBubbles;
 import java.awt.*;
 
 import entities.Player;
-import utilz.Constants;
+import model.utilz.Constants;
 import projectiles.ProjectileManager;
 import projectiles.LightingProjectile;
-import utilz.Constants.Projectiles.ProjectileType;
+import model.utilz.Constants.Projectiles.ProjectileType;
 
-import static utilz.Constants.Bubble.*;
-import static utilz.Constants.Bubble.IMAGE_H;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.IMAGE_H;
 
 public class LightningBubble extends SpecialBubble {
     public LightningBubble(float x, float y, Constants.Direction direction) {

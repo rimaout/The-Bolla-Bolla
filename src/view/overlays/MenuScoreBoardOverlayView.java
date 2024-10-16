@@ -2,8 +2,8 @@ package view.overlays;
 
 import model.overlays.MenuScoreBoardOverlayModel;
 import users.UsersManager;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,7 +1,7 @@
 package view.overlays;
 
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 import gameStates.PlayingModel;
 
 import java.awt.*;

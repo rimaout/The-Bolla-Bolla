@@ -1,16 +1,7 @@
 package gameStates;
 
-import static utilz.Constants.MenuConstants.*;
-
 import main.Game;
-import utilz.Constants;
-import utilz.LoadSave;
 import users.UsersManager;
-import entities.TwinkleBubbleManager;
-
-import java.awt.*;
-
-import static utilz.Constants.ANIMATION_SPEED;
 
 public class MenuModel extends State {
     private final UsersManager usersManager;

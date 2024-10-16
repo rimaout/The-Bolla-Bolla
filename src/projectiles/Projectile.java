@@ -5,13 +5,13 @@ import java.awt.*;
 import entities.Enemy;
 import entities.Entity;
 import entities.Player;
-import utilz.Constants.Direction;
-import utilz.Constants.Projectiles.ProjectileState;
+import model.utilz.Constants.Direction;
+import model.utilz.Constants.Projectiles.ProjectileState;
 
-import static utilz.Constants.Projectiles.*;
-import static utilz.Constants.ANIMATION_SPEED;
-import static utilz.Constants.Projectiles.ProjectileState.IMPACT;
-import static utilz.Constants.Projectiles.ProjectileState.MOVING;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
+import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
 public abstract class Projectile extends Entity {
     protected final ProjectileManager projectileManager = ProjectileManager.getInstance();

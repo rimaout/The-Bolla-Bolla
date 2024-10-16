@@ -12,7 +12,7 @@ import model.overlays.MenuScoreBoardOverlayModel;
 import model.overlays.MenuUserCreationOverlayModel;
 import model.overlays.MenuUserSelectionOverlayModel;
 
-import utilz.Constants;
+import model.utilz.Constants;
 import view.overlays.*;
 
 import java.awt.*;

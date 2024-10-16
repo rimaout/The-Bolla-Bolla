@@ -4,9 +4,9 @@ import java.awt.*;
 
 import bubbles.Bubble;
 import entities.Player;
-import utilz.Constants;
+import model.utilz.Constants;
 
-import static utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.*;
 
 public abstract class PlayerBubble extends Bubble {
     protected final PlayerBubblesManager bubbleManager = PlayerBubblesManager.getInstance();

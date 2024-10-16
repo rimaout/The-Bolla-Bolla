@@ -2,8 +2,8 @@ package view.overlays;
 
 import model.overlays.MenuUserCreationOverlayModel;
 import users.UsersManager;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 
 import javax.swing.*;
 import java.awt.*;

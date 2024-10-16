@@ -1,10 +1,9 @@
 package view.overlays;
 
 import gameStates.PlayingModel;
-import main.Game;
 import entities.Player;
-import utilz.Constants;
-import utilz.LoadSave;
+import model.utilz.Constants;
+import model.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

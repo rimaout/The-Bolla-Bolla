@@ -1,8 +1,8 @@
 package levels;
 
 import entities.Enemy;
-import utilz.LoadSave;
-import utilz.Constants.Direction;
+import model.utilz.LoadSave;
+import model.utilz.Constants.Direction;
 import bubbles.specialBubbles.BubbleGenerator;
 
 import java.awt.image.BufferedImage;

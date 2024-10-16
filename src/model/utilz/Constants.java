@@ -1,4 +1,4 @@
-package utilz;
+package model.utilz;
 
 import java.awt.*;
 
