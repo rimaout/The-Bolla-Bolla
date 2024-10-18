@@ -6,6 +6,7 @@ import gameStates.MenuModel;
 import audio.AudioPlayer;
 import users.UsersManager;
 import view.gameStates.HomeView;
+import view.gameStates.LevelTransitionView;
 import view.gameStates.MenuView;
 import view.gameStates.PlayingView;
 import model.overlays.MenuScoreBoardOverlayModel;
@@ -59,7 +60,8 @@ public class Game implements Runnable {
     private PlayingView playingView;
     private PlayingController playingController;
 
-    private LevelTransition levelTransition;
+    private LevelTransitionModel levelTransitionModel;
+    private LevelTransitionView levelTransitionView;
 
     public Game() {
         initClasses();
@@ -114,9 +116,8 @@ public class Game implements Runnable {
         playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView);
         playingController = new PlayingController(playingModel, gamePausedOverlayController, gameCompletedOverlayController, gameOverOverlayController);
 
-        levelTransition = new LevelTransition(this);
-        //levelTransitionModel = new LevelTransition(this);
-        //levelTransitionView = new LevelTransitionView(levelTransitionModel);
+        levelTransitionModel = new LevelTransitionModel(this);
+        levelTransitionView = new LevelTransitionView(levelTransitionModel);
 
     }
 
@@ -136,7 +137,8 @@ public class Game implements Runnable {
                 System.exit(0);
                 break;
             case LEVEL_TRANSITION:
-                levelTransition.update();
+                levelTransitionModel.update();
+                levelTransitionView.updatePlayerAnimation();
                 break;
         }
     }
@@ -154,7 +156,7 @@ public class Game implements Runnable {
                 playingView.draw(g);
                 break;
             case LEVEL_TRANSITION:
-                levelTransition.draw(g);
+                levelTransitionView.draw(g);
                 break;
         }
     }
@@ -233,8 +235,8 @@ public class Game implements Runnable {
         return playingController;
     }
 
-    public LevelTransition getLevelTransition() {
-        return levelTransition;
+    public LevelTransitionModel getLevelTransition() {
+        return levelTransitionModel;
     }
 
     public HomeController getHomeController() {
