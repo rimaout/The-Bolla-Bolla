@@ -4,7 +4,7 @@ import java.awt.*;
 
 import entities.Enemy;
 import entities.Player;
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.AudioConstants;

@@ -133,7 +133,7 @@ public class LoadSave {
     }
 
     public static Clip GetAudio(String audioName) {
-        URL url = LoadSave.class.getResource("/audio/" + audioName + ".wav");
+        URL url = LoadSave.class.getResource("/audioFiles/" + audioName + ".wav");
         AudioInputStream audio;
 
         try {

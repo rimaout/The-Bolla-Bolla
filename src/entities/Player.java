@@ -1,6 +1,6 @@
 package entities;
 
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import levels.LevelManager;

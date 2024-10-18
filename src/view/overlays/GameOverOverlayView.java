@@ -2,7 +2,7 @@ package view.overlays;
 
 import java.awt.*;
 
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import model.gameStates.PlayingModel;
 import model.utilz.Constants;
 

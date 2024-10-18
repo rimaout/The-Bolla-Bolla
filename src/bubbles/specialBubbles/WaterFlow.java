@@ -1,6 +1,6 @@
 package bubbles.specialBubbles;
 
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import bubbles.playerBubbles.PlayerBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;

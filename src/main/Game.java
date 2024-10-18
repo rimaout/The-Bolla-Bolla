@@ -3,7 +3,7 @@ package main;
 import controller.*;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import users.UsersManager;
 import view.gameStates.HomeView;
 import view.gameStates.LevelTransitionView;

@@ -1,6 +1,6 @@
 package view.overlays;
 
-import audio.AudioPlayer;
+import model.audio.AudioPlayer;
 import model.gameStates.PlayingModel;
 import model.utilz.Constants;
 
