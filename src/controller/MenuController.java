@@ -1,8 +1,8 @@
 package controller;
 
 import controller.inputs.InputMethods;
-import gameStates.GameState;
-import gameStates.MenuModel;
+import model.gameStates.GameState;
+import model.gameStates.MenuModel;
 import main.Game;
 
 import java.awt.event.KeyEvent;

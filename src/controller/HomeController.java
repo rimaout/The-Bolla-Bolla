@@ -1,7 +1,7 @@
 package controller;
 
 import controller.inputs.InputMethods;
-import gameStates.GameState;
+import model.gameStates.GameState;
 import view.gameStates.HomeView;
 
 import java.awt.event.KeyEvent;

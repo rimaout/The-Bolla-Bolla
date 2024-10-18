@@ -1,8 +1,8 @@
 package main;
 
 import controller.*;
-import gameStates.*;
-import gameStates.MenuModel;
+import model.gameStates.*;
+import model.gameStates.MenuModel;
 import audio.AudioPlayer;
 import users.UsersManager;
 import view.gameStates.HomeView;

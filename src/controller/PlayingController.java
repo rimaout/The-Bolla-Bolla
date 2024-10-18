@@ -1,7 +1,7 @@
 package controller;
 
 import controller.inputs.InputMethods;
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

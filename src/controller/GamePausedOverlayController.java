@@ -1,8 +1,8 @@
 package controller;
 
 import audio.AudioPlayer;
-import gameStates.GameState;
-import gameStates.PlayingModel;
+import model.gameStates.GameState;
+import model.gameStates.PlayingModel;
 
 import java.awt.event.KeyEvent;
 

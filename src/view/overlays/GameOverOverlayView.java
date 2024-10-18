@@ -3,7 +3,7 @@ package view.overlays;
 import java.awt.*;
 
 import audio.AudioPlayer;
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Overlays.BUD_GREEN_COLOR;

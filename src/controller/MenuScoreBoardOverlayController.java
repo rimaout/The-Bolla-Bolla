@@ -1,6 +1,6 @@
 package controller;
 
-import gameStates.MenuModel;
+import model.gameStates.MenuModel;
 
 import java.awt.event.KeyEvent;
 

@@ -1,4 +1,4 @@
-package gameStates;
+package model.gameStates;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
@@ -27,7 +27,7 @@ public class PlayingModel extends State {
     private ItemManager itemManager;
     private RewardPointsManager rewardPointsManager;
     private PowerUpManager powerUpManager;
-    private Intro intro;
+    private IntroModel introModel;
 
     private boolean intoRunning = true;
     private boolean paused;
@@ -55,7 +55,7 @@ public class PlayingModel extends State {
         itemManager = ItemManager.getInstance(this);
         rewardPointsManager = RewardPointsManager.getInstance(playerOne);
         powerUpManager = PowerUpManager.getInstance(playerOne);
-        intro = new Intro(this);
+        introModel = new IntroModel(this);
     }
 
     public void update() {
@@ -72,7 +72,7 @@ public class PlayingModel extends State {
         else if(!paused && !gameOver && !gameCompleted) {
 
             if (intoRunning) {
-                intro.update();
+                introModel.update();
                 return;
             }
 
@@ -118,7 +118,7 @@ public class PlayingModel extends State {
         itemManager.newPlayReset();
         powerUpManager.newPlayReset();
         rewardPointsManager.newPlayReset();
-        intro.newPlayReset();
+        introModel.newPlayReset();
 
         playerOne.reset(true, true);
 
@@ -204,8 +204,7 @@ public class PlayingModel extends State {
         return intoRunning;
     }
 
-    // todo: remove this when mvc is complete
-    public Intro getIntro() {
-        return intro;
+    public IntroModel getIntroModel() {
+        return introModel;
     }
 }

@@ -2,10 +2,9 @@ package view.gameStates;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
-import controller.PlayingController;
 import entities.EnemyManager;
 import entities.HurryUpManager;
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
 import levels.LevelManager;
@@ -37,6 +36,7 @@ public class PlayingView {
     private GamePausedOverlayView gamePauseOverlayView;
     private GameOverOverlayView gameOverOverlayView;
     private GameCompletedOverlayView gameCompletedOverlayView;
+    private IntroView introView;
     private PlayingHud playingHud;
 
     public PlayingView(PlayingModel playingModel, GamePausedOverlayView gamePausedOverlayView,
@@ -52,7 +52,7 @@ public class PlayingView {
     public void draw(Graphics g) {
 
         if (playingModel.isIntoRunning()) {
-            playingModel.getIntro().draw(g);
+            introView.draw(g);
         }
         else {
             LevelManager.getInstance().draw(g);
@@ -98,12 +98,13 @@ public class PlayingView {
 //        itemManagerView = new ItemManagerView();
 //        rewardPointsManagerView = new RewardPointsManagerView();
 //        powerUpManagerView = new PowerUpManagerView();
-//        introView = new IntroView();
+        introView = new IntroView(playingModel.getIntroModel());
 
         playingHud = PlayingHud.getInstance(playingModel);
     }
 
     public void update() {
         playerOneView.update();
+        introView.updatePlayerAnimation();
     }
 }

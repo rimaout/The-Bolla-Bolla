@@ -1,7 +1,7 @@
 package controller.inputs;
 
 import main.GamePanel;
-import gameStates.GameState;
+import model.gameStates.GameState;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 

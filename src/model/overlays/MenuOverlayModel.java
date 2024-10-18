@@ -1,6 +1,6 @@
 package model.overlays;
 
-import gameStates.MenuModel;
+import model.gameStates.MenuModel;
 
 
 public abstract class MenuOverlayModel {

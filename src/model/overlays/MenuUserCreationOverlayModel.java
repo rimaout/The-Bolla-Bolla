@@ -1,6 +1,6 @@
 package model.overlays;
 
-import gameStates.MenuModel;
+import model.gameStates.MenuModel;
 import users.UsersManager;
 
 public class MenuUserCreationOverlayModel extends MenuOverlayModel {

@@ -1,7 +1,7 @@
 package controller;
 
-import gameStates.GameState;
-import gameStates.PlayingModel;
+import model.gameStates.GameState;
+import model.gameStates.PlayingModel;
 import users.UsersManager;
 import view.overlays.GameOverOverlayView;
 

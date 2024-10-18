@@ -2,7 +2,7 @@ package view.overlays;
 
 
 import audio.AudioPlayer;
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 import model.utilz.Constants;
 import model.utilz.Constants.AudioConstants;
 

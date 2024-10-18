@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import model.utilz.LoadSave;
 import entities.Player;
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 import model.utilz.PlayingTimer;
 import levels.LevelManager;
 

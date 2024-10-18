@@ -3,8 +3,8 @@ package levels;
 
 import model.utilz.Constants;
 import model.utilz.LoadSave;
-import gameStates.PlayingModel;
-import gameStates.GameState;
+import model.gameStates.PlayingModel;
+import model.gameStates.GameState;
 import model.utilz.Constants.Direction;
 
 import java.awt.*;

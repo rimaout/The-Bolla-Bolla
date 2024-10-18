@@ -1,4 +1,4 @@
-package gameStates;
+package model.gameStates;
 
 import main.Game;
 import levels.Level;

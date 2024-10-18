@@ -1,6 +1,6 @@
 package view.gameStates;
 
-import gameStates.LevelTransitionModel;
+import model.gameStates.LevelTransitionModel;
 import levels.Level;
 import levels.LevelManager;
 import model.utilz.Constants;

@@ -1,7 +1,7 @@
 package view.gameStates;
 
 import entities.TwinkleBubbleManager;
-import gameStates.MenuModel;
+import model.gameStates.MenuModel;
 import main.Game;
 import users.UsersManager;
 import model.utilz.Constants;

@@ -1,6 +1,6 @@
 package view.gameStates;
 
-import gameStates.State;
+import model.gameStates.State;
 import main.Game;
 import model.utilz.Constants;
 import model.utilz.LoadSave;

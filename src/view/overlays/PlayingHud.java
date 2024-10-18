@@ -1,6 +1,6 @@
 package view.overlays;
 
-import gameStates.PlayingModel;
+import model.gameStates.PlayingModel;
 import entities.Player;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
