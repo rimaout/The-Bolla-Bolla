@@ -3,7 +3,7 @@ package entities;
 import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 import projectiles.ProjectileManager;
 import itemesAndRewards.PowerUpManager;
 import projectiles.PlayerBubbleProjectile;
@@ -15,7 +15,7 @@ import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
-    private final LevelManager levelManager = LevelManager.getInstance();
+    private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     // Movement values and variables
@@ -115,7 +115,7 @@ public class Player extends Entity{
             pacManEffect();
 
         // MOVE
-        if (IsEntityInsideSolid(hitbox, levelManager.getLevelData()))
+        if (IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData()))
             handleMovementInsideSolid();
 
         else if (inAir)
@@ -133,7 +133,7 @@ public class Player extends Entity{
             isJumping = true;
             playJumpSound = true;
             
-            if(!IsEntityInsideSolid(hitbox, levelManager.getLevelData())) {  // can't jump if is inside solid
+            if(!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
                 PowerUpManager.getInstance().increaseJumpCounter();
                 addPoints(jumpPoints);  //emeraldRing powerUp
@@ -157,7 +157,7 @@ public class Player extends Entity{
         }
 
         if (!inAir)
-            if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
+            if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
                 inAir = true;
     }
 
@@ -209,12 +209,12 @@ public class Player extends Entity{
 
         // Going down
         else if (airSpeed <= -JUMP_SPEED){
-            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
                 updateXPos(xSpeed);
             } else {
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelData());
                 resetInAir();
                 updateXPos(xSpeed);
             }
@@ -225,12 +225,12 @@ public class Player extends Entity{
     }
 
     private void falling(){
-        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
+        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed = FALL_SPEED;
                 updateXPos(xSpeed / 3);
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManager.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelData());
             updateXPos(xSpeed / 3);
             resetInAir();
         }
@@ -323,7 +323,7 @@ public class Player extends Entity{
         if (resetPoints)
             points = 0;
 
-        if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
+        if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
             inAir = true;
     }
 

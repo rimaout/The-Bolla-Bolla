@@ -44,7 +44,7 @@ public class PlayerBubbleProjectile extends Projectile {
         else
             xSpeed = projectileSpeed;
 
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData()))
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
             hitbox.x += xSpeed;
     }
 

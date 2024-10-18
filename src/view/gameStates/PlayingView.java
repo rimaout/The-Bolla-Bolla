@@ -7,9 +7,9 @@ import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
-import levels.LevelManager;
 import projectiles.ProjectileManager;
 import view.entities.PlayerView;
+import view.levels.LevelManagerView;
 import view.overlays.GameCompletedOverlayView;
 import view.overlays.GameOverOverlayView;
 import view.overlays.GamePausedOverlayView;
@@ -18,11 +18,12 @@ import view.overlays.PlayingHud;
 import java.awt.*;
 
 public class PlayingView {
-    private static PlayingModel playingModel;
+    private PlayingModel playingModel;
 
     private PlayerView playerOneView;
     private PlayerView playerTwoView = null;
 
+    private LevelManagerView levelManagerView;
 //    private EnemyManagerView enemyManagerView;
 //    private HurryUpManagerView hurryUpManagerView;
 //    private PlayerBubblesManagerView playerBubblesManagerView;
@@ -31,7 +32,6 @@ public class PlayingView {
 //    private ItemManagerView itemManagerView;
 //    private RewardPointsManagerView rewardPointsManagerView;
 //    private PowerUpManagerView powerUpManagerView;
-//    private IntroView introView;
 
     private GamePausedOverlayView gamePauseOverlayView;
     private GameOverOverlayView gameOverOverlayView;
@@ -41,6 +41,7 @@ public class PlayingView {
 
     public PlayingView(PlayingModel playingModel, GamePausedOverlayView gamePausedOverlayView,
                        GameOverOverlayView gameOverOverlayView, GameCompletedOverlayView gameCompletedOverlayView) {
+
         this.playingModel = playingModel;
         this.gamePauseOverlayView = gamePausedOverlayView;
         this.gameOverOverlayView = gameOverOverlayView;
@@ -55,7 +56,7 @@ public class PlayingView {
             introView.draw(g);
         }
         else {
-            LevelManager.getInstance().draw(g);
+            levelManagerView.draw(g);
             ItemManager.getInstance().draw(g);
             playingHud.draw(g);
             EnemyManager.getInstance().draw(g);
@@ -90,7 +91,9 @@ public class PlayingView {
     public void initClasses() {
         playerOneView = new PlayerView(playingModel.getPlayerOne());
 
-//        enemyManagerView = new EnemyManagerView();
+        levelManagerView = LevelManagerView.getInstance();
+
+        //        enemyManagerView = new EnemyManagerView();
 //        hurryUpManagerView = new HurryUpManagerView();
 //        playerBubblesManagerView = new PlayerBubblesManagerView();
 //        specialBubbleManagerView = new SpecialBubbleManagerView();

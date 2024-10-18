@@ -5,14 +5,14 @@ import java.awt.geom.Rectangle2D;
 
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 import itemesAndRewards.PowerUpManager;
 
 import static model.utilz.HelpMethods.*;
 
 public abstract class Entity {
     protected final PlayingTimer timer = PlayingTimer.getInstance();
-    protected LevelManager levelManager = LevelManager.getInstance();
+    protected LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
 
     protected float x, y;
     protected int width, height;
@@ -42,7 +42,7 @@ public abstract class Entity {
     }
 
     protected void updateXPos(float xMovement) {
-        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData())) {
+        if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
             hitbox.x += xMovement;
             PowerUpManager.getInstance().addDistance(xMovement);
         }
@@ -55,7 +55,7 @@ public abstract class Entity {
             int xTile = (int) ((hitbox.x + hitbox.width + xMovement) / Constants.TILES_SIZE);
             int yTile = (int) (hitbox.y / Constants.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
+            if (!IsWall(xTile, yTile, levelManagerModel.getLevelData())) {
                 hitbox.x += xMovement;
                 PowerUpManager.getInstance().addDistance(xMovement);
             }
@@ -66,7 +66,7 @@ public abstract class Entity {
             int xTile = (int) ((hitbox.x + xMovement) / Constants.TILES_SIZE);
             int yTile = (int) (hitbox.y / Constants.TILES_SIZE);
 
-            if (!IsWall(xTile, yTile, levelManager.getLevelData())) {
+            if (!IsWall(xTile, yTile, levelManagerModel.getLevelData())) {
                 hitbox.x += xMovement;
                 PowerUpManager.getInstance().addDistance(xMovement);
             }

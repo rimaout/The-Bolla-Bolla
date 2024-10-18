@@ -8,7 +8,7 @@ import model.utilz.LoadSave;
 import entities.Player;
 import model.gameStates.PlayingModel;
 import model.utilz.PlayingTimer;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.Items.*;
 import static model.utilz.HelpMethods.GetRandomPosition;
@@ -67,7 +67,7 @@ public class ItemManager {
         if (spawnPowerUpTimer <= 0 && !powerUpSpawned) {
             powerUpSpawned = true;
 
-            Point spawnPoint = GetRandomPosition(LevelManager.getInstance().getLevelData(), new Rectangle(0, 0, W, H));
+            Point spawnPoint = GetRandomPosition(LevelManagerModel.getInstance().getLevelData(), new Rectangle(0, 0, W, H));
             PowerUpType powerUp = PowerUpManager.getInstance().getPowerUpToSpawn();
 
             if (powerUp != null) {

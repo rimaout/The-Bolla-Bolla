@@ -1,6 +1,6 @@
 package entities;
 
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 import model.utilz.LoadSave;
 import model.utilz.PlayingTimer;
 
@@ -134,7 +134,7 @@ public class EnemyManager {
     }
 
     public void loadEnemies() {
-        enemies = LevelManager.getInstance().getCurrentLevel().getEnemies();
+        enemies = LevelManagerModel.getInstance().getCurrentLevel().getEnemies();
     }
 
     private void loadSprites() {

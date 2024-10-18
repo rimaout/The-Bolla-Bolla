@@ -59,7 +59,7 @@ public class Maita extends Enemy {
     }
 
     private void firstUpdate() {
-        if (!IsEntityOnFloor(hitbox, levelManager.getLevelData()))
+        if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
             goDown = true;
 
         fireBallTimer = FIREBALL_INITIAL_TIMER;
@@ -78,7 +78,7 @@ public class Maita extends Enemy {
 
     private void updateMove() {
 
-        if(!IsEntityOnFloor(hitbox, levelManager.getLevelData()) && !isJumping && !goUp && !goDown)
+        if(!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()) && !isJumping && !goUp && !goDown)
             goOnFloor();
 
         if (isFalling) {
@@ -95,7 +95,7 @@ public class Maita extends Enemy {
         }
 
         // enemy stuck in a wall
-        if(IsEntityInsideSolid(hitbox, levelManager.getLevelData()))
+        if(IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData()))
             hitbox.y += 1;
 
 
@@ -120,10 +120,10 @@ public class Maita extends Enemy {
         else
             xSpeed = walkSpeed;
 
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData())) {
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
 
-            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelManager.getLevelData())
-                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelManager.getLevelData())) {
+            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelManagerModel.getLevelData())
+                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelManagerModel.getLevelData())) {
 
                 if(goDown){
 
@@ -177,14 +177,14 @@ public class Maita extends Enemy {
         if(System.currentTimeMillis() - flyStartTime < 1000)
             return;
 
-        if(IsEntityInsideSolid(hitbox, levelManager.getLevelData())){
+        if(IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())){
             didFlyInsideSolid = true;
             hitbox.y -= flySpeed;
         }
         else if(didFlyInsideSolid){
 
             // fly ended
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelManager.getLevelData()) - 1;
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, flySpeed, levelManagerModel.getLevelData()) - 1;
             updateWalkingDir();
 
             // Reset fly variables
@@ -219,13 +219,13 @@ public class Maita extends Enemy {
 
         // Going down
         else if (ySpeed <= -JUMP_Y_SPEED){
-            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelManager.getLevelData())) {
+            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
                 hitbox.y += ySpeed;
                 ySpeed += GRAVITY;
                 updateXPos(jumpXSpeed);
             } else {
                 isJumping = false;
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManager.getLevelData());
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManagerModel.getLevelData());
                 updateXPos(jumpXSpeed);
             }
         } else {
@@ -235,20 +235,20 @@ public class Maita extends Enemy {
     }
 
     private void fall() {
-        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManager.getLevelData()))
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
             hitbox.y += fallSpeed;
         else {
             // fall ended
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManager.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManagerModel.getLevelData());
             isFalling = false;
         }
     }
 
     private void goOnFloor() {
-        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManager.getLevelData()))
+        if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
             hitbox.y += fallSpeed;
         else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManager.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManagerModel.getLevelData());
             goDown = false;
         }
     }
@@ -272,8 +272,8 @@ public class Maita extends Enemy {
             xTile2 = xTile1 + 1;
         }
 
-        return IsTileSolid(xTile1, yTile, levelManager.getLevelData())
-                || IsTileSolid(xTile2, yTile, levelManager.getLevelData());
+        return IsTileSolid(xTile1, yTile, levelManagerModel.getLevelData())
+                || IsTileSolid(xTile2, yTile, levelManagerModel.getLevelData());
     }
 
     private boolean canJump(int jumpDistance) {
@@ -306,7 +306,7 @@ public class Maita extends Enemy {
         // check if between 2 and 6 tiles there is a floor
         if (walkingDir == LEFT) {
             for (int i = 2; i < 8; i++)
-                if (IsTileSolid(getTileX() - i, yFlorTile, levelManager.getLevelData())) {
+                if (IsTileSolid(getTileX() - i, yFlorTile, levelManagerModel.getLevelData())) {
                     tileDistanceToFloor = i;
                     break;
                 }
@@ -314,7 +314,7 @@ public class Maita extends Enemy {
 
         else if (walkingDir == RIGHT) {
             for (int i = 2; i  < 8 ; i++)
-                if (IsTileSolid(getTileX() + i +1 , yFlorTile, levelManager.getLevelData())) {
+                if (IsTileSolid(getTileX() + i +1 , yFlorTile, levelManagerModel.getLevelData())) {
                     tileDistanceToFloor = i + 1;
                     break;
                 }
@@ -340,18 +340,18 @@ public class Maita extends Enemy {
         // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
 
         int oneTileAbove = getTileY()-1;
-        boolean oneUpSolid = IsTileSolid(getTileX(), oneTileAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, oneTileAbove, levelManager.getLevelData());
+        boolean oneUpSolid = IsTileSolid(getTileX(), oneTileAbove, levelManagerModel.getLevelData()) &&  IsTileSolid(getTileX()+1, oneTileAbove, levelManagerModel.getLevelData());
 
         int twoTilesAbove = getTileY()-2;
-        boolean twoUpSolid = IsTileSolid(getTileX(), twoTilesAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManager.getLevelData());
-        boolean twoUpEmpty = !IsTileSolid(getTileX(), twoTilesAbove, levelManager.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManager.getLevelData());
+        boolean twoUpSolid = IsTileSolid(getTileX(), twoTilesAbove, levelManagerModel.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManagerModel.getLevelData());
+        boolean twoUpEmpty = !IsTileSolid(getTileX(), twoTilesAbove, levelManagerModel.getLevelData()) &&  IsTileSolid(getTileX()+1, twoTilesAbove, levelManagerModel.getLevelData());
 
         int threeTilesAbove = getTileY()-3;
-        boolean threeUpSolid = IsTileSolid(getTileX(), threeTilesAbove, levelManager.getLevelData()) && IsTileSolid(getTileX()+1, threeTilesAbove, levelManager.getLevelData());
-        boolean threeUpEmpty = !IsTileSolid(getTileX(), threeTilesAbove, levelManager.getLevelData()) || IsTileSolid(getTileX()+1, threeTilesAbove, levelManager.getLevelData());
+        boolean threeUpSolid = IsTileSolid(getTileX(), threeTilesAbove, levelManagerModel.getLevelData()) && IsTileSolid(getTileX()+1, threeTilesAbove, levelManagerModel.getLevelData());
+        boolean threeUpEmpty = !IsTileSolid(getTileX(), threeTilesAbove, levelManagerModel.getLevelData()) || IsTileSolid(getTileX()+1, threeTilesAbove, levelManagerModel.getLevelData());
 
         int fourTilesAbove = getTileY()-4;
-        boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelManager.getLevelData()) || IsTileSolid(getTileX()+1, fourTilesAbove, levelManager.getLevelData());
+        boolean fourUpEmpty = !IsTileSolid(getTileX(), fourTilesAbove, levelManagerModel.getLevelData()) || IsTileSolid(getTileX()+1, fourTilesAbove, levelManagerModel.getLevelData());
 
         return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }

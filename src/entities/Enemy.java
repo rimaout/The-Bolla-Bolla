@@ -2,7 +2,7 @@ package entities;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.playerBubbles.EnemyBubble;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Direction;
@@ -59,8 +59,8 @@ public abstract class Enemy extends Entity {
         // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
         // use this method at the beginning of the update method for each enemy class
 
-        if (levelManager == null)
-            levelManager = LevelManager.getInstance();
+        if (levelManagerModel == null)
+            levelManagerModel = LevelManagerModel.getInstance();
     }
 
     protected void updateAnimationTick() {
@@ -83,7 +83,7 @@ public abstract class Enemy extends Entity {
         }
 
         else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , levelManager.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, SPAWN_TRANSITION_SPEED , levelManagerModel.getLevelData());
             reachedSpawn = true;
             immune = false;
         }

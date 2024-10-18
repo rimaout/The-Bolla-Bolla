@@ -1,10 +1,10 @@
 package model.gameStates;
 
-import levels.Level;
+import model.levels.Level;
 import model.utilz.Constants;
 import entities.Player;
 import model.audio.AudioPlayer;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.INTRO.IntroState.*;
 import static model.utilz.Constants.INTRO.*;
@@ -30,7 +30,7 @@ public class IntroModel {
         this.playingModel = playingModel;
         this.player = playingModel.getPlayerOne();
 
-        level = LevelManager.getInstance().getCurrentLevel();
+        level = LevelManagerModel.getInstance().getCurrentLevel();
     }
 
     public void update() {

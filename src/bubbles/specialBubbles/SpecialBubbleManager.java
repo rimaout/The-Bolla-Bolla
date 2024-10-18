@@ -2,7 +2,7 @@ package bubbles.specialBubbles;
 
 import model.utilz.LoadSave;
 import entities.Player;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -77,7 +77,7 @@ public class SpecialBubbleManager {
     }
 
     public void loadBubbleGenerator() {
-        bubbleGenerator = LevelManager.getInstance().getCurrentLevel().getBubbleGenerator();
+        bubbleGenerator = LevelManagerModel.getInstance().getCurrentLevel().getBubbleGenerator();
     }
 
     private void loadBubbleSprites() {

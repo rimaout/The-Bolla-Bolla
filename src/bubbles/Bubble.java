@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 
 import entities.Entity;
 import entities.Player;
-import levels.LevelManager;
+import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 
@@ -18,7 +18,7 @@ import static model.utilz.HelpMethods.IsEntityInsideMap;
 
 public abstract class Bubble extends Entity {
 
-    protected final LevelManager levelManager = LevelManager.getInstance();
+    protected final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     protected final PlayingTimer timer = PlayingTimer.getInstance();
 
     protected Rectangle2D.Float internalCollisionBox;
@@ -90,7 +90,7 @@ public abstract class Bubble extends Entity {
         if (direction != NONE)
             previousDirection = direction;
 
-        direction = levelManager.getWindDirectionData()[getTileY()][getTileX()];
+        direction = levelManagerModel.getWindDirectionData()[getTileY()][getTileX()];
     }
 
     protected void updatePosition() {

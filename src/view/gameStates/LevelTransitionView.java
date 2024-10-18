@@ -1,10 +1,10 @@
 package view.gameStates;
 
 import model.gameStates.LevelTransitionModel;
-import levels.Level;
-import levels.LevelManager;
+import model.levels.Level;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
+import view.levels.LevelManagerView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,8 +23,8 @@ public class LevelTransitionView {
     public LevelTransitionView(LevelTransitionModel levelTransitionModel) {
         this.levelTransitionModel = levelTransitionModel;
 
-        levelTiles = LevelManager.getInstance().getLevelTiles();
-        numbersTiles = LevelManager.getInstance().getNumbersTiles();
+        levelTiles = LevelManagerView.getInstance().getLevelTiles();
+        numbersTiles = LevelManagerView.getInstance().getNumbersTiles();
         loadPlayerTransitionSprites();
     }
 

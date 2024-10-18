@@ -1,7 +1,7 @@
 package model.gameStates;
 
 import main.Game;
-import levels.Level;
+import model.levels.Level;
 import model.utilz.Constants;
 import entities.Player;
 

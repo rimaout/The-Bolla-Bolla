@@ -90,11 +90,11 @@ public class EnemyBubble extends EmptyBubble {
             hitbox.x += xSpeed;
         }
         // Going down
-        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, levelManager.getLevelData())) {
+        else if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + ySpeed, levelManagerModel.getLevelData())) {
             hitbox.y += ySpeed;
             updateXPos(xSpeed);
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManager.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, ySpeed, levelManagerModel.getLevelData());
             conpenetrationSafeUpdateXPos(xSpeed);
             active = false;
 

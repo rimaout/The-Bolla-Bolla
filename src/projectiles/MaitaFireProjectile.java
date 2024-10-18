@@ -35,7 +35,7 @@ public class MaitaFireProjectile extends Projectile {
             else
                 xSpeed = MAITA_FIREBALL_SPEED;
 
-            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManager.getLevelData()))
+            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
                 hitbox.x += xSpeed;
             else {
                 state = IMPACT;
