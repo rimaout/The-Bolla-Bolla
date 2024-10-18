@@ -1,7 +1,7 @@
 package view.overlays;
 
 import model.overlays.MenuScoreBoardOverlayModel;
-import users.UsersManager;
+import model.users.UsersManager;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
 

@@ -2,7 +2,7 @@ package controller;
 
 import model.gameStates.GameState;
 import model.gameStates.PlayingModel;
-import users.UsersManager;
+import model.users.UsersManager;
 import view.overlays.GameCompletedOverlayView;
 
 import java.awt.event.KeyEvent;

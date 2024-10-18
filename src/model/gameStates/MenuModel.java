@@ -1,7 +1,7 @@
 package model.gameStates;
 
 import main.Game;
-import users.UsersManager;
+import model.users.UsersManager;
 
 public class MenuModel extends State {
     private final UsersManager usersManager;

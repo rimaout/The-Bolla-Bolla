@@ -1,7 +1,7 @@
 package controller;
 
 import model.gameStates.MenuModel;
-import users.UsersManager;
+import model.users.UsersManager;
 import model.overlays.MenuUserSelectionOverlayModel;
 import view.overlays.MenuUserSelectionOverlayView;
 

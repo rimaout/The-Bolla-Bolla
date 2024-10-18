@@ -1,7 +1,7 @@
 package model.overlays;
 
 import model.gameStates.MenuModel;
-import users.UsersManager;
+import model.users.UsersManager;
 
 public class MenuUserCreationOverlayModel extends MenuOverlayModel {
     private final UsersManager usersManager = UsersManager.getInstance();

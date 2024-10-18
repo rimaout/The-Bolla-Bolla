@@ -1,4 +1,4 @@
-package users;
+package model.users;
 
 import java.io.*;
 

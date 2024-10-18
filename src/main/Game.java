@@ -4,7 +4,7 @@ import controller.*;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
 import model.audio.AudioPlayer;
-import users.UsersManager;
+import model.users.UsersManager;
 import view.gameStates.HomeView;
 import view.gameStates.LevelTransitionView;
 import view.gameStates.MenuView;

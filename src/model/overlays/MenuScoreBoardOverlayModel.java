@@ -1,8 +1,8 @@
 package model.overlays;
 
-import users.User;
+import model.users.User;
 import model.gameStates.MenuModel;
-import users.UsersManager;
+import model.users.UsersManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
