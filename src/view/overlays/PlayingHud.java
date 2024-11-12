@@ -17,8 +17,8 @@ public class PlayingHud {
     private BufferedImage[] numbersTiles;
 
     private PlayingHud(PlayingModel playingModel) {
-        this.playerModelOne = playingModel.getPlayerOne();
-        this.playerModelTwo = playingModel.getPlayerTwo();
+        this.playerModelOne = playingModel.getPlayerOneModel();
+        this.playerModelTwo = playingModel.getPlayerTwoModel();
         loadNumberTiles();
     }
 

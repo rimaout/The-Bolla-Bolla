@@ -268,7 +268,6 @@ public class PlayerModel extends Entity {
 
     private void respawn() {
 
-        // todo: aiutoooooo (vedi player view)
         if (canRespawn) { // Last frame of the dying animation
             respawning = false;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;

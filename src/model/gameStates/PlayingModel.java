@@ -175,11 +175,11 @@ public class PlayingModel extends State {
         this.paused = paused;
     }
 
-    public PlayerModel getPlayerOne() {
+    public PlayerModel getPlayerOneModel() {
         return playerModelOne;
     }
 
-    public PlayerModel getPlayerTwo() {
+    public PlayerModel getPlayerTwoModel() {
         return playerModelTwo;
     }
 

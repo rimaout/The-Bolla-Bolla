@@ -28,7 +28,7 @@ public class IntroModel {
 
     public IntroModel(PlayingModel playingModel) {
         this.playingModel = playingModel;
-        this.playerModel = playingModel.getPlayerOne();
+        this.playerModel = playingModel.getPlayerOneModel();
 
         level = LevelManagerModel.getInstance().getCurrentLevel();
     }

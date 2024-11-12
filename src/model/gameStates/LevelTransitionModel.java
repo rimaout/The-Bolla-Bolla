@@ -29,7 +29,7 @@ public class LevelTransitionModel extends State {
 
         this.playingModel = game.getPlaying();
 
-        playerModel = game.getPlaying().getPlayerOne();
+        playerModel = game.getPlaying().getPlayerOneModel();
     }
 
     public void update() {

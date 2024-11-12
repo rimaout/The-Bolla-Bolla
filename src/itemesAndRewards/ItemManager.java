@@ -77,7 +77,7 @@ public class ItemManager {
     }
 
     private void checkCollisionWithPlayer(Item item) {
-        PlayerModel playerModel = playingModel.getPlayerOne();
+        PlayerModel playerModel = playingModel.getPlayerOneModel();
 
         if (!playerModel.isActive())
             return;

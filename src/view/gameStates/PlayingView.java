@@ -2,6 +2,8 @@ package view.gameStates;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
+import controller.PlayerController;
+import controller.PlayingController;
 import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
@@ -40,14 +42,14 @@ public class PlayingView {
     private PlayingHud playingHud;
 
     public PlayingView(PlayingModel playingModel, GamePausedOverlayView gamePausedOverlayView,
-                       GameOverOverlayView gameOverOverlayView, GameCompletedOverlayView gameCompletedOverlayView) {
+                       GameOverOverlayView gameOverOverlayView, GameCompletedOverlayView gameCompletedOverlayView, PlayingController playingController) {
 
         this.playingModel = playingModel;
         this.gamePauseOverlayView = gamePausedOverlayView;
         this.gameOverOverlayView = gameOverOverlayView;
         this.gameCompletedOverlayView = gameCompletedOverlayView;
 
-        initClasses();
+        initClasses(playingController.getPlayerController());
     }
 
     public void draw(Graphics g) {
@@ -66,7 +68,7 @@ public class PlayingView {
             ProjectileManager.getInstance().draw(g);
             RewardPointsManager.getInstance().draw((Graphics2D) g);
 
-            if (playingModel.getPlayerOne().isActive())
+            if (playingModel.getPlayerOneModel().isActive())
                 playerOneView.draw((Graphics2D) g);
         }
 
@@ -88,8 +90,8 @@ public class PlayingView {
         gamePauseOverlayView.reset();
     }
      
-    public void initClasses() {
-        playerOneView = new PlayerView(playingModel.getPlayerOne());
+    public void initClasses(PlayerController playerController) {
+        playerOneView = new PlayerView(playingModel.getPlayerOneModel(), playerController);
 
         levelManagerView = LevelManagerView.getInstance();
 

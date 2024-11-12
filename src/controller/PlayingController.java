@@ -13,6 +13,8 @@ public class PlayingController implements InputMethods {
     private final GameCompletedOverlayController gameCompletedOverlayController;
     private final GameOverOverlayController gameOverOverlayController;
 
+    private final PlayerController playerController;
+
     public PlayingController(PlayingModel playingModel, GamePausedOverlayController gamePausedOverlayController,
                              GameCompletedOverlayController gameCompletedOverlayController,
                              GameOverOverlayController gameOverOverlayController) {
@@ -20,13 +22,15 @@ public class PlayingController implements InputMethods {
         this.gamePausedOverlayController = gamePausedOverlayController;
         this.gameCompletedOverlayController = gameCompletedOverlayController;
         this.gameOverOverlayController = gameOverOverlayController;
+
+        playerController = new PlayerController(playingModel.getPlayerOneModel());
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!playingModel.isGameOver() || !playingModel.isPaused() || !playingModel.isLevelCompleted())
             if (e.getButton() == MouseEvent.BUTTON1)
-                playingModel.getPlayerOne().setAttacking(true);
+                playingModel.getPlayerOneModel().setAttacking(true);
     }
 
     @Override
@@ -60,44 +64,21 @@ public class PlayingController implements InputMethods {
         else if (playingModel.isGameCompleted())
             gameCompletedOverlayController.keyPressed(e);
 
-        else {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_A:
-                    playingModel.getPlayerOne().setLeft(true);
-                    break;
-                case KeyEvent.VK_D:
-                    playingModel.getPlayerOne().setRight(true);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    playingModel.getPlayerOne().setJump(true);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    playingModel.getPlayerOne().setAttacking(true);
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    playingModel.setPaused(!playingModel.isPaused());
-                    break;
-            }
-        }
+        else if (KeyEvent.VK_ESCAPE == e.getKeyCode())
+            playingModel.setPaused(!playingModel.isPaused());
+
+        else
+            playerController.keyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (!playingModel.isPaused() || !playingModel.isGameOver() || !playingModel.isGameCompleted()) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_A:
-                    playingModel.getPlayerOne().setLeft(false);
-                    break;
-                case KeyEvent.VK_D:
-                    playingModel.getPlayerOne().setRight(false);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    playingModel.getPlayerOne().setJump(false);
-                    break;
-                case KeyEvent.VK_ENTER:
-                    playingModel.getPlayerOne().setAttacking(false);
-                    break;
-            }
+            playerController.keyReleased(e);
         }
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 }

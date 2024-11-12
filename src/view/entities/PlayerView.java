@@ -1,5 +1,6 @@
 package view.entities;
 
+import controller.PlayerController;
 import model.entities.PlayerModel;
 import model.utilz.LoadSave;
 
@@ -12,13 +13,16 @@ import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
 
 public class PlayerView {
     private final PlayerModel playerModel;
+    private final PlayerController playerController;
 
     private BufferedImage[][] sprites;
     private int animationIndex, animationTick;
     private int playerAnimation = IDLE_ANIMATION;
 
-    public PlayerView(PlayerModel playerModel) {
+    public PlayerView(PlayerModel playerModel, PlayerController playerController) {
         this.playerModel = playerModel;
+        this.playerController = playerController;
+
         loadAnimation();
     }
 
@@ -49,17 +53,15 @@ public class PlayerView {
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
                 animationIndex = 0;
 
-                // todo: use observer pattern to notify the player that the animation has ended
-                playerModel.setAttackingAnimation(false);
-                playerModel.setRespawning(false);
+                playerController.setAttackingAnimation(false);
+                playerController.setRespawning(false);
             }
         }
 
-        // todo: use observer pattern to notify the player that the animation has ended
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
-            playerModel.setCanRespawn(true);
+            playerController.setCanRespawn(true);
         else
-            playerModel.setCanRespawn(false);
+            playerController.setCanRespawn(false);
     }
 
     private void setAnimation() {

@@ -80,7 +80,7 @@ public class UsersManager {
     }
 
     public void updateCurrentUserInfo(boolean victory) {
-        currentUser.setScore(game.getPlaying().getPlayerOne().getPoints());
+        currentUser.setScore(game.getPlaying().getPlayerOneModel().getPoints());
 
         if (victory)
             currentUser.increaseWins();

@@ -113,8 +113,8 @@ public class Game implements Runnable {
         gameOverOverlayView = new GameOverOverlayView(playingModel);
         gameOverOverlayController = new GameOverOverlayController(gameOverOverlayView, playingModel);
 
-        playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView);
         playingController = new PlayingController(playingModel, gamePausedOverlayController, gameCompletedOverlayController, gameOverOverlayController);
+        playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView, playingController);
 
         levelTransitionModel = new LevelTransitionModel(this);
         levelTransitionView = new LevelTransitionView(levelTransitionModel);
