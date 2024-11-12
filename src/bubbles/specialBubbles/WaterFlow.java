@@ -6,7 +6,7 @@ import bubbles.playerBubbles.PlayerBubblesManager;
 import entities.Enemy;
 import entities.EnemyManager;
 import entities.Entity;
-import entities.Player;
+import model.entities.PlayerModel;
 import itemesAndRewards.BubbleReward;
 import itemesAndRewards.Item;
 import itemesAndRewards.ItemManager;
@@ -40,7 +40,7 @@ public class WaterFlow extends Entity {
     private boolean firstUpdate = true;
     private Direction previousDirection;
 
-    private Player capturedPlayer;
+    private PlayerModel capturedPlayerModel;
     private int capturedEnemiesCounter;
 
     private int addWaterDropTimer = ADD_WATER_DROP_INTERVAL;
@@ -72,7 +72,7 @@ public class WaterFlow extends Entity {
             g.drawImage(bubbleManager.getWaterBubbleSprites()[1][0], (int) (pos.x - HITBOX_OFFSET_X), (int) (pos.y - HITBOX_OFFSET_Y), W, H, null);
         }
 
-        if (capturedPlayer != null)
+        if (capturedPlayerModel != null)
             g.drawImage(bubbleManager.getPlayerSprites()[IDLE_ANIMATION][0], (int) (hitbox.x - HITBOX_OFFSET_X) + flipX(), (int) (hitbox.y - HITBOX_OFFSET_Y), W * flipW(), H, null);
         else
             g.drawImage(bubbleManager.getWaterBubbleSprites()[1][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), W, H, null);
@@ -180,7 +180,7 @@ public class WaterFlow extends Entity {
     private void updateOutOfScreen() {
         if (getTileY() == Constants.TILES_IN_HEIGHT + 1) {
 
-            if (capturedPlayer != null)
+            if (capturedPlayerModel != null)
                 spawnPlayer();
 
             if (capturedEnemiesCounter > 0)
@@ -192,10 +192,10 @@ public class WaterFlow extends Entity {
 
     private void spawnPlayer() {
         // spawn player at the top of the screen
-        capturedPlayer.setActive(true);
-        capturedPlayer.reset(false, false);
-        capturedPlayer.setInAir(true);
-        capturedPlayer.getHitbox().y = Constants.TILES_IN_HEIGHT + 1;
+        capturedPlayerModel.setActive(true);
+        capturedPlayerModel.reset(false, false);
+        capturedPlayerModel.setInAir(true);
+        capturedPlayerModel.getHitbox().y = Constants.TILES_IN_HEIGHT + 1;
     }
 
     private void spawnEnemiesDrops() {
@@ -228,28 +228,28 @@ public class WaterFlow extends Entity {
         return dropY;
     }
 
-    public void updateCollisions(Player player) {
-        checkCollisionWithPlayer(player);
+    public void updateCollisions(PlayerModel playerModel) {
+        checkCollisionWithPlayer(playerModel);
         EnemyManager.getInstance().getEnemies().forEach(this::checkCollisionWithEnemy);
 
-        if (capturedPlayer != null) {
+        if (capturedPlayerModel != null) {
             PlayerBubblesManager.getInstance().getBubbles().forEach(this::checkCollisionWithBubble);
-            ItemManager.getInstance().getItems().forEach(item -> checkCollisionWithItem(item, player));
+            ItemManager.getInstance().getItems().forEach(item -> checkCollisionWithItem(item, playerModel));
         }
     }
 
-    private void checkCollisionWithPlayer(Player player) {
-        if (!player.isActive())
+    private void checkCollisionWithPlayer(PlayerModel playerModel) {
+        if (!playerModel.isActive())
             return;
 
         // if player is above the water flow, don't capture him
-        if (player.getTileY() < getTileY())
+        if (playerModel.getTileY() < getTileY())
             return;
 
         // check collision with player
-        if (hitbox.intersects(player.getHitbox())) {
-            capturedPlayer = player;
-            player.setActive(false);
+        if (hitbox.intersects(playerModel.getHitbox())) {
+            capturedPlayerModel = playerModel;
+            playerModel.setActive(false);
         }
     }
 
@@ -273,14 +273,14 @@ public class WaterFlow extends Entity {
         }
     }
 
-    private void checkCollisionWithItem(Item item, Player player) {
+    private void checkCollisionWithItem(Item item, PlayerModel playerModel) {
         if (!item.isActive())
             return;
 
         if (hitbox.intersects(item.getHitbox())) {
             item.setActive(false);
-            item.addPoints(player);
-            item.applyEffect(player);
+            item.addPoints(playerModel);
+            item.applyEffect(playerModel);
             PowerUpManager.getInstance().increaseItemCollectCounter();
         }
     }

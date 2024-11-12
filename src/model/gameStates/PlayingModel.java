@@ -4,7 +4,7 @@ import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
 import entities.EnemyManager;
 import entities.HurryUpManager;
-import entities.Player;
+import model.entities.PlayerModel;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;
@@ -14,8 +14,8 @@ import projectiles.ProjectileManager;
 import model.utilz.PlayingTimer;
 
 public class PlayingModel extends State {
-    private Player playerOne;
-    private Player playerTwo = null;
+    private PlayerModel playerModelOne;
+    private PlayerModel playerModelTwo = null;
 
     private PlayingTimer playingTimer;
     private LevelManagerModel levelManagerModel;
@@ -45,16 +45,16 @@ public class PlayingModel extends State {
         playingTimer = PlayingTimer.getInstance();
         levelManagerModel = LevelManagerModel.getInstance(this);
 
-        playerOne = new Player();
+        playerModelOne = new PlayerModel();
 
-        enemyManager = EnemyManager.getInstance(playerOne);
+        enemyManager = EnemyManager.getInstance(playerModelOne);
         hurryUpManager = HurryUpManager.getInstance();
-        playerBubblesManager = PlayerBubblesManager.getInstance(playerOne);
-        specialBubbleManager = SpecialBubbleManager.getInstance(playerOne);
-        projectileManager = ProjectileManager.getInstance(playerOne);
+        playerBubblesManager = PlayerBubblesManager.getInstance(playerModelOne);
+        specialBubbleManager = SpecialBubbleManager.getInstance(playerModelOne);
+        projectileManager = ProjectileManager.getInstance(playerModelOne);
         itemManager = ItemManager.getInstance(this);
-        rewardPointsManager = RewardPointsManager.getInstance(playerOne);
-        powerUpManager = PowerUpManager.getInstance(playerOne);
+        rewardPointsManager = RewardPointsManager.getInstance(playerModelOne);
+        powerUpManager = PowerUpManager.getInstance(playerModelOne);
         introModel = new IntroModel(this);
     }
 
@@ -76,13 +76,13 @@ public class PlayingModel extends State {
                 return;
             }
 
-            if (playerOne.isActive())
-                playerOne.update();
+            if (playerModelOne.isActive())
+                playerModelOne.update();
 
             playerBubblesManager.update();
             specialBubbleManager.update();
             enemyManager.update();
-            hurryUpManager.update(playerOne);
+            hurryUpManager.update(playerModelOne);
             projectileManager.update();
             itemManager.update();
             rewardPointsManager.update();
@@ -91,7 +91,7 @@ public class PlayingModel extends State {
     }
 
     private void updateBooleans(){
-        if (playerOne.getLives() == 0)
+        if (playerModelOne.getLives() == 0)
             gameOver = true;
 
         if (enemyManager.getAllEnemiesDeadChronometer() >= 6000)
@@ -119,7 +119,7 @@ public class PlayingModel extends State {
         rewardPointsManager.newPlayReset();
         introModel.newPlayReset();
 
-        playerOne.reset(true, true);
+        playerModelOne.reset(true, true);
 
         loadFirstLevel();
     }
@@ -139,7 +139,7 @@ public class PlayingModel extends State {
         playerBubblesManager.newLevelReset();
         specialBubbleManager.newLevelReset();
         projectileManager.newLevelReset();
-        playerOne.reset(false, false);
+        playerModelOne.reset(false, false);
         itemManager.newPlayReset();
         rewardPointsManager.newPlayReset();
 
@@ -159,7 +159,7 @@ public class PlayingModel extends State {
     }
 
     public void windowFocusLost() {
-        playerOne.resetMovements();
+        playerModelOne.resetMovements();
         paused = true;
     }
 
@@ -175,12 +175,12 @@ public class PlayingModel extends State {
         this.paused = paused;
     }
 
-    public Player getPlayerOne() {
-        return playerOne;
+    public PlayerModel getPlayerOne() {
+        return playerModelOne;
     }
 
-    public Player getPlayerTwo() {
-        return playerTwo;
+    public PlayerModel getPlayerTwo() {
+        return playerModelTwo;
     }
 
     public boolean isPaused() {

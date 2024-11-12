@@ -3,7 +3,7 @@ package model.gameStates;
 import main.Game;
 import model.levels.Level;
 import model.utilz.Constants;
-import entities.Player;
+import model.entities.PlayerModel;
 
 import static model.utilz.Constants.PlayerConstants.SPAWN_X;
 import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
@@ -21,7 +21,7 @@ public class LevelTransitionModel extends State {
     private TransitionState transitionState;
     private boolean firstUpdate = true;
 
-    private Player player;
+    private PlayerModel playerModel;
     private float playerStartX, playerStartY;
 
     public LevelTransitionModel(Game game) {
@@ -29,7 +29,7 @@ public class LevelTransitionModel extends State {
 
         this.playingModel = game.getPlaying();
 
-        player = game.getPlaying().getPlayerOne();
+        playerModel = game.getPlaying().getPlayerOne();
     }
 
     public void update() {
@@ -54,8 +54,8 @@ public class LevelTransitionModel extends State {
     private void firstUpdate(){
         transitionState = LEVEL_TRANSITION;
 
-        playerStartX = player.getHitbox().x;
-        playerStartY = player.getHitbox().y;
+        playerStartX = playerModel.getHitbox().x;
+        playerStartY = playerModel.getHitbox().y;
 
         oldLevelY = 0;
         newLevelY = Constants.GAME_HEIGHT;
@@ -77,8 +77,8 @@ public class LevelTransitionModel extends State {
         // player position
         float playerTransitionSpeedX = (SPAWN_X - playerStartX) / (Constants.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
         float playerTransitionSpeedY = (SPAWN_Y - playerStartY) / (Constants.GAME_HEIGHT / LEVEL_TRANSITION_SPEED);
-        player.getHitbox().x += playerTransitionSpeedX;
-        player.getHitbox().y += playerTransitionSpeedY;
+        playerModel.getHitbox().x += playerTransitionSpeedX;
+        playerModel.getHitbox().y += playerTransitionSpeedY;
     }
 
     private void loadNewLevel() {
@@ -119,8 +119,8 @@ public class LevelTransitionModel extends State {
         return newLevelY;
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerModel getPlayer() {
+        return playerModel;
     }
 
 

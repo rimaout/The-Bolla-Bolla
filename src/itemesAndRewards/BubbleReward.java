@@ -2,7 +2,7 @@ package itemesAndRewards;
 
 import java.awt.*;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import model.audio.AudioPlayer;
 import model.utilz.Constants.AudioConstants;
 
@@ -36,12 +36,12 @@ public class BubbleReward extends Item{
     }
 
     @Override
-    public void addPoints(Player player) {
-        RewardPointsManager.getInstance(player).addSmallPoints(GetPoints(type));
+    public void addPoints(PlayerModel playerModel) {
+        RewardPointsManager.getInstance(playerModel).addSmallPoints(GetPoints(type));
     }
 
     @Override
-    public void applyEffect(Player player) {
+    public void applyEffect(PlayerModel playerModel) {
         // Bubble Rewards do not apply effects to the player
     }
 

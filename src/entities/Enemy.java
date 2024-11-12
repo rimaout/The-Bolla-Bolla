@@ -2,6 +2,7 @@ package entities;
 
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.playerBubbles.EnemyBubble;
+import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 
@@ -53,7 +54,7 @@ public abstract class Enemy extends Entity {
         this.startWalkingDir = startWalkingDir;
     }
 
-    public abstract void update(Player player);
+    public abstract void update(PlayerModel playerModel);
 
     protected void loadLevelManager() {
         // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
@@ -122,13 +123,13 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    protected boolean isPlayerInViewingRange(Player player) {
-        return Math.abs(player.getHitbox().x - hitbox.x) <= VIEWING_RANGE;
+    protected boolean isPlayerInViewingRange(PlayerModel playerModel) {
+        return Math.abs(playerModel.getHitbox().x - hitbox.x) <= VIEWING_RANGE;
     }
 
-    protected void calculatePlayersPos(Player player) {
-        playerTileX = (int) (player.getHitbox().x / Constants.TILES_SIZE);
-        playerTileY = (int)(player.getHitbox().y / Constants.TILES_SIZE);
+    protected void calculatePlayersPos(PlayerModel playerModel) {
+        playerTileX = (int) (playerModel.getHitbox().x / Constants.TILES_SIZE);
+        playerTileY = (int)(playerModel.getHitbox().y / Constants.TILES_SIZE);
     }
 
     protected void changeWalkingDir() {
@@ -163,19 +164,19 @@ public abstract class Enemy extends Entity {
             walkingDir = RIGHT;
     }
 
-    protected Direction isPlayerLeftOrRight(Player player) {
-        if (player.getTileX() < getTileX())
+    protected Direction isPlayerLeftOrRight(PlayerModel playerModel) {
+        if (playerModel.getTileX() < getTileX())
             return LEFT;
-        else if (player.getTileX() > getTileX())
+        else if (playerModel.getTileX() > getTileX())
             return RIGHT;
         else
             return NONE;
     }
 
-    protected Direction isPlayerUpOrDown(Player player) {
-        if (player.getTileY() < getTileY())
+    protected Direction isPlayerUpOrDown(PlayerModel playerModel) {
+        if (playerModel.getTileY() < getTileY())
             return UP;
-        else if (player.getTileY() > getTileY())
+        else if (playerModel.getTileY() > getTileY())
             return DOWN;
         else
             return NONE;
@@ -205,10 +206,10 @@ public abstract class Enemy extends Entity {
         animationTick = 0;
     }
 
-    public void instantKill(Player player) {
+    public void instantKill(PlayerModel playerModel) {
         active = false;
         enemyState = DEAD_STATE;
-        PlayerBubblesManager.getInstance().addDeadEnemy(this, player);
+        PlayerBubblesManager.getInstance().addDeadEnemy(this, playerModel);
     }
 
 

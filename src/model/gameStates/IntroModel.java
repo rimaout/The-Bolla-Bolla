@@ -2,7 +2,7 @@ package model.gameStates;
 
 import model.levels.Level;
 import model.utilz.Constants;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.audio.AudioPlayer;
 import model.levels.LevelManagerModel;
 
@@ -13,7 +13,7 @@ import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
 
 public class IntroModel {
     private PlayingModel playingModel;
-    private Player player;
+    private PlayerModel playerModel;
     Level level;
 
     private boolean firstUpdate = true;
@@ -28,7 +28,7 @@ public class IntroModel {
 
     public IntroModel(PlayingModel playingModel) {
         this.playingModel = playingModel;
-        this.player = playingModel.getPlayerOne();
+        this.playerModel = playingModel.getPlayerOne();
 
         level = LevelManagerModel.getInstance().getCurrentLevel();
     }
@@ -52,8 +52,8 @@ public class IntroModel {
 
     private void firstUpdate(){
         AudioPlayer.getInstance().playIntroSong();
-        player.getHitbox().x = PLAYER_START_X;
-        player.getHitbox().y = PLAYER_START_Y;
+        playerModel.getHitbox().x = PLAYER_START_X;
+        playerModel.getHitbox().y = PLAYER_START_Y;
 
         firstUpdate = false;
     }
@@ -90,8 +90,8 @@ public class IntroModel {
             // P.S. I hate trigonometry :/
 
             // Update player position
-            player.getHitbox().x = newX;
-            player.getHitbox().y = newY;
+            playerModel.getHitbox().x = newX;
+            playerModel.getHitbox().y = newY;
 
             // Check if a lap is completed
             if (angle >= 2 * Math.PI) {
@@ -107,8 +107,8 @@ public class IntroModel {
             float xOffSet = 20 * Constants.SCALE;
             float playerTransitionSpeedX = (SPAWN_X - PLAYER_START_X - xOffSet) / (Constants.GAME_HEIGHT / TRANSITION_SPEED);
             float playerTransitionSpeedY = (SPAWN_Y - PLAYER_START_Y) / (Constants.GAME_HEIGHT / TRANSITION_SPEED);
-            player.getHitbox().x += playerTransitionSpeedX;
-            player.getHitbox().y += playerTransitionSpeedY;
+            playerModel.getHitbox().x += playerTransitionSpeedX;
+            playerModel.getHitbox().y += playerTransitionSpeedY;
         }
     }
 
@@ -137,8 +137,8 @@ public class IntroModel {
         return levelY;
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerModel getPlayer() {
+        return playerModel;
     }
 
     public float getTextY() {

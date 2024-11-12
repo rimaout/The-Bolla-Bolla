@@ -1,6 +1,6 @@
 package view.entities;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.LoadSave;
 
 import java.awt.*;
@@ -11,14 +11,14 @@ import static model.utilz.Constants.PlayerConstants.*;
 import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
 
 public class PlayerView {
-    private final Player player;
+    private final PlayerModel playerModel;
 
     private BufferedImage[][] sprites;
     private int animationIndex, animationTick;
     private int playerAnimation = IDLE_ANIMATION;
 
-    public PlayerView(Player player) {
-        this.player = player;
+    public PlayerView(PlayerModel playerModel) {
+        this.playerModel = playerModel;
         loadAnimation();
     }
 
@@ -29,16 +29,16 @@ public class PlayerView {
 
     public void draw(Graphics2D g) {
 
-        if (player.isImmune() && !player.isRespawning()) {
-            if (player.getImmuneTimer() % 100 < 40) { // Transparency blink effect
+        if (playerModel.isImmune() && !playerModel.isRespawning()) {
+            if (playerModel.getImmuneTimer() % 100 < 40) { // Transparency blink effect
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55F)); // Set transparency
-                g.drawImage(sprites[playerAnimation][animationIndex], (int) (player.getHitbox().x - OFFSET_X) + player.getFlipX(), (int) (player.getHitbox().y - OFFSET_Y), player.getWidth() * player.getFlipW(), player.getHeight(), null);
+                g.drawImage(sprites[playerAnimation][animationIndex], (int) (playerModel.getHitbox().x - OFFSET_X) + playerModel.getFlipX(), (int) (playerModel.getHitbox().y - OFFSET_Y), playerModel.getWidth() * playerModel.getFlipW(), playerModel.getHeight(), null);
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F)); // Set transparency
                 return;
             }
         }
 
-        g.drawImage(sprites[playerAnimation][animationIndex],  (int) (player.getHitbox().x - OFFSET_X) + player.getFlipX(), (int) (player.getHitbox().y - OFFSET_Y), player.getWidth() * player.getFlipW(), player.getHeight(), null);
+        g.drawImage(sprites[playerAnimation][animationIndex],  (int) (playerModel.getHitbox().x - OFFSET_X) + playerModel.getFlipX(), (int) (playerModel.getHitbox().y - OFFSET_Y), playerModel.getWidth() * playerModel.getFlipW(), playerModel.getHeight(), null);
     }
 
     private void updateAnimationTick() {
@@ -50,37 +50,37 @@ public class PlayerView {
                 animationIndex = 0;
 
                 // todo: use observer pattern to notify the player that the animation has ended
-                player.setAttackingAnimation(false);
-                player.setRespawning(false);
+                playerModel.setAttackingAnimation(false);
+                playerModel.setRespawning(false);
             }
         }
 
         // todo: use observer pattern to notify the player that the animation has ended
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
-            player.setCanRespawn(true);
+            playerModel.setCanRespawn(true);
         else
-            player.setCanRespawn(false);
+            playerModel.setCanRespawn(false);
     }
 
     private void setAnimation() {
         int startAnimation = playerAnimation;
 
-        if (player.isMoving())
+        if (playerModel.isMoving())
             playerAnimation = RUNNING_ANIMATION;
         else
             playerAnimation = IDLE_ANIMATION;
 
-        if (player.isInAir()) {
-            if (player.getAirSpeed() < 0)
+        if (playerModel.isInAir()) {
+            if (playerModel.getAirSpeed() < 0)
                 playerAnimation = JUMPING_ANIMATION;
             else
                 playerAnimation = FALLING_ANIMATION;
         }
 
-        if (player.isAttackingAnimation())
+        if (playerModel.isAttackingAnimation())
             playerAnimation = ATTACK_ANIMATION;
 
-        if (player.isRespawning())
+        if (playerModel.isRespawning())
             playerAnimation = DEAD_ANIMATION;
 
         if (startAnimation != playerAnimation){

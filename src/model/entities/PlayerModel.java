@@ -1,5 +1,6 @@
-package entities;
+package model.entities;
 
+import entities.Entity;
 import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
@@ -14,7 +15,7 @@ import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.PlayerConstants.*;
 
-public class Player extends Entity{
+public class PlayerModel extends Entity {
     private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
@@ -44,7 +45,7 @@ public class Player extends Entity{
     // Sound Variables
     private boolean playJumpSound, playDeathSound;
 
-    public Player() {
+    public PlayerModel() {
         super(-3* Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
     }

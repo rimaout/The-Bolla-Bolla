@@ -1,5 +1,6 @@
 package entities;
 
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 
@@ -32,7 +33,7 @@ public class ZenChan extends Enemy {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(PlayerModel playerModel) {
         loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         updateAnimationTick();
@@ -47,7 +48,7 @@ public class ZenChan extends Enemy {
             firstUpdate();
 
         updateTimers();
-        updatePlayerInfo(player);
+        updatePlayerInfo(playerModel);
         updateMove();
         updateStateVariables();
     }
@@ -342,10 +343,10 @@ public class ZenChan extends Enemy {
         return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }
 
-    private void updatePlayerInfo(Player player){
+    private void updatePlayerInfo(PlayerModel playerModel){
 
         if (playerUpdateTimer <= 0) {
-            calculatePlayersPos(player);
+            calculatePlayersPos(playerModel);
             playerUpdateTimer = (int) (Math.random() * updatePlayerPosMaxInterval);
         }
     }

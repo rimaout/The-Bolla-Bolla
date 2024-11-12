@@ -1,6 +1,6 @@
 package itemesAndRewards;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.PlayingTimer;
 
 import static model.utilz.Constants.Items.*;
@@ -31,8 +31,8 @@ public abstract class Item {
 
     public abstract void draw(Graphics g);
     public abstract void audioEffects();
-    public abstract void addPoints(Player player);
-    public abstract void applyEffect(Player player);
+    public abstract void addPoints(PlayerModel playerModel);
+    public abstract void applyEffect(PlayerModel playerModel);
 
     protected void update(){
         updateTimers();

@@ -4,21 +4,21 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import itemesAndRewards.PowerUpManager;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
-    private final Player player;
+    private final PlayerModel playerModel;
     private final Timer timer = new Timer();
     private final LinkedList<PlayerBubble> bubbles;
 
     private int enemyBubblePopCounter = 0;
 
-    public ChainExplosionManager(Player player, PlayerBubble firstPoppedBubble, LinkedList<PlayerBubble> bubbles) {
-        this.player = player;
+    public ChainExplosionManager(PlayerModel playerModel, PlayerBubble firstPoppedBubble, LinkedList<PlayerBubble> bubbles) {
+        this.playerModel = playerModel;
         this.bubbles = bubbles;
 
         chainExplosion(firstPoppedBubble);
@@ -45,7 +45,7 @@ public class ChainExplosionManager {
                     @Override public void run() {chainExplosion(b);}}, delay);
         }
 
-        poppedBubble.playerPop(player, enemyBubblePopCounter, this);
+        poppedBubble.playerPop(playerModel, enemyBubblePopCounter, this);
     }
 
     public void increaseEnemyBubblePopCounter() {

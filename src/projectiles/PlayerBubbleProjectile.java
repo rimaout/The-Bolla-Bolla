@@ -3,7 +3,7 @@ package projectiles;
 import java.awt.*;
 
 import entities.Enemy;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.audio.AudioPlayer;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.AudioConstants;
@@ -49,7 +49,7 @@ public class PlayerBubbleProjectile extends Projectile {
     }
 
     @Override
-    protected void checkEnemyHit(Enemy enemy, Player player) {
+    protected void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
         // Parameters: enemy  = enemy that is being checked for collision with projectile
         //             player = player to add score to if the enemy is killed (not used in this case)
 
@@ -65,7 +65,7 @@ public class PlayerBubbleProjectile extends Projectile {
     }
 
     @Override
-    protected void checkPlayerHit(Player player) {
+    protected void checkPlayerHit(PlayerModel playerModel) {
         // not used, playerBubbles can't hit players
     }
 

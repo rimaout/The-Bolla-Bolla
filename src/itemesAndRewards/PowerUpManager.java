@@ -2,7 +2,7 @@ package itemesAndRewards;
 
 import static java.lang.Math.abs;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import entities.EnemyManager;
 import projectiles.ProjectileManager;
 import model.utilz.Constants;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class PowerUpManager{
     private static PowerUpManager instance;
-    private final Player player;
+    private final PlayerModel playerModel;
 
     // PowerUp Flags
     private boolean greenCandy = false;
@@ -38,13 +38,13 @@ public class PowerUpManager{
     private int redCandyCounter = 0;
 
 
-    private PowerUpManager(Player player){
-        this.player = player;
+    private PowerUpManager(PlayerModel playerModel){
+        this.playerModel = playerModel;
     }
 
-    public static PowerUpManager getInstance(Player player){
+    public static PowerUpManager getInstance(PlayerModel playerModel){
         if (instance == null)
-            instance = new PowerUpManager(player);
+            instance = new PowerUpManager(playerModel);
         return instance;
     }
 
@@ -59,9 +59,9 @@ public class PowerUpManager{
     public void applyPowerUp() {
 
         if (greenCandy)
-            player.setBubbleCadenceMultiplier(0.5f);
+            playerModel.setBubbleCadenceMultiplier(0.5f);
         else
-            player.setBubbleCadenceMultiplier(1);
+            playerModel.setBubbleCadenceMultiplier(1);
 
         if (blueCandy)
             ProjectileManager.getInstance().setPlayerProjectileSpeedMultiplier(1.65f);
@@ -74,12 +74,12 @@ public class PowerUpManager{
             ProjectileManager.getInstance().setPlayerProjectileDistanceMultiplier(1f);
 
         if (shoe)
-            player.setSpeedMultiplier(1.7f);
+            playerModel.setSpeedMultiplier(1.7f);
         else
-            player.setSpeedMultiplier(1);
+            playerModel.setSpeedMultiplier(1);
 
         if (chacknHeart) {
-            player.setChacknHeartImmunity(15000);
+            playerModel.setChacknHeartImmunity(15000);
             EnemyManager.getInstance().setChacknHeartfreeze(15000);
             chacknHeart = false;
         }
@@ -95,19 +95,19 @@ public class PowerUpManager{
             System.out.print("");
 
         if (emeraldRing)
-            player.setJumpPoints(500);
+            playerModel.setJumpPoints(500);
         else
-            player.setJumpPoints(0);
+            playerModel.setJumpPoints(0);
 
         if (crystalRing)
-            player.setWalkPoints(10);
+            playerModel.setWalkPoints(10);
         else
-            player.setWalkPoints(0);
+            playerModel.setWalkPoints(0);
 
         if (rubyRing)
-            player.setBubbleShotPoints(100);
+            playerModel.setBubbleShotPoints(100);
         else
-            player.setBubbleShotPoints(0);
+            playerModel.setBubbleShotPoints(0);
     }
 
     public PowerUpType getPowerUpToSpawn() {

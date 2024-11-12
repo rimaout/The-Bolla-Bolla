@@ -1,7 +1,7 @@
 package itemesAndRewards;
 
 import model.utilz.LoadSave;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.PlayingTimer;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ import static model.utilz.Constants.PointsManager.BIG_DEFAULT_H;
 
 public class RewardPointsManager {
     private static RewardPointsManager instance;
-    private final Player player;
+    private final PlayerModel playerModel;
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private BufferedImage[][] smallPointsSprites;
@@ -24,16 +24,16 @@ public class RewardPointsManager {
     private int consecutivePops;
     private int consecutivePopsTimer;
 
-    private RewardPointsManager(Player player) {
-        this.player = player;
+    private RewardPointsManager(PlayerModel playerModel) {
+        this.playerModel = playerModel;
         pointsToDraw = new ArrayList<>();
 
         loadPointsSprites();
     }
 
-    public static RewardPointsManager getInstance(Player player) {
+    public static RewardPointsManager getInstance(PlayerModel playerModel) {
         if (instance == null) {
-            instance = new RewardPointsManager(player);
+            instance = new RewardPointsManager(playerModel);
         }
         return instance;
     }
@@ -65,13 +65,13 @@ public class RewardPointsManager {
     }
 
     public void addSmallPoints(int value) {
-        player.addPoints(value);
-        pointsToDraw.add(new Points(value, player.getHitbox().x, player.getHitbox().y, SMALL));
+        playerModel.addPoints(value);
+        pointsToDraw.add(new Points(value, playerModel.getHitbox().x, playerModel.getHitbox().y, SMALL));
     }
 
     public void addBigPoints(int value) {
-        player.addPoints(value);
-        pointsToDraw.add(new Points(value, player.getHitbox().x, player.getHitbox().y, BIG));
+        playerModel.addPoints(value);
+        pointsToDraw.add(new Points(value, playerModel.getHitbox().x, playerModel.getHitbox().y, BIG));
     }
 
     public void addChainReactionReward(int consecutivePops) {

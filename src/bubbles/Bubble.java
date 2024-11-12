@@ -5,7 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import entities.Entity;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
@@ -49,7 +49,7 @@ public abstract class Bubble extends Entity {
 
     public abstract void update();
     public abstract void draw(Graphics g);
-    public abstract void checkCollisionWithPlayer(Player player);
+    public abstract void checkCollisionWithPlayer(PlayerModel playerModel);
 
     protected void initCollisionBoxes() {
         internalCollisionBox = new Rectangle2D.Float(hitbox.x + INTERNAL_BOX_OFFSET_X, hitbox.y + INTERNAL_BOX_OFFSET_Y, INTERNAL_BOX_W, INTERNAL_BOX_H);
@@ -158,29 +158,29 @@ public abstract class Bubble extends Entity {
         }
     }
 
-    protected boolean isPlayerPoppingBubble(Player player) {
+    protected boolean isPlayerPoppingBubble(PlayerModel playerModel) {
         // if player is colliding with the internal box of the bubble, the bubble is popped
-        return internalCollisionBox.intersects(player.getHitbox());
+        return internalCollisionBox.intersects(playerModel.getHitbox());
     }
 
-    protected boolean isPlayerJumpingOnBubble(Player player) {
-        return hitbox.y > player.getHitbox().y && player.isJumpActive();
+    protected boolean isPlayerJumpingOnBubble(PlayerModel playerModel) {
+        return hitbox.y > playerModel.getHitbox().y && playerModel.isJumpActive();
     }
 
-    protected boolean isPlayerTouchingBubble(Player player) {
-        return externalCollisionBox.intersects(player.getHitbox());
+    protected boolean isPlayerTouchingBubble(PlayerModel playerModel) {
+        return externalCollisionBox.intersects(playerModel.getHitbox());
     }
 
-    protected void handlePlayerPush(Player player) {
+    protected void handlePlayerPush(PlayerModel playerModel) {
         int correctionOffset = 5 * Constants.SCALE;
 
         // left push
-        if (hitbox.x + hitbox.width - correctionOffset <= player.getHitbox().x)
-            hitbox.x -= abs(player.getXSpeed());
+        if (hitbox.x + hitbox.width - correctionOffset <= playerModel.getHitbox().x)
+            hitbox.x -= abs(playerModel.getXSpeed());
 
             // right push
-        else if (hitbox.x + correctionOffset >= player.getHitbox().x + player.getHitbox().width)
-            hitbox.x += abs(player.getXSpeed());
+        else if (hitbox.x + correctionOffset >= playerModel.getHitbox().x + playerModel.getHitbox().width)
+            hitbox.x += abs(playerModel.getXSpeed());
     }
 
     public Point getCenter() {

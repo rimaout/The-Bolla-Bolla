@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 import entities.Enemy;
 import model.utilz.LoadSave;
-import entities.Player;
+import model.entities.PlayerModel;
 import entities.EnemyManager;
 
 import static model.utilz.Constants.Projectiles.*;
 
 public class ProjectileManager {
     private static ProjectileManager instance;
-    private final Player player;
+    private final PlayerModel playerModel;
 
     private BufferedImage[][] fireBallSprites;
     private BufferedImage[][] bubbleSprites;
@@ -25,14 +25,14 @@ public class ProjectileManager {
     private float playerProjectileSpeedMultiplier = 1;
     private float playerProjectileDistanceMultiplier = 1;
 
-    private ProjectileManager(Player player) {
+    private ProjectileManager(PlayerModel playerModel) {
         loadSprites();
-        this.player = player;
+        this.playerModel = playerModel;
     }
 
-    public static ProjectileManager getInstance(Player player) {
+    public static ProjectileManager getInstance(PlayerModel playerModel) {
         if (instance == null) {
-            instance = new ProjectileManager(player);
+            instance = new ProjectileManager(playerModel);
         }
         return instance;
     }
@@ -59,10 +59,10 @@ public class ProjectileManager {
     }
 
     private void updateEntityCollisions(Projectile p) {
-        p.checkPlayerHit(player);
+        p.checkPlayerHit(playerModel);
 
         for (Enemy enemy : EnemyManager.getInstance().getEnemies())
-            p.checkEnemyHit(enemy, player);
+            p.checkEnemyHit(enemy, playerModel);
     }
 
     public void addProjectile(Projectile projectile) {

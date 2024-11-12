@@ -2,7 +2,7 @@ package bubbles.specialBubbles;
 
 import java.awt.*;
 
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import projectiles.ProjectileManager;
 import projectiles.LightingProjectile;
@@ -31,7 +31,7 @@ public class LightningBubble extends SpecialBubble {
     }
 
     @Override
-    public void playerPop(Player player) {
+    public void playerPop(PlayerModel playerModel) {
         active = false;
         spawnWaterLighting();
     }

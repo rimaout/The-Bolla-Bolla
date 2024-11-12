@@ -1,7 +1,7 @@
 package bubbles.specialBubbles;
 
 import itemesAndRewards.PowerUpManager;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 
@@ -30,7 +30,7 @@ public class WaterBubble extends SpecialBubble {
     }
 
     @Override
-    public void playerPop(Player player) {
+    public void playerPop(PlayerModel playerModel) {
         active = false;
         spawnWaterFlow();
 

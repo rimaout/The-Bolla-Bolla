@@ -1,5 +1,6 @@
 package entities;
 
+import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.LoadSave;
 import model.utilz.PlayingTimer;
@@ -14,7 +15,7 @@ public class EnemyManager {
     private static EnemyManager instance;
 
     private final PlayingTimer timer = PlayingTimer.getInstance();
-    private final Player player;
+    private final PlayerModel playerModel;
 
     private BufferedImage[][] zenChanSprites;
     private BufferedImage[][] maitaSprites;
@@ -33,14 +34,14 @@ public class EnemyManager {
     private boolean playerInvincibleMode = false;
     private int invincibleTimer;
 
-    private EnemyManager(Player player) {
-        this.player = player;
+    private EnemyManager(PlayerModel playerModel) {
+        this.playerModel = playerModel;
         loadSprites();
     }
 
-    public static EnemyManager getInstance(Player player) {
+    public static EnemyManager getInstance(PlayerModel playerModel) {
         if (instance == null) {
-            instance = new EnemyManager(player);
+            instance = new EnemyManager(playerModel);
         }
         return instance;
     }
@@ -78,9 +79,9 @@ public class EnemyManager {
             if (e.isActive()) {
 
                 if (!enemiesFreeze)
-                    e.update(player);
+                    e.update(playerModel);
 
-                checkEnemyHit(player, e);
+                checkEnemyHit(playerModel, e);
             }
 
             if (e.getReachedSpawn())
@@ -105,15 +106,15 @@ public class EnemyManager {
                 g.drawImage(getEnemySprite(e.getEnemyType())[e.getEnemyState()][e.getAnimationIndex()], (int) (e.getHitbox().x - ENEMY_HITBOX_OFFSET_X) + e.flipX(), (int) (e.getHitbox().y - ENEMY_HITBOX_OFFSET_Y), ENEMY_W * e.flipW(), ENEMY_H, null);
     }
 
-    public void checkEnemyHit(Player player, Enemy enemy) {
-        if (!player.isActive())
+    public void checkEnemyHit(PlayerModel playerModel, Enemy enemy) {
+        if (!playerModel.isActive())
             return;
 
-        if (enemy.getHitbox().intersects(player.getHitbox()) && enemy.isActive()) {
+        if (enemy.getHitbox().intersects(playerModel.getHitbox()) && enemy.isActive()) {
             if (playerInvincibleMode)
-                enemy.instantKill(player);
+                enemy.instantKill(playerModel);
             else {
-                player.death();
+                playerModel.death();
                 setAllNormal();
             }
         }

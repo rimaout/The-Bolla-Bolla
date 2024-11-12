@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import bubbles.Bubble;
 import entities.Enemy;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
 import model.utilz.PlayingTimer;
@@ -17,7 +17,7 @@ public class PlayerBubblesManager {
     // This class is responsible for managing the bubbles that the player shoots
     private static PlayerBubblesManager instance;
 
-    private final Player player;
+    private final PlayerModel playerModel;
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private final LinkedList<PlayerBubble> bubbles;
@@ -26,15 +26,15 @@ public class PlayerBubblesManager {
 
     private BufferedImage[][] playerBubbleSprites;
 
-    private PlayerBubblesManager(Player player) {
-        this.player = player;
+    private PlayerBubblesManager(PlayerModel playerModel) {
+        this.playerModel = playerModel;
         bubbles = new LinkedList<>();
         loadBubbleSprites();
     }
 
-    public static PlayerBubblesManager getInstance(Player player) {
+    public static PlayerBubblesManager getInstance(PlayerModel playerModel) {
         if (instance == null) {
-            instance = new PlayerBubblesManager(player);
+            instance = new PlayerBubblesManager(playerModel);
         }
         return instance;
     }
@@ -49,7 +49,7 @@ public class PlayerBubblesManager {
         for (Bubble b : bubbles) {
             if (b.isActive()) {
                 b.update();
-                b.checkCollisionWithPlayer(player);
+                b.checkCollisionWithPlayer(playerModel);
             }
         }
 
@@ -120,7 +120,7 @@ public class PlayerBubblesManager {
         popTimer = POP_DELAY_AFTER_CHAIN_EXPLOSION;
 
         LinkedList<PlayerBubble> bubblesShallowCopy = new LinkedList<>(bubbles);
-        new ChainExplosionManager(player, firstPoppedBubble, bubblesShallowCopy);
+        new ChainExplosionManager(playerModel, firstPoppedBubble, bubblesShallowCopy);
     }
 
     public void loadBubbleSprites() {
@@ -145,9 +145,9 @@ public class PlayerBubblesManager {
         bubbles.add(bubble);
     }
 
-    public void addDeadEnemy(Enemy e, Player player) {
-        EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, player.getDirection());
-        deadEnemyBubble.playerPop(player);
+    public void addDeadEnemy(Enemy e, PlayerModel playerModel) {
+        EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, playerModel.getDirection());
+        deadEnemyBubble.playerPop(playerModel);
         bubbles.add(deadEnemyBubble);
     }
 

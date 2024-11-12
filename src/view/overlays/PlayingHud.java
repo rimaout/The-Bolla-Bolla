@@ -1,7 +1,7 @@
 package view.overlays;
 
 import model.gameStates.PlayingModel;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
 
@@ -12,13 +12,13 @@ public class PlayingHud {
     // This class will be used to display: The Player Score and Lives and Powerups
     private static PlayingHud instance;
 
-    private Player playerOne;
-    private Player playerTwo;
+    private PlayerModel playerModelOne;
+    private PlayerModel playerModelTwo;
     private BufferedImage[] numbersTiles;
 
     private PlayingHud(PlayingModel playingModel) {
-        this.playerOne = playingModel.getPlayerOne();
-        this.playerTwo = playingModel.getPlayerTwo();
+        this.playerModelOne = playingModel.getPlayerOne();
+        this.playerModelTwo = playingModel.getPlayerTwo();
         loadNumberTiles();
     }
 
@@ -37,7 +37,7 @@ public class PlayingHud {
     }
 
     private void drawPlayerOnePoints(Graphics g) {
-        String score = String.valueOf(playerOne.getPoints());
+        String score = String.valueOf(playerModelOne.getPoints());
 
         if (score.length() == 1) {
             score = "0" + score;
@@ -55,7 +55,7 @@ public class PlayingHud {
 
     private void drawPlayerTwoPoints(Graphics g) {
 
-        if (playerTwo == null) {
+        if (playerModelTwo == null) {
             int yPos = Constants.TILES_SIZE;
             int size = 8 * Constants.SCALE;
             int xPos1 = Constants.GAME_WIDTH - 9 * Constants.TILES_SIZE;
@@ -71,11 +71,11 @@ public class PlayingHud {
         int yPos = 26 * Constants.TILES_SIZE;
         int size = 8 * Constants.SCALE;
 
-        drawNumber(g, playerOne.getLives(), xPos, yPos, size);
+        drawNumber(g, playerModelOne.getLives(), xPos, yPos, size);
     }
 
     private void drawPlayerTwoLives(Graphics g) {
-       if (playerTwo == null)
+       if (playerModelTwo == null)
            return;
     }
 

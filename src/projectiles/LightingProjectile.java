@@ -3,7 +3,7 @@ package projectiles;
 import java.awt.*;
 
 import entities.Enemy;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
@@ -49,7 +49,7 @@ public class LightingProjectile extends Projectile{
     }
 
     @Override
-    protected void checkEnemyHit(Enemy enemy, Player player) {
+    protected void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
         //Parameters: enemy  = enemy that is being checked for collision with projectile
         //            player = player to add score to if the enemy is killed
 
@@ -57,13 +57,13 @@ public class LightingProjectile extends Projectile{
             return;
 
         if (hitbox.intersects(enemy.getHitbox())) {
-            enemy.instantKill(player);
+            enemy.instantKill(playerModel);
             active = false;
         }
     }
 
     @Override
-    protected void checkPlayerHit(Player player) {
+    protected void checkPlayerHit(PlayerModel playerModel) {
         // not used, lighting can't hit players
     }
 

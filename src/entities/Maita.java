@@ -1,5 +1,6 @@
 package entities;
 
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import projectiles.ProjectileManager;
@@ -37,7 +38,7 @@ public class Maita extends Enemy {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(PlayerModel playerModel) {
         loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
         updateAnimationTick();
 
@@ -50,12 +51,12 @@ public class Maita extends Enemy {
         if (firstUpdate)
             firstUpdate();
 
-        updateTimers(player);
-        updatePlayerInfo(player);
+        updateTimers(playerModel);
+        updatePlayerInfo(playerModel);
         updateMove();
         updateStateVariables();
 
-        checkFireBall(player);
+        checkFireBall(playerModel);
     }
 
     private void firstUpdate() {
@@ -66,10 +67,10 @@ public class Maita extends Enemy {
         firstUpdate = false;
     }
 
-    private void updateTimers(Player player) {
+    private void updateTimers(PlayerModel playerModel) {
         playerUpdateTimer -= (int) timer.getTimeDelta();
 
-        if (player.getTileY() == getTileY())
+        if (playerModel.getTileY() == getTileY())
             fireBallTimer -= (int) timer.getTimeDelta();
 
         if (fireBallTimer <= 0)
@@ -356,21 +357,21 @@ public class Maita extends Enemy {
         return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }
 
-    private void checkFireBall(Player player) {
-        if (fireBallReady && player.getTileY() == getTileY() && isPlayerInViewingRange(player)) {
-            ProjectileManager.getInstance().addProjectile(new MaitaFireProjectile(hitbox.x, hitbox.y, isPlayerLeftOrRight(player)));
+    private void checkFireBall(PlayerModel playerModel) {
+        if (fireBallReady && playerModel.getTileY() == getTileY() && isPlayerInViewingRange(playerModel)) {
+            ProjectileManager.getInstance().addProjectile(new MaitaFireProjectile(hitbox.x, hitbox.y, isPlayerLeftOrRight(playerModel)));
 
             fireBallTimer = FIREBALL_TIMER;
             fireBallReady = false;
         }
     }
 
-    private void updatePlayerInfo(Player player){
+    private void updatePlayerInfo(PlayerModel playerModel){
 
         // update player info in a random interval between 0-8 seconds
 
         if (playerUpdateTimer <= 0) {
-            calculatePlayersPos(player);
+            calculatePlayersPos(playerModel);
             playerUpdateTimer = (int) (Math.random() * updatePlayerPosMaxInterval);
         }
     }

@@ -3,7 +3,7 @@ package bubbles.playerBubbles;
 import model.audio.AudioPlayer;
 import entities.Enemy;
 import entities.EnemyManager;
-import entities.Player;
+import model.entities.PlayerModel;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
 import model.utilz.Constants.AudioConstants;
@@ -120,7 +120,7 @@ public class EnemyBubble extends EmptyBubble {
 
 
     @Override
-    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
+    public void playerPop(PlayerModel playerModel, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
 
         if (!popped) {
             chainExplosionManager.increaseEnemyBubblePopCounter();
@@ -128,10 +128,10 @@ public class EnemyBubble extends EmptyBubble {
             RewardPointsManager.getInstance().addChainReactionReward(consecutivePopsCounter);
         }
         
-       playerPop(player);
+       playerPop(playerModel);
     }
 
-    public void playerPop(Player player) {
+    public void playerPop(PlayerModel playerModel) {
 
         // calculate the speed of the bubble (random values between 50% and 100% of the Max speed)
         ySpeedDead = - (0.5f + random.nextFloat() * 0.5f) * DEAD_Y_SPEED;
@@ -140,7 +140,7 @@ public class EnemyBubble extends EmptyBubble {
         xSpeed = xSpeedDead;
 
         // Set the direction of the bubble (following the player direction)
-        direction = player.getDirection();
+        direction = playerModel.getDirection();
 
         // Set Bubble state
         state = DEAD;

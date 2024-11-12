@@ -3,7 +3,7 @@ package bubbles.playerBubbles;
 import java.awt.*;
 
 import bubbles.Bubble;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.*;
@@ -20,7 +20,7 @@ public abstract class PlayerBubble extends Bubble {
     protected abstract void updateDeadAnimation();
 
     public abstract void pop();
-    public abstract void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);
+    public abstract void playerPop(PlayerModel playerModel, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);
 
     @Override
     public void update() {
@@ -41,28 +41,28 @@ public abstract class PlayerBubble extends Bubble {
     }
 
     @Override
-    public void checkCollisionWithPlayer(Player player) {
-        if (!player.isActive())
+    public void checkCollisionWithPlayer(PlayerModel playerModel) {
+        if (!playerModel.isActive())
             return;
 
         if (!active || state == DEAD)
             return;
 
         // check if bubble pop
-        if (bubbleManager.getPopTimer() <= 0 && isPlayerPoppingBubble(player)) {
+        if (bubbleManager.getPopTimer() <= 0 && isPlayerPoppingBubble(playerModel)) {
             bubbleManager.startChainExplosions(this);
             return;
         }
 
-        if (isPlayerTouchingBubble(player)) {
+        if (isPlayerTouchingBubble(playerModel)) {
 
-            if (isPlayerJumpingOnBubble(player)) {
+            if (isPlayerJumpingOnBubble(playerModel)) {
                 bounceDown();
-                player.jumpOnBubble();
+                playerModel.jumpOnBubble();
                 return;
             }
 
-            handlePlayerPush(player);
+            handlePlayerPush(playerModel);
         }
     }
 

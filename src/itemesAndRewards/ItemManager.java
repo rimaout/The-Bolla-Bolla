@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 import model.utilz.LoadSave;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.gameStates.PlayingModel;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
@@ -77,15 +77,15 @@ public class ItemManager {
     }
 
     private void checkCollisionWithPlayer(Item item) {
-        Player player = playingModel.getPlayerOne();
+        PlayerModel playerModel = playingModel.getPlayerOne();
 
-        if (!player.isActive())
+        if (!playerModel.isActive())
             return;
 
-        if(item.getHitbox().intersects(player.getHitbox())){
+        if(item.getHitbox().intersects(playerModel.getHitbox())){
             item.setActive(false);
-            item.addPoints(player);
-            item.applyEffect(player);
+            item.addPoints(playerModel);
+            item.applyEffect(playerModel);
             item.setPlaySound(true);
             PowerUpManager.getInstance().increaseItemCollectCounter();
         }

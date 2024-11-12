@@ -4,7 +4,7 @@ import java.awt.*;
 
 import entities.Enemy;
 import entities.Entity;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileState;
 
@@ -35,8 +35,8 @@ public abstract class Projectile extends Entity {
 
     protected abstract void draw(Graphics g);
     protected abstract void updatePos();
-    protected abstract void checkEnemyHit(Enemy enemy, Player player);
-    protected abstract void checkPlayerHit(Player player);
+    protected abstract void checkEnemyHit(Enemy enemy, PlayerModel playerModel);
+    protected abstract void checkPlayerHit(PlayerModel playerModel);
 
     protected void updateAnimationTick() {
         animationTick++;

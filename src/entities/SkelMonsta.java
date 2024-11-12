@@ -1,5 +1,6 @@
 package entities;
 
+import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 
 import java.awt.*;
@@ -32,15 +33,15 @@ public class SkelMonsta extends Enemy{
     }
 
     @Override
-    public void update(Player player) {
+    public void update(PlayerModel playerModel) {
         loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         updateState();
         updateAnimationTick();
         updateTimer();
-        calculateNextMove(player);
-        updateMove(player);
-        checkPlayerHit(player);
+        calculateNextMove(playerModel);
+        updateMove(playerModel);
+        checkPlayerHit(playerModel);
     }
 
     @Override
@@ -55,13 +56,13 @@ public class SkelMonsta extends Enemy{
         }
     }
 
-    private void checkPlayerHit(Player player) {
+    private void checkPlayerHit(PlayerModel playerModel) {
 
-        if (spawning || despawning || !player.isActive())
+        if (spawning || despawning || !playerModel.isActive())
             return;
 
-        if (hitbox.intersects(player.getHitbox())) {
-            player.death();
+        if (hitbox.intersects(playerModel.getHitbox())) {
+            playerModel.death();
             HurryUpManager.getInstance().restart();
         }
     }
@@ -90,13 +91,13 @@ public class SkelMonsta extends Enemy{
         nextMoveTimer -= (int)  timer.getTimeDelta();
     }
 
-    private void calculateNextMove(Player player) {
+    private void calculateNextMove(PlayerModel playerModel) {
 
         if (nextMoveTimer <= 0 && !moving) {
             if (walkingDir != UP && walkingDir != DOWN)
                 previousWalkingDir = walkingDir;
 
-            walkingDir = getDirectionToPlayer(player);
+            walkingDir = getDirectionToPlayer(playerModel);
         }
 
         if (nextMoveTimer <= 0 && !spawning && !despawning)
@@ -105,22 +106,22 @@ public class SkelMonsta extends Enemy{
             moving = false;
     }
 
-    private void updateMove(Player player) {
+    private void updateMove(PlayerModel playerModel) {
         if (!moving)
             return;
 
         switch (walkingDir) {
-            case UP -> moveOnYAxis(UP, player);
-            case DOWN -> moveOnYAxis(DOWN, player);
-            case LEFT -> moveOnXAxis(LEFT, player);
-            case RIGHT -> moveOnXAxis(RIGHT, player);
+            case UP -> moveOnYAxis(UP, playerModel);
+            case DOWN -> moveOnYAxis(DOWN, playerModel);
+            case LEFT -> moveOnXAxis(LEFT, playerModel);
+            case RIGHT -> moveOnXAxis(RIGHT, playerModel);
         }
 
         updateWalkedDistance();
     }
 
-    private void moveOnYAxis(Direction direction, Player player) {
-        if (player.getTileY() == getTileY())
+    private void moveOnYAxis(Direction direction, PlayerModel playerModel) {
+        if (playerModel.getTileY() == getTileY())
             return;
 
         switch (direction) {
@@ -129,8 +130,8 @@ public class SkelMonsta extends Enemy{
         }
     }
 
-    private void moveOnXAxis(Direction direction, Player player) {
-        if (player.getTileX() == getTileX())
+    private void moveOnXAxis(Direction direction, PlayerModel playerModel) {
+        if (playerModel.getTileX() == getTileX())
             return;
 
         switch (direction) {
@@ -146,9 +147,9 @@ public class SkelMonsta extends Enemy{
             stopMove();
     }
 
-    private Direction getDirectionToPlayer(Player player) {
-        Direction upOrDown = isPlayerUpOrDown(player);
-        Direction leftOrRight = isPlayerLeftOrRight(player);
+    private Direction getDirectionToPlayer(PlayerModel playerModel) {
+        Direction upOrDown = isPlayerUpOrDown(playerModel);
+        Direction leftOrRight = isPlayerLeftOrRight(playerModel);
 
         if (upOrDown == UP)
             return UP;

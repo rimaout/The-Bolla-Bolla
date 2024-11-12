@@ -3,7 +3,7 @@ package projectiles;
 import java.awt.*;
 
 import entities.Enemy;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 
 import static model.utilz.Constants.Direction.*;
@@ -48,19 +48,19 @@ public class MaitaFireProjectile extends Projectile {
     }
 
     @Override
-    public void checkEnemyHit(Enemy enemy, Player player) {
+    public void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
         // not used, MaitaFireProjectiles can't hit enemies
     }
 
     @Override
-    public void checkPlayerHit(Player player) {
+    public void checkPlayerHit(PlayerModel playerModel) {
         // Parameters: player = player that is being checked for collision with projectile
 
-        if (!player.isActive() || player.isImmune())
+        if (!playerModel.isActive() || playerModel.isImmune())
             return;
 
-        if (hitbox.intersects(player.getHitbox()) && !player.isRespawning()) {
-            player.death();
+        if (hitbox.intersects(playerModel.getHitbox()) && !playerModel.isRespawning()) {
+            playerModel.death();
             state = IMPACT;
 
             // Reset animation

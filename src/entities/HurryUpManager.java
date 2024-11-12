@@ -3,6 +3,7 @@ package entities;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
 import model.audio.AudioPlayer;
@@ -41,12 +42,12 @@ public class HurryUpManager {
         return instance;
     }
 
-    public void update(Player player) {
+    public void update(PlayerModel playerModel) {
         updateTimer();
         updateHurryPos();
 
         if (skelMonsta.isActive())
-            skelMonsta.update(player);
+            skelMonsta.update(playerModel);
     }
 
     public void draw(Graphics g) {

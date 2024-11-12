@@ -2,7 +2,7 @@ package bubbles.playerBubbles;
 
 import java.awt.*;
 
-import entities.Player;
+import model.entities.PlayerModel;
 
 import static model.utilz.Constants.Bubble.*;
 import static model.utilz.Constants.Direction;
@@ -34,7 +34,7 @@ public class EmptyBubble extends PlayerBubble {
         }
     }
 
-    public void playerPop(Player player, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
+    public void playerPop(PlayerModel playerModel, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager) {
        pop();
     }
 }

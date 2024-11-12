@@ -3,7 +3,7 @@ package bubbles.specialBubbles;
 import java.awt.*;
 
 import bubbles.Bubble;
-import entities.Player;
+import model.entities.PlayerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.BUBBLE;
@@ -18,27 +18,27 @@ public abstract class SpecialBubble extends Bubble {
 
     public abstract void draw(Graphics g);
     public abstract void update();
-    public abstract void playerPop(Player player);
+    public abstract void playerPop(PlayerModel playerModel);
 
     @Override
-    public void checkCollisionWithPlayer(Player player) {
-        if (!player.isActive())
+    public void checkCollisionWithPlayer(PlayerModel playerModel) {
+        if (!playerModel.isActive())
             return;
 
-        if (isPlayerPoppingBubble(player)) {
-            playerPop(player);
+        if (isPlayerPoppingBubble(playerModel)) {
+            playerPop(playerModel);
             return;
         }
 
-        if (isPlayerTouchingBubble(player)) {
+        if (isPlayerTouchingBubble(playerModel)) {
 
-            if (isPlayerJumpingOnBubble(player)) {
+            if (isPlayerJumpingOnBubble(playerModel)) {
                 bounceDown();
-                player.jumpOnBubble();
+                playerModel.jumpOnBubble();
                 return;
             }
 
-            handlePlayerPush(player);
+            handlePlayerPush(playerModel);
         }
     }
 }
