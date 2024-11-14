@@ -21,7 +21,7 @@ public class PlayerModel extends Entity {
 
     // Movement values and variables
     private boolean left, right, jump, isJumping, inAir;
-    private boolean moving, attacking, attackingAnimation, respawning, canRespawn;
+    private boolean moving, attacking, respawning, canRespawn;
     private float xSpeed = 0;
     private float airSpeed = 0.0f;
 
@@ -60,7 +60,7 @@ public class PlayerModel extends Entity {
             attack();
     }
 
-    private boolean canAttack() {
+    public boolean canAttack() {
         return !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Constants.TILES_SIZE);
     }
 
@@ -80,7 +80,6 @@ public class PlayerModel extends Entity {
         else
             ProjectileManagerModel.getInstance().addProjectile(new PlayerBubbleProjectileModel(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction));
 
-        attackingAnimation = true;
         attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);
 
         PowerUpManager.getInstance().increaseBubbleShootCounter();
@@ -423,14 +422,6 @@ public class PlayerModel extends Entity {
         return flipW;
     }
 
-    public void setAttackingAnimation(boolean attackingAnimation) {
-        this.attackingAnimation = attackingAnimation;
-    }
-
-    public void setRespawning(boolean respawning) {
-        this.respawning = respawning;
-    }
-
     public boolean isMoving() {
         return moving;
     }
@@ -443,11 +434,19 @@ public class PlayerModel extends Entity {
         return airSpeed;
     }
 
-    public boolean isAttackingAnimation() {
-        return attackingAnimation;
+    public boolean isAttacking() {
+        return attacking;
     }
 
-    public void setCanRespawn(boolean canRespawn) {
-        this.canRespawn = canRespawn;
+    public void deactivateRespawning() {
+        respawning = false;
+    }
+
+    public void activateCanRespawn() {
+        canRespawn = true;
+    }
+
+    public void deactivateCanRespawn() {
+        canRespawn = false;
     }
 }

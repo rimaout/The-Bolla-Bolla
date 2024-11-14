@@ -1,6 +1,7 @@
 package view.entities;
 
 import controller.PlayerController;
+import controller.mediator.PlayerMediator;
 import model.entities.PlayerModel;
 import model.utilz.LoadSave;
 
@@ -18,6 +19,7 @@ public class PlayerView {
     private BufferedImage[][] sprites;
     private int animationIndex, animationTick;
     private int playerAnimation = IDLE_ANIMATION;
+    private boolean activateAttackingAnimation;
 
     public PlayerView(PlayerModel playerModel, PlayerController playerController) {
         this.playerModel = playerModel;
@@ -53,19 +55,22 @@ public class PlayerView {
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
                 animationIndex = 0;
 
-                playerController.setAttackingAnimation(false); //TODO: change to playerController.deactivateAttackAnimation()?
-                playerController.setRespawning(false);         //TODO: change to playerController.deactivateRespawnAnimation()?
+                activateAttackingAnimation = false;
+                PlayerMediator.deactivateRespawning(playerModel);
             }
         }
 
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
-            playerController.setCanRespawn(true);              //TODO: change to playerController.activateRespawn()?
+            PlayerMediator.activateCanRespawn(playerModel);
         else
-            playerController.setCanRespawn(false);             //TODO: change to playerController.deactivateRespawn()?
+            PlayerMediator.deactivateCanRespawn(playerModel);
     }
 
     private void setAnimation() {
         int startAnimation = playerAnimation;
+
+        if (playerModel.isAttacking() && playerModel.canAttack())
+            activateAttackingAnimation = true;
 
         if (playerModel.isMoving())
             playerAnimation = RUNNING_ANIMATION;
@@ -79,7 +84,7 @@ public class PlayerView {
                 playerAnimation = FALLING_ANIMATION;
         }
 
-        if (playerModel.isAttackingAnimation())
+        if (activateAttackingAnimation)
             playerAnimation = ATTACK_ANIMATION;
 
         if (playerModel.isRespawning())

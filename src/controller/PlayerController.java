@@ -12,18 +12,6 @@ public class PlayerController {
         this.playerModel = playerModel;
     }
 
-    public void setAttackingAnimation(boolean attackingAnimation) {
-        playerModel.setAttackingAnimation(attackingAnimation);
-    }
-
-    public void setRespawning(boolean respawning) {
-        playerModel.setRespawning(respawning);
-    }
-
-    public void setCanRespawn(boolean canRespawn) {
-        playerModel.setCanRespawn(canRespawn);
-    }
-
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
