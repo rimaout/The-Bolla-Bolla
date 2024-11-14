@@ -278,4 +278,8 @@ public class Game implements Runnable {
     public MenuScoreBoardOverlayView getMenuScoreBoardOverlayView() {
         return menuScoreBoardOverlayView;
     }
+
+    public PlayingView getPlayingView() {
+        return playingView;
+    }
 }

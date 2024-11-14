@@ -13,15 +13,10 @@ import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 import static model.utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
 
-public class MaitaFireProjectile extends Projectile {
+public class MaitaFireProjectileModel extends ProjectileModel {
 
-    public MaitaFireProjectile(float x, float y, Direction direction) {
+    public MaitaFireProjectileModel(float x, float y, Direction direction) {
         super(x, y, direction, MAITA_FIREBALL);
-    }
-
-    @Override
-    protected void draw(Graphics g) {
-        g.drawImage(projectileManager.getSprites(MAITA_FIREBALL)[getAnimation(state)][animationIndex], (int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
     }
 
     @Override

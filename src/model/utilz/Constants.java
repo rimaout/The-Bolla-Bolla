@@ -433,31 +433,6 @@ public class Constants {
         public enum ProjectileType {
             PLAYER_BUBBLE, MAITA_FIREBALL, LIGHTNING
         }
-
-
-        public static int getSpriteAmount(ProjectileState projectileState, ProjectileType projectileType) {
-
-            if (projectileType == ProjectileType.MAITA_FIREBALL)
-                return switch (projectileState) {
-                    case MOVING -> 4;
-                    case IMPACT -> 2;
-                };
-
-            if (projectileType == ProjectileType.PLAYER_BUBBLE)
-                return switch (projectileState) {
-                    case MOVING -> 4;
-                    case IMPACT -> 0;
-                };
-
-            return 0;
-        }
-
-        public static int getAnimation(ProjectileState projectileState) {
-            return switch (projectileState) {
-                case MOVING -> 0;
-                case IMPACT -> 1;
-            };
-        }
     }
 
     public static class HurryUpManager {
@@ -502,7 +477,7 @@ public class Constants {
         public static final int HOME = 0;
         public static final int JUMP = 1;
         public static final int PLAYER_DEATH = 2;
-        public static final int BUUBBLE_SHOOT = 3;
+        public static final int BUBBLE_SHOOT = 3;
         public static final int ENEMY_BUBBLE_POP = 4;
         public static final int WATER_FLOW = 5;
         public static final int LIGHTNING = 6;
@@ -530,9 +505,9 @@ public class Constants {
             "Press ENTER to shoot a magic bubble.",                                  // Index 5
             "If you like VIM try the HJKL keys to move, Z to jump and X to shoot.",  // Index 6
         };
-        public static final int[] SUGGESTIONS_WHIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
+        public static final int[] SUGGESTIONS_WIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
 
         public static final String SPACE = "            ";
-        public static final int SPACE_WHIDTH = 108;
+        public static final int SPACE_WIDTH = 108;
     }
 }

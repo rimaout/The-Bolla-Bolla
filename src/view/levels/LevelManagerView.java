@@ -16,7 +16,6 @@ public class LevelManagerView {
 
     private LevelManagerView(){
         this.levelManagerModel = LevelManagerModel.getInstance();
-
         loadSprites();
     }
 

@@ -53,15 +53,15 @@ public class PlayerView {
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
                 animationIndex = 0;
 
-                playerController.setAttackingAnimation(false);
-                playerController.setRespawning(false);
+                playerController.setAttackingAnimation(false); //TODO: change to playerController.deactivateAttackAnimation()?
+                playerController.setRespawning(false);         //TODO: change to playerController.deactivateRespawnAnimation()?
             }
         }
 
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
-            playerController.setCanRespawn(true);
+            playerController.setCanRespawn(true);              //TODO: change to playerController.activateRespawn()?
         else
-            playerController.setCanRespawn(false);
+            playerController.setCanRespawn(false);             //TODO: change to playerController.deactivateRespawn()?
     }
 
     private void setAnimation() {

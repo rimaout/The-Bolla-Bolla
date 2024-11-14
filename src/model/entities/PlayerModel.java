@@ -5,9 +5,9 @@ import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
-import projectiles.ProjectileManager;
+import projectiles.ProjectileManagerModel;
 import itemesAndRewards.PowerUpManager;
-import projectiles.PlayerBubbleProjectile;
+import projectiles.PlayerBubbleProjectileModel;
 
 import static model.utilz.Constants.*;
 import static model.utilz.HelpMethods.*;
@@ -76,9 +76,9 @@ public class PlayerModel extends Entity {
         int yOffset = 3 * Constants.SCALE;
 
         if (direction == LEFT)
-            ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x - xOffset, hitbox.y - yOffset, direction));
+            ProjectileManagerModel.getInstance().addProjectile(new PlayerBubbleProjectileModel(hitbox.x - xOffset, hitbox.y - yOffset, direction));
         else
-            ProjectileManager.getInstance().addProjectile(new PlayerBubbleProjectile(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction));
+            ProjectileManagerModel.getInstance().addProjectile(new PlayerBubbleProjectileModel(hitbox.x + hitbox.width - xOffset, hitbox.y - yOffset, direction));
 
         attackingAnimation = true;
         attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);

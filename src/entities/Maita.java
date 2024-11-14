@@ -3,8 +3,8 @@ package entities;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
-import projectiles.ProjectileManager;
-import projectiles.MaitaFireProjectile;
+import projectiles.ProjectileManagerModel;
+import projectiles.MaitaFireProjectileModel;
 
 import static model.utilz.HelpMethods.*;
 import static model.utilz.Constants.GRAVITY;
@@ -359,7 +359,7 @@ public class Maita extends Enemy {
 
     private void checkFireBall(PlayerModel playerModel) {
         if (fireBallReady && playerModel.getTileY() == getTileY() && isPlayerInViewingRange(playerModel)) {
-            ProjectileManager.getInstance().addProjectile(new MaitaFireProjectile(hitbox.x, hitbox.y, isPlayerLeftOrRight(playerModel)));
+            ProjectileManagerModel.getInstance().addProjectile(new MaitaFireProjectileModel(hitbox.x, hitbox.y, isPlayerLeftOrRight(playerModel)));
 
             fireBallTimer = FIREBALL_TIMER;
             fireBallReady = false;

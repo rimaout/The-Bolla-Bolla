@@ -11,7 +11,7 @@ import java.awt.*;
 
 import static model.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.MenuConstants.*;
-import static model.utilz.Constants.MenuConstants.SPACE_WHIDTH;
+import static model.utilz.Constants.MenuConstants.SPACE_WIDTH;
 
 public class MenuView {
     private final MenuModel menuModel;
@@ -176,7 +176,7 @@ public class MenuView {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < SUGGESTIONS.length; i++) {
             sb.append(SUGGESTIONS[i]).append(SPACE);
-            suggestionsWidth += SUGGESTIONS_WHIDTHS[i] + SPACE_WHIDTH;
+            suggestionsWidth += SUGGESTIONS_WIDTHS[i] + SPACE_WIDTH;
         }
         suggestions = sb.toString();
     }

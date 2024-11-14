@@ -9,13 +9,13 @@ import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
 import itemesAndRewards.ItemManager;
 import itemesAndRewards.RewardPointsManager;
-import projectiles.ProjectileManager;
 import view.entities.PlayerView;
 import view.levels.LevelManagerView;
 import view.overlays.GameCompletedOverlayView;
 import view.overlays.GameOverOverlayView;
 import view.overlays.GamePausedOverlayView;
 import view.overlays.PlayingHud;
+import view.projectiles.ProjectileManagerView;
 
 import java.awt.*;
 
@@ -52,6 +52,12 @@ public class PlayingView {
         initClasses(playingController.getPlayerController());
     }
 
+    public void update() {
+        playerOneView.update();
+        introView.updatePlayerAnimation();
+        ProjectileManagerView.getInstance().update();
+    }
+
     public void draw(Graphics g) {
 
         if (playingModel.isIntoRunning()) {
@@ -65,7 +71,7 @@ public class PlayingView {
             HurryUpManager.getInstance().draw(g);
             PlayerBubblesManager.getInstance().draw(g);
             SpecialBubbleManager.getInstance().draw(g);
-            ProjectileManager.getInstance().draw(g);
+            ProjectileManagerView.getInstance().draw(g);
             RewardPointsManager.getInstance().draw((Graphics2D) g);
 
             if (playingModel.getPlayerOneModel().isActive())
@@ -82,12 +88,15 @@ public class PlayingView {
             gameCompletedOverlayView.draw(g);
     }
 
-    private void resetNewLevel() {
+    public void newLevelReset() {
+        //TODO: sistemare reset per tutte le view
 
+        ProjectileManagerView.getInstance().newLevelReset();
     }
 
-    private void resetNewGame() {
+    public void newPlayReset() {
         gamePauseOverlayView.reset();
+        ProjectileManagerView.getInstance().newPlayReset();
     }
      
     public void initClasses(PlayerController playerController) {
@@ -106,10 +115,5 @@ public class PlayingView {
         introView = new IntroView(playingModel.getIntroModel());
 
         playingHud = PlayingHud.getInstance(playingModel);
-    }
-
-    public void update() {
-        playerOneView.update();
-        introView.updatePlayerAnimation();
     }
 }

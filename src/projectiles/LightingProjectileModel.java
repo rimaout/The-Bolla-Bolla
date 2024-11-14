@@ -1,36 +1,23 @@
 package projectiles;
 
-import java.awt.*;
 
 import entities.Enemy;
 import model.entities.PlayerModel;
 import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
-import model.utilz.Constants.AudioConstants;
 import model.utilz.Constants.Projectiles.ProjectileType;
 
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.Constants.Projectiles.H;
 import static model.utilz.HelpMethods.IsPerimeterWallTile;
-import static model.utilz.Constants.Projectiles.ProjectileType.LIGHTNING;
 
-public class LightingProjectile extends Projectile{
-    private boolean playSound = true;
+public class LightingProjectileModel extends ProjectileModel {
 
-    public LightingProjectile(float x, float y, ProjectileType type) {
+    public LightingProjectileModel(float x, float y, ProjectileType type) {
         super(x, y, CalculateLightingDirection(x), type);
-    }
 
-    @Override
-    protected void draw(Graphics g) {
-       g.drawImage(projectileManager.getSprites(LIGHTNING)[1][0],(int) hitbox.x + OFFSET_X, (int) hitbox.y + OFFSET_Y, W, H, null);
-
-        if (playSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.LIGHTNING);
-            playSound = false;
-        }
+        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.LIGHTNING);
     }
 
     @Override

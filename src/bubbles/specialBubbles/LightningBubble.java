@@ -4,8 +4,8 @@ import java.awt.*;
 
 import model.entities.PlayerModel;
 import model.utilz.Constants;
-import projectiles.ProjectileManager;
-import projectiles.LightingProjectile;
+import projectiles.ProjectileManagerModel;
+import projectiles.LightingProjectileModel;
 import model.utilz.Constants.Projectiles.ProjectileType;
 
 import static model.utilz.Constants.Bubble.*;
@@ -37,6 +37,6 @@ public class LightningBubble extends SpecialBubble {
     }
 
     private void spawnWaterLighting() {
-        ProjectileManager.getInstance().addProjectile(new LightingProjectile(hitbox.x, hitbox.y, ProjectileType.LIGHTNING));
+        ProjectileManagerModel.getInstance().addProjectile(new LightingProjectileModel(hitbox.x, hitbox.y, ProjectileType.LIGHTNING));
     }
 }

@@ -17,8 +17,9 @@ public abstract class Entity {
     protected float x, y;
     protected int width, height;
     protected Rectangle2D.Float hitbox;
-    protected int animationIndex;
-    protected float animationTick;
+
+    protected int animationIndex;       //TODO: remove from here move to view (MVC)
+    protected float animationTick;      //TODO: remove from here move to view (MVC)
 
     protected boolean immune = false;
     protected boolean active = true;

@@ -4,7 +4,7 @@ import static java.lang.Math.abs;
 
 import model.entities.PlayerModel;
 import entities.EnemyManager;
-import projectiles.ProjectileManager;
+import projectiles.ProjectileManagerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Items.PowerUpType;
 
@@ -64,14 +64,14 @@ public class PowerUpManager{
             playerModel.setBubbleCadenceMultiplier(1);
 
         if (blueCandy)
-            ProjectileManager.getInstance().setPlayerProjectileSpeedMultiplier(1.65f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1.65f);
         else
-            ProjectileManager.getInstance().setPlayerProjectileSpeedMultiplier(1f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1f);
 
         if (redCandy)
-            ProjectileManager.getInstance().setPlayerProjectileDistanceMultiplier(1.65f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.65f);
         else
-            ProjectileManager.getInstance().setPlayerProjectileDistanceMultiplier(1f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1f);
 
         if (shoe)
             playerModel.setSpeedMultiplier(1.7f);

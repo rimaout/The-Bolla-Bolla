@@ -1,7 +1,5 @@
 package projectiles;
 
-import java.awt.*;
-
 import entities.Enemy;
 import entities.Entity;
 import model.entities.PlayerModel;
@@ -13,14 +11,14 @@ import static model.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
-public abstract class Projectile extends Entity {
-    protected final ProjectileManager projectileManager = ProjectileManager.getInstance();
+public abstract class ProjectileModel extends Entity {
+    protected final ProjectileManagerModel projectileManagerModel = ProjectileManagerModel.getInstance();
 
     protected ProjectileState state = MOVING;
     protected ProjectileType type;
     protected Direction direction;
 
-    public Projectile(float x, float y, Direction direction, ProjectileType type) {
+    public ProjectileModel(float x, float y, Direction direction, ProjectileType type) {
         super(x, y, H, W);
         this.direction = direction;
         this.type = type;
@@ -30,26 +28,21 @@ public abstract class Projectile extends Entity {
 
     public void update() {
         updatePos();
-        updateAnimationTick();
     }
 
-    protected abstract void draw(Graphics g);
     protected abstract void updatePos();
     protected abstract void checkEnemyHit(Enemy enemy, PlayerModel playerModel);
     protected abstract void checkPlayerHit(PlayerModel playerModel);
 
-    protected void updateAnimationTick() {
-        animationTick++;
-        if (animationTick >= ANIMATION_SPEED) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= getSpriteAmount(state, type)) {
-                animationIndex = 0;
-            }
-        }
+    public ProjectileState getState() {
+        return state;
+    }
 
-        if (state == IMPACT && animationIndex == getSpriteAmount(state, type) - 1) {
-           active = false;
-        }
+    public ProjectileType getType() {
+        return type;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }
