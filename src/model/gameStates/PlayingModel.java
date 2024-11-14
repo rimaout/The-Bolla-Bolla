@@ -6,8 +6,8 @@ import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.entities.PlayerModel;
 import itemesAndRewards.ItemManager;
-import itemesAndRewards.PowerUpManager;
-import itemesAndRewards.RewardPointsManager;
+import itemesAndRewards.PowerUpManagerModel;
+import itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
 import main.Game;
 import model.projectiles.ProjectileManagerModel;
@@ -25,8 +25,8 @@ public class PlayingModel extends State {
     private SpecialBubbleManager specialBubbleManager;
     private ProjectileManagerModel projectileManagerModel;
     private ItemManager itemManager;
-    private RewardPointsManager rewardPointsManager;
-    private PowerUpManager powerUpManager;
+    private RewardPointsManagerModel rewardPointsManagerModel;
+    private PowerUpManagerModel powerUpManagerModel;
     private IntroModel introModel;
 
     private boolean intoRunning = true;
@@ -53,8 +53,8 @@ public class PlayingModel extends State {
         specialBubbleManager = SpecialBubbleManager.getInstance(playerModelOne);
         projectileManagerModel = ProjectileManagerModel.getInstance(playerModelOne);
         itemManager = ItemManager.getInstance(this);
-        rewardPointsManager = RewardPointsManager.getInstance(playerModelOne);
-        powerUpManager = PowerUpManager.getInstance(playerModelOne);
+        rewardPointsManagerModel = RewardPointsManagerModel.getInstance(playerModelOne);
+        powerUpManagerModel = PowerUpManagerModel.getInstance(playerModelOne);
         introModel = new IntroModel(this);
     }
 
@@ -85,8 +85,8 @@ public class PlayingModel extends State {
             hurryUpManager.update(playerModelOne);
             projectileManagerModel.update();
             itemManager.update();
-            rewardPointsManager.update();
-            powerUpManager.update();
+            rewardPointsManagerModel.update();
+            powerUpManagerModel.update();
         }
     }
 
@@ -115,8 +115,8 @@ public class PlayingModel extends State {
         playerBubblesManager.newPlayReset();
         specialBubbleManager.newPlayReset();
         itemManager.newPlayReset();
-        powerUpManager.newPlayReset();
-        rewardPointsManager.newPlayReset();
+        powerUpManagerModel.newPlayReset();
+        rewardPointsManagerModel.newPlayReset();
         introModel.newPlayReset();
 
         playerModelOne.reset(true, true);
@@ -146,7 +146,7 @@ public class PlayingModel extends State {
         projectileManagerModel.newLevelReset();
         playerModelOne.reset(false, false);
         itemManager.newPlayReset();
-        rewardPointsManager.newPlayReset();
+        rewardPointsManagerModel.newLevelReset();
 
         levelCompleted = false;
 

@@ -37,7 +37,7 @@ public class BubbleReward extends Item{
 
     @Override
     public void addPoints(PlayerModel playerModel) {
-        RewardPointsManager.getInstance(playerModel).addSmallPoints(GetPoints(type));
+        RewardPointsManagerModel.getInstance(playerModel).addSmallPoints(GetPoints(type));
     }
 
     @Override

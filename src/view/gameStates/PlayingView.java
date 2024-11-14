@@ -8,8 +8,8 @@ import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
 import itemesAndRewards.ItemManager;
-import itemesAndRewards.RewardPointsManager;
 import view.entities.PlayerView;
+import view.itemsAndRewards.RewardPointsManagerView;
 import view.levels.LevelManagerView;
 import view.overlays.GameCompletedOverlayView;
 import view.overlays.GameOverOverlayView;
@@ -72,7 +72,7 @@ public class PlayingView {
             PlayerBubblesManager.getInstance().draw(g);
             SpecialBubbleManager.getInstance().draw(g);
             ProjectileManagerView.getInstance().draw(g);
-            RewardPointsManager.getInstance().draw((Graphics2D) g);
+            RewardPointsManagerView.getInstance().draw((Graphics2D) g);
 
             if (playingModel.getPlayerOneModel().isActive())
                 playerOneView.draw((Graphics2D) g);
@@ -92,11 +92,13 @@ public class PlayingView {
         //TODO: sistemare reset per tutte le view
 
         ProjectileManagerView.getInstance().newLevelReset();
+        RewardPointsManagerView.getInstance().newLevelReset();
     }
 
     public void newPlayReset() {
         gamePauseOverlayView.reset();
         ProjectileManagerView.getInstance().newPlayReset();
+        RewardPointsManagerView.getInstance().newPlayReset();
     }
      
     public void initClasses(PlayerController playerController) {

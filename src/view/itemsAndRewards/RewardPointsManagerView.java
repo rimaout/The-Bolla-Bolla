@@ -1,93 +1,46 @@
-package itemesAndRewards;
+package view.itemsAndRewards;
 
+import itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.LoadSave;
-import model.entities.PlayerModel;
-import model.utilz.PlayingTimer;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static model.utilz.Constants.PointsManager.*;
-import static model.utilz.Constants.PointsManager.PointsType.*;
-import static model.utilz.Constants.PointsManager.BIG_DEFAULT_H;
 
-public class RewardPointsManager {
-    private static RewardPointsManager instance;
-    private final PlayerModel playerModel;
-    private final PlayingTimer timer = PlayingTimer.getInstance();
+public class RewardPointsManagerView {
+    private static RewardPointsManagerView instance;
 
     private BufferedImage[][] smallPointsSprites;
     private BufferedImage[] bigPointsSprites;
 
-    private ArrayList<Points> pointsToDraw;
-    private int consecutivePops;
-    private int consecutivePopsTimer;
+    private final ArrayList<PointsView> pointsViewArray = new ArrayList<>();
 
-    private RewardPointsManager(PlayerModel playerModel) {
-        this.playerModel = playerModel;
-        pointsToDraw = new ArrayList<>();
-
+    private RewardPointsManagerView() {
         loadPointsSprites();
     }
 
-    public static RewardPointsManager getInstance(PlayerModel playerModel) {
+    public static RewardPointsManagerView getInstance() {
         if (instance == null) {
-            instance = new RewardPointsManager(playerModel);
+            instance = new RewardPointsManagerView();
         }
         return instance;
-    }
-
-    public static RewardPointsManager getInstance() {
-        return instance;
-    }
-
-    public void update() {
-
-        updateTimer();
-        updateChainReactionReward();
-
-        for (Points p : pointsToDraw) {
-            if (p.isActive())
-                p.update();
-        }
     }
 
     public void draw(Graphics2D g) {
-        for (Points p : pointsToDraw) {
+        syncPointsViewsWithModel();
+
+        for (PointsView p : pointsViewArray) {
             if (p.isActive())
                 p.draw(g);
         }
     }
 
-    private void updateTimer() {
-        consecutivePopsTimer -= (int) timer.getTimeDelta();
-    }
-
-    public void addSmallPoints(int value) {
-        playerModel.addPoints(value);
-        pointsToDraw.add(new Points(value, playerModel.getHitbox().x, playerModel.getHitbox().y, SMALL));
-    }
-
-    public void addBigPoints(int value) {
-        playerModel.addPoints(value);
-        pointsToDraw.add(new Points(value, playerModel.getHitbox().x, playerModel.getHitbox().y, BIG));
-    }
-
-    public void addChainReactionReward(int consecutivePops) {
-        this.consecutivePops = consecutivePops;
-        restartConsecutivePopsTimer();
-    }
-
-    private void updateChainReactionReward() {
-        if (consecutivePopsTimer <= 0 && consecutivePops > 0) {
-            addBigPoints(1000 * (int) Math.pow(2, consecutivePops-1));
-            consecutivePops = 0;
-        }
-    }
-
-    private void restartConsecutivePopsTimer() {
-        consecutivePopsTimer = CONSECUTIVE_POP_DELAY;
+    private void syncPointsViewsWithModel() {
+        for (var p : RewardPointsManagerModel.getInstance().getPointsModelModelArray())
+            if (pointsViewArray.stream().noneMatch(pv -> pv.getPointsModel().equals(p)))
+                pointsViewArray.add(new PointsView(p));
     }
 
     public BufferedImage getSmallPointsImage(int value) {
@@ -148,8 +101,10 @@ public class RewardPointsManager {
     }
 
     public void newPlayReset() {
-        pointsToDraw.clear();
-        consecutivePops = 0;
-        consecutivePopsTimer = 0;
+        pointsViewArray.clear();
+    }
+
+    public void newLevelReset() {
+        pointsViewArray.clear();
     }
 }

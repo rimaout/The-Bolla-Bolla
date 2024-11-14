@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
-import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.PowerUpManagerModel;
 
 import static model.utilz.HelpMethods.*;
 
@@ -45,7 +45,7 @@ public abstract class Entity {
     protected void updateXPos(float xMovement) {
         if (CanMoveHere(hitbox.x + xMovement, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
             hitbox.x += xMovement;
-            PowerUpManager.getInstance().addDistance(xMovement);
+            PowerUpManagerModel.getInstance().addDistance(xMovement);
         }
     }
 
@@ -58,7 +58,7 @@ public abstract class Entity {
 
             if (!IsWall(xTile, yTile, levelManagerModel.getLevelData())) {
                 hitbox.x += xMovement;
-                PowerUpManager.getInstance().addDistance(xMovement);
+                PowerUpManagerModel.getInstance().addDistance(xMovement);
             }
         }
 
@@ -69,7 +69,7 @@ public abstract class Entity {
 
             if (!IsWall(xTile, yTile, levelManagerModel.getLevelData())) {
                 hitbox.x += xMovement;
-                PowerUpManager.getInstance().addDistance(xMovement);
+                PowerUpManagerModel.getInstance().addDistance(xMovement);
             }
         }
     }

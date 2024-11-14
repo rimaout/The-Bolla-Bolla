@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import model.entities.PlayerModel;
-import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.PowerUpManagerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.DEAD;
@@ -50,7 +50,7 @@ public class ChainExplosionManager {
 
     public void increaseEnemyBubblePopCounter() {
         enemyBubblePopCounter++;
-        PowerUpManager.getInstance().increaseBubblePopCounter();
+        PowerUpManagerModel.getInstance().increaseBubblePopCounter();
     }
 
     public int getEnemyBubblePopCounter() {

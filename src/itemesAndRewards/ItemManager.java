@@ -68,7 +68,7 @@ public class ItemManager {
             powerUpSpawned = true;
 
             Point spawnPoint = GetRandomPosition(LevelManagerModel.getInstance().getLevelData(), new Rectangle(0, 0, W, H));
-            PowerUpType powerUp = PowerUpManager.getInstance().getPowerUpToSpawn();
+            PowerUpType powerUp = PowerUpManagerModel.getInstance().getPowerUpToSpawn();
 
             if (powerUp != null) {
                 items.add(new PowerUp(spawnPoint.x, spawnPoint.y, powerUp));
@@ -87,7 +87,7 @@ public class ItemManager {
             item.addPoints(playerModel);
             item.applyEffect(playerModel);
             item.setPlaySound(true);
-            PowerUpManager.getInstance().increaseItemCollectCounter();
+            PowerUpManagerModel.getInstance().increaseItemCollectCounter();
         }
     }
 

@@ -49,13 +49,16 @@ public class ProjectileManagerView {
 
     private void syncProjectilesViewsWithModel() {
 
-        for (var p : projectileManagerModel.getProjectileModels())
+        for (var p : projectileManagerModel.getProjectileModels()) {
+
+            // if a projectile is not in the view, add it
             if (projectilesViews.stream().noneMatch(pv -> pv.projectileModel.equals(p)))
                 switch (p.getType()) {
                     case MAITA_FIREBALL -> projectilesViews.add(new MaitaFireProjectileView(p));
                     case PLAYER_BUBBLE -> projectilesViews.add(new PlayerBubbleProjectileView(p));
                     case LIGHTNING -> projectilesViews.add(new LightingProjectileView(p));
                 }
+        }
     }
 
     private void loadSprites() {

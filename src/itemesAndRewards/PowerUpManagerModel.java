@@ -10,8 +10,8 @@ import model.utilz.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
 
-public class PowerUpManager{
-    private static PowerUpManager instance;
+public class PowerUpManagerModel {
+    private static PowerUpManagerModel instance;
     private final PlayerModel playerModel;
 
     // PowerUp Flags
@@ -38,17 +38,17 @@ public class PowerUpManager{
     private int redCandyCounter = 0;
 
 
-    private PowerUpManager(PlayerModel playerModel){
+    private PowerUpManagerModel(PlayerModel playerModel){
         this.playerModel = playerModel;
     }
 
-    public static PowerUpManager getInstance(PlayerModel playerModel){
+    public static PowerUpManagerModel getInstance(PlayerModel playerModel){
         if (instance == null)
-            instance = new PowerUpManager(playerModel);
+            instance = new PowerUpManagerModel(playerModel);
         return instance;
     }
 
-    public static PowerUpManager getInstance(){
+    public static PowerUpManagerModel getInstance(){
         return instance;
     }
 

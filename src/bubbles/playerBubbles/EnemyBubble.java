@@ -5,7 +5,7 @@ import entities.Enemy;
 import entities.EnemyManager;
 import model.entities.PlayerModel;
 import itemesAndRewards.ItemManager;
-import itemesAndRewards.RewardPointsManager;
+import itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.Constants.AudioConstants;
 import model.utilz.Constants.Direction;
 
@@ -125,7 +125,7 @@ public class EnemyBubble extends EmptyBubble {
         if (!popped) {
             chainExplosionManager.increaseEnemyBubblePopCounter();
             consecutivePopsCounter = chainExplosionManager.getEnemyBubblePopCounter();
-            RewardPointsManager.getInstance().addChainReactionReward(consecutivePopsCounter);
+            RewardPointsManagerModel.getInstance().addChainReactionReward(consecutivePopsCounter);
         }
         
        playerPop(playerModel);

@@ -1,6 +1,6 @@
 package bubbles.specialBubbles;
 
-import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.PowerUpManagerModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
@@ -34,7 +34,7 @@ public class WaterBubble extends SpecialBubble {
         active = false;
         spawnWaterFlow();
 
-        PowerUpManager.getInstance().increaseWaterBubblePopCounter();
+        PowerUpManagerModel.getInstance().increaseWaterBubblePopCounter();
     }
 
     private void spawnWaterFlow() {

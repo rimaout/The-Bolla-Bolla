@@ -10,7 +10,7 @@ import model.entities.PlayerModel;
 import itemesAndRewards.BubbleReward;
 import itemesAndRewards.Item;
 import itemesAndRewards.ItemManager;
-import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.PowerUpManagerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.AudioConstants;
@@ -281,7 +281,7 @@ public class WaterFlow extends Entity {
             item.setActive(false);
             item.addPoints(playerModel);
             item.applyEffect(playerModel);
-            PowerUpManager.getInstance().increaseItemCollectCounter();
+            PowerUpManagerModel.getInstance().increaseItemCollectCounter();
         }
     }
 

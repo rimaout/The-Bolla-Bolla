@@ -6,7 +6,7 @@ import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.projectiles.ProjectileManagerModel;
-import itemesAndRewards.PowerUpManager;
+import itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
 import static model.utilz.Constants.*;
@@ -82,7 +82,7 @@ public class PlayerModel extends Entity {
 
         attackTimer = (int) (ATTACK_TIMER * bubbleCadenceMultiplier);
 
-        PowerUpManager.getInstance().increaseBubbleShootCounter();
+        PowerUpManagerModel.getInstance().increaseBubbleShootCounter();
         addPoints(bubbleShotPoints);     // rubyRing powerUp
     }
 
@@ -135,7 +135,7 @@ public class PlayerModel extends Entity {
             
             if(!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
-                PowerUpManager.getInstance().increaseJumpCounter();
+                PowerUpManagerModel.getInstance().increaseJumpCounter();
                 addPoints(jumpPoints);  //emeraldRing powerUp
             }
         }
@@ -195,7 +195,7 @@ public class PlayerModel extends Entity {
         inAir = true;
         isJumping = true;
         playJumpSound = true;
-        PowerUpManager.getInstance().increaseJumpCounter();
+        PowerUpManagerModel.getInstance().increaseJumpCounter();
     }
 
     private void jumping(){
@@ -274,7 +274,7 @@ public class PlayerModel extends Entity {
             hitbox.y = SPAWN_Y;
             lives--;
 
-            PowerUpManager.getInstance().reset();    // Reset all powerUps when player dies
+            PowerUpManagerModel.getInstance().reset();    // Reset all powerUps when player dies
         }
     }
 
