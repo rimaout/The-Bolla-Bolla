@@ -1,4 +1,4 @@
-package projectiles;
+package model.projectiles;
 
 import entities.Enemy;
 import entities.Entity;
@@ -7,8 +7,6 @@ import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileState;
 
 import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.Constants.ANIMATION_SPEED;
-import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
 public abstract class ProjectileModel extends Entity {

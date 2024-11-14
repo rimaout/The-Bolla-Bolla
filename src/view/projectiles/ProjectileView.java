@@ -1,7 +1,7 @@
 package view.projectiles;
 
 import model.utilz.Constants;
-import projectiles.ProjectileModel;
+import model.projectiles.ProjectileModel;
 import model.utilz.Constants.Projectiles.ProjectileState;
 
 import java.awt.*;
@@ -18,13 +18,15 @@ public abstract class ProjectileView {
 
     protected ProjectileView(ProjectileModel projectileModel) {
         this.projectileModel = projectileModel;
+
+        playSoundEffect();
     }
 
     protected abstract void draw(Graphics g);
-
     protected void update() {
         updateAnimationTick();
     }
+    protected abstract void playSoundEffect();
 
     protected void updateAnimationTick() {
         animationTick++;

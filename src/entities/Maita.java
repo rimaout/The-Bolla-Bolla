@@ -3,8 +3,8 @@ package entities;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
-import projectiles.ProjectileManagerModel;
-import projectiles.MaitaFireProjectileModel;
+import model.projectiles.ProjectileManagerModel;
+import model.projectiles.MaitaFireProjectileModel;
 
 import static model.utilz.HelpMethods.*;
 import static model.utilz.Constants.GRAVITY;

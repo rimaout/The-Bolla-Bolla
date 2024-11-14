@@ -3,7 +3,7 @@ package model.gameStates;
 import model.levels.Level;
 import model.utilz.Constants;
 import model.entities.PlayerModel;
-import model.audio.AudioPlayer;
+import view.audio.AudioPlayer;
 import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.INTRO.IntroState.*;

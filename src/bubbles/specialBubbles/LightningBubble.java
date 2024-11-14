@@ -4,8 +4,8 @@ import java.awt.*;
 
 import model.entities.PlayerModel;
 import model.utilz.Constants;
-import projectiles.ProjectileManagerModel;
-import projectiles.LightingProjectileModel;
+import model.projectiles.ProjectileManagerModel;
+import model.projectiles.LightingProjectileModel;
 import model.utilz.Constants.Projectiles.ProjectileType;
 
 import static model.utilz.Constants.Bubble.*;

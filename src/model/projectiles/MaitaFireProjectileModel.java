@@ -1,6 +1,4 @@
-package projectiles;
-
-import java.awt.*;
+package model.projectiles;
 
 import entities.Enemy;
 import model.entities.PlayerModel;

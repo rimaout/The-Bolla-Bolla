@@ -2,7 +2,7 @@ package view.projectiles;
 
 import model.utilz.Constants;
 import model.utilz.LoadSave;
-import projectiles.ProjectileManagerModel;
+import model.projectiles.ProjectileManagerModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

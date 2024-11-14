@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
-import model.audio.AudioPlayer;
+import view.audio.AudioPlayer;
 import model.utilz.PlayingTimer;
 import model.utilz.Constants.AudioConstants;
 

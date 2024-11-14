@@ -3,7 +3,7 @@ package itemesAndRewards;
 import java.awt.*;
 
 import model.entities.PlayerModel;
-import model.audio.AudioPlayer;
+import view.audio.AudioPlayer;
 import model.utilz.Constants.AudioConstants;
 
 import static model.utilz.Constants.Items.*;

@@ -1,10 +1,8 @@
-package projectiles;
+package model.projectiles;
 
 import entities.Enemy;
 import model.entities.PlayerModel;
-import model.audio.AudioPlayer;
 import model.utilz.Constants.Direction;
-import model.utilz.Constants.AudioConstants;
 
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Projectiles.*;
@@ -16,8 +14,6 @@ public class PlayerBubbleProjectileModel extends ProjectileModel {
     public PlayerBubbleProjectileModel(float x, float y, Direction direction) {
         super(x, y, direction, PLAYER_BUBBLE);
         this.direction = direction;
-
-        AudioPlayer.getInstance().playSoundEffect(AudioConstants.BUBBLE_SHOOT);
     }
 
     @Override

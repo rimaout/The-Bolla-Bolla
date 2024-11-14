@@ -10,7 +10,7 @@ import itemesAndRewards.PowerUpManager;
 import itemesAndRewards.RewardPointsManager;
 import model.levels.LevelManagerModel;
 import main.Game;
-import projectiles.ProjectileManagerModel;
+import model.projectiles.ProjectileManagerModel;
 import model.utilz.PlayingTimer;
 
 public class PlayingModel extends State {

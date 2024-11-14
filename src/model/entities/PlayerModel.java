@@ -1,13 +1,13 @@
 package model.entities;
 
 import entities.Entity;
-import model.audio.AudioPlayer;
+import view.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
-import projectiles.ProjectileManagerModel;
+import model.projectiles.ProjectileManagerModel;
 import itemesAndRewards.PowerUpManager;
-import projectiles.PlayerBubbleProjectileModel;
+import model.projectiles.PlayerBubbleProjectileModel;
 
 import static model.utilz.Constants.*;
 import static model.utilz.HelpMethods.*;

@@ -1,6 +1,6 @@
 package view.projectiles;
 
-import projectiles.ProjectileModel;
+import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
@@ -16,5 +16,10 @@ public class MaitaFireProjectileView extends ProjectileView {
     @Override
     protected void draw(Graphics g) {
         g.drawImage(projectileManagerView.getSprites(MAITA_FIREBALL)[getAnimation(projectileModel.getState())][animationIndex], (int) projectileModel.getHitbox().x + OFFSET_X, (int) projectileModel.getHitbox().y + OFFSET_Y, W, H, null);
+    }
+
+    @Override
+    protected void playSoundEffect() {
+        // not used, MaitaFireProjectiles don't have a sound effect
     }
 }

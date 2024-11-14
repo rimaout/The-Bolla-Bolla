@@ -2,8 +2,10 @@ package view.projectiles;
 
 import bubbles.playerBubbles.EmptyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
-import projectiles.ProjectileManagerModel;
-import projectiles.ProjectileModel;
+import view.audio.AudioPlayer;
+import model.utilz.Constants;
+import model.projectiles.ProjectileManagerModel;
+import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
@@ -19,6 +21,11 @@ public class PlayerBubbleProjectileView extends ProjectileView {
     @Override
     public void draw(Graphics g) {
         g.drawImage(projectileManagerView.getSprites(PLAYER_BUBBLE)[0][animationIndex], (int) projectileModel.getHitbox().x, (int) projectileModel.getHitbox().y, W, H, null);
+    }
+
+    @Override
+    protected void playSoundEffect() {
+        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.BUBBLE_SHOOT);
     }
 
     @Override

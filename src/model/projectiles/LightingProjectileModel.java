@@ -1,9 +1,8 @@
-package projectiles;
+package model.projectiles;
 
 
 import entities.Enemy;
 import model.entities.PlayerModel;
-import model.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileType;
@@ -16,8 +15,6 @@ public class LightingProjectileModel extends ProjectileModel {
 
     public LightingProjectileModel(float x, float y, ProjectileType type) {
         super(x, y, CalculateLightingDirection(x), type);
-
-        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.LIGHTNING);
     }
 
     @Override

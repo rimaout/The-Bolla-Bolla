@@ -1,6 +1,6 @@
 package controller;
 
-import model.audio.AudioPlayer;
+import view.audio.AudioPlayer;
 import model.gameStates.GameState;
 import model.gameStates.PlayingModel;
 

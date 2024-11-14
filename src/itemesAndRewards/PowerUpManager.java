@@ -4,7 +4,7 @@ import static java.lang.Math.abs;
 
 import model.entities.PlayerModel;
 import entities.EnemyManager;
-import projectiles.ProjectileManagerModel;
+import model.projectiles.ProjectileManagerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Items.PowerUpType;
 
