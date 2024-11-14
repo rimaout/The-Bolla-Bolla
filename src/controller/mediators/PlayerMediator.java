@@ -1,4 +1,4 @@
-package controller.mediator;
+package controller.mediators;
 
 import model.entities.PlayerModel;
 

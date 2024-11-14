@@ -145,6 +145,11 @@ public class PlayerBubblesManager {
         bubbles.add(bubble);
     }
 
+    public void createEmptyBubble(float x, float y, Constants.Direction direction) {
+        EmptyBubble emptyBubble = new EmptyBubble(x, y, direction);
+        bubbles.add(emptyBubble);
+    }
+
     public void addDeadEnemy(Enemy e, PlayerModel playerModel) {
         EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, playerModel.getDirection());
         deadEnemyBubble.playerPop(playerModel);

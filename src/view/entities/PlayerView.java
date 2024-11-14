@@ -1,7 +1,7 @@
 package view.entities;
 
 import controller.PlayerController;
-import controller.mediator.PlayerMediator;
+import controller.mediators.PlayerMediator;
 import model.entities.PlayerModel;
 import model.utilz.LoadSave;
 

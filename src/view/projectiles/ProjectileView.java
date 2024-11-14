@@ -1,5 +1,6 @@
 package view.projectiles;
 
+import controller.mediators.ProjectileMediator;
 import model.utilz.Constants;
 import model.projectiles.ProjectileModel;
 import model.utilz.Constants.Projectiles.ProjectileState;
@@ -40,8 +41,7 @@ public abstract class ProjectileView {
 
         // Deactivate projectile after impact animation
         if (projectileModel.getState() == IMPACT && animationIndex == getSpriteAmount(projectileModel.getState(), projectileModel.getType()) - 1) {
-            projectileModel.setActive(false);   // TODO: use controller as a mediator between view and model
-                                                // use a static class with a static method that takes a projectileModel and sets it to inactive
+            ProjectileMediator.deactivateProjectile(projectileModel);
         }
     }
 

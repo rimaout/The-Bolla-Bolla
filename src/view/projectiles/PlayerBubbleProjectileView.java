@@ -2,6 +2,7 @@ package view.projectiles;
 
 import bubbles.playerBubbles.EmptyBubble;
 import bubbles.playerBubbles.PlayerBubblesManager;
+import controller.mediators.ProjectileMediator;
 import view.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.projectiles.ProjectileManagerModel;
@@ -41,9 +42,8 @@ public class PlayerBubbleProjectileView extends ProjectileView {
             animationIndex++;
             if (animationIndex >= 4) {
 
-                // TODO: use controller as a mediator between view and model
-                projectileModel.setActive(false);
-                PlayerBubblesManager.getInstance().addBubble(new EmptyBubble(projectileModel.getHitbox().x, projectileModel.getHitbox().y, projectileModel.getDirection()));
+                ProjectileMediator.deactivateProjectile(projectileModel);
+                ProjectileMediator.createEmptyBubbleFromPlayerProjectile(projectileModel);
             }
         }
     }
