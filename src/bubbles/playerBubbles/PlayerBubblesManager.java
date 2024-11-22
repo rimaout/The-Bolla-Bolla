@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import bubbles.Bubble;
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
@@ -150,7 +150,7 @@ public class PlayerBubblesManager {
         bubbles.add(emptyBubble);
     }
 
-    public void addDeadEnemy(Enemy e, PlayerModel playerModel) {
+    public void addDeadEnemy(EnemyModel e, PlayerModel playerModel) {
         EnemyBubble deadEnemyBubble = new EnemyBubble(e, e.getHitbox().x, e.getHitbox().y, playerModel.getDirection());
         deadEnemyBubble.playerPop(playerModel);
         bubbles.add(deadEnemyBubble);

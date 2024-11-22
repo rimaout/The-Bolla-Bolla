@@ -1,6 +1,6 @@
 package model.projectiles;
 
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 
@@ -32,16 +32,12 @@ public class MaitaFireProjectileModel extends ProjectileModel {
                 hitbox.x += xSpeed;
             else {
                 state = IMPACT;
-
-                // Reset animation
-                animationIndex = 0;
-                animationTick = 0;
             }
         }
     }
 
     @Override
-    public void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
+    public void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel) {
         // not used, MaitaFireProjectiles can't hit enemies
     }
 
@@ -55,10 +51,6 @@ public class MaitaFireProjectileModel extends ProjectileModel {
         if (hitbox.intersects(playerModel.getHitbox()) && !playerModel.isRespawning()) {
             playerModel.death();
             state = IMPACT;
-
-            // Reset animation
-            animationIndex = 0;
-            animationTick = 0;
         }
     }
 }

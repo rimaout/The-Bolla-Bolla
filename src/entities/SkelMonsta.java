@@ -1,7 +1,10 @@
 package entities;
 
+import model.entities.EnemyManagerModel;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
+import view.entities.EnemyManagerView;
 
 import java.awt.*;
 
@@ -10,7 +13,7 @@ import static model.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.EnemyConstants.*;
 import static model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
-public class SkelMonsta extends Enemy{
+public class SkelMonsta extends EnemyModel {
 
     private int nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
     private float walkedDistance = 0;
@@ -18,6 +21,8 @@ public class SkelMonsta extends Enemy{
     private boolean spawning = true;
     private boolean moving = false;
     private boolean despawning = false;
+
+    int animationTick, animationIndex;
 
     public SkelMonsta() {
         super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_W, ENEMY_H, SKEL_MONSTA, RIGHT);
@@ -29,7 +34,7 @@ public class SkelMonsta extends Enemy{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(EnemyManager.getInstance().getEnemySprite(SKEL_MONSTA)[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
+        g.drawImage(EnemyManagerView.getInstance().getEnemySprite(SKEL_MONSTA)[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
     }
 
     @Override
@@ -44,7 +49,6 @@ public class SkelMonsta extends Enemy{
         checkPlayerHit(playerModel);
     }
 
-    @Override
     protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED) {
@@ -83,7 +87,7 @@ public class SkelMonsta extends Enemy{
             HurryUpManager.getInstance().newLevelReset();
         }
 
-        if (EnemyManager.getInstance().getActiveEnemiesCount() == 0 && !despawning)
+        if (EnemyManagerModel.getInstance().getActiveEnemiesCount() == 0 && !despawning)
             despawn();
     }
 

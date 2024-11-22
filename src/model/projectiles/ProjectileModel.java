@@ -1,7 +1,7 @@
 package model.projectiles;
 
-import entities.Enemy;
-import entities.Entity;
+import model.entities.EnemyModel;
+import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileState;
@@ -9,7 +9,7 @@ import model.utilz.Constants.Projectiles.ProjectileState;
 import static model.utilz.Constants.Projectiles.*;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
-public abstract class ProjectileModel extends Entity {
+public abstract class ProjectileModel extends EntityModel {
     protected final ProjectileManagerModel projectileManagerModel = ProjectileManagerModel.getInstance();
 
     protected ProjectileState state = MOVING;
@@ -29,7 +29,7 @@ public abstract class ProjectileModel extends Entity {
     }
 
     protected abstract void updatePos();
-    protected abstract void checkEnemyHit(Enemy enemy, PlayerModel playerModel);
+    protected abstract void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel);
     protected abstract void checkPlayerHit(PlayerModel playerModel);
 
     public ProjectileState getState() {

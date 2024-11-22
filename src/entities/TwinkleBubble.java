@@ -1,5 +1,6 @@
 package entities;
 
+import model.entities.EntityModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import static model.utilz.Constants.Direction.*;
@@ -10,11 +11,12 @@ import static model.utilz.Constants.ANIMATION_SPEED;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TwinkleBubble extends Entity {
+public class TwinkleBubble extends EntityModel {
     private final TwinkleBubbleManager manager;
 
     private BufferedImage[] sprite;
     private Direction direction;
+    int animationIndex, animationTick;
 
     public TwinkleBubble(BufferedImage[] sprite, int startX, int startY, TwinkleBubbleManager manager) {
         super(startX, startY, BUBBLE_W, BUBBLE_H);

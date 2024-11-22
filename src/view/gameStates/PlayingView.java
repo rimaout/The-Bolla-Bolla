@@ -4,9 +4,9 @@ import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
 import controller.PlayerController;
 import controller.PlayingController;
-import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
+import view.entities.EnemyManagerView;
 import view.entities.PlayerView;
 import view.itemsAndRewards.ItemManagerView;
 import view.itemsAndRewards.RewardPointsManagerView;
@@ -26,14 +26,9 @@ public class PlayingView {
     private PlayerView playerTwoView = null;
 
     private LevelManagerView levelManagerView;
-//    private EnemyManagerView enemyManagerView;
 //    private HurryUpManagerView hurryUpManagerView;
 //    private PlayerBubblesManagerView playerBubblesManagerView;
 //    private SpecialBubbleManagerView specialBubbleManagerView;
-//    private ProjectileManagerView projectileManagerView;
-//    private ItemManagerView itemManagerView;
-//    private RewardPointsManagerView rewardPointsManagerView;
-//    private PowerUpManagerView powerUpManagerView;
 
     private GamePausedOverlayView gamePauseOverlayView;
     private GameOverOverlayView gameOverOverlayView;
@@ -56,6 +51,7 @@ public class PlayingView {
         playerOneView.update();
         introView.updatePlayerAnimation();
         ProjectileManagerView.getInstance().update();
+        EnemyManagerView.getInstance().update();
     }
 
     public void draw(Graphics g) {
@@ -67,7 +63,7 @@ public class PlayingView {
             levelManagerView.draw(g);
             ItemManagerView.getInstance().draw(g);
             playingHud.draw(g);
-            EnemyManager.getInstance().draw(g);
+            EnemyManagerView.getInstance().draw(g);
             HurryUpManager.getInstance().draw(g);
             PlayerBubblesManager.getInstance().draw(g);
             SpecialBubbleManager.getInstance().draw(g);
@@ -94,6 +90,7 @@ public class PlayingView {
         ProjectileManagerView.getInstance().newLevelReset();
         RewardPointsManagerView.getInstance().newLevelReset();
         ItemManagerView.getInstance().newLevelReset();
+        EnemyManagerView.getInstance().newLevelReset();
     }
 
     public void newPlayReset() {
@@ -101,6 +98,7 @@ public class PlayingView {
         ProjectileManagerView.getInstance().newPlayReset();
         RewardPointsManagerView.getInstance().newPlayReset();
         ItemManagerView.getInstance().newPlayReset();
+        EnemyManagerView.getInstance().newPlayReset();
     }
      
     public void initClasses(PlayerController playerController) {
@@ -108,14 +106,9 @@ public class PlayingView {
 
         levelManagerView = LevelManagerView.getInstance();
 
-        //        enemyManagerView = new EnemyManagerView();
 //        hurryUpManagerView = new HurryUpManagerView();
 //        playerBubblesManagerView = new PlayerBubblesManagerView();
 //        specialBubbleManagerView = new SpecialBubbleManagerView();
-//        projectileManagerView = new ProjectileManagerView();
-//        itemManagerView = new ItemManagerView();
-//        rewardPointsManagerView = new RewardPointsManagerView();
-//        powerUpManagerView = new PowerUpManagerView();
         introView = new IntroView(playingModel.getIntroModel());
 
         playingHud = PlayingHud.getInstance(playingModel);

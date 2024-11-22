@@ -11,7 +11,7 @@ import static model.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.PlayerConstants.*;
 import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
 
-public class PlayerView {
+public class PlayerView{
     private final PlayerModel playerModel;
 
     private BufferedImage[][] sprites;

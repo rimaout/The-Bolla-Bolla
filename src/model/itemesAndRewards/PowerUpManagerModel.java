@@ -3,7 +3,7 @@ package model.itemesAndRewards;
 import static java.lang.Math.abs;
 
 import model.entities.PlayerModel;
-import entities.EnemyManager;
+import model.entities.EnemyManagerModel;
 import model.projectiles.ProjectileManagerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Items.PowerUpType;
@@ -80,7 +80,7 @@ public class PowerUpManagerModel {
 
         if (chacknHeart) {
             playerModel.setChacknHeartImmunity(15000);
-            EnemyManager.getInstance().setChacknHeartfreeze(15000);
+            EnemyManagerModel.getInstance().setChacknHeartfreeze(15000);
             chacknHeart = false;
         }
 

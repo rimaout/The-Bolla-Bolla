@@ -1,7 +1,7 @@
 package model.projectiles;
 
 
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
@@ -33,15 +33,15 @@ public class LightingProjectileModel extends ProjectileModel {
     }
 
     @Override
-    protected void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
+    protected void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel) {
         //Parameters: enemy  = enemy that is being checked for collision with projectile
         //            player = player to add score to if the enemy is killed
 
-        if (!enemy.isActive() || enemy.isImmune())
+        if (!enemyModel.isActive() || enemyModel.isImmune())
             return;
 
-        if (hitbox.intersects(enemy.getHitbox())) {
-            enemy.instantKill(playerModel);
+        if (hitbox.intersects(enemyModel.getHitbox())) {
+            enemyModel.instantKill(playerModel);
             active = false;
         }
     }

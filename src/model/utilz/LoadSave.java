@@ -1,9 +1,9 @@
 package model.utilz;
 
 import bubbles.specialBubbles.BubbleGenerator;
-import entities.Enemy;
-import entities.Maita;
-import entities.ZenChan;
+import model.entities.EnemyModel;
+import model.entities.MaitaModel;
+import model.entities.ZenChanModel;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -167,7 +167,7 @@ public class LoadSave {
         return levelData;
     }
 
-    public static ArrayList<Enemy> GetEnemies(BufferedImage img) {
+    public static ArrayList<EnemyModel> GetEnemies(BufferedImage img) {
 
         //enemies type and position and direction are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile info
         // the green component of the pixel determines the type of enemy and facing direction
@@ -178,7 +178,7 @@ public class LoadSave {
         //      3 -> Maita facing left
         //      4 -> Maita facing right
 
-        ArrayList<Enemy> list = new ArrayList<>();
+        ArrayList<EnemyModel> list = new ArrayList<>();
 
         for(int x = 0; x < img.getHeight(); x++)
             for (int y = 0; y < img.getWidth(); y++) {
@@ -189,10 +189,10 @@ public class LoadSave {
                     green = 0;
 
                 switch (green) {
-                    case ZEN_CHAN_LEFT -> list.add(new ZenChan(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
-                    case ZEN_CHAN_RIGHT -> list.add(new ZenChan(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
-                    case MAITA_LEFT -> list.add(new Maita(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
-                    case MAITA_RIGHT -> list.add(new Maita(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
+                    case ZEN_CHAN_LEFT -> list.add(new ZenChanModel(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
+                    case ZEN_CHAN_RIGHT -> list.add(new ZenChanModel(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
+                    case MAITA_LEFT -> list.add(new MaitaModel(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, LEFT));
+                    case MAITA_RIGHT -> list.add(new MaitaModel(y * Constants.TILES_SIZE, x * Constants.TILES_SIZE, RIGHT));
                 }
             }
         return list;

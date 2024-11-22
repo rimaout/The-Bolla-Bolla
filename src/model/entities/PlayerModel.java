@@ -1,6 +1,5 @@
 package model.entities;
 
-import entities.Entity;
 import view.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
@@ -15,7 +14,7 @@ import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.PlayerConstants.*;
 
-public class PlayerModel extends Entity {
+public class PlayerModel extends EntityModel {
     private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     private final PlayingTimer timer = PlayingTimer.getInstance();
 

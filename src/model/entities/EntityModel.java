@@ -1,6 +1,5 @@
-package entities;
+package model.entities;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import model.utilz.Constants;
@@ -10,7 +9,7 @@ import model.itemesAndRewards.PowerUpManagerModel;
 
 import static model.utilz.HelpMethods.*;
 
-public abstract class Entity {
+public abstract class EntityModel {
     protected final PlayingTimer timer = PlayingTimer.getInstance();
     protected LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
 
@@ -18,13 +17,10 @@ public abstract class Entity {
     protected int width, height;
     protected Rectangle2D.Float hitbox;
 
-    protected int animationIndex;       //TODO: remove from here move to view (MVC)
-    protected float animationTick;      //TODO: remove from here move to view (MVC)
-
     protected boolean immune = false;
     protected boolean active = true;
 
-    public Entity(float x, float y, int width, int height) {
+    public EntityModel(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -33,13 +29,6 @@ public abstract class Entity {
 
     protected void initHitbox(float width, float height) {
         hitbox = new Rectangle2D.Float(x, y, width, height);
-    }
-
-    public void drawHitbox(Graphics g) {
-        // For debugging purposes
-
-        g.setColor(Color.RED);
-        g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
     }
 
     protected void updateXPos(float xMovement) {
@@ -84,10 +73,6 @@ public abstract class Entity {
 
     public Rectangle2D.Float getHitbox() {
         return hitbox;
-    }
-
-    public int getAnimationIndex() {
-        return animationIndex;
     }
 
     public boolean isImmune() {

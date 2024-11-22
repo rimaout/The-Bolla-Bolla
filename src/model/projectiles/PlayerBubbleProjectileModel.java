@@ -1,6 +1,6 @@
 package model.projectiles;
 
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 
@@ -32,16 +32,16 @@ public class PlayerBubbleProjectileModel extends ProjectileModel {
     }
 
     @Override
-    protected void checkEnemyHit(Enemy enemy, PlayerModel playerModel) {
+    protected void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel) {
         // Parameters: enemy  = enemy that is being checked for collision with projectile
         //             player = player to add score to if the enemy is killed (not used in this case)
 
-        if (!enemy.isActive() || enemy.isImmune())
+        if (!enemyModel.isActive() || enemyModel.isImmune())
             return;
 
-        if (hitbox.intersects(enemy.getHitbox())) {
-            if (hitbox.intersects(enemy.getHitbox())) {
-                enemy.bubbleCapture(direction);
+        if (hitbox.intersects(enemyModel.getHitbox())) {
+            if (hitbox.intersects(enemyModel.getHitbox())) {
+                enemyModel.bubbleCapture(direction);
                 active = false;
             }
         }

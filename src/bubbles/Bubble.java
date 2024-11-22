@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-import entities.Entity;
+import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
@@ -16,7 +16,7 @@ import static model.utilz.Constants.Direction;
 import static model.utilz.Constants.Direction.*;
 import static model.utilz.HelpMethods.IsEntityInsideMap;
 
-public abstract class Bubble extends Entity {
+public abstract class Bubble extends EntityModel {
 
     protected final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     protected final PlayingTimer timer = PlayingTimer.getInstance();
@@ -37,6 +37,8 @@ public abstract class Bubble extends Entity {
     protected float xSpeed, ySpeed;
     protected Direction direction;
     protected Direction previousDirection;
+
+    protected int animationIndex, animationTick; // todo: remove later for MVC
 
     public Bubble(float x, float y, Direction direction) {
         super(x, y, IMAGE_W, IMAGE_H);

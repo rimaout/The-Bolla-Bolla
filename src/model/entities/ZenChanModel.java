@@ -1,19 +1,17 @@
-package entities;
+package model.entities;
 
-import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
-import model.projectiles.ProjectileManagerModel;
-import model.projectiles.MaitaFireProjectileModel;
 
 import static model.utilz.HelpMethods.*;
 import static model.utilz.Constants.GRAVITY;
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.EnemyConstants.*;
-import static model.utilz.Constants.EnemyConstants.EnemyType.MAITA;
+import static model.utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN;
 
-public class Maita extends Enemy {
+public class ZenChanModel extends EnemyModel {
+    private boolean firstUpdate = true;
 
     // Fly Variables
     private int flyDirectionChangeCounter = 0;
@@ -23,16 +21,12 @@ public class Maita extends Enemy {
 
     // Player Info Update variables
     private int playerUpdateTimer;
-    private int fireBallTimer;
-
-    private boolean fireBallReady = false;
-    private boolean firstUpdate = true;
 
     // Jump Variables
     private int jumpDistance = 0;
 
-    public Maita(float x, float y, Direction startWalkingDir) {
-        super(x, y, ENEMY_W, ENEMY_H, MAITA, startWalkingDir);
+    public ZenChanModel(float x, float y, Direction startWalkingDir) {
+        super(x, y, ENEMY_W, ENEMY_H, ZEN_CHAN, startWalkingDir);
         this.startWalkingDir = startWalkingDir;
         initHitbox(ENEMY_HITBOX_W, ENEMY_HITBOX_H);
     }
@@ -40,9 +34,8 @@ public class Maita extends Enemy {
     @Override
     public void update(PlayerModel playerModel) {
         loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
-        updateAnimationTick();
 
-        if (!EnemyManager.getInstance().didAllEnemiesReachedSpawn()) {
+        if (!EnemyManagerModel.getInstance().didAllEnemiesReachedSpawn()) {
             if (!reachedSpawn)
                 updateSpawning();
             return;
@@ -51,30 +44,21 @@ public class Maita extends Enemy {
         if (firstUpdate)
             firstUpdate();
 
-        updateTimers(playerModel);
+        updateTimers();
         updatePlayerInfo(playerModel);
         updateMove();
         updateStateVariables();
-
-        checkFireBall(playerModel);
     }
 
     private void firstUpdate() {
         if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
             goDown = true;
 
-        fireBallTimer = FIREBALL_INITIAL_TIMER;
         firstUpdate = false;
     }
 
-    private void updateTimers(PlayerModel playerModel) {
+    private void updateTimers() {
         playerUpdateTimer -= (int) timer.getTimeDelta();
-
-        if (playerModel.getTileY() == getTileY())
-            fireBallTimer -= (int) timer.getTimeDelta();
-
-        if (fireBallTimer <= 0)
-            fireBallReady = true;
     }
 
     private void updateMove() {
@@ -121,13 +105,13 @@ public class Maita extends Enemy {
         else
             xSpeed = walkSpeed;
 
+        // check if there is a solid tile in front of the enemy
         if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
 
-            if (walkingDir==LEFT && !IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, levelManagerModel.getLevelData())
-                    || walkingDir==RIGHT && !IsSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, levelManagerModel.getLevelData())) {
+            // check if there is a solid tile below the enemy
+            if (!isNextPosFloorSolid()) {
 
                 if(goDown){
-
                     if(!canFall()){
                         goDown = false;
                         return;
@@ -242,7 +226,7 @@ public class Maita extends Enemy {
             // fall ended
             hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManagerModel.getLevelData());
             isFalling = false;
-        }
+         }
     }
 
     private void goOnFloor() {
@@ -258,23 +242,21 @@ public class Maita extends Enemy {
         // This method checks if the next two tiles in front of the enemy are solid or not
         // It's used to check if the enemy can jump/fall or not
 
-        int yTile = 0, xTile1 = 0, xTile2 = 0;
+        float yPos =  hitbox.y + hitbox.height + 1;
+        float xPos1 = 0, xPos2 = 0;
 
         //check if there are 2 solid tiles in front of the enemy
         if (walkingDir == LEFT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
-            xTile1 = (int) hitbox.x / Constants.TILES_SIZE;
-            xTile2 = xTile1 - 1;
+            xPos1 = hitbox.x - 1;
+            xPos2 = hitbox.x - Constants.TILES_SIZE - 1;
         }
 
         else if (walkingDir == RIGHT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
-            xTile1 = (int) (hitbox.x + hitbox.width) / Constants.TILES_SIZE;
-            xTile2 = xTile1 + 1;
+            xPos1 = hitbox.x + hitbox.width + 1;
+            xPos2 = hitbox.x + hitbox.width + Constants.TILES_SIZE + 1;
         }
 
-        return IsTileSolid(xTile1, yTile, levelManagerModel.getLevelData())
-                || IsTileSolid(xTile2, yTile, levelManagerModel.getLevelData());
+        return IsSolid(xPos1, yPos, levelManagerModel.getLevelData()) && IsSolid(xPos2, yPos, levelManagerModel.getLevelData());
     }
 
     private boolean canJump(int jumpDistance) {
@@ -334,7 +316,8 @@ public class Maita extends Enemy {
         return -1;
     }
 
-    protected boolean canFly(){
+
+    private boolean canFly(){
 
         // TODO: Refactor - this method checks fi there is a solid tile to fly on, ig there is checks if there is a empty tile on top
 
@@ -357,18 +340,7 @@ public class Maita extends Enemy {
         return (oneUpSolid && twoUpEmpty) || (twoUpSolid && threeUpEmpty) || (threeUpSolid && fourUpEmpty);
     }
 
-    private void checkFireBall(PlayerModel playerModel) {
-        if (fireBallReady && playerModel.getTileY() == getTileY() && isPlayerInViewingRange(playerModel)) {
-            ProjectileManagerModel.getInstance().addProjectile(new MaitaFireProjectileModel(hitbox.x, hitbox.y, isPlayerLeftOrRight(playerModel)));
-
-            fireBallTimer = FIREBALL_TIMER;
-            fireBallReady = false;
-        }
-    }
-
     private void updatePlayerInfo(PlayerModel playerModel){
-
-        // update player info in a random interval between 0-8 seconds
 
         if (playerUpdateTimer <= 0) {
             calculatePlayersPos(playerModel);
@@ -389,16 +361,12 @@ public class Maita extends Enemy {
         flyStartTime = 0;
         didFlyInsideSolid = false;
         playerUpdateTimer = 0;
-        fireBallTimer = FIREBALL_INITIAL_TIMER;
-        fireBallReady = false;
-
-        firstUpdate = true;
     }
 
     @Override
     public void bubbleCapture(Direction direction) {
         super.bubbleCapture(direction);
-
+        
         isFalling = false;
         isJumping = false;
         goUp = false;
@@ -412,6 +380,6 @@ public class Maita extends Enemy {
 
     @Override
     public EnemyType getEnemyType() {
-        return MAITA;
+        return ZEN_CHAN;
     }
 }

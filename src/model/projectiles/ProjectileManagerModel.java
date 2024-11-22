@@ -2,9 +2,9 @@ package model.projectiles;
 
 import java.util.ArrayList;
 
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import entities.EnemyManager;
+import model.entities.EnemyManagerModel;
 
 public class ProjectileManagerModel {
     private static ProjectileManagerModel instance;
@@ -46,8 +46,8 @@ public class ProjectileManagerModel {
     private void updateEntityCollisions(ProjectileModel p) {
         p.checkPlayerHit(playerModel);
 
-        for (Enemy enemy : EnemyManager.getInstance().getEnemies())
-            p.checkEnemyHit(enemy, playerModel);
+        for (EnemyModel enemyModel : EnemyManagerModel.getInstance().getEnemiesModels())
+            p.checkEnemyHit(enemyModel, playerModel);
     }
 
     public void addProjectile(ProjectileModel projectileModel) {

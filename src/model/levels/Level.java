@@ -1,6 +1,6 @@
 package model.levels;
 
-import entities.Enemy;
+import model.entities.EnemyModel;
 import model.utilz.LoadSave;
 import model.utilz.Constants.Direction;
 import bubbles.specialBubbles.BubbleGenerator;
@@ -14,7 +14,7 @@ public class Level {
     private int[][] levelData;
     private Direction[][] windDirectionData;
     private BubbleGenerator bubbleGenerator;
-    private ArrayList<Enemy> Enemies;
+    private ArrayList<EnemyModel> Enemies;
 
     public Level(BufferedImage levelIMap) {
         this.levelIMap = levelIMap;
@@ -56,7 +56,7 @@ public class Level {
         return bubbleGenerator;
     }
 
-    public ArrayList<Enemy> getEnemies() {
+    public ArrayList<EnemyModel> getEnemies() {
         return Enemies;
     }
 

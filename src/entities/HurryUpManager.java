@@ -3,6 +3,7 @@ package entities;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import model.entities.EnemyManagerModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
@@ -70,7 +71,7 @@ public class HurryUpManager {
         startAnimationTimer -= (int) timer.getTimeDelta();
         startHurryUpTimer -= (int) timer.getTimeDelta();
 
-        if (EnemyManager.getInstance().areAllEnemiesDead())
+        if (EnemyManagerModel.getInstance().areAllEnemiesDead())
             restart();
 
         if (startAnimationTimer <= 0) {
@@ -127,7 +128,7 @@ public class HurryUpManager {
     public void startHurryUp() {
         animationActive = false;
         skelMonsta.activate();
-        EnemyManager.getInstance().setAllHungry();
+        EnemyManagerModel.getInstance().setAllHungry();
     }
 }
 

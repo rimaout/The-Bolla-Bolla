@@ -1,13 +1,14 @@
 package bubbles.playerBubbles;
 
 import view.audio.AudioPlayer;
-import entities.Enemy;
-import entities.EnemyManager;
+import model.entities.EnemyModel;
+import model.entities.EnemyManagerModel;
 import model.entities.PlayerModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.Constants.AudioConstants;
 import model.utilz.Constants.Direction;
+import view.entities.EnemyManagerView;
 
 import java.awt.*;
 import java.util.Random;
@@ -21,9 +22,10 @@ import static model.utilz.HelpMethods.*;
 
 public class EnemyBubble extends EmptyBubble {
 
-    private final EnemyManager enemyManager = EnemyManager.getInstance();
+    private final EnemyManagerModel enemyManagerModel = EnemyManagerModel.getInstance();
+    private final EnemyManagerView enemyManagerView = EnemyManagerView.getInstance(); //todo: remove later for mvc
     private final Random random = new Random();
-    private final Enemy enemy;
+    private final EnemyModel enemyModel;
 
     private float ySpeedDead;
     private float xSpeedDead;
@@ -31,28 +33,28 @@ public class EnemyBubble extends EmptyBubble {
     private int consecutivePopsCounter;
     private boolean playPopSound = false;
 
-    public EnemyBubble(Enemy enemy, float x, float y, Direction direction) {
+    public EnemyBubble(EnemyModel enemyModel, float x, float y, Direction direction) {
         super(x, y, direction);
         this.state = NORMAL;
-        this.enemy = enemy;
+        this.enemyModel = enemyModel;
     }
 
     @Override
     public void draw(Graphics g) {
 
         if (state == NORMAL)
-            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
 
         else if (state == RED || state == BLINKING)
-            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
 
         else if (state == POP_NORMAL)
-            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_GREEN_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_GREEN_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
 
         else if (state == POP_RED)
-            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
         else if (state == DEAD)
-            g.drawImage(enemyManager.getEnemySprite(enemy.getEnemyType())[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
 
         if (playPopSound) {
             playPopSound = false;
@@ -63,11 +65,11 @@ public class EnemyBubble extends EmptyBubble {
 
     public void respawnEnemy() {
         if (!playerPopped) {
-            enemy.resetEnemy();
-            enemy.getHitbox().x = hitbox.x;
-            enemy.getHitbox().y = hitbox.y;
-            enemy.setEnemyState(HUNGRY_STATE);
-            enemy.setActive(true);
+            enemyModel.resetEnemy();
+            enemyModel.getHitbox().x = hitbox.x;
+            enemyModel.getHitbox().y = hitbox.y;
+            enemyModel.setEnemyState(HUNGRY_STATE);
+            enemyModel.setActive(true);
         }
     }
 
@@ -115,7 +117,7 @@ public class EnemyBubble extends EmptyBubble {
             animationTick = 0;
         }
 
-        enemy.setAlive(false);
+        enemyModel.setAlive(false);
     }
 
 
@@ -149,7 +151,7 @@ public class EnemyBubble extends EmptyBubble {
         animationIndex = 0;
         animationTick = 0;
 
-        enemy.setAlive(false);
+        enemyModel.setAlive(false);
 
         playPopSound = true;
     }
