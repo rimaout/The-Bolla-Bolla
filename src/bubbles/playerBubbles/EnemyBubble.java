@@ -4,8 +4,8 @@ import view.audio.AudioPlayer;
 import entities.Enemy;
 import entities.EnemyManager;
 import model.entities.PlayerModel;
-import itemesAndRewards.ItemManager;
-import itemesAndRewards.RewardPointsManagerModel;
+import model.itemesAndRewards.ItemManagerModel;
+import model.itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.Constants.AudioConstants;
 import model.utilz.Constants.Direction;
 
@@ -99,7 +99,7 @@ public class EnemyBubble extends EmptyBubble {
             active = false;
 
             // Spawn Reward
-            ItemManager.getInstance().addBubbleReward((int) hitbox.x, (int) hitbox.y, GetBubbleRewardType(consecutivePopsCounter));
+            ItemManagerModel.getInstance().addBubbleReward((int) hitbox.x, (int) hitbox.y, GetBubbleRewardType(consecutivePopsCounter));
         }
     }
 

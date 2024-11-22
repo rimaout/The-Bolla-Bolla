@@ -3,10 +3,10 @@ package view.entities;
 import entities.Enemy;
 
 public class EnemyView {
-    private final Enemy enemy;
+    private final Enemy enemyModel;
 
-    public EnemyView(Enemy enemy) {
-        this.enemy = enemy;
+    public EnemyView(Enemy enemyModel) {
+        this.enemyModel = enemyModel;
     }
 
     public void update() {
@@ -18,10 +18,10 @@ public class EnemyView {
     }
 
     public boolean isActive() {
-        return enemy.isActive();
+        return enemyModel.isActive();
     }
 
     public boolean isAlive() {
-        return enemy.isAlive();
+        return enemyModel.isAlive();
     }
 }

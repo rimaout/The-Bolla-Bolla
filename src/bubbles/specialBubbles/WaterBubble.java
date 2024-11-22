@@ -1,6 +1,6 @@
 package bubbles.specialBubbles;
 
-import itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;

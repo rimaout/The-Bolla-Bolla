@@ -1,4 +1,4 @@
-package itemesAndRewards;
+package model.itemesAndRewards;
 
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;

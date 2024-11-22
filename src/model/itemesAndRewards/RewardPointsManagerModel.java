@@ -1,4 +1,4 @@
-package itemesAndRewards;
+package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
 import model.utilz.PlayingTimer;

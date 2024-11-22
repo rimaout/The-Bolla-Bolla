@@ -19,4 +19,6 @@ public class EnemyManagerView {
     public void update() {
 
     }
+
+    //Add resetEnemiesViews
 }

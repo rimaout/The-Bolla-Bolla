@@ -7,8 +7,8 @@ import controller.PlayingController;
 import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.gameStates.PlayingModel;
-import itemesAndRewards.ItemManager;
 import view.entities.PlayerView;
+import view.itemsAndRewards.ItemManagerView;
 import view.itemsAndRewards.RewardPointsManagerView;
 import view.levels.LevelManagerView;
 import view.overlays.GameCompletedOverlayView;
@@ -65,7 +65,7 @@ public class PlayingView {
         }
         else {
             levelManagerView.draw(g);
-            ItemManager.getInstance().draw(g);
+            ItemManagerView.getInstance().draw(g);
             playingHud.draw(g);
             EnemyManager.getInstance().draw(g);
             HurryUpManager.getInstance().draw(g);
@@ -93,16 +93,18 @@ public class PlayingView {
 
         ProjectileManagerView.getInstance().newLevelReset();
         RewardPointsManagerView.getInstance().newLevelReset();
+        ItemManagerView.getInstance().newLevelReset();
     }
 
     public void newPlayReset() {
         gamePauseOverlayView.reset();
         ProjectileManagerView.getInstance().newPlayReset();
         RewardPointsManagerView.getInstance().newPlayReset();
+        ItemManagerView.getInstance().newPlayReset();
     }
      
     public void initClasses(PlayerController playerController) {
-        playerOneView = new PlayerView(playingModel.getPlayerOneModel(), playerController);
+        playerOneView = new PlayerView(playingModel.getPlayerOneModel());
 
         levelManagerView = LevelManagerView.getInstance();
 

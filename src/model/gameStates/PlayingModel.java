@@ -5,9 +5,9 @@ import bubbles.specialBubbles.SpecialBubbleManager;
 import entities.EnemyManager;
 import entities.HurryUpManager;
 import model.entities.PlayerModel;
-import itemesAndRewards.ItemManager;
-import itemesAndRewards.PowerUpManagerModel;
-import itemesAndRewards.RewardPointsManagerModel;
+import model.itemesAndRewards.ItemManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
 import main.Game;
 import model.projectiles.ProjectileManagerModel;
@@ -24,7 +24,7 @@ public class PlayingModel extends State {
     private PlayerBubblesManager playerBubblesManager;
     private SpecialBubbleManager specialBubbleManager;
     private ProjectileManagerModel projectileManagerModel;
-    private ItemManager itemManager;
+    private ItemManagerModel itemManagerModel;
     private RewardPointsManagerModel rewardPointsManagerModel;
     private PowerUpManagerModel powerUpManagerModel;
     private IntroModel introModel;
@@ -52,7 +52,7 @@ public class PlayingModel extends State {
         playerBubblesManager = PlayerBubblesManager.getInstance(playerModelOne);
         specialBubbleManager = SpecialBubbleManager.getInstance(playerModelOne);
         projectileManagerModel = ProjectileManagerModel.getInstance(playerModelOne);
-        itemManager = ItemManager.getInstance(this);
+        itemManagerModel = ItemManagerModel.getInstance(this);
         rewardPointsManagerModel = RewardPointsManagerModel.getInstance(playerModelOne);
         powerUpManagerModel = PowerUpManagerModel.getInstance(playerModelOne);
         introModel = new IntroModel(this);
@@ -84,7 +84,7 @@ public class PlayingModel extends State {
             enemyManager.update();
             hurryUpManager.update(playerModelOne);
             projectileManagerModel.update();
-            itemManager.update();
+            itemManagerModel.update();
             rewardPointsManagerModel.update();
             powerUpManagerModel.update();
         }
@@ -114,7 +114,7 @@ public class PlayingModel extends State {
         projectileManagerModel.newPlayReset();
         playerBubblesManager.newPlayReset();
         specialBubbleManager.newPlayReset();
-        itemManager.newPlayReset();
+        itemManagerModel.newPlayReset();
         powerUpManagerModel.newPlayReset();
         rewardPointsManagerModel.newPlayReset();
         introModel.newPlayReset();
@@ -145,7 +145,7 @@ public class PlayingModel extends State {
         specialBubbleManager.newLevelReset();
         projectileManagerModel.newLevelReset();
         playerModelOne.reset(false, false);
-        itemManager.newPlayReset();
+        itemManagerModel.newPlayReset();
         rewardPointsManagerModel.newLevelReset();
 
         levelCompleted = false;
@@ -157,7 +157,7 @@ public class PlayingModel extends State {
     public void startNewLevel() {
         levelManagerModel.increaseLevelIndex();
         enemyManager.loadEnemies();
-        itemManager.newLevelReset();
+        itemManagerModel.newLevelReset();
         specialBubbleManager.loadBubbleGenerator();
     }
 

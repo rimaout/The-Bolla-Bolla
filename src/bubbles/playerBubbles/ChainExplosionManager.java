@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import model.entities.PlayerModel;
-import itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.DEAD;

@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
-import itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
 
 import static model.utilz.HelpMethods.*;
 

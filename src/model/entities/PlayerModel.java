@@ -6,7 +6,7 @@ import model.utilz.Constants;
 import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.projectiles.ProjectileManagerModel;
-import itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
 import static model.utilz.Constants.*;

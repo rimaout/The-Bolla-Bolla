@@ -22,29 +22,29 @@ public class Constants {
 
         public static Direction GetRandomDirection() {
             return switch ((int) (Math.random() * 4)) {
-                case 0 -> Direction.LEFT;
-                case 1 -> Direction.RIGHT;
-                case 2 -> Direction.UP;
-                case 3 -> Direction.DOWN;
-                default -> Direction.NONE;
+                case 0 -> LEFT;
+                case 1 -> RIGHT;
+                case 2 -> UP;
+                case 3 -> DOWN;
+                default -> NONE;
             };
         }
 
         public static Direction GetRandomHorizontalDirection() {
             return switch ((int) (Math.random() * 2)) {
-                case 0 -> Direction.LEFT;
-                case 1 -> Direction.RIGHT;
-                default -> Direction.NONE;
+                case 0 -> LEFT;
+                case 1 -> RIGHT;
+                default -> NONE;
             };
         }
 
         public static Direction GetOppositeDirection(Direction direction) {
             return switch (direction) {
-                case LEFT -> Direction.RIGHT;
-                case RIGHT -> Direction.LEFT;
-                case UP -> Direction.DOWN;
-                case DOWN -> Direction.UP;
-                default -> Direction.NONE;
+                case LEFT -> RIGHT;
+                case RIGHT -> LEFT;
+                case UP -> DOWN;
+                case DOWN -> UP;
+                default -> NONE;
             };
         }
     }
@@ -312,6 +312,10 @@ public class Constants {
         public static final int DE_SPAWN_TIMER = 8000;
         public static final int SPAWN_POWER_UP_TIMER = 12000;
 
+        public enum ItemType {
+            BUBBLE_REWARD, POWER_UP
+        }
+
         public enum BubbleRewardType {
             APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA, WATER_CRISTAL;
 
@@ -358,6 +362,7 @@ public class Constants {
         public enum PowerUpType {
             GREEN_CANDY, BLUE_CANDY, RED_CANDY, SHOE, ORANGE_PARASOL, BLUE_PARASOL, CHACKN_HEART, CRYSTAL_RING, EMERALD_RING, RUBY_RING;
 
+            //TODO: not here put in view
             public static int GetPowerUpImageIndex(PowerUpType powerUpType) {
                 return switch (powerUpType) {
                     case GREEN_CANDY -> 0;

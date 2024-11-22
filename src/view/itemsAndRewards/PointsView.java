@@ -1,6 +1,6 @@
 package view.itemsAndRewards;
 
-import itemesAndRewards.PointsModel;
+import model.itemesAndRewards.PointsModel;
 
 import java.awt.*;
 

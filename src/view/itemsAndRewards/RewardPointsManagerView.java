@@ -1,6 +1,6 @@
 package view.itemsAndRewards;
 
-import itemesAndRewards.RewardPointsManagerModel;
+import model.itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.LoadSave;
 
 import java.awt.*;

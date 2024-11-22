@@ -1,6 +1,5 @@
 package view.entities;
 
-import controller.PlayerController;
 import controller.mediators.PlayerMediator;
 import model.entities.PlayerModel;
 import model.utilz.LoadSave;
@@ -14,16 +13,14 @@ import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
 
 public class PlayerView {
     private final PlayerModel playerModel;
-    private final PlayerController playerController;
 
     private BufferedImage[][] sprites;
     private int animationIndex, animationTick;
     private int playerAnimation = IDLE_ANIMATION;
     private boolean activateAttackingAnimation;
 
-    public PlayerView(PlayerModel playerModel, PlayerController playerController) {
+    public PlayerView(PlayerModel playerModel) {
         this.playerModel = playerModel;
-        this.playerController = playerController;
 
         loadAnimation();
     }

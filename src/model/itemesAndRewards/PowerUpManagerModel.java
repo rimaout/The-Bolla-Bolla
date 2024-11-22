@@ -1,4 +1,4 @@
-package itemesAndRewards;
+package model.itemesAndRewards;
 
 import static java.lang.Math.abs;
 

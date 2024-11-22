@@ -7,10 +7,10 @@ import entities.Enemy;
 import entities.EnemyManager;
 import entities.Entity;
 import model.entities.PlayerModel;
-import itemesAndRewards.BubbleReward;
-import itemesAndRewards.Item;
-import itemesAndRewards.ItemManager;
-import itemesAndRewards.PowerUpManagerModel;
+import model.itemesAndRewards.BubbleRewardModel;
+import model.itemesAndRewards.ItemModel;
+import model.itemesAndRewards.ItemManagerModel;
+import model.itemesAndRewards.PowerUpManagerModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.AudioConstants;
@@ -202,7 +202,7 @@ public class WaterFlow extends Entity {
         int dropY = calculateEnemyDropY();
         for (int i = 0; i < capturedEnemiesCounter; i++) {
             int dropX = calculateEnemyDropX((int) hitbox.x, i);
-            ItemManager.getInstance().getItems().add(new BubbleReward(dropX, dropY, WATER_CRISTAL));
+            ItemManagerModel.getInstance().getItemsModels().add(new BubbleRewardModel(dropX, dropY, WATER_CRISTAL));
         }
     }
 
@@ -234,7 +234,7 @@ public class WaterFlow extends Entity {
 
         if (capturedPlayerModel != null) {
             PlayerBubblesManager.getInstance().getBubbles().forEach(this::checkCollisionWithBubble);
-            ItemManager.getInstance().getItems().forEach(item -> checkCollisionWithItem(item, playerModel));
+            ItemManagerModel.getInstance().getItemsModels().forEach(item -> checkCollisionWithItem(item, playerModel));
         }
     }
 
@@ -273,14 +273,14 @@ public class WaterFlow extends Entity {
         }
     }
 
-    private void checkCollisionWithItem(Item item, PlayerModel playerModel) {
-        if (!item.isActive())
+    private void checkCollisionWithItem(ItemModel itemModel, PlayerModel playerModel) {
+        if (!itemModel.isActive())
             return;
 
-        if (hitbox.intersects(item.getHitbox())) {
-            item.setActive(false);
-            item.addPoints(playerModel);
-            item.applyEffect(playerModel);
+        if (hitbox.intersects(itemModel.getHitbox())) {
+            itemModel.deactivateItem();
+            itemModel.addPoints(playerModel);
+            itemModel.applyEffect(playerModel);
             PowerUpManagerModel.getInstance().increaseItemCollectCounter();
         }
     }

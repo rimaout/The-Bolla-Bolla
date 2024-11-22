@@ -1,47 +1,27 @@
-package itemesAndRewards;
-
-import java.awt.*;
+package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
-import view.audio.AudioPlayer;
-import model.utilz.Constants.AudioConstants;
 
 import static model.utilz.Constants.Items.*;
 import static model.utilz.Constants.Items.PowerUpType.*;
 
-public class PowerUp extends Item {
+public class PowerUpModel extends ItemModel {
     private final PowerUpManagerModel powerUpManagerModel = PowerUpManagerModel.getInstance();
-    private final PowerUpType type;
+    private final PowerUpType powerUpType;
 
-    public PowerUp(int x, int y, PowerUpType type) {
-        super(x, y);
-        this.type = type;
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        if (!deSpawning)
-            g.drawImage(itemManager.getPowerUpImages()[GetPowerUpImageIndex(type)], x, y, W, H, null);
-        else
-            g.drawImage(itemManager.getDeSpawnImages()[animationIndex], x, y, W, H, null);
-    }
-
-    @Override
-    public void audioEffects() {
-        if (playSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.POWER_UP_COLLECTED);
-            playSound = false;
-        }
+    public PowerUpModel(int x, int y, PowerUpType powerUpType) {
+        super(x, y, ItemType.POWER_UP);
+        this.powerUpType = powerUpType;
     }
 
     @Override
     public void addPoints(PlayerModel playerModel) {
-        RewardPointsManagerModel.getInstance(playerModel).addSmallPoints(GetPoints(type));
+        RewardPointsManagerModel.getInstance(playerModel).addSmallPoints(GetPoints(powerUpType));
     }
 
     @Override
     public void applyEffect(PlayerModel playerModel) {
-        switch (type) {
+        switch (powerUpType) {
             case GREEN_CANDY -> powerUpManagerModel.collectedGreenCandy();
             case BLUE_CANDY -> powerUpManagerModel.collectedBlueCandy();
             case RED_CANDY -> powerUpManagerModel.collectedRedCandyCounter();
@@ -53,5 +33,9 @@ public class PowerUp extends Item {
             case EMERALD_RING -> powerUpManagerModel.collectedEmeraldRing();
             case RUBY_RING -> powerUpManagerModel.collectedRubyRing();
         }
+    }
+
+    public PowerUpType getPowerUpType() {
+        return powerUpType;
     }
 }
