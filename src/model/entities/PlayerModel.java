@@ -254,12 +254,12 @@ public class PlayerModel extends EntityModel {
 
     private void updateSounds() {
         if (playJumpSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP); //todo: move in view, example use controller to play sound (add if in !air and jump is pressed play sound)
             playJumpSound = false;
         }
 
         if (playDeathSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH); //todo: move in view example use controller to play sound (add if in !air and jump is pressed play sound)
             playDeathSound = false;
         }
     }

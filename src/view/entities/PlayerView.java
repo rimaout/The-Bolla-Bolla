@@ -53,10 +53,11 @@ public class PlayerView{
                 animationIndex = 0;
 
                 activateAttackingAnimation = false;
-                PlayerMediator.deactivateRespawning(playerModel);
+                PlayerMediator.deactivateRespawning(playerModel); //TODO: use a timer in model instead of relying on animationIndex
             }
         }
 
+        //TODO: use a timer in model instead of relying on animationIndex
         if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
             PlayerMediator.activateCanRespawn(playerModel);
         else
