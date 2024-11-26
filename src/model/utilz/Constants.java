@@ -146,7 +146,6 @@ public class Constants {
 
         public static final float WATER_FLOW_SPEED = 1.5f * SCALE;
         public static final int ADD_WATER_DROP_INTERVAL = 60;
-
     }
 
     public static class INTRO {
@@ -232,7 +231,9 @@ public class Constants {
         public static final int SKEL_MONSTA_SPAWN_Y = 24 * TILES_SIZE + 2 * SCALE;
         public static final int SKEL_MONSTA_MOVEMENT_MAX_DISTANCE = 6 * TILES_SIZE;
         public static final int SKEL_MONSTA_MOVEMENT_TIMER = 300;
-        
+        public static final int SKEL_MONSTA_SPAWNING_TIMER = 600;
+        public static final int SKEL_MONSTA_DESPAWNING_TIMER = 600;
+
         // Hitbox Constants
         public static final int ENEMY_HITBOX_W = 14 * SCALE;
         public static final int ENEMY_HITBOX_H = 15 * SCALE;

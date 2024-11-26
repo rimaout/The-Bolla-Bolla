@@ -1,6 +1,5 @@
 package model.entities;
 
-import entities.HurryUpManager;
 import model.levels.LevelManagerModel;
 import model.utilz.PlayingTimer;
 
@@ -117,7 +116,7 @@ public class EnemyManagerModel {
             if (e.isActive())
                 e.setEnemyState(NORMAL_STATE);
 
-        HurryUpManager.getInstance().restart();
+        HurryUpManagerModel.getInstance().restart();
     }
 
     public void loadEnemies() {

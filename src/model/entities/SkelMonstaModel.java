@@ -1,31 +1,27 @@
-package entities;
+package model.entities;
 
-import model.entities.EnemyManagerModel;
-import model.entities.EnemyModel;
-import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
-import view.entities.EnemyManagerView;
-
-import java.awt.*;
 
 import static model.utilz.Constants.Direction.*;
-import static model.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.EnemyConstants.*;
 import static model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
-public class SkelMonsta extends EnemyModel {
+public class SkelMonstaModel extends EnemyModel {
 
-    private int nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
     private float walkedDistance = 0;
 
-    private boolean spawning = true;
     private boolean moving = false;
+    private boolean spawning = true;
     private boolean despawning = false;
 
-    int animationTick, animationIndex;
+    private int nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
+    private int spawningTimer = SKEL_MONSTA_SPAWNING_TIMER;
+    private int despawningTimer = SKEL_MONSTA_DESPAWNING_TIMER;
 
-    public SkelMonsta() {
+    public SkelMonstaModel() {
         super(SKEL_MONSTA_SPAWN_X, SKEL_MONSTA_SPAWN_Y, ENEMY_W, ENEMY_H, SKEL_MONSTA, RIGHT);
+
+        // enemyModel custom variables for SkelMonsta
         active = false;
         y = SKEL_MONSTA_SPAWN_Y;    // Set the y position to the spawn point (the super constructor sets it outside the screen, but skelMonsta spawns from the ground)
         walkingDir = RIGHT;
@@ -33,31 +29,15 @@ public class SkelMonsta extends EnemyModel {
         initHitbox(ENEMY_HITBOX_W, ENEMY_HITBOX_H);
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(EnemyManagerView.getInstance().getEnemySprite(SKEL_MONSTA)[getAnimation()][animationIndex], (int) hitbox.x + flipX(), (int) hitbox.y, ENEMY_W * flipW(), ENEMY_H, null);
-    }
-
     @Override
     public void update(PlayerModel playerModel) {
         loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         updateState();
-        updateAnimationTick();
         updateTimer();
         calculateNextMove(playerModel);
         updateMove(playerModel);
         checkPlayerHit(playerModel);
-    }
-
-    protected void updateAnimationTick() {
-        animationTick++;
-        if (animationTick >= ANIMATION_SPEED) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= 2) {
-                animationIndex = 0;
-            }
-        }
     }
 
     private void checkPlayerHit(PlayerModel playerModel) {
@@ -67,32 +47,33 @@ public class SkelMonsta extends EnemyModel {
 
         if (hitbox.intersects(playerModel.getHitbox())) {
             playerModel.death();
-            HurryUpManager.getInstance().restart();
+            HurryUpManagerModel.getInstance().restart();
         }
     }
 
     private void updateState() {
 
-        if (spawning && animationIndex >= 1) {
-            animationTick = 0;
-            animationIndex = 0;
+        if (EnemyManagerModel.getInstance().getActiveEnemiesCount() == 0 && !despawning)
+            activateDespawn();
 
+        if (spawning && spawningTimer <= 0) {
             spawning = false;
             moving = true;
             return;
         }
 
-        if (despawning && animationIndex >= 1) {
-            active = false;
-            HurryUpManager.getInstance().newLevelReset();
-        }
-
-        if (EnemyManagerModel.getInstance().getActiveEnemiesCount() == 0 && !despawning)
-            despawn();
+        if (despawning && despawningTimer <= 0)
+            deactivate();
     }
 
     private void updateTimer() {
         nextMoveTimer -= (int)  timer.getTimeDelta();
+
+        if (spawning)
+            spawningTimer -= (int)  timer.getTimeDelta();
+
+        if (despawning)
+            despawningTimer -= (int)  timer.getTimeDelta();
     }
 
     private void calculateNextMove(PlayerModel playerModel) {
@@ -167,17 +148,6 @@ public class SkelMonsta extends EnemyModel {
             return NONE;
     }
 
-    private int getAnimation() {
-        if (spawning)
-            return 0;
-        else if (moving)
-            return 1;
-        else if (despawning)
-            return 2;
-        else
-            return 1;
-    }
-
     private void stopMove() {
         nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
         walkedDistance = 0;
@@ -195,19 +165,27 @@ public class SkelMonsta extends EnemyModel {
         walkingDir = RIGHT;
         previousWalkingDir = RIGHT;
 
-        animationIndex = 0;
-        animationTick = 0;
         nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
+        spawningTimer = SKEL_MONSTA_SPAWNING_TIMER;
+        despawningTimer = SKEL_MONSTA_DESPAWNING_TIMER;
+
         spawning = true;
         moving = false;
         despawning = false;
         walkedDistance = 0;
     }
 
-    public void despawn() {
-        animationTick = 0;
-        animationIndex = 0;
+    @Override
+    public void deactivate(){
+        active = false;
+        nextMoveTimer = SKEL_MONSTA_MOVEMENT_TIMER;
+        spawningTimer = SKEL_MONSTA_SPAWNING_TIMER;
+        despawningTimer = SKEL_MONSTA_DESPAWNING_TIMER;
 
+        HurryUpManagerModel.getInstance().newLevelReset();
+    }
+
+    public void activateDespawn() {
         despawning = true;
         moving = false;
     }
@@ -216,4 +194,17 @@ public class SkelMonsta extends EnemyModel {
     public EnemyType getEnemyType() {
         return SKEL_MONSTA;
     }
+
+    public boolean isDespawning() {
+        return despawning;
+    }
+
+    public boolean isSpawning() {
+        return spawning;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
 }

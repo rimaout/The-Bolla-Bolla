@@ -15,11 +15,11 @@ public class EnemyView {
 
     public EnemyView(EnemyModel enemyModel) {
         this.enemyModel = enemyModel;
-
     }
 
     public void update() {
         updateAnimationTick();
+        updateStateVariables();
     }
 
     protected void updateAnimationTick() {

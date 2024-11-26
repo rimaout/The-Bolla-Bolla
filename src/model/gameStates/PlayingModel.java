@@ -3,7 +3,7 @@ package model.gameStates;
 import bubbles.playerBubbles.PlayerBubblesManager;
 import bubbles.specialBubbles.SpecialBubbleManager;
 import model.entities.EnemyManagerModel;
-import entities.HurryUpManager;
+import model.entities.HurryUpManagerModel;
 import model.entities.PlayerModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
@@ -20,7 +20,7 @@ public class PlayingModel extends State {
     private PlayingTimer playingTimer;
     private LevelManagerModel levelManagerModel;
     private EnemyManagerModel enemyManagerModel;
-    private HurryUpManager hurryUpManager;
+    private HurryUpManagerModel hurryUpManagerModel;
     private PlayerBubblesManager playerBubblesManager;
     private SpecialBubbleManager specialBubbleManager;
     private ProjectileManagerModel projectileManagerModel;
@@ -48,7 +48,7 @@ public class PlayingModel extends State {
         playerModelOne = new PlayerModel();
 
         enemyManagerModel = EnemyManagerModel.getInstance(playerModelOne);
-        hurryUpManager = HurryUpManager.getInstance();
+        hurryUpManagerModel = HurryUpManagerModel.getInstance();
         playerBubblesManager = PlayerBubblesManager.getInstance(playerModelOne);
         specialBubbleManager = SpecialBubbleManager.getInstance(playerModelOne);
         projectileManagerModel = ProjectileManagerModel.getInstance(playerModelOne);
@@ -82,7 +82,7 @@ public class PlayingModel extends State {
             playerBubblesManager.update();
             specialBubbleManager.update();
             enemyManagerModel.update();
-            hurryUpManager.update(playerModelOne);
+            hurryUpManagerModel.update(playerModelOne);
             projectileManagerModel.update();
             itemManagerModel.update();
             rewardPointsManagerModel.update();
@@ -110,7 +110,7 @@ public class PlayingModel extends State {
         // reset classes
         levelManagerModel.newPlayReset();
         enemyManagerModel.newPlayReset();
-        hurryUpManager.newPlayReset();
+        hurryUpManagerModel.newPlayReset();
         projectileManagerModel.newPlayReset();
         playerBubblesManager.newPlayReset();
         specialBubbleManager.newPlayReset();
@@ -140,7 +140,7 @@ public class PlayingModel extends State {
         levelManagerModel.loadNextLevel();
 
         enemyManagerModel.newLevelReset();
-        hurryUpManager.newLevelReset();
+        hurryUpManagerModel.newLevelReset();
         playerBubblesManager.newLevelReset();
         specialBubbleManager.newLevelReset();
         projectileManagerModel.newLevelReset();
