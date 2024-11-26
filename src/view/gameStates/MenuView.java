@@ -1,6 +1,6 @@
 package view.gameStates;
 
-import entities.TwinkleBubbleManager;
+import view.overlays.MenuTwinkleBubbleManager;
 import model.gameStates.MenuModel;
 import main.Game;
 import model.users.UsersManager;
@@ -17,7 +17,7 @@ public class MenuView {
     private final MenuModel menuModel;
     private final Game game;
 
-    private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance();
+    private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
     private final UsersManager usersManager = UsersManager.getInstance();
 
     private Font nesFont;
@@ -48,8 +48,8 @@ public class MenuView {
     }
 
     public void draw(Graphics g) {
-        twinkleBubbleManager.update();
-        twinkleBubbleManager.draw(g);
+        menuTwinkleBubbleManager.update();
+        menuTwinkleBubbleManager.draw(g);
 
         g.setColor(new Color(0, 0, 0, 40));
         g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);

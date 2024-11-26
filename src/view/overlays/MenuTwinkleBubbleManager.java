@@ -1,4 +1,4 @@
-package entities;
+package view.overlays;
 
 import model.utilz.Constants;
 import model.utilz.LoadSave;
@@ -12,34 +12,34 @@ import java.awt.image.BufferedImage;
 import static model.utilz.Constants.Home.BUBBLE_DEFAULT_H;
 import static model.utilz.Constants.Home.BUBBLE_DEFAULT_W;
 
-public class TwinkleBubbleManager {
-    private static TwinkleBubbleManager instance;
+public class MenuTwinkleBubbleManager {
+    private static MenuTwinkleBubbleManager instance;
 
     private final HomeView homeView;
 
     private BufferedImage[] twinkleBubbleSprite;
-    private List<TwinkleBubble> bubbles;
+    private List<MenuTwinkleBubble> bubbles;
 
-    private TwinkleBubbleManager(HomeView homeView) {
+    private MenuTwinkleBubbleManager(HomeView homeView) {
         this.homeView = homeView;
 
         loadTwinkleBubble();
         initializeBubbles();
     }
 
-    public static TwinkleBubbleManager getInstance(HomeView homeView) {
+    public static MenuTwinkleBubbleManager getInstance(HomeView homeView) {
         if (instance == null) {
-            instance = new TwinkleBubbleManager(homeView);
+            instance = new MenuTwinkleBubbleManager(homeView);
         }
         return instance;
     }
 
-    public static TwinkleBubbleManager getInstance() {
+    public static MenuTwinkleBubbleManager getInstance() {
         return instance;
     }
 
     public void update() {
-        bubbles.forEach(TwinkleBubble::update);
+        bubbles.forEach(MenuTwinkleBubble::update);
     }
 
     public void draw(java.awt.Graphics g) {
@@ -64,7 +64,7 @@ public class TwinkleBubbleManager {
         for (int i = 0; i < bubbleCount; i++) {
             int x = random.nextInt(Constants.GAME_WIDTH);
             int y = random.nextInt(Constants.GAME_HEIGHT);
-            bubbles.add(new TwinkleBubble(twinkleBubbleSprite, x, y, this));
+            bubbles.add(new MenuTwinkleBubble(twinkleBubbleSprite, x, y, this));
         }
     }
 

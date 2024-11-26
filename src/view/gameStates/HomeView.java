@@ -4,7 +4,7 @@ import model.gameStates.State;
 import main.Game;
 import model.utilz.Constants;
 import model.utilz.LoadSave;
-import entities.TwinkleBubbleManager;
+import view.overlays.MenuTwinkleBubbleManager;
 import static model.utilz.Constants.Home.*;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 public class HomeView extends State {
 
-    private final TwinkleBubbleManager twinkleBubbleManager = TwinkleBubbleManager.getInstance(this);
+    private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance(this);
 
     private BufferedImage logoImg;
     private float logoX, logoY, logoW, logoH;
@@ -39,7 +39,7 @@ public class HomeView extends State {
     public void updatePositions() {
 
         // Update Bubbles
-        twinkleBubbleManager.update();
+        menuTwinkleBubbleManager.update();
 
         // Update Logo Position
         if (logoY < LOGO_END_Y)
@@ -54,7 +54,7 @@ public class HomeView extends State {
         updatePositions();
 
         // Draw Bubbles
-        twinkleBubbleManager.draw(g);
+        menuTwinkleBubbleManager.draw(g);
 
         g.drawImage(logoImg, (int) logoX, (int) logoY, (int) logoW, (int) logoH, null);
 

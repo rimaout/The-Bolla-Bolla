@@ -1,4 +1,4 @@
-package entities;
+package view.overlays;
 
 import model.entities.EntityModel;
 import model.utilz.Constants;
@@ -11,14 +11,14 @@ import static model.utilz.Constants.ANIMATION_SPEED;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TwinkleBubble extends EntityModel {
-    private final TwinkleBubbleManager manager;
+public class MenuTwinkleBubble extends EntityModel {
+    private final MenuTwinkleBubbleManager manager;
 
     private BufferedImage[] sprite;
     private Direction direction;
     int animationIndex, animationTick;
 
-    public TwinkleBubble(BufferedImage[] sprite, int startX, int startY, TwinkleBubbleManager manager) {
+    public MenuTwinkleBubble(BufferedImage[] sprite, int startX, int startY, MenuTwinkleBubbleManager manager) {
         super(startX, startY, BUBBLE_W, BUBBLE_H);
         this.sprite = sprite;
         this.manager = manager;
