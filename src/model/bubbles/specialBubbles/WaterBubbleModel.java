@@ -1,28 +1,22 @@
-package bubbles.specialBubbles;
+package model.bubbles.specialBubbles;
 
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 
-import java.awt.*;
+import static model.utilz.Constants.Bubble.BubbleType.WATER_BUBBLE;
 
-import static model.utilz.Constants.Bubble.*;
+public class WaterBubbleModel extends SpecialBubbleModel {
 
-public class WaterBubble extends SpecialBubble {
-
-    public WaterBubble(float x, float y, Direction direction) {
+    public WaterBubbleModel(float x, float y, Direction direction) {
         super(x, y, direction);
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+        bubbleType = WATER_BUBBLE;
     }
 
     @Override
     public void update() {
-        updateAnimationTick();
+        updateTimers();
         updateDirection();
         updatePosition();
         updateCollisionBoxes();
@@ -41,18 +35,18 @@ public class WaterBubble extends SpecialBubble {
 
         // if waterBubble conpenetrates with left perimeter wall, spawn waterFlow not in the wall
         if (getTileX() < 2) {
-            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x + Constants.TILES_SIZE, hitbox.y));
+            SpecialBubbleManagerModel.getInstance().addWaterFlow(new WaterFlowModel(hitbox.x + Constants.TILES_SIZE, hitbox.y));
             return;
         }
 
 
         // if waterBubble conpenetrates with right perimeter wall, spawn waterFlow not in the wall
         if ( getTileX() + Constants.TILES_SIZE > Constants.TILES_IN_WIDTH - 3) {
-            SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x - Constants.TILES_SIZE, hitbox.y));
+            SpecialBubbleManagerModel.getInstance().addWaterFlow(new WaterFlowModel(hitbox.x - Constants.TILES_SIZE, hitbox.y));
             return;
         }
 
         // if the bubble does not concentrate with the perimeter walls, spawn waterFlow in the same position of the bubble
-        SpecialBubbleManager.getInstance().addWaterFlow(new WaterFlow(hitbox.x, hitbox.y));
+        SpecialBubbleManagerModel.getInstance().addWaterFlow(new WaterFlowModel(hitbox.x, hitbox.y));
     }
 }

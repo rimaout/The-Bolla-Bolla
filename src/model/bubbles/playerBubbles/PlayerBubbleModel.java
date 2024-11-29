@@ -1,23 +1,19 @@
-package bubbles.playerBubbles;
+package model.bubbles.playerBubbles;
 
-import java.awt.*;
-
-import bubbles.Bubble;
+import model.bubbles.BubbleModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.*;
 
-public abstract class PlayerBubble extends Bubble {
-    protected final PlayerBubblesManager bubbleManager = PlayerBubblesManager.getInstance();
+public abstract class PlayerBubbleModel extends BubbleModel {
+    protected final PlayerBubblesManagerModel bubbleManager = PlayerBubblesManagerModel.getInstance();
 
-    public PlayerBubble(float x, float y, Constants.Direction direction) {
+    public PlayerBubbleModel(float x, float y, Constants.Direction direction) {
         super(x, y, direction);
     }
 
-    public abstract void draw(Graphics g);
-
-    protected abstract void updateDeadAnimation();
+    protected abstract void updateDeadAction();
 
     public abstract void pop();
     public abstract void playerPop(PlayerModel playerModel, int EnemyBubblePopCounter, ChainExplosionManager chainExplosionManager);
@@ -25,11 +21,10 @@ public abstract class PlayerBubble extends Bubble {
     @Override
     public void update() {
         updateTimers();
-        updateAnimationTick();
         setState();
 
         if (state == DEAD)
-            updateDeadAnimation();
+            updateDeadAction();
 
         else {
             updateDirection();
@@ -66,7 +61,9 @@ public abstract class PlayerBubble extends Bubble {
         }
     }
 
-    private void updateTimers() {
+    @Override
+    protected void updateTimers() {
+        super.updateTimers();
 
         if (state == NORMAL)
             normalTimer -= (int) timer.getTimeDelta();
@@ -76,11 +73,12 @@ public abstract class PlayerBubble extends Bubble {
 
         if (state == BLINKING)
             blinkingTimer -= (int) timer.getTimeDelta();
+
+        if (state == POP_NORMAL || state == POP_RED)
+            popTimer -= (int) timer.getTimeDelta();
     }
 
     private void setState() {
-        int startAnimation = state;
-
         if (state == NORMAL && normalTimer <= 0) {
             previousState = state;
             state = RED;
@@ -95,18 +93,11 @@ public abstract class PlayerBubble extends Bubble {
             previousState = state;
             state = POP_RED;
 
-            if (this instanceof EnemyBubble)
-                ((EnemyBubble) this).respawnEnemy();
+            if (this instanceof EnemyBubbleModel)
+                ((EnemyBubbleModel) this).respawnEnemy();
         }
 
-        if (state == POP_RED || state == POP_NORMAL) {
-            if (animationIndex == 2)
+        if (state == POP_RED || state == POP_NORMAL && popTimer <= 0)
                 active = false;
-        }
-
-        if (startAnimation != state) {
-            animationTick = 0;
-            animationIndex = 0;
-        }
     }
 }

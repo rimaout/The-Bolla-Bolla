@@ -1,6 +1,6 @@
 package model.utilz;
 
-import bubbles.specialBubbles.BubbleGenerator;
+import model.bubbles.specialBubbles.BubbleGenerator;
 import model.entities.EnemyModel;
 import model.entities.MaitaModel;
 import model.entities.ZenChanModel;

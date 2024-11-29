@@ -113,14 +113,14 @@ public class Constants {
         public static final int NORMAL_TIMER = 12000;
         public static final int RED_TIMER = 3000;
         public static final int BLINKING_TIMER = 2000;
+        public static final int POP_TIMER = 500;
+        public static final int SHAKE_TIMER = 100;
 
         // Movement Constants
         public static final float BUBBLE_SPEED = 0.1f * SCALE;
         public static final float SHAKING_SPEED = 0.03f * SCALE;
         public static final float DEAD_X_SPEED = 0.6f * SCALE;
         public static final float DEAD_Y_SPEED = 1.2f * SCALE;
-
-
 
         public static int getSpriteAmount(int bubbleState) {
             return switch (bubbleState) {
@@ -130,6 +130,10 @@ public class Constants {
                 case POP_NORMAL, POP_RED -> 3;
                 default -> 4;
             };
+        }
+
+        public enum BubbleType {
+            ENEMY_BUBBLE, EMPTY_BUBBLE, WATER_BUBBLE, LIGHTNING_BUBBLE
         }
     }
 
@@ -157,6 +161,7 @@ public class Constants {
         public static final int RADIUS = 75;
         public static final int TOTAL_LAPS = 3;
         public static final float ANGLE_INCREMENT = 0.02f;
+
         public enum IntroState {
             INTRO, LEVEL_TRANSITION, START_NEW_LEVEL
         }

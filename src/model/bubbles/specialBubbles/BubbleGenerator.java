@@ -1,4 +1,4 @@
-package bubbles.specialBubbles;
+package model.bubbles.specialBubbles;
 
 import java.util.Random;
 
@@ -35,13 +35,13 @@ public class BubbleGenerator {
         if (spawnTimer <= 0) {
             spawnTimer = BUBBLE_GENERATION_INTERVAL;
 
-            if (SpecialBubbleManager.getInstance().getActiveBubblesCount() < MAX_SPECIAL_BUBBLES)
+            if (SpecialBubbleManagerModel.getInstance().getActiveBubblesCount() < MAX_SPECIAL_BUBBLES)
                 spawnBubble();
         }
     }
 
     public void spawnBubble() {
-        SpecialBubbleManager bubbleManager = SpecialBubbleManager.getInstance();
+        SpecialBubbleManagerModel bubbleManager = SpecialBubbleManagerModel.getInstance();
 
         // Calculate x pos (chose randomly between Left Generator Position and Right Generator Position)
         int bubbleX;
@@ -67,10 +67,10 @@ public class BubbleGenerator {
 
         switch (generatorType) {
             case WATER_BUBBLE:
-                bubbleManager.addBubble(new WaterBubble(bubbleX, bubbleY, direction));
+                bubbleManager.addBubble(new WaterBubbleModel(bubbleX, bubbleY, direction));
                 break;
             case LIGHTNING_BUBBLE:
-                bubbleManager.addBubble(new LightningBubble(bubbleX, bubbleY, direction));
+                bubbleManager.addBubble(new LightningBubbleModel(bubbleX, bubbleY, direction));
                 break;
         }
     }

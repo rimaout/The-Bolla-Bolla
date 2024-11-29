@@ -1,22 +1,19 @@
-package bubbles.specialBubbles;
+package model.bubbles.specialBubbles;
 
-import java.awt.*;
-
-import bubbles.Bubble;
+import model.bubbles.BubbleModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 
-import static model.utilz.Constants.Bubble.BUBBLE;
+import static model.utilz.Constants.Bubble.*;
 
-public abstract class SpecialBubble extends Bubble {
-    protected final SpecialBubbleManager bubbleManager = SpecialBubbleManager.getInstance();
+public abstract class SpecialBubbleModel extends BubbleModel {
+    protected final SpecialBubbleManagerModel bubbleManager = SpecialBubbleManagerModel.getInstance();
 
-    public SpecialBubble(float x, float y, Constants.Direction direction) {
+    public SpecialBubbleModel(float x, float y, Constants.Direction direction) {
         super(x, y, direction);
         this.state = BUBBLE;
     }
 
-    public abstract void draw(Graphics g);
     public abstract void update();
     public abstract void playerPop(PlayerModel playerModel);
 

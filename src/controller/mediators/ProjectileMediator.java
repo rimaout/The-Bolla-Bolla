@@ -1,6 +1,6 @@
 package controller.mediators;
 
-import bubbles.playerBubbles.PlayerBubblesManager;
+import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 import model.projectiles.ProjectileModel;
 
 public interface ProjectileMediator {
@@ -10,6 +10,6 @@ public interface ProjectileMediator {
     }
 
     static void createEmptyBubbleFromPlayerProjectile(ProjectileModel projectileModel) {
-        PlayerBubblesManager.getInstance().createEmptyBubble(projectileModel.getHitbox().x, projectileModel.getHitbox().y, projectileModel.getDirection());
+        PlayerBubblesManagerModel.getInstance().createEmptyBubble(projectileModel.getHitbox().x, projectileModel.getHitbox().y, projectileModel.getDirection());
     }
 }

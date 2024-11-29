@@ -1,4 +1,4 @@
-package bubbles.playerBubbles;
+package model.bubbles.playerBubbles;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -13,20 +13,20 @@ import static model.utilz.Constants.Bubble.DEAD;
 public class ChainExplosionManager {
     private final PlayerModel playerModel;
     private final Timer timer = new Timer();
-    private final LinkedList<PlayerBubble> bubbles;
+    private final LinkedList<PlayerBubbleModel> bubbles;
 
     private int enemyBubblePopCounter = 0;
 
-    public ChainExplosionManager(PlayerModel playerModel, PlayerBubble firstPoppedBubble, LinkedList<PlayerBubble> bubbles) {
+    public ChainExplosionManager(PlayerModel playerModel, PlayerBubbleModel firstPoppedBubble, LinkedList<PlayerBubbleModel> bubbles) {
         this.playerModel = playerModel;
         this.bubbles = bubbles;
 
         chainExplosion(firstPoppedBubble);
     }
 
-    public void chainExplosion(PlayerBubble poppedBubble) {
+    public void chainExplosion(PlayerBubbleModel poppedBubble) {
 
-        for (PlayerBubble b : bubbles) {
+        for (PlayerBubbleModel b : bubbles) {
 
             if (!b.isActive() || b == poppedBubble || b.getState() == DEAD)
                 continue;

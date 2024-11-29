@@ -1,7 +1,5 @@
 package view.projectiles;
 
-import bubbles.playerBubbles.EmptyBubble;
-import bubbles.playerBubbles.PlayerBubblesManager;
 import controller.mediators.ProjectileMediator;
 import view.audio.AudioPlayer;
 import model.utilz.Constants;

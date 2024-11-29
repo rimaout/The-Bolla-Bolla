@@ -1,4 +1,4 @@
-package bubbles;
+package model.bubbles;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -16,7 +16,7 @@ import static model.utilz.Constants.Direction;
 import static model.utilz.Constants.Direction.*;
 import static model.utilz.HelpMethods.IsEntityInsideMap;
 
-public abstract class Bubble extends EntityModel {
+public abstract class BubbleModel extends EntityModel {
 
     protected final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     protected final PlayingTimer timer = PlayingTimer.getInstance();
@@ -26,6 +26,7 @@ public abstract class Bubble extends EntityModel {
 
     protected boolean active = true;
     protected boolean popped = false;
+    protected BubbleType bubbleType;
 
     protected int state = NORMAL;
     protected int previousState = NORMAL;
@@ -33,14 +34,15 @@ public abstract class Bubble extends EntityModel {
     protected int normalTimer = NORMAL_TIMER;
     protected int redTimer = RED_TIMER;
     protected int blinkingTimer = BLINKING_TIMER;
+    protected int popTimer = POP_TIMER;
+    protected int shakeTimer = SHAKE_TIMER;
+    protected boolean shake;
 
     protected float xSpeed, ySpeed;
     protected Direction direction;
     protected Direction previousDirection;
 
-    protected int animationIndex, animationTick; // todo: remove later for MVC
-
-    public Bubble(float x, float y, Direction direction) {
+    public BubbleModel(float x, float y, Direction direction) {
         super(x, y, IMAGE_W, IMAGE_H);
         this.direction = direction;
         this.previousDirection = direction;
@@ -50,7 +52,7 @@ public abstract class Bubble extends EntityModel {
     }
 
     public abstract void update();
-    public abstract void draw(Graphics g);
+
     public abstract void checkCollisionWithPlayer(PlayerModel playerModel);
 
     protected void initCollisionBoxes() {
@@ -58,23 +60,13 @@ public abstract class Bubble extends EntityModel {
         externalCollisionBox = new Ellipse2D.Float(hitbox.x + EXTERNAL_BOX_OFFSET_X, hitbox.y, EXTERNAL_BOX_W, EXTERNAL_BOX_H);
     }
 
-    protected void updateAnimationTick() {
-        animationTick++;
-        if (animationTick > BUBBLE_ANIMATION_SPEED) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= getSpriteAmount(state))
-                animationIndex = 0;
+    protected void updateTimers() {
+        shakeTimer -= (int) timer.getTimeDelta();
+
+        if (!shake & shakeTimer <= 0) {
+            shake = true;
+            shakeTimer = SHAKE_TIMER;
         }
-    }
-
-    public void drawCollisionBox(Graphics g) {
-        // For debugging purposes
-        g.setColor(Color.GREEN);
-        g.drawRect((int) internalCollisionBox.x, (int) internalCollisionBox.y, (int) internalCollisionBox.width, (int) internalCollisionBox.height);
-
-        g.setColor(Color.BLUE);
-        g.drawOval((int) externalCollisionBox.x, (int) externalCollisionBox.y, (int) externalCollisionBox.width, (int) externalCollisionBox.height);
     }
 
     protected void updateCollisionBoxes() {
@@ -120,7 +112,7 @@ public abstract class Bubble extends EntityModel {
         if (direction == DOWN && getTileY() == Constants.TILES_IN_HEIGHT + 1)
             hitbox.y = -2 * Constants.TILES_SIZE;
 
-        if (direction == UP && getTileY() == - 1)
+        if (direction == UP && getTileY() == -1)
             hitbox.y = (Constants.TILES_IN_HEIGHT + 2) * Constants.TILES_SIZE;
     }
 
@@ -132,28 +124,28 @@ public abstract class Bubble extends EntityModel {
     protected void bubbleShaking() {
 
         if (previousDirection == UP) {
-            if (animationIndex % 2 == 0)
+            if (shake)
                 ySpeed -= SHAKING_SPEED;
             else
                 ySpeed += SHAKING_SPEED;
         }
 
         if (previousDirection == DOWN) {
-            if (animationIndex % 2 == 0)
+            if (shake)
                 ySpeed += SHAKING_SPEED;
             else
                 ySpeed -= SHAKING_SPEED;
         }
 
         if (previousDirection == LEFT) {
-            if (animationIndex % 2 == 0)
+            if (shake)
                 xSpeed -= SHAKING_SPEED;
             else
                 xSpeed += SHAKING_SPEED;
         }
 
         if (previousDirection == RIGHT) {
-            if (animationIndex % 2 == 0)
+            if (shake)
                 xSpeed += SHAKING_SPEED;
             else
                 xSpeed -= SHAKING_SPEED;
@@ -210,5 +202,13 @@ public abstract class Bubble extends EntityModel {
 
     protected void changeDirection() {
         direction = (direction == LEFT) ? RIGHT : LEFT;
+    }
+
+    public boolean isPopped() {
+        return popped;
+    }
+
+    public BubbleType getBubbleType() {
+        return bubbleType;
     }
 }

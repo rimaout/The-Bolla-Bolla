@@ -1,23 +1,19 @@
-package bubbles.playerBubbles;
-
-import java.awt.*;
+package model.bubbles.playerBubbles;
 
 import model.entities.PlayerModel;
 
 import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.BubbleType.EMPTY_BUBBLE;
 import static model.utilz.Constants.Direction;
 
-public class EmptyBubble extends PlayerBubble {
+public class EmptyBubbleModel extends PlayerBubbleModel {
 
-    public EmptyBubble(float x, float y, Direction direction) {
+    public EmptyBubbleModel(float x, float y, Direction direction) {
         super(x, y, direction);
+        this.bubbleType = EMPTY_BUBBLE;
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getPlayerBubbleSprites()[state][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-    }
-
-    protected void updateDeadAnimation(){
+    protected void updateDeadAction(){
         // Empty implementation, only used by EnemyBubble
     }
 
@@ -28,9 +24,6 @@ public class EmptyBubble extends PlayerBubble {
                 state = POP_RED;
             else
                 state = POP_NORMAL;
-
-            animationIndex = 0;
-            animationTick = 0;
         }
     }
 

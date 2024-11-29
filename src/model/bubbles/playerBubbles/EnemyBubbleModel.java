@@ -1,29 +1,22 @@
-package bubbles.playerBubbles;
+package model.bubbles.playerBubbles;
 
-import view.audio.AudioPlayer;
 import model.entities.EnemyModel;
-import model.entities.EnemyManagerModel;
 import model.entities.PlayerModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
-import model.utilz.Constants.AudioConstants;
 import model.utilz.Constants.Direction;
-import view.entities.EnemyManagerView;
-
-import java.awt.*;
 import java.util.Random;
 
 import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.BubbleType.ENEMY_BUBBLE;
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.EnemyConstants.*;
 import static model.utilz.Constants.GRAVITY;
 import static model.utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
 import static model.utilz.HelpMethods.*;
 
-public class EnemyBubble extends EmptyBubble {
+public class EnemyBubbleModel extends EmptyBubbleModel {
 
-    private final EnemyManagerModel enemyManagerModel = EnemyManagerModel.getInstance();
-    private final EnemyManagerView enemyManagerView = EnemyManagerView.getInstance(); //todo: remove later for mvc
     private final Random random = new Random();
     private final EnemyModel enemyModel;
 
@@ -31,37 +24,13 @@ public class EnemyBubble extends EmptyBubble {
     private float xSpeedDead;
     private boolean playerPopped;
     private int consecutivePopsCounter;
-    private boolean playPopSound = false;
 
-    public EnemyBubble(EnemyModel enemyModel, float x, float y, Direction direction) {
+    public EnemyBubbleModel(EnemyModel enemyModel, float x, float y, Direction direction) {
         super(x, y, direction);
         this.state = NORMAL;
         this.enemyModel = enemyModel;
+        this.bubbleType = ENEMY_BUBBLE;
     }
-
-    @Override
-    public void draw(Graphics g) {
-
-        if (state == NORMAL)
-            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_GREEN_ANIMATION][animationIndex], (int) (hitbox.x - ENEMY_HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-
-        else if (state == RED || state == BLINKING)
-            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_RED_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-
-        else if (state == POP_NORMAL)
-            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_GREEN_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-
-        else if (state == POP_RED)
-            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-        else if (state == DEAD)
-            g.drawImage(enemyManagerView.getEnemySprite(enemyModel.getEnemyType())[DEAD_ANIMATION][animationIndex], (int) (hitbox.x - HITBOX_OFFSET_X), (int) (hitbox.y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
-
-        if (playPopSound) {
-            playPopSound = false;
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.ENEMY_BUBBLE_POP);
-        }
-    }
-
 
     public void respawnEnemy() {
         if (!playerPopped) {
@@ -73,7 +42,7 @@ public class EnemyBubble extends EmptyBubble {
         }
     }
 
-    protected void updateDeadAnimation() {
+    protected void updateDeadAction() {
 
         ySpeed += GRAVITY;
 
@@ -112,9 +81,6 @@ public class EnemyBubble extends EmptyBubble {
                 state = POP_RED;
             else
                 state = POP_NORMAL;
-
-            animationIndex = 0;
-            animationTick = 0;
         }
 
         enemyModel.setAlive(false);
@@ -148,19 +114,22 @@ public class EnemyBubble extends EmptyBubble {
         state = DEAD;
         popped = true;
         playerPopped = true;
-        animationIndex = 0;
-        animationTick = 0;
 
         enemyModel.setAlive(false);
-
-        playPopSound = true;
     }
-
 
     private boolean willBubbleBeInPerimeterWall(float xSpeed) {
         if (direction == LEFT)
             return IsPerimeterWallTile(hitbox.x + xSpeed);
         else
             return IsPerimeterWallTile(hitbox.x + hitbox.width + xSpeed);
+    }
+
+    public EnemyModel getEnemyModel() {
+        return enemyModel;
+    }
+
+    public boolean isPlayerPopped() {
+        return playerPopped;
     }
 }

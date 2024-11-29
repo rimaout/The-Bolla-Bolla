@@ -1,7 +1,7 @@
 package model.entities;
 
-import bubbles.playerBubbles.PlayerBubblesManager;
-import bubbles.playerBubbles.EnemyBubble;
+import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
+import model.bubbles.playerBubbles.EnemyBubbleModel;
 import model.levels.LevelManagerModel;
 import model.utilz.Constants;
 
@@ -176,7 +176,7 @@ public abstract class EnemyModel extends EntityModel {
 
     public void bubbleCapture(Direction direction) {
 
-        PlayerBubblesManager.getInstance().addBubble(new EnemyBubble(this, hitbox.x, hitbox.y, direction));
+        PlayerBubblesManagerModel.getInstance().addBubble(new EnemyBubbleModel(this, hitbox.x, hitbox.y, direction));
         active = false;
         enemyState = BOBBLE_STATE;
         //animationIndex = 0;   //todo: check if it ok with this two
@@ -186,7 +186,7 @@ public abstract class EnemyModel extends EntityModel {
     public void instantKill(PlayerModel playerModel) {
         active = false;
         enemyState = DEAD_STATE;
-        PlayerBubblesManager.getInstance().addDeadEnemy(this, playerModel);
+        PlayerBubblesManagerModel.getInstance().addDeadEnemy(this, playerModel);
     }
 
 

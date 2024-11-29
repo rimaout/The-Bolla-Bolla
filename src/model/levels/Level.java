@@ -3,7 +3,7 @@ package model.levels;
 import model.entities.EnemyModel;
 import model.utilz.LoadSave;
 import model.utilz.Constants.Direction;
-import bubbles.specialBubbles.BubbleGenerator;
+import model.bubbles.specialBubbles.BubbleGenerator;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
