@@ -1,6 +1,5 @@
 package view.entities;
 
-import controller.mediators.PlayerMediator;
 import model.entities.PlayerModel;
 import model.utilz.LoadSave;
 
@@ -51,17 +50,16 @@ public class PlayerView{
             animationIndex++;
             if (animationIndex >= getSpriteAmount(playerAnimation)) {
                 animationIndex = 0;
-
                 activateAttackingAnimation = false;
-                PlayerMediator.deactivateRespawning(playerModel); //TODO: use a timer in model instead of relying on animationIndex
+                //PlayerMediator.deactivateRespawning(playerModel); //TODO: use a timer in model instead of relying on animationIndex
             }
         }
 
         //TODO: use a timer in model instead of relying on animationIndex
-        if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
-            PlayerMediator.activateCanRespawn(playerModel);
-        else
-            PlayerMediator.deactivateCanRespawn(playerModel);
+        //if (animationIndex == getSpriteAmount(DEAD_ANIMATION)-1)
+        //PlayerMediator.activateCanRespawn(playerModel);
+        //else
+        //    PlayerMediator.deactivateCanRespawn(playerModel);
     }
 
     private void setAnimation() {

@@ -32,7 +32,8 @@ public class PlayerModel extends EntityModel {
 
     // Timers
     private int immuneTimer;
-    private int attackTimer = 150;
+    private int attackTimer = 150;    //todo: use value in constants
+    private int respawnTimer = RESPAWN_TIME;
 
     // PowerUp Values
     private float speedMultiplier = 1;         // shoes
@@ -45,7 +46,7 @@ public class PlayerModel extends EntityModel {
     private boolean playJumpSound, playDeathSound;
 
     public PlayerModel() {
-        super(-3* Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
+        super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
     }
 
@@ -95,7 +96,17 @@ public class PlayerModel extends EntityModel {
 
         attackTimer -= (int) timer.getTimeDelta();
         if (attackTimer > 0)
-                attacking = false;
+            attacking = false;
+
+        if (respawning) {
+            respawnTimer -= (int) timer.getTimeDelta();
+
+            if (respawnTimer <= 0) {
+                canRespawn = true;
+                respawnTimer = RESPAWN_TIME;
+            } else
+                canRespawn = false;
+        }
     }
 
     private void updatePosition() {
@@ -110,7 +121,7 @@ public class PlayerModel extends EntityModel {
         if (!left && !right && !inAir)
             return;
 
-        if(!IsEntityInsideMap(hitbox))
+        if (!IsEntityInsideMap(hitbox))
             pacManEffect();
 
         // MOVE
@@ -119,9 +130,8 @@ public class PlayerModel extends EntityModel {
 
         else if (inAir)
             handleInAirMovement();
-
         else
-           handleOnFloorMovement();
+            handleOnFloorMovement();
     }
 
     private void updateMovementValues() {
@@ -131,8 +141,8 @@ public class PlayerModel extends EntityModel {
             inAir = true;
             isJumping = true;
             playJumpSound = true;
-            
-            if(!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
+
+            if (!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
                 PowerUpManagerModel.getInstance().increaseJumpCounter();
                 addPoints(jumpPoints);  //emeraldRing powerUp
@@ -160,14 +170,14 @@ public class PlayerModel extends EntityModel {
                 inAir = true;
     }
 
-    private void handleInAirMovement(){
+    private void handleInAirMovement() {
         if (isJumping)
             jumping();
         else
             falling();
     }
 
-    private void handleOnFloorMovement(){
+    private void handleOnFloorMovement() {
         updateXPos(xSpeed);
         addPoints(walkPoints);  // crystalRing powerUp
         moving = true;          // Activate running animation
@@ -197,17 +207,17 @@ public class PlayerModel extends EntityModel {
         PowerUpManagerModel.getInstance().increaseJumpCounter();
     }
 
-    private void jumping(){
+    private void jumping() {
 
         // Going up
-        if (airSpeed < 0){
+        if (airSpeed < 0) {
             hitbox.y += airSpeed;
             airSpeed += GRAVITY;
             conpenetrationSafeUpdateXPos(xSpeed);
         }
 
         // Going down
-        else if (airSpeed <= -JUMP_SPEED){
+        else if (airSpeed <= -JUMP_SPEED) {
             if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
@@ -223,11 +233,11 @@ public class PlayerModel extends EntityModel {
         }
     }
 
-    private void falling(){
+    private void falling() {
         if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
-                hitbox.y += airSpeed;
-                airSpeed = FALL_SPEED;
-                updateXPos(xSpeed / 3);
+            hitbox.y += airSpeed;
+            airSpeed = FALL_SPEED;
+            updateXPos(xSpeed / 3);
         } else {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelData());
             updateXPos(xSpeed / 3);
@@ -357,7 +367,7 @@ public class PlayerModel extends EntityModel {
         return points;
     }
 
-    public float getXSpeed(){
+    public float getXSpeed() {
         return xSpeed;
     }
 
@@ -369,7 +379,7 @@ public class PlayerModel extends EntityModel {
         return respawning;
     }
 
-    public Direction getDirection(){
+    public Direction getDirection() {
         if (flipW == -1)
             return LEFT;
         else
@@ -435,17 +445,5 @@ public class PlayerModel extends EntityModel {
 
     public boolean isAttacking() {
         return attacking;
-    }
-
-    public void deactivateRespawning() {
-        respawning = false;
-    }
-
-    public void activateCanRespawn() {
-        canRespawn = true;
-    }
-
-    public void deactivateCanRespawn() {
-        canRespawn = false;
     }
 }
