@@ -32,7 +32,7 @@ public class PlayerModel extends EntityModel {
 
     // Timers
     private int immuneTimer;
-    private int attackTimer = 150;    //todo: use value in constants
+    private int attackTimer = 150;
     private int respawnTimer = RESPAWN_TIME;
 
     // PowerUp Values

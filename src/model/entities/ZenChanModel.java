@@ -319,7 +319,7 @@ public class ZenChanModel extends EnemyModel {
 
     private boolean canFly(){
 
-        // TODO: Refactor - this method checks fi there is a solid tile to fly on, ig there is checks if there is a empty tile on top
+        // TODO: Refactor - this method checks fi there is a solid tile to fly on, if there is checks if there is a empty tile on top
 
         // check if there is a ceiling above (if there isn't a solid in 3 tiles --> can't fly)
 

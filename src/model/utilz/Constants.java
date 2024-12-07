@@ -369,7 +369,6 @@ public class Constants {
         public enum PowerUpType {
             GREEN_CANDY, BLUE_CANDY, RED_CANDY, SHOE, ORANGE_PARASOL, BLUE_PARASOL, CHACKN_HEART, CRYSTAL_RING, EMERALD_RING, RUBY_RING;
 
-            //TODO: not here put in view
             public static int GetPowerUpImageIndex(PowerUpType powerUpType) {
                 return switch (powerUpType) {
                     case GREEN_CANDY -> 0;

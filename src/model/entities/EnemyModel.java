@@ -167,8 +167,6 @@ public abstract class EnemyModel extends EntityModel {
     public void resetEnemy() {
         hitbox.x = x;
         hitbox.y = y;
-        //animationIndex = 0;   //todo: check if is ok with out this two
-        //animationTick = 0;
         active = true;
         enemyState = NORMAL_STATE;
         walkingDir = startWalkingDir;
@@ -179,8 +177,6 @@ public abstract class EnemyModel extends EntityModel {
         PlayerBubblesManagerModel.getInstance().addBubble(new EnemyBubbleModel(this, hitbox.x, hitbox.y, direction));
         active = false;
         enemyState = BOBBLE_STATE;
-        //animationIndex = 0;   //todo: check if it ok with this two
-        //animationTick = 0;
     }
 
     public void instantKill(PlayerModel playerModel) {

@@ -14,7 +14,7 @@ public class KeyBoardInputs implements KeyListener {
 
     @Override
     public void keyTyped(java.awt.event.KeyEvent e) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
     }
 
     @Override
