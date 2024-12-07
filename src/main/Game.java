@@ -55,7 +55,6 @@ public class Game implements Runnable {
     private GameCompletedOverlayView gameCompletedOverlayView;
     private GameCompletedOverlayController gameCompletedOverlayController;
 
-
     private PlayingModel playingModel;
     private PlayingView playingView;
     private PlayingController playingController;

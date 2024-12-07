@@ -15,6 +15,7 @@ public class ProjectileManagerModel {
     // PowerUp Multipliers
     private float playerProjectileSpeedMultiplier = 1;
     private float playerProjectileDistanceMultiplier = 1;
+    private float playerProjectileActiveTimeMultiplier = 1;
 
     private ProjectileManagerModel(PlayerModel playerModel) {
 
@@ -62,6 +63,7 @@ public class ProjectileManagerModel {
         projectileModels.clear();
         playerProjectileSpeedMultiplier = 1;
         playerProjectileDistanceMultiplier = 1;
+        playerProjectileActiveTimeMultiplier = 1;
     }
 
     public float getPlayerProjectileSpeedMultiplier() {
@@ -82,5 +84,13 @@ public class ProjectileManagerModel {
 
     public ArrayList<ProjectileModel> getProjectileModels() {
         return projectileModels;
+    }
+
+    public float getPlayerProjectileActiveMultiplier(){
+        return playerProjectileActiveTimeMultiplier;
+    }
+
+    public void setPlayerProjectileActiveMultiplier(float playerProjectileActiveTimeMultiplier) {
+        this.playerProjectileActiveTimeMultiplier = playerProjectileActiveTimeMultiplier;
     }
 }

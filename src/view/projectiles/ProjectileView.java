@@ -1,6 +1,5 @@
 package view.projectiles;
 
-import controller.mediators.ProjectileMediator;
 import model.utilz.Constants;
 import model.projectiles.ProjectileModel;
 import model.utilz.Constants.Projectiles.ProjectileState;
@@ -8,7 +7,6 @@ import model.utilz.Constants.Projectiles.ProjectileState;
 import java.awt.*;
 
 import static model.utilz.Constants.ANIMATION_SPEED;
-import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 
 public abstract class ProjectileView {
     protected ProjectileModel projectileModel;
@@ -37,11 +35,6 @@ public abstract class ProjectileView {
             if (animationIndex >= getSpriteAmount(projectileModel.getState(), projectileModel.getType())) {
                 animationIndex = 0;
             }
-        }
-
-        // Deactivate projectile after impact animation
-        if (projectileModel.getState() == IMPACT && animationIndex == getSpriteAmount(projectileModel.getState(), projectileModel.getType()) - 1) {
-            ProjectileMediator.deactivateProjectile(projectileModel);
         }
     }
 

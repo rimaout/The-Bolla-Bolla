@@ -17,7 +17,7 @@ public class PowerUpManagerModel {
     // PowerUp Flags
     private boolean greenCandy = false;
     private boolean blueCandy = false;
-    private boolean redCandy = false;
+    private boolean redCandy = true;
     private boolean shoe = false;
     private boolean orangeParasol = false;
     private boolean blueParasol = false;
@@ -68,10 +68,14 @@ public class PowerUpManagerModel {
         else
             ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1f);
 
-        if (redCandy)
-            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.65f);
-        else
+        if (redCandy) {
+            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.50f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(2f);
+        }
+        else {
             ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(1f);
+        }
 
         if (shoe)
             playerModel.setSpeedMultiplier(1.7f);

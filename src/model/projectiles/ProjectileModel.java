@@ -5,12 +5,15 @@ import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileState;
+import model.utilz.PlayingTimer;
 
 import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
 public abstract class ProjectileModel extends EntityModel {
-    protected final ProjectileManagerModel projectileManagerModel = ProjectileManagerModel.getInstance();
+    protected final PlayingTimer timer = PlayingTimer.getInstance();
+    private int impactTimer = 100; //time that the projectile is active after an impact
 
     protected ProjectileState state = MOVING;
     protected ProjectileType type;
@@ -26,11 +29,20 @@ public abstract class ProjectileModel extends EntityModel {
 
     public void update() {
         updatePos();
+        updateTimer();
     }
 
     protected abstract void updatePos();
     protected abstract void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel);
     protected abstract void checkPlayerHit(PlayerModel playerModel);
+
+    protected void updateTimer(){
+        if (state == IMPACT)
+            impactTimer -= timer.getTimeDelta();
+
+        if (impactTimer <= 0)
+            active = false;
+    }
 
     public ProjectileState getState() {
         return state;

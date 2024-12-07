@@ -1,5 +1,6 @@
 package model.projectiles;
 
+import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
@@ -10,6 +11,7 @@ import static model.utilz.HelpMethods.CanMoveHere;
 import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectileModel extends ProjectileModel {
+    private float activeTimer = 290;
 
     public PlayerBubbleProjectileModel(float x, float y, Direction direction) {
         super(x, y, direction, PLAYER_BUBBLE);
@@ -29,6 +31,16 @@ public class PlayerBubbleProjectileModel extends ProjectileModel {
 
         if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
             hitbox.x += xSpeed;
+    }
+
+    @Override
+    protected void updateTimer() {
+        activeTimer -= timer.getTimeDelta();
+
+        if (activeTimer <= 0) {
+            active = false;
+            PlayerBubblesManagerModel.getInstance().createEmptyBubble(hitbox.x, hitbox.y, direction);
+        }
     }
 
     @Override

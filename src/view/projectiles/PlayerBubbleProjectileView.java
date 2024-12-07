@@ -1,6 +1,5 @@
 package view.projectiles;
 
-import controller.mediators.ProjectileMediator;
 import view.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.projectiles.ProjectileManagerModel;
@@ -38,11 +37,7 @@ public class PlayerBubbleProjectileView extends ProjectileView {
         if (animationTick > PROJECTILE_ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
-            if (animationIndex >= 4) {
 
-                ProjectileMediator.deactivateProjectile(projectileModel);
-                ProjectileMediator.createEmptyBubbleFromPlayerProjectile(projectileModel);
-            }
         }
     }
 }
