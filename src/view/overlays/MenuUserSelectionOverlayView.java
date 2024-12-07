@@ -2,8 +2,8 @@ package view.overlays;
 
 import model.overlays.MenuUserSelectionOverlayModel;
 import model.users.UsersManager;
-import model.utilz.Constants;
-import model.utilz.LoadSave;
+import model.Constants;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

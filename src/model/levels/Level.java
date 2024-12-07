@@ -1,8 +1,7 @@
 package model.levels;
 
 import model.entities.EnemyModel;
-import model.utilz.LoadSave;
-import model.utilz.Constants.Direction;
+import model.Constants.Direction;
 import model.bubbles.specialBubbles.BubbleGenerator;
 
 import java.awt.image.BufferedImage;
@@ -25,19 +24,19 @@ public class Level {
     }
 
     private void createLevelData() {
-        levelData = LoadSave.GetLevelData(levelIMap);
+        levelData = LevelImportMethods.GetLevelData(levelIMap);
     }
 
     private void createWindDirectionData() {
-        windDirectionData = LoadSave.GetWindsDirectionsData(levelIMap);
+        windDirectionData = LevelImportMethods.GetWindsDirectionsData(levelIMap);
     }
 
     private void createBubbleGenerator() {
-        bubbleGenerator = LoadSave.GetBubbleGenerator(levelIMap);
+        bubbleGenerator = LevelImportMethods.GetBubbleGenerator(levelIMap);
     }
 
     private void createEnemies() {
-        Enemies = LoadSave.GetEnemies(levelIMap);
+        Enemies = LevelImportMethods.GetEnemies(levelIMap);
     }
 
     public int getSpriteIndex(int x, int y) {

@@ -3,7 +3,9 @@ package view.bubbles;
 import model.bubbles.BubbleModel;
 import java.awt.*;
 
-import static model.utilz.Constants.Bubble.*;
+import static model.Constants.Bubble.*;
+import static view.Constants.Bubble.BUBBLE_ANIMATION_SPEED;
+import static view.Constants.Bubble.getPlayerBubbleSpriteAmount;
 
 public abstract class BubbleView{
     protected BubbleModel bubbleModel;
@@ -23,7 +25,7 @@ public abstract class BubbleView{
         if (animationTick > BUBBLE_ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;
-            if (animationIndex >= getSpriteAmount(bubbleModel.getState()))
+            if (animationIndex >= getPlayerBubbleSpriteAmount(bubbleModel.getState()))
                 animationIndex = 0;
         }
     }

@@ -2,14 +2,14 @@ package view.itemsAndRewards;
 
 import model.itemesAndRewards.BubbleRewardModel;
 import model.itemesAndRewards.ItemModel;
-import model.utilz.Constants;
+import view.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Items.BubbleRewardType.GetRewardImageIndex;
-import static model.utilz.Constants.Items.H;
-import static model.utilz.Constants.Items.W;
+import static view.Constants.Items.GetRewardImageIndex;
+import static model.Constants.Items.H;
+import static model.Constants.Items.W;
 
 public class BubbleRewardView extends ItemView{
 
@@ -31,7 +31,7 @@ public class BubbleRewardView extends ItemView{
     @Override
     public void audioEffects() {
         if (itemModel.isCollected() && !soundPlayed) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.REWARD_COLLECTED);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.REWARD_COLLECTED);
             soundPlayed = true;
         }
     }

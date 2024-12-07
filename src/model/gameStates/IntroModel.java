@@ -1,15 +1,15 @@
 package model.gameStates;
 
 import model.levels.Level;
-import model.utilz.Constants;
+import model.Constants;
 import model.entities.PlayerModel;
 import view.audio.AudioPlayer;
 import model.levels.LevelManagerModel;
 
-import static model.utilz.Constants.INTRO.IntroState.*;
-import static model.utilz.Constants.INTRO.*;
-import static model.utilz.Constants.PlayerConstants.SPAWN_X;
-import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
+import static model.Constants.INTRO.IntroState.*;
+import static model.Constants.INTRO.*;
+import static model.Constants.PlayerConstants.SPAWN_X;
+import static model.Constants.PlayerConstants.SPAWN_Y;
 
 public class IntroModel {
     private PlayingModel playingModel;

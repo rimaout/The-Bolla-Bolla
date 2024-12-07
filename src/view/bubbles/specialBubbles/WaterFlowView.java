@@ -1,13 +1,13 @@
 package view.bubbles.specialBubbles;
 
 import model.bubbles.specialBubbles.WaterFlowModel;
-import model.utilz.Constants;
+import view.Constants.AudioConstants;
 import view.audio.AudioPlayer;
-
 import java.awt.*;
 
-import static model.utilz.Constants.PlayerConstants.IDLE_ANIMATION;
-import static model.utilz.Constants.WaterFLow.*;
+import static view.Constants.PlayerConstants.IDLE_ANIMATION;
+import static model.Constants.WaterFLow.*;
+
 
 public class WaterFlowView {
 
@@ -41,7 +41,7 @@ public class WaterFlowView {
         g2d.setComposite(originalComposite);
 
         if (waterFlowModel.isPlaySoundActive() && !soundAlreadyPlayed) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.WATER_FLOW);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.WATER_FLOW);
             soundAlreadyPlayed = true;
         }
     }

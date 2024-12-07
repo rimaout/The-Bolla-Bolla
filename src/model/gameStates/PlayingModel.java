@@ -11,7 +11,7 @@ import model.itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
 import main.Game;
 import model.projectiles.ProjectileManagerModel;
-import model.utilz.PlayingTimer;
+import model.PlayingTimer;
 
 public class PlayingModel extends State {
     private PlayerModel playerModelOne;

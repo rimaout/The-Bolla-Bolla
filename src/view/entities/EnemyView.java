@@ -2,8 +2,9 @@ package view.entities;
 
 import model.entities.EnemyModel;
 
-import static model.utilz.Constants.ANIMATION_SPEED;
-import static model.utilz.Constants.EnemyConstants.*;
+import static view.Constants.ANIMATION_SPEED;
+import static model.Constants.EnemyConstants.*;
+import static view.Constants.EnemyConstants.*;
 
 public class EnemyView {
     protected final EnemyModel enemyModel;

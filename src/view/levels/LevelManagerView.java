@@ -1,8 +1,8 @@
 package view.levels;
 
 import model.levels.LevelManagerModel;
-import model.utilz.Constants;
-import model.utilz.LoadSave;
+import model.Constants;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

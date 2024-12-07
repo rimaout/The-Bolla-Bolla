@@ -5,8 +5,8 @@ import static java.lang.Math.abs;
 import model.entities.PlayerModel;
 import model.entities.EnemyManagerModel;
 import model.projectiles.ProjectileManagerModel;
-import model.utilz.Constants;
-import model.utilz.Constants.Items.PowerUpType;
+import model.Constants;
+import model.Constants.Items.PowerUpType;
 
 import java.util.ArrayList;
 

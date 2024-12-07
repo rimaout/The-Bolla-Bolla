@@ -3,12 +3,12 @@ package model.entities;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 import model.bubbles.playerBubbles.EnemyBubbleModel;
 import model.levels.LevelManagerModel;
-import model.utilz.Constants;
+import model.Constants;
 
-import static model.utilz.Constants.Direction;
-import static model.utilz.Constants.Direction.*;
-import static model.utilz.Constants.EnemyConstants.*;
-import static model.utilz.HelpMethods.GetEntityYPosAboveFloor;
+import static model.Constants.Direction;
+import static model.Constants.Direction.*;
+import static model.Constants.EnemyConstants.*;
+import static model.HelpMethods.GetEntityYPosAboveFloor;
 
 public abstract class EnemyModel extends EntityModel {
 

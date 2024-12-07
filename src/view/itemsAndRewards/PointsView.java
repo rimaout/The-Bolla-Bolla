@@ -4,9 +4,9 @@ import model.itemesAndRewards.PointsModel;
 
 import java.awt.*;
 
-import static model.utilz.Constants.PointsManager.*;
-import static model.utilz.Constants.PointsManager.BIG_H;
-import static model.utilz.Constants.PointsManager.PointsType.SMALL;
+import static model.Constants.PointsManager.*;
+import static model.Constants.PointsManager.BIG_H;
+import static model.Constants.PointsManager.PointsType.SMALL;
 
 public class PointsView {
     private final RewardPointsManagerView rewardPointsManager = RewardPointsManagerView.getInstance();

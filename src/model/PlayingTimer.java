@@ -1,4 +1,4 @@
-package model.utilz;
+package model;
 
 public class PlayingTimer {
     private static PlayingTimer instance;

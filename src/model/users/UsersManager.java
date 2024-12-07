@@ -1,7 +1,7 @@
 package model.users;
 
 import main.Game;
-import model.utilz.LoadSave;
+import view.LoadSave;
 
 import java.awt.*;
 import java.io.File;

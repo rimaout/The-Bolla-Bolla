@@ -5,8 +5,8 @@ import view.bubbles.BubbleView;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Bubble.*;
-import static model.utilz.Constants.Bubble.IMAGE_H;
+import static model.Constants.Bubble.*;
+import static model.Constants.Bubble.H;
 
 public class LightningBubbleView extends BubbleView {
     SpecialBubbleManagerView bubbleManager = SpecialBubbleManagerView.getInstance();
@@ -22,6 +22,6 @@ public class LightningBubbleView extends BubbleView {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getLightningBubbleSprites()[0][0], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+        g.drawImage(bubbleManager.getLightningBubbleSprites()[0][0], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
     }
 }

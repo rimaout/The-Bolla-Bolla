@@ -1,19 +1,19 @@
 package model.entities;
 
-import model.utilz.PlayingTimer;
+import model.PlayingTimer;
 import view.entities.HurryUpManagerView;
 
-import static model.utilz.Constants.HurryUpManager.*;
+import static model.Constants.HurryUpManager.*;
 
 public class HurryUpManagerModel {
     private static HurryUpManagerModel instance;
 
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
-    private boolean animationActive;
+    private boolean hurryUpActive;
 
-    private int startAnimationTimer = START_ANIMATION_TIMER;
     private int startHurryUpTimer = START_HURRY_UP_TIMER;
+    private int activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
     private final SkelMonstaModel skelMonsta;
 
@@ -38,31 +38,31 @@ public class HurryUpManagerModel {
     }
 
     public void updateTimer() {
-        startAnimationTimer -= (int) timer.getTimeDelta();
         startHurryUpTimer -= (int) timer.getTimeDelta();
-
-        if (startAnimationTimer <= 0)
-            animationActive = true;
+        activateSkelMonstaTimer -= (int) timer.getTimeDelta();
 
         if (startHurryUpTimer <= 0)
-            startHurryUp();
+            hurryUpActive = true;
+
+        if (activateSkelMonstaTimer <= 0)
+            startSkelMostaAction();
     }
 
     public void restart() {
-        startAnimationTimer = START_ANIMATION_TIMER;
         startHurryUpTimer = START_HURRY_UP_TIMER;
+        activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
-        animationActive = false;
+        hurryUpActive = false;
 
         HurryUpManagerView.getInstance().restart(); // todo: use observer pattern to notify the view
         skelMonsta.activateDespawn();
     }
 
     public void newLevelReset() {
-        startAnimationTimer = START_ANIMATION_TIMER;
         startHurryUpTimer = START_HURRY_UP_TIMER;
+        activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
-        animationActive = false;
+        hurryUpActive = false;
 
         HurryUpManagerView.getInstance().restart(); // todo: use observer pattern to notify the view
         skelMonsta.reset();
@@ -72,14 +72,14 @@ public class HurryUpManagerModel {
         newLevelReset();
     }
 
-    public void startHurryUp() {
-        animationActive = false;
+    public void startSkelMostaAction() {
+        hurryUpActive = false;
         skelMonsta.activate();
         EnemyManagerModel.getInstance().setAllHungry();
     }
 
-    public boolean isAnimationActive() {
-        return animationActive;
+    public boolean isHurryUpActive() {
+        return hurryUpActive;
     }
 
     public EnemyModel getSkelMonstaModel() {

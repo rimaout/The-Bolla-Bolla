@@ -3,12 +3,12 @@ package model.projectiles;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants.Direction;
+import model.Constants.Direction;
 
-import static model.utilz.Constants.Direction.LEFT;
-import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.HelpMethods.CanMoveHere;
-import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
+import static model.Constants.Direction.LEFT;
+import static model.Constants.Projectiles.*;
+import static model.HelpMethods.CanMoveHere;
+import static model.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectileModel extends ProjectileModel {
     private float activeTimer = 290;

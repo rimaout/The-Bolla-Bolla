@@ -1,14 +1,14 @@
 package view.entities;
 
 import model.entities.EnemyManagerModel;
-import model.utilz.LoadSave;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static model.utilz.Constants.EnemyConstants.*;
-import static model.utilz.Constants.EnemyConstants.ENEMY_H;
+import static model.Constants.EnemyConstants.*;
+import static model.Constants.EnemyConstants.ENEMY_H;
 
 public class EnemyManagerView {
     private static EnemyManagerView instance;

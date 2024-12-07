@@ -1,13 +1,13 @@
 package view.itemsAndRewards;
 
 import model.itemesAndRewards.RewardPointsManagerModel;
-import model.utilz.LoadSave;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static model.utilz.Constants.PointsManager.*;
+import static model.Constants.PointsManager.*;
 
 public class RewardPointsManagerView {
     private static RewardPointsManagerView instance;

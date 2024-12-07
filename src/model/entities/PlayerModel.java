@@ -1,18 +1,17 @@
 package model.entities;
 
-import view.audio.AudioPlayer;
-import model.utilz.Constants;
-import model.utilz.PlayingTimer;
+import model.Constants;
+import model.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.projectiles.ProjectileManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
-import static model.utilz.Constants.*;
-import static model.utilz.HelpMethods.*;
-import static model.utilz.Constants.Direction.LEFT;
-import static model.utilz.Constants.Direction.RIGHT;
-import static model.utilz.Constants.PlayerConstants.*;
+import static model.Constants.*;
+import static model.HelpMethods.*;
+import static model.Constants.Direction.LEFT;
+import static model.Constants.Direction.RIGHT;
+import static model.Constants.PlayerConstants.*;
 
 public class PlayerModel extends EntityModel {
     private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
@@ -46,7 +45,7 @@ public class PlayerModel extends EntityModel {
     private boolean playDeathSound;
 
     public PlayerModel() {
-        super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
+        super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, PLAYER_W, PLAYER_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
     }
 

@@ -2,9 +2,9 @@ package model.bubbles.playerBubbles;
 
 import model.bubbles.BubbleModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants;
+import model.Constants;
 
-import static model.utilz.Constants.Bubble.*;
+import static model.Constants.Bubble.*;
 
 public abstract class PlayerBubbleModel extends BubbleModel {
     protected final PlayerBubblesManagerModel bubbleManager = PlayerBubblesManagerModel.getInstance();

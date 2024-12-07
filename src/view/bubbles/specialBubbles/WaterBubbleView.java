@@ -5,7 +5,7 @@ import view.bubbles.BubbleView;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Bubble.*;
+import static model.Constants.Bubble.*;
 
 public class WaterBubbleView extends BubbleView {
     private final SpecialBubbleManagerView bubbleManager = SpecialBubbleManagerView.getInstance();
@@ -21,6 +21,6 @@ public class WaterBubbleView extends BubbleView {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+        g.drawImage(bubbleManager.getWaterBubbleSprites()[0][0], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
     }
 }

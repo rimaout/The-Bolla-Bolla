@@ -3,13 +3,13 @@ package model.projectiles;
 
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants;
-import model.utilz.Constants.Direction;
-import model.utilz.Constants.Projectiles.ProjectileType;
+import model.Constants;
+import model.Constants.Direction;
+import model.Constants.Projectiles.ProjectileType;
 
-import static model.utilz.Constants.Direction.LEFT;
-import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.HelpMethods.IsPerimeterWallTile;
+import static model.Constants.Direction.LEFT;
+import static model.Constants.Projectiles.*;
+import static model.HelpMethods.IsPerimeterWallTile;
 
 public class LightingProjectileModel extends ProjectileModel {
 

@@ -2,14 +2,14 @@ package view.bubbles.playerBubbles;
 
 import model.bubbles.BubbleModel;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
-import model.utilz.LoadSave;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import static model.utilz.Constants.Bubble.DEFAULT_H;
-import static model.utilz.Constants.Bubble.DEFAULT_W;
+import static model.Constants.Bubble.DEFAULT_H;
+import static model.Constants.Bubble.DEFAULT_W;
 
 public class PlayerBubblesManagerView {
     private static PlayerBubblesManagerView instance;

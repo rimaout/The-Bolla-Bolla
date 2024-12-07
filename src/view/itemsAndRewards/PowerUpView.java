@@ -2,14 +2,14 @@ package view.itemsAndRewards;
 
 import model.itemesAndRewards.ItemModel;
 import model.itemesAndRewards.PowerUpModel;
-import model.utilz.Constants;
+import view.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Items.H;
-import static model.utilz.Constants.Items.PowerUpType.GetPowerUpImageIndex;
-import static model.utilz.Constants.Items.W;
+import static model.Constants.Items.H;
+import static view.Constants.Items.GetPowerUpImageIndex;
+import static model.Constants.Items.W;
 
 public class PowerUpView extends ItemView {
 
@@ -30,7 +30,7 @@ public class PowerUpView extends ItemView {
     @Override
     public void audioEffects() {
         if (itemModel.isCollected() && !soundPlayed) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.POWER_UP_COLLECTED);
+            AudioPlayer.getInstance().playSoundEffect(AudioConstants.POWER_UP_COLLECTED);
             soundPlayed = true;
         }
     }

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import controller.inputs.KeyBoardInputs;
 import controller.inputs.MouseKeyInputs;
 import controller.inputs.MouseMotionInputs;
+import model.Constants;
 
 public class GamePanel extends JPanel {
     private final Game game;
@@ -22,10 +23,10 @@ public class GamePanel extends JPanel {
     }
 
      private void setPanelSize() {
-        Dimension size = new Dimension(model.utilz.Constants.GAME_WIDTH, model.utilz.Constants.GAME_HEIGHT);
+        Dimension size = new Dimension(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         setPreferredSize(size);
 
-        System.out.println("Size: " + model.utilz.Constants.GAME_WIDTH + " | " + model.utilz.Constants.GAME_HEIGHT);
+        System.out.println("Size: " + Constants.GAME_WIDTH + " | " + Constants.GAME_HEIGHT);
     }
 
     public void paintComponent(Graphics g) {

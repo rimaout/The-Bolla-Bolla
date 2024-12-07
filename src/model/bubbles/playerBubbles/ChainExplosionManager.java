@@ -6,9 +6,9 @@ import java.util.TimerTask;
 
 import model.entities.PlayerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
-import model.utilz.Constants;
+import model.Constants;
 
-import static model.utilz.Constants.Bubble.DEAD;
+import static model.Constants.Bubble.DEAD;
 
 public class ChainExplosionManager {
     private final PlayerModel playerModel;

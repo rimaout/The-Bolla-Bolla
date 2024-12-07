@@ -1,12 +1,12 @@
 package view.overlays;
 
 import model.entities.EntityModel;
-import model.utilz.Constants;
-import model.utilz.Constants.Direction;
-import static model.utilz.Constants.Direction.*;
+import model.Constants;
+import model.Constants.Direction;
+import static model.Constants.Direction.*;
 
-import static model.utilz.Constants.Home.*;
-import static model.utilz.Constants.ANIMATION_SPEED;
+import static view.Constants.Home.*;
+import static view.Constants.ANIMATION_SPEED;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

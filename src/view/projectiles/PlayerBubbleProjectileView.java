@@ -1,14 +1,15 @@
 package view.projectiles;
 
 import view.audio.AudioPlayer;
-import model.utilz.Constants;
+import view.Constants.AudioConstants;
 import model.projectiles.ProjectileManagerModel;
 import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
+import static model.Constants.Projectiles.*;
+import static model.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
+import static view.Constants.Projectiles.PROJECTILE_ANIMATION_SPEED;
 
 public class PlayerBubbleProjectileView extends ProjectileView {
 
@@ -23,7 +24,7 @@ public class PlayerBubbleProjectileView extends ProjectileView {
 
     @Override
     protected void playSoundEffect() {
-        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.BUBBLE_SHOOT);
+        AudioPlayer.getInstance().playSoundEffect(AudioConstants.BUBBLE_SHOOT);
     }
 
     @Override

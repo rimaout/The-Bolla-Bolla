@@ -1,14 +1,14 @@
 package view.projectiles;
 
 import view.audio.AudioPlayer;
-import model.utilz.Constants;
+import view.Constants.AudioConstants;
 import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Projectiles.*;
-import static model.utilz.Constants.Projectiles.H;
-import static model.utilz.Constants.Projectiles.ProjectileType.LIGHTNING;
+import static model.Constants.Projectiles.*;
+import static model.Constants.Projectiles.H;
+import static model.Constants.Projectiles.ProjectileType.LIGHTNING;
 
 public class LightingProjectileView extends ProjectileView {
 
@@ -23,6 +23,6 @@ public class LightingProjectileView extends ProjectileView {
 
     @Override
     protected void playSoundEffect() {
-        AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.LIGHTNING);
+        AudioPlayer.getInstance().playSoundEffect(AudioConstants.LIGHTNING);
     }
 }

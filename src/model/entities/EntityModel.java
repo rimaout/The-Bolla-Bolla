@@ -2,12 +2,12 @@ package model.entities;
 
 import java.awt.geom.Rectangle2D;
 
-import model.utilz.Constants;
-import model.utilz.PlayingTimer;
+import model.Constants;
+import model.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 
-import static model.utilz.HelpMethods.*;
+import static model.HelpMethods.*;
 
 public abstract class EntityModel {
     protected final PlayingTimer timer = PlayingTimer.getInstance();

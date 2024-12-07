@@ -1,13 +1,13 @@
 package view.itemsAndRewards;
 
 import model.itemesAndRewards.ItemManagerModel;
-import model.utilz.LoadSave;
+import view.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static model.utilz.Constants.Items.*;
+import static model.Constants.Items.*;
 
 public class ItemManagerView {
     private static ItemManagerView instance;

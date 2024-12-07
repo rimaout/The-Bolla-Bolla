@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import model.entities.PlayerModel;
 import model.gameStates.PlayingModel;
-import model.utilz.PlayingTimer;
+import model.PlayingTimer;
 import model.levels.LevelManagerModel;
 
-import static model.utilz.Constants.Items.*;
-import static model.utilz.HelpMethods.GetRandomPosition;
+import static model.Constants.Items.*;
+import static model.HelpMethods.GetRandomPosition;
 
 public class ItemManagerModel {
     private static ItemManagerModel instance;

@@ -4,7 +4,7 @@ import model.itemesAndRewards.ItemModel;
 
 import java.awt.*;
 
-import static model.utilz.Constants.ANIMATION_SPEED;
+import static view.Constants.ANIMATION_SPEED;
 
 public abstract class ItemView {
     protected ItemModel itemModel;

@@ -1,10 +1,9 @@
 package model.levels;
 
 
-import model.utilz.LoadSave;
 import model.gameStates.PlayingModel;
 import model.gameStates.GameState;
-import model.utilz.Constants.Direction;
+import model.Constants.Direction;
 
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -50,7 +49,7 @@ public class LevelManagerModel {
     }
 
     private void buildAllLevels() {
-        BufferedImage[] allLevels = LoadSave.GetAllLevels();
+        BufferedImage[] allLevels = LevelImportMethods.GetAllLevels();
 
         for (BufferedImage level : allLevels)
             levels.add(new Level(level));

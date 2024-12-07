@@ -1,16 +1,19 @@
 package view.entities;
 
 import model.entities.PlayerModel;
-import model.utilz.Constants;
-import model.utilz.LoadSave;
+import model.Constants;
+import view.LoadSave;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static model.utilz.Constants.ANIMATION_SPEED;
-import static model.utilz.Constants.PlayerConstants.*;
-import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
+import static view.Constants.ANIMATION_SPEED;
+import static model.Constants.PlayerConstants.*;
+import static model.Constants.PlayerConstants.DEFAULT_H;
+import static view.Constants.PlayerConstants.*;
+import static view.Constants.AudioConstants.JUMP;
+import static view.Constants.AudioConstants.PLAYER_DEATH;
 
 public class PlayerView{
     private final PlayerModel playerModel;
@@ -51,7 +54,7 @@ public class PlayerView{
 
         // Jump sound Logic
         if (playerModel.getIsJumping() && !jumpSoundAlreadyPlayed) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.JUMP);
+            AudioPlayer.getInstance().playSoundEffect(JUMP);
             jumpSoundAlreadyPlayed = true;
         }
         if (!playerModel.getIsJumping())
@@ -60,7 +63,7 @@ public class PlayerView{
 
         // Death sound Logic
         if (playerModel.isRespawning() && !deathSoundAlreadyPlayed) {
-            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.PLAYER_DEATH);
+            AudioPlayer.getInstance().playSoundEffect(PLAYER_DEATH);
             deathSoundAlreadyPlayed = true;
         }
         if (!playerModel.isRespawning())

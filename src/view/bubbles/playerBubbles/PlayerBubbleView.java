@@ -5,7 +5,7 @@ import view.bubbles.BubbleView;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Bubble.*;
+import static model.Constants.Bubble.*;
 
 public abstract class PlayerBubbleView extends BubbleView {
     protected int previousModelState = NORMAL;

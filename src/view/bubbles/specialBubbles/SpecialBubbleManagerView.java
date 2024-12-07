@@ -3,15 +3,15 @@ package view.bubbles.specialBubbles;
 import model.bubbles.BubbleModel;
 import model.bubbles.specialBubbles.SpecialBubbleManagerModel;
 import model.bubbles.specialBubbles.WaterFlowModel;
-import model.utilz.LoadSave;
+import view.LoadSave;
 import view.bubbles.BubbleView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
-import static model.utilz.Constants.PlayerConstants.DEFAULT_W;
+import static model.Constants.PlayerConstants.DEFAULT_H;
+import static model.Constants.PlayerConstants.DEFAULT_W;
 
 public class SpecialBubbleManagerView {
     private static SpecialBubbleManagerView instance;

@@ -4,8 +4,8 @@ import model.bubbles.BubbleModel;
 
 import java.awt.*;
 
-import static model.utilz.Constants.Bubble.*;
-import static model.utilz.Constants.Bubble.IMAGE_H;
+import static model.Constants.Bubble.*;
+import static model.Constants.Bubble.H;
 
 public class EmptyBubbleView extends PlayerBubbleView{
     public EmptyBubbleView(BubbleModel bubbleModel) {
@@ -14,6 +14,6 @@ public class EmptyBubbleView extends PlayerBubbleView{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(PlayerBubblesManagerView.getInstance().getPlayerBubbleSprites()[bubbleModel.getState()][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), IMAGE_W, IMAGE_H, null);
+        g.drawImage(PlayerBubblesManagerView.getInstance().getPlayerBubbleSprites()[bubbleModel.getState()][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
     }
 }

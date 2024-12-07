@@ -1,4 +1,6 @@
-package model.utilz;
+package model;
+
+import model.Constants;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

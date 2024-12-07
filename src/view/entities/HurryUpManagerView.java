@@ -1,15 +1,16 @@
 package view.entities;
 
 import model.entities.HurryUpManagerModel;
-import model.utilz.Constants;
-import model.utilz.LoadSave;
+import view.Constants;
+import view.LoadSave;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static model.utilz.Constants.HurryUpManager.*;
-import static model.utilz.Constants.HurryUpManager.HURRY_IMG_H;
+import static model.Constants.GAME_HEIGHT;
+import static view.Constants.HurryUpManager.*;
+import static view.Constants.HurryUpManager.HURRY_IMG_H;
 
 public class HurryUpManagerView {
     private static HurryUpManagerView instance;
@@ -44,7 +45,7 @@ public class HurryUpManagerView {
 
     public void draw(Graphics g) {
 
-        if (hurryUpManagerModel.isAnimationActive())
+        if (hurryUpManagerModel.isHurryUpActive())
             g.drawImage(hurryImg, (int) hurryImgX, (int) hurryImgY, HURRY_IMG_W,  HURRY_IMG_H, null);
 
         if (skelMonstaView.isActive())
@@ -58,16 +59,16 @@ public class HurryUpManagerView {
     }
 
     public void checkPlaySound() {
-        if (!alreadyPlayedSound && hurryUpManagerModel.isAnimationActive())
+        if (!alreadyPlayedSound && hurryUpManagerModel.isHurryUpActive())
             playSound = true;
     }
 
     private void updateHurryPos() {
-        if (!hurryUpManagerModel.isAnimationActive())
+        if (!hurryUpManagerModel.isHurryUpActive())
             return;
 
         // If image is at center of screen, stop moving
-        if (hurryImgY <= Constants.GAME_HEIGHT / 2 - HURRY_IMG_H / 2)
+        if (hurryImgY <= GAME_HEIGHT / 2 - HURRY_IMG_H / 2)
             return;
 
         hurryImgY -= HURRY_IMG_SPEED;
