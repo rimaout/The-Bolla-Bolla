@@ -1,7 +1,9 @@
 package view.entities;
 
 import model.entities.PlayerModel;
+import model.utilz.Constants;
 import model.utilz.LoadSave;
+import view.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +19,7 @@ public class PlayerView{
     private int animationIndex, animationTick;
     private int playerAnimation = IDLE_ANIMATION;
     private boolean activateAttackingAnimation;
+    private boolean jumpSoundAlreadyPlayed, deathSoundAlreadyPlayed;
 
     public PlayerView(PlayerModel playerModel) {
         this.playerModel = playerModel;
@@ -27,6 +30,7 @@ public class PlayerView{
     public void update() {
         updateAnimationTick();
         setAnimation();
+        updateSound();
     }
 
     public void draw(Graphics2D g) {
@@ -41,6 +45,26 @@ public class PlayerView{
         }
 
         g.drawImage(sprites[playerAnimation][animationIndex],  (int) (playerModel.getHitbox().x - OFFSET_X) + playerModel.getFlipX(), (int) (playerModel.getHitbox().y - OFFSET_Y), playerModel.getWidth() * playerModel.getFlipW(), playerModel.getHeight(), null);
+    }
+
+    private void updateSound() {
+
+        // Jump sound Logic
+        if (playerModel.getIsJumping() && !jumpSoundAlreadyPlayed) {
+            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.JUMP);
+            jumpSoundAlreadyPlayed = true;
+        }
+        if (!playerModel.getIsJumping())
+            jumpSoundAlreadyPlayed = false;
+
+
+        // Death sound Logic
+        if (playerModel.isRespawning() && !deathSoundAlreadyPlayed) {
+            AudioPlayer.getInstance().playSoundEffect(Constants.AudioConstants.PLAYER_DEATH);
+            deathSoundAlreadyPlayed = true;
+        }
+        if (!playerModel.isRespawning())
+            deathSoundAlreadyPlayed = false;
     }
 
     private void updateAnimationTick() {

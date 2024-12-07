@@ -43,7 +43,7 @@ public class PlayerModel extends EntityModel {
     private int bubbleShotPoints = 0;          // rubyRing
 
     // Sound Variables
-    private boolean playJumpSound, playDeathSound;
+    private boolean playDeathSound;
 
     public PlayerModel() {
         super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, IMAGE_W, IMAGE_H); // Set the player outside the map (so it doesn't get drawn)
@@ -54,7 +54,6 @@ public class PlayerModel extends EntityModel {
 
         updateTimers();
         updatePosition();
-        updateSounds();
 
         if (attacking && canAttack())
             attack();
@@ -140,7 +139,6 @@ public class PlayerModel extends EntityModel {
         if (jump && !inAir) {
             inAir = true;
             isJumping = true;
-            playJumpSound = true;
 
             if (!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
@@ -203,7 +201,6 @@ public class PlayerModel extends EntityModel {
         airSpeed = JUMP_SPEED;
         inAir = true;
         isJumping = true;
-        playJumpSound = true;
         PowerUpManagerModel.getInstance().increaseJumpCounter();
     }
 
@@ -262,18 +259,6 @@ public class PlayerModel extends EntityModel {
         }
     }
 
-    private void updateSounds() {
-        if (playJumpSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.JUMP); //todo: move in view, example use controller to play sound (add if in !air and jump is pressed play sound)
-            playJumpSound = false;
-        }
-
-        if (playDeathSound) {
-            AudioPlayer.getInstance().playSoundEffect(AudioConstants.PLAYER_DEATH); //todo: move in view example use controller to play sound (add if in !air and jump is pressed play sound)
-            playDeathSound = false;
-        }
-    }
-
     private void respawn() {
 
         if (canRespawn) { // Last frame of the dying animation
@@ -322,7 +307,6 @@ public class PlayerModel extends EntityModel {
         flipX = 0;
         flipW = 1;
 
-        playJumpSound = false;
         playDeathSound = false;
 
         if (resetLives)
@@ -409,6 +393,10 @@ public class PlayerModel extends EntityModel {
 
     public void setBubbleShotPoints(int bubbleShotPoints) {
         this.bubbleShotPoints = bubbleShotPoints;
+    }
+
+    public boolean getIsJumping() {
+        return isJumping;
     }
 
     public int getImmuneTimer() {
