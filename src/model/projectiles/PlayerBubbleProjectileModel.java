@@ -7,7 +7,7 @@ import model.Constants.Direction;
 
 import static model.Constants.Direction.LEFT;
 import static model.Constants.Projectiles.*;
-import static model.HelpMethods.CanMoveHere;
+import static model.entities.HelpMethods.CanMoveHere;
 import static model.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectileModel extends ProjectileModel {

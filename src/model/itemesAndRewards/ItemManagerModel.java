@@ -9,7 +9,7 @@ import model.PlayingTimer;
 import model.levels.LevelManagerModel;
 
 import static model.Constants.Items.*;
-import static model.HelpMethods.GetRandomPosition;
+import static model.entities.HelpMethods.GetRandomPosition;
 
 public class ItemManagerModel {
     private static ItemManagerModel instance;

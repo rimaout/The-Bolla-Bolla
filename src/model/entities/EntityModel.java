@@ -7,7 +7,7 @@ import model.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 
-import static model.HelpMethods.*;
+import static model.entities.HelpMethods.*;
 
 public abstract class EntityModel {
     protected final PlayingTimer timer = PlayingTimer.getInstance();

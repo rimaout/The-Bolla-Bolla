@@ -5,7 +5,7 @@ import model.entities.PlayerModel;
 import model.Constants.Direction;
 
 import static model.Constants.Direction.*;
-import static model.HelpMethods.CanMoveHere;
+import static model.entities.HelpMethods.CanMoveHere;
 import static model.Constants.Projectiles.*;
 import static model.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.Constants.Projectiles.ProjectileState.MOVING;

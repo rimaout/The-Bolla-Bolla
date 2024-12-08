@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.*;
-
 public class Constants {
 
     public final static int FPS_SET = 60;

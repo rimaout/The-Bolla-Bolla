@@ -11,12 +11,13 @@ import static model.Constants.LevelTransition.TransitionState;
 import static model.Constants.LevelTransition.TransitionState.*;
 import static model.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
-public class LevelTransitionModel extends State {
-    PlayingModel playingModel;
+public class LevelTransitionModel implements State {
+    private PlayingModel playingModel;
+    private Game game;
 
-    Level oldLevel, newLevel;
-    float oldLevelY;
-    float newLevelY;
+    private Level oldLevel, newLevel;
+    private float oldLevelY;
+    private float newLevelY;
 
     private TransitionState transitionState;
     private boolean firstUpdate = true;
@@ -25,8 +26,7 @@ public class LevelTransitionModel extends State {
     private float playerStartX, playerStartY;
 
     public LevelTransitionModel(Game game) {
-        super(game);
-
+        this.game = game;
         this.playingModel = game.getPlaying();
 
         playerModel = game.getPlaying().getPlayerOneModel();
@@ -123,5 +123,7 @@ public class LevelTransitionModel extends State {
         return playerModel;
     }
 
-
+    public Game getGame() {
+        return game;
+    }
 }

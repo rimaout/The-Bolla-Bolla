@@ -13,7 +13,7 @@ import static model.Constants.Direction.LEFT;
 import static model.Constants.EnemyConstants.*;
 import static model.Constants.GRAVITY;
 import static model.Constants.Items.BubbleRewardType.GetBubbleRewardType;
-import static model.HelpMethods.*;
+import static model.entities.HelpMethods.*;
 
 public class EnemyBubbleModel extends EmptyBubbleModel {
 

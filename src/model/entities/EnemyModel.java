@@ -8,7 +8,7 @@ import model.Constants;
 import static model.Constants.Direction;
 import static model.Constants.Direction.*;
 import static model.Constants.EnemyConstants.*;
-import static model.HelpMethods.GetEntityYPosAboveFloor;
+import static model.entities.HelpMethods.GetEntityYPosAboveFloor;
 
 public abstract class EnemyModel extends EntityModel {
 

@@ -8,7 +8,7 @@ import model.itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
 import static model.Constants.*;
-import static model.HelpMethods.*;
+import static model.entities.HelpMethods.*;
 import static model.Constants.Direction.LEFT;
 import static model.Constants.Direction.RIGHT;
 import static model.Constants.PlayerConstants.*;

@@ -5,7 +5,7 @@ import model.Constants.Direction;
 import model.projectiles.ProjectileManagerModel;
 import model.projectiles.MaitaFireProjectileModel;
 
-import static model.HelpMethods.*;
+import static model.entities.HelpMethods.*;
 import static model.Constants.GRAVITY;
 import static model.Constants.Direction.LEFT;
 import static model.Constants.Direction.RIGHT;

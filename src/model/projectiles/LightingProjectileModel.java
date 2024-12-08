@@ -9,7 +9,7 @@ import model.Constants.Projectiles.ProjectileType;
 
 import static model.Constants.Direction.LEFT;
 import static model.Constants.Projectiles.*;
-import static model.HelpMethods.IsPerimeterWallTile;
+import static model.entities.HelpMethods.IsPerimeterWallTile;
 
 public class LightingProjectileModel extends ProjectileModel {
 

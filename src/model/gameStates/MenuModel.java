@@ -3,8 +3,8 @@ package model.gameStates;
 import main.Game;
 import model.users.UsersManager;
 
-public class MenuModel extends State {
-    private final UsersManager usersManager;
+public class MenuModel implements State {
+    private final Game game;
 
     private int selectionIndex = 0;
 
@@ -14,8 +14,8 @@ public class MenuModel extends State {
     private boolean scoreBoardOverlayActive = false;
 
     public MenuModel(Game game) {
-        super(game);
-        this.usersManager = UsersManager.getInstance();
+
+        this.game = game;
     }
 
     public void update() {
@@ -69,5 +69,10 @@ public class MenuModel extends State {
 
     public void decreaseSelectionIndex() {
         selectionIndex--;
+    }
+
+    @Override
+    public Game getGame() {
+        return game;
     }
 }

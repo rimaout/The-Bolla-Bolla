@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
 import static model.Constants.Bubble.*;
 import static model.Constants.Direction;
 import static model.Constants.Direction.*;
-import static model.HelpMethods.IsEntityInsideMap;
+import static model.entities.HelpMethods.IsEntityInsideMap;
 
 public abstract class BubbleModel extends EntityModel {
 

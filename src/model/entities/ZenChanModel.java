@@ -3,7 +3,7 @@ package model.entities;
 import model.Constants;
 import model.Constants.Direction;
 
-import static model.HelpMethods.*;
+import static model.entities.HelpMethods.*;
 import static model.Constants.GRAVITY;
 import static model.Constants.Direction.LEFT;
 import static model.Constants.Direction.RIGHT;

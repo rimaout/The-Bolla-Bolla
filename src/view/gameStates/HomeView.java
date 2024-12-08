@@ -10,9 +10,10 @@ import static view.Constants.Home.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HomeView extends State {
+public class HomeView implements State {
 
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance(this);
+    private final Game game;
 
     private BufferedImage logoImg;
     private float logoX, logoY, logoW, logoH;
@@ -21,7 +22,7 @@ public class HomeView extends State {
     private final Font nesFont;
 
     public HomeView(Game game) {
-        super(game);
+        this.game = game;
         loadLogo();
 
         nesFont = LoadSave.GetNesFont();
@@ -70,5 +71,9 @@ public class HomeView extends State {
 
     public boolean IsLogoInPosition() {
         return isLogoInPosition;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
