@@ -1,10 +1,12 @@
 package main;
 
 import controller.*;
+import model.entities.HurryUpManagerModel;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
 import view.audio.AudioPlayer;
 import model.users.UsersManager;
+import view.entities.HurryUpManagerView;
 import view.gameStates.HomeView;
 import view.gameStates.LevelTransitionView;
 import view.gameStates.MenuView;
@@ -118,6 +120,8 @@ public class Game implements Runnable {
         levelTransitionModel = new LevelTransitionModel(this);
         levelTransitionView = new LevelTransitionView(levelTransitionModel);
 
+        playingModel.addObserver(playingView);
+        HurryUpManagerModel.getInstance().addObserver(HurryUpManagerView.getInstance());
     }
 
     public void update() {

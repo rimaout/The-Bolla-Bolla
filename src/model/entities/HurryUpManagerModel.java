@@ -1,11 +1,14 @@
 package model.entities;
 
 import model.PlayingTimer;
-import view.entities.HurryUpManagerView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
 import static model.Constants.HurryUpManager.*;
 
-public class HurryUpManagerModel {
+public class HurryUpManagerModel extends Observable {
     private static HurryUpManagerModel instance;
 
     private final PlayingTimer timer = PlayingTimer.getInstance();
@@ -16,6 +19,7 @@ public class HurryUpManagerModel {
     private int activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
     private final SkelMonstaModel skelMonsta;
+
 
     private HurryUpManagerModel() {
         skelMonsta = new SkelMonstaModel();
@@ -53,9 +57,11 @@ public class HurryUpManagerModel {
         activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
         hurryUpActive = false;
-
-        HurryUpManagerView.getInstance().restart(); // todo: use observer pattern to notify the view
         skelMonsta.activateDespawn();
+
+        // notify observers
+        notifyObservers();
+        setChanged();
     }
 
     public void newLevelReset() {
@@ -63,9 +69,11 @@ public class HurryUpManagerModel {
         activateSkelMonstaTimer = ACTIVATE_SKEL_MONSTA_TIMER;
 
         hurryUpActive = false;
-
-        HurryUpManagerView.getInstance().restart(); // todo: use observer pattern to notify the view
         skelMonsta.reset();
+
+        // notify observers
+        notifyObservers();
+        setChanged();
     }
 
     public void newPlayReset() {

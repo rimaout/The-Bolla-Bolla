@@ -18,8 +18,10 @@ import view.projectiles.ProjectileManagerView;
 import view.bubbles.specialBubbles.SpecialBubbleManagerView;
 
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PlayingView {
+public class PlayingView implements Observer {
     private PlayingModel playingModel;
 
     private PlayerView playerOneView;
@@ -81,8 +83,6 @@ public class PlayingView {
     }
 
     public void newLevelReset() {
-        //TODO: sistemare reset per tutte le view
-
         ProjectileManagerView.getInstance().newLevelReset();
         RewardPointsManagerView.getInstance().newLevelReset();
         ItemManagerView.getInstance().newLevelReset();
@@ -106,5 +106,16 @@ public class PlayingView {
     public void initClasses(PlayerController playerController) {
         playerOneView = new PlayerView(playingModel.getPlayerOneModel());
         introView = new IntroView(playingModel.getIntroModel());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        PlayingModel playingModel = (PlayingModel) o;
+
+        if (playingModel.isNewPlayReset())
+            newPlayReset();
+
+        if (playingModel.isNewLevelReset())
+            newLevelReset();
     }
 }

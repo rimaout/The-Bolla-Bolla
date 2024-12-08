@@ -7,12 +7,14 @@ import view.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 
 import static model.Constants.GAME_HEIGHT;
 import static view.Constants.HurryUpManager.*;
 import static view.Constants.HurryUpManager.HURRY_IMG_H;
 
-public class HurryUpManagerView {
+public class HurryUpManagerView implements Observer {
     private static HurryUpManagerView instance;
     private static HurryUpManagerModel hurryUpManagerModel = HurryUpManagerModel.getInstance();
 
@@ -89,6 +91,11 @@ public class HurryUpManagerView {
     }
 
     public void newPlayReset() {
+        restart();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
         restart();
     }
 }

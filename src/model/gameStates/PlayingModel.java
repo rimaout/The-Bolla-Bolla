@@ -13,7 +13,10 @@ import main.Game;
 import model.projectiles.ProjectileManagerModel;
 import model.PlayingTimer;
 
-public class PlayingModel extends State {
+import java.util.Observable;
+
+public class PlayingModel extends Observable implements State {
+    private Game game;
     private PlayerModel playerModelOne;
     private PlayerModel playerModelTwo = null;
 
@@ -35,8 +38,12 @@ public class PlayingModel extends State {
     private boolean gameCompleted;
     private boolean levelCompleted;
 
+    // Observer State
+    private boolean newLevelReset;
+    private boolean newPlayReset;
+
     public PlayingModel(Game game) {
-        super(game);
+        this.game = game;
         initClasses();
         loadFirstLevel();
     }
@@ -123,9 +130,11 @@ public class PlayingModel extends State {
 
         loadFirstLevel();
 
-
-        // rest View todo: remove from here, use observer observable.
-        game.getPlayingView().newPlayReset();
+        // notify view to reset
+        newPlayReset = true;
+        newLevelReset = false;
+        setChanged();
+        notifyObservers();
     }
 
     public void restartGame() {
@@ -150,8 +159,11 @@ public class PlayingModel extends State {
 
         levelCompleted = false;
 
-        // reset View todo: remove from here, use observer observable.
-        game.getPlayingView().newLevelReset();
+        // notify view to reset
+        newLevelReset = true;
+        newPlayReset = false;
+        setChanged();
+        notifyObservers();
     }
 
     public void startNewLevel() {
@@ -213,5 +225,18 @@ public class PlayingModel extends State {
 
     public IntroModel getIntroModel() {
         return introModel;
+    }
+
+    @Override
+    public Game getGame() {
+        return game;
+    }
+
+    public boolean isNewLevelReset() {
+        return newLevelReset;
+    }
+
+    public boolean isNewPlayReset() {
+        return newPlayReset;
     }
 }
