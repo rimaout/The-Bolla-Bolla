@@ -1,12 +1,10 @@
 package model.entities;
 
-import model.PlayingTimer;
+import model.utilz.PlayingTimer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
-import static model.Constants.HurryUpManager.*;
+import static model.utilz.Constants.HurryUpManager.*;
 
 public class HurryUpManagerModel extends Observable {
     private static HurryUpManagerModel instance;

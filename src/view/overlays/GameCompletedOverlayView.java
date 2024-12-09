@@ -2,15 +2,15 @@ package view.overlays;
 
 
 import view.audio.AudioPlayer;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 
 import model.gameStates.PlayingModel;
-import model.Constants;
+import model.utilz.Constants;
 
 import java.awt.*;
 
-import static view.Constants.Overlays.BUD_RED_COLOR;
-import static view.Constants.Overlays.BUD_GREEN_COLOR;
+import static view.utilz.Constants.Overlays.BUD_RED_COLOR;
+import static view.utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
 public class GameCompletedOverlayView extends GameOverlayView {
 

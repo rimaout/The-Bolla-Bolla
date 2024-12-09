@@ -2,8 +2,8 @@ package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
 
-import static model.Constants.Items.*;
-import static model.Constants.Items.PowerUpType.*;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.Constants.Items.PowerUpType.*;
 
 public class PowerUpModel extends ItemModel {
     private final PowerUpManagerModel powerUpManagerModel = PowerUpManagerModel.getInstance();

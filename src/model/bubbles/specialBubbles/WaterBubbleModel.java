@@ -2,10 +2,10 @@ package model.bubbles.specialBubbles;
 
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.entities.PlayerModel;
-import model.Constants;
-import model.Constants.Direction;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
 
-import static model.Constants.Bubble.BubbleType.WATER_BUBBLE;
+import static model.utilz.Constants.Bubble.BubbleType.WATER_BUBBLE;
 
 public class WaterBubbleModel extends SpecialBubbleModel {
 

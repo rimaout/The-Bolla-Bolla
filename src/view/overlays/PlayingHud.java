@@ -2,8 +2,8 @@ package view.overlays;
 
 import model.gameStates.PlayingModel;
 import model.entities.PlayerModel;
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

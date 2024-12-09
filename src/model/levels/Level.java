@@ -1,7 +1,7 @@
 package model.levels;
 
 import model.entities.EnemyModel;
-import model.Constants.Direction;
+import model.utilz.Constants.Direction;
 import model.bubbles.specialBubbles.BubbleGenerator;
 
 import java.awt.image.BufferedImage;

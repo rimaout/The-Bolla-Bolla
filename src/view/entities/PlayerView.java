@@ -1,19 +1,18 @@
 package view.entities;
 
 import model.entities.PlayerModel;
-import model.Constants;
-import view.LoadSave;
+import view.utilz.LoadSave;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static view.Constants.ANIMATION_SPEED;
-import static model.Constants.PlayerConstants.*;
-import static model.Constants.PlayerConstants.DEFAULT_H;
-import static view.Constants.PlayerConstants.*;
-import static view.Constants.AudioConstants.JUMP;
-import static view.Constants.AudioConstants.PLAYER_DEATH;
+import static view.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.PlayerConstants.*;
+import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
+import static view.utilz.Constants.PlayerConstants.*;
+import static view.utilz.Constants.AudioConstants.JUMP;
+import static view.utilz.Constants.AudioConstants.PLAYER_DEATH;
 
 public class PlayerView{
     private final PlayerModel playerModel;

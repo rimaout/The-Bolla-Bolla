@@ -2,8 +2,8 @@ package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
 
-import static model.Constants.Items.*;
-import static model.Constants.Items.BubbleRewardType.*;
+import static model.utilz.Constants.Items.*;
+import static model.utilz.Constants.Items.BubbleRewardType.*;
 
 public class BubbleRewardModel extends ItemModel {
 

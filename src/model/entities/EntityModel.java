@@ -2,8 +2,8 @@ package model.entities;
 
 import java.awt.geom.Rectangle2D;
 
-import model.Constants;
-import model.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 

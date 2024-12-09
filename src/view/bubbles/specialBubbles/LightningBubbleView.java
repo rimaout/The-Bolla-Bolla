@@ -5,8 +5,8 @@ import view.bubbles.BubbleView;
 
 import java.awt.*;
 
-import static model.Constants.Bubble.*;
-import static model.Constants.Bubble.H;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.H;
 
 public class LightningBubbleView extends BubbleView {
     SpecialBubbleManagerView bubbleManager = SpecialBubbleManagerView.getInstance();

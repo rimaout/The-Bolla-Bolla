@@ -1,4 +1,4 @@
-package view;
+package view.utilz;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;

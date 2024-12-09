@@ -1,4 +1,4 @@
-package controller;
+package controller.classes;
 
 import controller.inputs.InputMethods;
 import model.gameStates.GameState;

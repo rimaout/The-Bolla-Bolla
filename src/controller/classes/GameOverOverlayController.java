@@ -1,4 +1,4 @@
-package controller;
+package controller.classes;
 
 import model.gameStates.GameState;
 import model.gameStates.PlayingModel;

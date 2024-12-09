@@ -4,8 +4,8 @@ import model.bubbles.BubbleModel;
 
 import java.awt.*;
 
-import static model.Constants.Bubble.*;
-import static model.Constants.Bubble.H;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.H;
 
 public class EmptyBubbleView extends PlayerBubbleView{
     public EmptyBubbleView(BubbleModel bubbleModel) {

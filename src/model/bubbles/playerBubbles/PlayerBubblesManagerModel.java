@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import model.bubbles.BubbleModel;
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import model.Constants;
-import model.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 
-import static model.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.*;
 
 public class PlayerBubblesManagerModel {
     // This class is responsible for managing the model.bubbles that the player shoots

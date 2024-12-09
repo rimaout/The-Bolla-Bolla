@@ -1,15 +1,15 @@
 package model.gameStates;
 
-import main.Game;
+import controller.Game;
 import model.levels.Level;
-import model.Constants;
+import model.utilz.Constants;
 import model.entities.PlayerModel;
 
-import static model.Constants.PlayerConstants.SPAWN_X;
-import static model.Constants.PlayerConstants.SPAWN_Y;
-import static model.Constants.LevelTransition.TransitionState;
-import static model.Constants.LevelTransition.TransitionState.*;
-import static model.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
+import static model.utilz.Constants.PlayerConstants.SPAWN_X;
+import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
+import static model.utilz.Constants.LevelTransition.TransitionState;
+import static model.utilz.Constants.LevelTransition.TransitionState.*;
+import static model.utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
 public class LevelTransitionModel implements State {
     private PlayingModel playingModel;

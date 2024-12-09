@@ -1,6 +1,6 @@
 package model.entities;
 
-import model.Constants;
+import model.utilz.Constants;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

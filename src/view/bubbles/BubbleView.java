@@ -3,9 +3,8 @@ package view.bubbles;
 import model.bubbles.BubbleModel;
 import java.awt.*;
 
-import static model.Constants.Bubble.*;
-import static view.Constants.Bubble.BUBBLE_ANIMATION_SPEED;
-import static view.Constants.Bubble.getPlayerBubbleSpriteAmount;
+import static view.utilz.Constants.Bubble.BUBBLE_ANIMATION_SPEED;
+import static view.utilz.Constants.Bubble.getPlayerBubbleSpriteAmount;
 
 public abstract class BubbleView{
     protected BubbleModel bubbleModel;

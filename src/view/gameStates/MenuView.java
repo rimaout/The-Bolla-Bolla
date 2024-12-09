@@ -2,16 +2,16 @@ package view.gameStates;
 
 import view.overlays.MenuTwinkleBubbleManager;
 import model.gameStates.MenuModel;
-import main.Game;
+import controller.Game;
 import model.users.UsersManager;
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 
 import java.awt.*;
 
-import static view.Constants.ANIMATION_SPEED;
-import static view.Constants.MenuConstants.*;
-import static view.Constants.MenuConstants.SPACE_WIDTH;
+import static view.utilz.Constants.ANIMATION_SPEED;
+import static view.utilz.Constants.MenuConstants.*;
+import static view.utilz.Constants.MenuConstants.SPACE_WIDTH;
 
 public class MenuView {
     private final MenuModel menuModel;

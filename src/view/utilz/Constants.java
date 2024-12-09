@@ -1,13 +1,13 @@
-package view;
+package view.utilz;
 
 import java.awt.*;
 
-import static model.Constants.*;
-import static model.Constants.Bubble.NORMAL;
-import static model.Constants.Bubble.RED;
-import static model.Constants.Bubble.BLINKING;
-import static model.Constants.Bubble.POP_NORMAL;
-import static model.Constants.Bubble.POP_RED;
+import static model.utilz.Constants.*;
+import static model.utilz.Constants.Bubble.NORMAL;
+import static model.utilz.Constants.Bubble.RED;
+import static model.utilz.Constants.Bubble.BLINKING;
+import static model.utilz.Constants.Bubble.POP_NORMAL;
+import static model.utilz.Constants.Bubble.POP_RED;
 
 public class Constants {
 
@@ -78,8 +78,8 @@ public class Constants {
         public static final float NORMAL_ANIMATION_SPEED_MULTIPLIER = 1.0f;
         public static final float HUNGRY_ANIMATION_SPEED_MULTIPLIER = 0.53f;
 
-        public static int getSpriteAmount(model.Constants.EnemyConstants.EnemyType enemyType, int enemyState) {
-            if (enemyType == model.Constants.EnemyConstants.EnemyType.ZEN_CHAN || enemyType == model.Constants.EnemyConstants.EnemyType.MAITA) {
+        public static int getSpriteAmount(model.utilz.Constants.EnemyConstants.EnemyType enemyType, int enemyState) {
+            if (enemyType == model.utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN || enemyType == model.utilz.Constants.EnemyConstants.EnemyType.MAITA) {
                 return switch (enemyState) {
                     case WALKING_ANIMATION_NORMAL -> 2;
                     case WALKING_ANIMATION_HUNGRY -> 2;
@@ -90,7 +90,7 @@ public class Constants {
                 };
             }
 
-            if (enemyType == model.Constants.EnemyConstants.EnemyType.SKEL_MONSTA)
+            if (enemyType == model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA)
                 return 2; // SkelMonsta only has animations of 2 frames
 
             return 0;
@@ -99,7 +99,7 @@ public class Constants {
 
     public static class Items {
 
-        public static int GetRewardImageIndex(model.Constants.Items.BubbleRewardType bubbleRewardType) {
+        public static int GetRewardImageIndex(model.utilz.Constants.Items.BubbleRewardType bubbleRewardType) {
             return switch (bubbleRewardType) {
                 case APPLE -> 0;
                 case PEPPER -> 1;
@@ -112,7 +112,7 @@ public class Constants {
             };
         }
 
-        public static int GetPowerUpImageIndex(model.Constants.Items.PowerUpType powerUpType) {
+        public static int GetPowerUpImageIndex(model.utilz.Constants.Items.PowerUpType powerUpType) {
             return switch (powerUpType) {
                 case GREEN_CANDY -> 0;
                 case BLUE_CANDY -> 1;

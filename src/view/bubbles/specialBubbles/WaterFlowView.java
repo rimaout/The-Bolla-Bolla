@@ -1,12 +1,12 @@
 package view.bubbles.specialBubbles;
 
 import model.bubbles.specialBubbles.WaterFlowModel;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 import java.awt.*;
 
-import static view.Constants.PlayerConstants.IDLE_ANIMATION;
-import static model.Constants.WaterFLow.*;
+import static view.utilz.Constants.PlayerConstants.IDLE_ANIMATION;
+import static model.utilz.Constants.WaterFLow.*;
 
 
 public class WaterFlowView {

@@ -1,9 +1,11 @@
-package main;
+package controller;
 
-import controller.*;
+import controller.classes.*;
 import model.entities.HurryUpManagerModel;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
+import view.GamePanel;
+import view.GameWindow;
 import view.audio.AudioPlayer;
 import model.users.UsersManager;
 import view.entities.HurryUpManagerView;
@@ -15,7 +17,7 @@ import model.overlays.MenuScoreBoardOverlayModel;
 import model.overlays.MenuUserCreationOverlayModel;
 import model.overlays.MenuUserSelectionOverlayModel;
 
-import model.Constants;
+import model.utilz.Constants;
 import view.overlays.*;
 
 import java.awt.*;

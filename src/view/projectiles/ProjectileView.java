@@ -1,12 +1,12 @@
 package view.projectiles;
 
-import model.Constants;
+import model.utilz.Constants;
 import model.projectiles.ProjectileModel;
-import model.Constants.Projectiles.ProjectileState;
+import model.utilz.Constants.Projectiles.ProjectileState;
 
 import java.awt.*;
 
-import static view.Constants.ANIMATION_SPEED;
+import static view.utilz.Constants.ANIMATION_SPEED;
 
 public abstract class ProjectileView {
     protected ProjectileModel projectileModel;

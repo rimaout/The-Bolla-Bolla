@@ -11,19 +11,19 @@ import model.itemesAndRewards.ItemModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.levels.LevelManagerModel;
-import model.Constants;
-import model.Constants.Direction;
-import model.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
+import model.utilz.PlayingTimer;
 
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static model.Constants.WaterFLow.*;
-import static model.Constants.Direction.*;
+import static model.utilz.Constants.WaterFLow.*;
+import static model.utilz.Constants.Direction.*;
 import static model.entities.HelpMethods.*;
-import static model.Constants.Items.BubbleRewardType.WATER_CRISTAL;
+import static model.utilz.Constants.Items.BubbleRewardType.WATER_CRISTAL;
 
 
 public class WaterFlowModel extends EntityModel {

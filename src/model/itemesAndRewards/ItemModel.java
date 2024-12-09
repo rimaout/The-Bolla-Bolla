@@ -1,9 +1,9 @@
 package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
-import model.PlayingTimer;
+import model.utilz.PlayingTimer;
 
-import static model.Constants.Items.*;
+import static model.utilz.Constants.Items.*;
 
 import java.awt.geom.Rectangle2D;
 

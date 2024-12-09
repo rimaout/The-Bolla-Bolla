@@ -1,7 +1,7 @@
 package model.users;
 
-import main.Game;
-import view.LoadSave;
+import controller.Game;
+import view.utilz.LoadSave;
 
 import java.awt.*;
 import java.io.File;

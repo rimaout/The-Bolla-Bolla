@@ -2,14 +2,14 @@ package view.gameStates;
 
 import model.gameStates.LevelTransitionModel;
 import model.levels.Level;
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 import view.levels.LevelManagerView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static view.Constants.ANIMATION_SPEED;
+import static view.utilz.Constants.ANIMATION_SPEED;
 
 public class LevelTransitionView {
     private final LevelTransitionModel levelTransitionModel;

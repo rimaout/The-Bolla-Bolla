@@ -1,11 +1,11 @@
 package view.gameStates;
 
 import model.gameStates.State;
-import main.Game;
-import model.Constants;
-import view.LoadSave;
+import controller.Game;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 import view.overlays.MenuTwinkleBubbleManager;
-import static view.Constants.Home.*;
+import static view.utilz.Constants.Home.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

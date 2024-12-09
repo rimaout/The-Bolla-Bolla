@@ -1,8 +1,8 @@
 package model.itemesAndRewards;
 
-import model.Constants;
-import model.PlayingTimer;
-import model.Constants.PointsManager.PointsType;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
+import model.utilz.Constants.PointsManager.PointsType;
 
 public class PointsModel {
     private final PlayingTimer timer = PlayingTimer.getInstance();

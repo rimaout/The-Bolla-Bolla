@@ -5,10 +5,10 @@ import model.entities.EnemyModel;
 
 import java.awt.*;
 
-import static view.Constants.ANIMATION_SPEED;
-import static model.Constants.EnemyConstants.ENEMY_H;
-import static model.Constants.EnemyConstants.ENEMY_W;
-import static model.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
+import static view.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.EnemyConstants.ENEMY_H;
+import static model.utilz.Constants.EnemyConstants.ENEMY_W;
+import static model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
 public class SkelMonstaView extends EnemyView {
     private boolean despawningAnimationActive = false;

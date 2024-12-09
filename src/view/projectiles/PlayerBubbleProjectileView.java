@@ -1,15 +1,15 @@
 package view.projectiles;
 
 import view.audio.AudioPlayer;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 import model.projectiles.ProjectileManagerModel;
 import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
-import static model.Constants.Projectiles.*;
-import static model.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
-import static view.Constants.Projectiles.PROJECTILE_ANIMATION_SPEED;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
+import static view.utilz.Constants.Projectiles.PROJECTILE_ANIMATION_SPEED;
 
 public class PlayerBubbleProjectileView extends ProjectileView {
 

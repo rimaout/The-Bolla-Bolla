@@ -1,17 +1,17 @@
 package model.entities;
 
-import model.Constants;
-import model.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
 import model.projectiles.ProjectileManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
-import static model.Constants.*;
+import static model.utilz.Constants.*;
 import static model.entities.HelpMethods.*;
-import static model.Constants.Direction.LEFT;
-import static model.Constants.Direction.RIGHT;
-import static model.Constants.PlayerConstants.*;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Direction.RIGHT;
+import static model.utilz.Constants.PlayerConstants.*;
 
 public class PlayerModel extends EntityModel {
     private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();

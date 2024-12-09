@@ -1,4 +1,4 @@
-package controller;
+package controller.classes;
 
 import view.audio.AudioPlayer;
 import model.gameStates.GameState;

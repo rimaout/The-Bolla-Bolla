@@ -1,16 +1,16 @@
 package model.entities;
 
-import model.Constants;
-import model.Constants.Direction;
+import model.utilz.Constants;
+import model.utilz.Constants.Direction;
 import model.projectiles.ProjectileManagerModel;
 import model.projectiles.MaitaFireProjectileModel;
 
 import static model.entities.HelpMethods.*;
-import static model.Constants.GRAVITY;
-import static model.Constants.Direction.LEFT;
-import static model.Constants.Direction.RIGHT;
-import static model.Constants.EnemyConstants.*;
-import static model.Constants.EnemyConstants.EnemyType.MAITA;
+import static model.utilz.Constants.GRAVITY;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Direction.RIGHT;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.EnemyType.MAITA;
 
 public class MaitaModel extends EnemyModel {
 

@@ -4,11 +4,11 @@ import java.awt.*;
 
 import view.audio.AudioPlayer;
 import model.gameStates.PlayingModel;
-import model.Constants;
+import model.utilz.Constants;
 
-import static view.Constants.AudioConstants.GAME_OVER;
-import static view.Constants.Overlays.BUD_GREEN_COLOR;
-import static view.Constants.Overlays.BUD_RED_COLOR;
+import static view.utilz.Constants.AudioConstants.GAME_OVER;
+import static view.utilz.Constants.Overlays.BUD_GREEN_COLOR;
+import static view.utilz.Constants.Overlays.BUD_RED_COLOR;
 
 public class GameOverOverlayView extends GameOverlayView {
 

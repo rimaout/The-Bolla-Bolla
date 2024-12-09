@@ -3,13 +3,13 @@ package model.projectiles;
 import model.entities.EnemyModel;
 import model.entities.EntityModel;
 import model.entities.PlayerModel;
-import model.Constants.Direction;
-import model.Constants.Projectiles.ProjectileState;
-import model.PlayingTimer;
+import model.utilz.Constants.Direction;
+import model.utilz.Constants.Projectiles.ProjectileState;
+import model.utilz.PlayingTimer;
 
-import static model.Constants.Projectiles.*;
-import static model.Constants.Projectiles.ProjectileState.IMPACT;
-import static model.Constants.Projectiles.ProjectileState.MOVING;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
+import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 
 public abstract class ProjectileModel extends EntityModel {
     protected final PlayingTimer timer = PlayingTimer.getInstance();

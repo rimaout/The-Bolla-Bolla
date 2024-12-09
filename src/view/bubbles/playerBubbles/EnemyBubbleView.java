@@ -2,15 +2,15 @@ package view.bubbles.playerBubbles;
 
 import model.bubbles.BubbleModel;
 import model.bubbles.playerBubbles.EnemyBubbleModel;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 import view.entities.EnemyManagerView;
 
 import java.awt.*;
 
-import static model.Constants.Bubble.*;
-import static model.Constants.EnemyConstants.*;
-import static view.Constants.EnemyConstants.*;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.EnemyConstants.*;
+import static view.utilz.Constants.EnemyConstants.*;
 
 public class EnemyBubbleView extends EmptyBubbleView {
     private final EnemyManagerView enemyManagerView = EnemyManagerView.getInstance();

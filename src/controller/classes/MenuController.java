@@ -1,9 +1,9 @@
-package controller;
+package controller.classes;
 
+import controller.Game;
 import controller.inputs.InputMethods;
 import model.gameStates.GameState;
 import model.gameStates.MenuModel;
-import main.Game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

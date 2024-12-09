@@ -1,4 +1,4 @@
-package main;
+package view;
 
 import java.awt.*;
 import javax.swing.JPanel;
@@ -6,7 +6,8 @@ import javax.swing.JPanel;
 import controller.inputs.KeyBoardInputs;
 import controller.inputs.MouseKeyInputs;
 import controller.inputs.MouseMotionInputs;
-import model.Constants;
+import controller.Game;
+import model.utilz.Constants;
 
 public class GamePanel extends JPanel {
     private final Game game;

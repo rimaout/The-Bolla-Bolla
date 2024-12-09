@@ -1,12 +1,12 @@
 package model.itemesAndRewards;
 
 import model.entities.PlayerModel;
-import model.PlayingTimer;
+import model.utilz.PlayingTimer;
 
 import java.util.ArrayList;
 
-import static model.Constants.PointsManager.*;
-import static model.Constants.PointsManager.PointsType.*;
+import static model.utilz.Constants.PointsManager.*;
+import static model.utilz.Constants.PointsManager.PointsType.*;
 
 public class RewardPointsManagerModel {
     private static RewardPointsManagerModel instance;

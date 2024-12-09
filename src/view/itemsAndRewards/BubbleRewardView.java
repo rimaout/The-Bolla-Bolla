@@ -2,14 +2,14 @@ package view.itemsAndRewards;
 
 import model.itemesAndRewards.BubbleRewardModel;
 import model.itemesAndRewards.ItemModel;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 
-import static view.Constants.Items.GetRewardImageIndex;
-import static model.Constants.Items.H;
-import static model.Constants.Items.W;
+import static view.utilz.Constants.Items.GetRewardImageIndex;
+import static model.utilz.Constants.Items.H;
+import static model.utilz.Constants.Items.W;
 
 public class BubbleRewardView extends ItemView{
 

@@ -4,8 +4,8 @@ import model.bubbles.specialBubbles.BubbleGenerator;
 import model.entities.EnemyModel;
 import model.entities.MaitaModel;
 import model.entities.ZenChanModel;
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static model.Constants.BubbleGenerator.GeneratorPosition.BOTTOM;
-import static model.Constants.BubbleGenerator.GeneratorPosition.TOP;
-import static model.Constants.BubbleGenerator.GeneratorType.LIGHTNING_BUBBLE;
-import static model.Constants.BubbleGenerator.GeneratorType.WATER_BUBBLE;
-import static model.Constants.Direction.LEFT;
-import static model.Constants.Direction.RIGHT;
-import static model.Constants.EnemyConstants.*;
-import static model.Constants.EnemyConstants.MAITA_RIGHT;
+import static model.utilz.Constants.BubbleGenerator.GeneratorPosition.BOTTOM;
+import static model.utilz.Constants.BubbleGenerator.GeneratorPosition.TOP;
+import static model.utilz.Constants.BubbleGenerator.GeneratorType.LIGHTNING_BUBBLE;
+import static model.utilz.Constants.BubbleGenerator.GeneratorType.WATER_BUBBLE;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.Direction.RIGHT;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.MAITA_RIGHT;
 
 public interface LevelImportMethods {
 

@@ -3,7 +3,7 @@ package model.levels;
 
 import model.gameStates.PlayingModel;
 import model.gameStates.GameState;
-import model.Constants.Direction;
+import model.utilz.Constants.Direction;
 
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;

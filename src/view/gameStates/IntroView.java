@@ -2,15 +2,15 @@ package view.gameStates;
 
 import model.gameStates.IntroModel;
 import model.levels.Level;
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 import view.levels.LevelManagerView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static view.Constants.ANIMATION_SPEED;
-import static model.Constants.INTRO.IntroState.LEVEL_TRANSITION;
+import static view.utilz.Constants.ANIMATION_SPEED;
+import static model.utilz.Constants.INTRO.IntroState.LEVEL_TRANSITION;
 
 public class IntroView {
     private final IntroModel introModel;

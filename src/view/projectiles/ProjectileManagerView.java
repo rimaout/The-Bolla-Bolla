@@ -1,15 +1,15 @@
 package view.projectiles;
 
-import model.Constants;
-import view.LoadSave;
+import model.utilz.Constants;
+import view.utilz.LoadSave;
 import model.projectiles.ProjectileManagerModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static model.Constants.Projectiles.DEFAULT_H;
-import static model.Constants.Projectiles.DEFAULT_W;
+import static model.utilz.Constants.Projectiles.DEFAULT_H;
+import static model.utilz.Constants.Projectiles.DEFAULT_W;
 
 public class ProjectileManagerView {
     private static ProjectileManagerView instance;

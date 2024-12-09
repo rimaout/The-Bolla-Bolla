@@ -2,14 +2,14 @@ package model.projectiles;
 
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import model.Constants.Direction;
+import model.utilz.Constants.Direction;
 
-import static model.Constants.Direction.*;
+import static model.utilz.Constants.Direction.*;
 import static model.entities.HelpMethods.CanMoveHere;
-import static model.Constants.Projectiles.*;
-import static model.Constants.Projectiles.ProjectileState.IMPACT;
-import static model.Constants.Projectiles.ProjectileState.MOVING;
-import static model.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
+import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
+import static model.utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
 
 public class MaitaFireProjectileModel extends ProjectileModel {
 

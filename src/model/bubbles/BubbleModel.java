@@ -7,13 +7,13 @@ import java.awt.geom.Rectangle2D;
 import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
-import model.Constants;
-import model.PlayingTimer;
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 
 import static java.lang.Math.abs;
-import static model.Constants.Bubble.*;
-import static model.Constants.Direction;
-import static model.Constants.Direction.*;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Direction;
+import static model.utilz.Constants.Direction.*;
 import static model.entities.HelpMethods.IsEntityInsideMap;
 
 public abstract class BubbleModel extends EntityModel {

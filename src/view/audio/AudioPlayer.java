@@ -2,8 +2,8 @@ package view.audio;
 
 import javax.sound.sampled.*;
 
-import static view.LoadSave.GetAudio;
-import static view.Constants.AudioConstants.*;
+import static view.utilz.LoadSave.GetAudio;
+import static view.utilz.Constants.AudioConstants.*;
 
 public class AudioPlayer {
     private static AudioPlayer instance;

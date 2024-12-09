@@ -9,9 +9,9 @@ import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
-import main.Game;
+import controller.Game;
 import model.projectiles.ProjectileManagerModel;
-import model.PlayingTimer;
+import model.utilz.PlayingTimer;
 
 import java.util.Observable;
 

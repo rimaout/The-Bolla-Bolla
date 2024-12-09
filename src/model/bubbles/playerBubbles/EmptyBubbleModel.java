@@ -2,9 +2,9 @@ package model.bubbles.playerBubbles;
 
 import model.entities.PlayerModel;
 
-import static model.Constants.Bubble.*;
-import static model.Constants.Bubble.BubbleType.EMPTY_BUBBLE;
-import static model.Constants.Direction;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.BubbleType.EMPTY_BUBBLE;
+import static model.utilz.Constants.Direction;
 
 public class EmptyBubbleModel extends PlayerBubbleModel {
 

@@ -1,7 +1,6 @@
 package model.gameStates;
 
-import main.Game;
-import model.users.UsersManager;
+import controller.Game;
 
 public class MenuModel implements State {
     private final Game game;

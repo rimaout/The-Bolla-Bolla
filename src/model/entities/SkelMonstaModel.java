@@ -1,10 +1,10 @@
 package model.entities;
 
-import model.Constants.Direction;
+import model.utilz.Constants.Direction;
 
-import static model.Constants.Direction.*;
-import static model.Constants.EnemyConstants.*;
-import static model.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
+import static model.utilz.Constants.Direction.*;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.EnemyType.SKEL_MONSTA;
 
 public class SkelMonstaModel extends EnemyModel {
 

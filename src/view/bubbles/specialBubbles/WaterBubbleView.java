@@ -5,7 +5,7 @@ import view.bubbles.BubbleView;
 
 import java.awt.*;
 
-import static model.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.*;
 
 public class WaterBubbleView extends BubbleView {
     private final SpecialBubbleManagerView bubbleManager = SpecialBubbleManagerView.getInstance();

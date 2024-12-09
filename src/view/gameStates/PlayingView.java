@@ -1,7 +1,7 @@
 package view.gameStates;
 
-import controller.PlayerController;
-import controller.PlayingController;
+import controller.classes.PlayerController;
+import controller.classes.PlayingController;
 import model.gameStates.PlayingModel;
 import view.bubbles.playerBubbles.PlayerBubblesManagerView;
 import view.entities.EnemyManagerView;

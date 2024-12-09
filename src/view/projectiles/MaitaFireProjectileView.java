@@ -4,8 +4,8 @@ import model.projectiles.ProjectileModel;
 
 import java.awt.*;
 
-import static model.Constants.Projectiles.*;
-import static model.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
+import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
 
 public class MaitaFireProjectileView extends ProjectileView {
 

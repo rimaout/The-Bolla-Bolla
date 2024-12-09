@@ -4,15 +4,15 @@ import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
-import model.Constants.Direction;
+import model.utilz.Constants.Direction;
 import java.util.Random;
 
-import static model.Constants.Bubble.*;
-import static model.Constants.Bubble.BubbleType.ENEMY_BUBBLE;
-import static model.Constants.Direction.LEFT;
-import static model.Constants.EnemyConstants.*;
-import static model.Constants.GRAVITY;
-import static model.Constants.Items.BubbleRewardType.GetBubbleRewardType;
+import static model.utilz.Constants.Bubble.*;
+import static model.utilz.Constants.Bubble.BubbleType.ENEMY_BUBBLE;
+import static model.utilz.Constants.Direction.LEFT;
+import static model.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.GRAVITY;
+import static model.utilz.Constants.Items.BubbleRewardType.GetBubbleRewardType;
 import static model.entities.HelpMethods.*;
 
 public class EnemyBubbleModel extends EmptyBubbleModel {

@@ -1,9 +1,9 @@
 package model.entities;
 
 import model.levels.LevelManagerModel;
-import model.PlayingTimer;
+import model.utilz.PlayingTimer;
 
-import static model.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.*;
 
 import java.util.ArrayList;
 

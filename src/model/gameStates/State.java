@@ -1,6 +1,6 @@
 package model.gameStates;
 
-import main.Game;
+import controller.Game;
 
 public interface State {
     Game getGame();

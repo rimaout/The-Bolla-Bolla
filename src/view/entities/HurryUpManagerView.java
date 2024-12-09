@@ -1,8 +1,8 @@
 package view.entities;
 
 import model.entities.HurryUpManagerModel;
-import view.Constants;
-import view.LoadSave;
+import view.utilz.Constants;
+import view.utilz.LoadSave;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
-import static model.Constants.GAME_HEIGHT;
-import static view.Constants.HurryUpManager.*;
-import static view.Constants.HurryUpManager.HURRY_IMG_H;
+import static model.utilz.Constants.GAME_HEIGHT;
+import static view.utilz.Constants.HurryUpManager.*;
+import static view.utilz.Constants.HurryUpManager.HURRY_IMG_H;
 
 public class HurryUpManagerView implements Observer {
     private static HurryUpManagerView instance;

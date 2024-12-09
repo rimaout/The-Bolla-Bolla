@@ -2,14 +2,14 @@ package view.itemsAndRewards;
 
 import model.itemesAndRewards.ItemModel;
 import model.itemesAndRewards.PowerUpModel;
-import view.Constants.AudioConstants;
+import view.utilz.Constants.AudioConstants;
 import view.audio.AudioPlayer;
 
 import java.awt.*;
 
-import static model.Constants.Items.H;
-import static view.Constants.Items.GetPowerUpImageIndex;
-import static model.Constants.Items.W;
+import static model.utilz.Constants.Items.H;
+import static view.utilz.Constants.Items.GetPowerUpImageIndex;
+import static model.utilz.Constants.Items.W;
 
 public class PowerUpView extends ItemView {
 
