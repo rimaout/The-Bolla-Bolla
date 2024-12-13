@@ -17,20 +17,16 @@ public class SpecialBubbleManagerModel {
 
     private BubbleGenerator bubbleGenerator;
 
-    private SpecialBubbleManagerModel(PlayerModel playerModel) {
-        this.playerModel = playerModel;
+    private SpecialBubbleManagerModel() {
+        this.playerModel = PlayerModel.getInstance();
         bubblesModels = new LinkedList<>();
         waterFlowsModel = new LinkedList<>();
     }
 
-    public static SpecialBubbleManagerModel getInstance(PlayerModel playerModel) {
-        if (instance == null) {
-            instance = new SpecialBubbleManagerModel(playerModel);
-        }
-        return instance;
-    }
-
     public static SpecialBubbleManagerModel getInstance() {
+        if (instance == null) {
+            instance = new SpecialBubbleManagerModel();
+        }
         return instance;
     }
 

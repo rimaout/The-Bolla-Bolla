@@ -15,12 +15,12 @@ public class PowerUpModel extends ItemModel {
     }
 
     @Override
-    public void addPoints(PlayerModel playerModel) {
-        RewardPointsManagerModel.getInstance(playerModel).addSmallPoints(GetPoints(powerUpType));
+    public void addPoints() {
+        RewardPointsManagerModel.getInstance().addSmallPoints(GetPoints(powerUpType));
     }
 
     @Override
-    public void applyEffect(PlayerModel playerModel) {
+    public void applyEffect() {
         switch (powerUpType) {
             case GREEN_CANDY -> powerUpManagerModel.collectedGreenCandy();
             case BLUE_CANDY -> powerUpManagerModel.collectedBlueCandy();

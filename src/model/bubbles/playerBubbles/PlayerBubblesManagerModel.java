@@ -22,19 +22,15 @@ public class PlayerBubblesManagerModel {
     private final int POP_DELAY_AFTER_CHAIN_EXPLOSION = 200;
     private int popTimer = 0;
 
-    private PlayerBubblesManagerModel(PlayerModel playerModel) {
-        this.playerModel = playerModel;
+    private PlayerBubblesManagerModel() {
+        this.playerModel = PlayerModel.getInstance();
         bubblesModels = new LinkedList<>();
     }
 
-    public static PlayerBubblesManagerModel getInstance(PlayerModel playerModel) {
-        if (instance == null) {
-            instance = new PlayerBubblesManagerModel(playerModel);
-        }
-        return instance;
-    }
-
     public static PlayerBubblesManagerModel getInstance() {
+        if (instance == null) {
+            instance = new PlayerBubblesManagerModel();
+        }
         return instance;
     }
 

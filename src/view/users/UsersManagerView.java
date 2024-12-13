@@ -21,7 +21,6 @@ public class UsersManagerView {
         return instance;
     }
 
-    // todo: move to view (maybe)
     public void loadUserPictures() {
         userPictures = new BufferedImage[10];
         BufferedImage numbersSprite = LoadSave.GetSprite(LoadSave.USER_PICTURES);

@@ -17,20 +17,14 @@ public class RewardPointsManagerModel {
     private int consecutivePops;
     private int consecutivePopsTimer;
 
-    private RewardPointsManagerModel(PlayerModel playerModel) {
-        this.playerModel = playerModel;
+    private RewardPointsManagerModel() {
+        this.playerModel = PlayerModel.getInstance();
         pointsModelModelArray = new ArrayList<>();
-
-    }
-
-    public static RewardPointsManagerModel getInstance(PlayerModel playerModel) {
-        if (instance == null) {
-            instance = new RewardPointsManagerModel(playerModel);
-        }
-        return instance;
     }
 
     public static RewardPointsManagerModel getInstance() {
+        if (instance == null)
+            instance = new RewardPointsManagerModel();
         return instance;
     }
 

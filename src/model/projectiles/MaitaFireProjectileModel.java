@@ -2,11 +2,12 @@ package model.projectiles;
 
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
+import model.levels.LevelManagerModel;
 import model.utilz.Constants.Direction;
 
 import static model.utilz.Constants.Direction.*;
-import static model.entities.HelpMethods.CanMoveHere;
 import static model.utilz.Constants.Projectiles.*;
+import static model.entities.HelpMethods.CanMoveHere;
 import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;
 import static model.utilz.Constants.Projectiles.ProjectileState.MOVING;
 import static model.utilz.Constants.Projectiles.ProjectileType.MAITA_FIREBALL;
@@ -28,7 +29,7 @@ public class MaitaFireProjectileModel extends ProjectileModel {
             else
                 xSpeed = MAITA_FIREBALL_SPEED;
 
-            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
+            if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, LevelManagerModel.getInstance().getLevelData()))
                 hitbox.x += xSpeed;
             else {
                 state = IMPACT;

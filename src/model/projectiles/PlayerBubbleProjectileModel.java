@@ -2,6 +2,7 @@ package model.projectiles;
 
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
+import model.levels.LevelManagerModel;
 import model.utilz.Constants.Direction;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 
@@ -30,7 +31,7 @@ public class PlayerBubbleProjectileModel extends ProjectileModel {
         else
             xSpeed = projectileSpeed;
 
-        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelManagerModel.getLevelData()))
+        if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, LevelManagerModel.getInstance().getLevelData()))
             hitbox.x += xSpeed;
     }
 

@@ -26,21 +26,16 @@ public class EnemyManagerModel {
     private boolean playerInvincibleMode = false;
     private int invincibleTimer;
 
-    private EnemyManagerModel(PlayerModel playerModel) {
-        this.playerModel = playerModel;
-    }
-
-    public static EnemyManagerModel getInstance(PlayerModel playerModel) {
-        if (instance == null) {
-            instance = new EnemyManagerModel(playerModel);
-        }
-        return instance;
+    private EnemyManagerModel() {
+        this.playerModel = PlayerModel.getInstance();
     }
 
     public static EnemyManagerModel getInstance() {
+        if (instance == null) {
+            instance = new EnemyManagerModel();
+        }
         return instance;
     }
-
 
     public void update() {
         timersUpdate();

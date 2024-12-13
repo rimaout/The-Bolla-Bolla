@@ -205,7 +205,7 @@ public class WaterFlowModel extends EntityModel {
 
         if (capturedPlayerModel != null) {
             PlayerBubblesManagerModel.getInstance().getBubblesModels().forEach(this::checkCollisionWithBubble);
-            ItemManagerModel.getInstance().getItemsModels().forEach(item -> checkCollisionWithItem(item, playerModel));
+            ItemManagerModel.getInstance().getItemsModels().forEach(item -> checkCollisionWithItem(item));
         }
     }
 
@@ -244,14 +244,14 @@ public class WaterFlowModel extends EntityModel {
         }
     }
 
-    private void checkCollisionWithItem(ItemModel itemModel, PlayerModel playerModel) {
+    private void checkCollisionWithItem(ItemModel itemModel) {
         if (!itemModel.isActive())
             return;
 
         if (hitbox.intersects(itemModel.getHitbox())) {
             itemModel.deactivateItem();
-            itemModel.addPoints(playerModel);
-            itemModel.applyEffect(playerModel);
+            itemModel.addPoints();
+            itemModel.applyEffect();
             PowerUpManagerModel.getInstance().increaseItemCollectCounter();
         }
     }

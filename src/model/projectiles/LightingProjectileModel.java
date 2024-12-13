@@ -1,6 +1,5 @@
 package model.projectiles;
 
-
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;

@@ -54,16 +54,16 @@ public class PlayingModel extends Observable {
         playingTimer = PlayingTimer.getInstance();
         levelManagerModel = LevelManagerModel.getInstance(this);
 
-        playerModelOne = new PlayerModel();
+        playerModelOne = PlayerModel.getInstance();
 
-        enemyManagerModel = EnemyManagerModel.getInstance(playerModelOne);
+        enemyManagerModel = EnemyManagerModel.getInstance();
         hurryUpManagerModel = HurryUpManagerModel.getInstance();
-        playerBubblesManagerModel = PlayerBubblesManagerModel.getInstance(playerModelOne);
-        specialBubbleManagerModel = SpecialBubbleManagerModel.getInstance(playerModelOne);
-        projectileManagerModel = ProjectileManagerModel.getInstance(playerModelOne);
-        itemManagerModel = ItemManagerModel.getInstance(this);
-        rewardPointsManagerModel = RewardPointsManagerModel.getInstance(playerModelOne);
-        powerUpManagerModel = PowerUpManagerModel.getInstance(playerModelOne);
+        playerBubblesManagerModel = PlayerBubblesManagerModel.getInstance();
+        specialBubbleManagerModel = SpecialBubbleManagerModel.getInstance();
+        projectileManagerModel = ProjectileManagerModel.getInstance();
+        itemManagerModel = ItemManagerModel.getInstance();
+        rewardPointsManagerModel = RewardPointsManagerModel.getInstance();
+        powerUpManagerModel = PowerUpManagerModel.getInstance();
         introModel = new IntroModel(this);
     }
 

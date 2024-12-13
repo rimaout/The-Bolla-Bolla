@@ -14,6 +14,8 @@ import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.PlayerConstants.*;
 
 public class PlayerModel extends EntityModel {
+    private static PlayerModel instance;
+
     private final LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
@@ -41,10 +43,14 @@ public class PlayerModel extends EntityModel {
     private int walkPoints = 0;                // crystalRing
     private int bubbleShotPoints = 0;          // rubyRing
 
-    // Sound Variables
-    private boolean playDeathSound;
 
-    public PlayerModel() {
+    public static PlayerModel getInstance() {
+        if (instance == null)
+            instance = new PlayerModel();
+        return instance;
+    }
+
+    private PlayerModel() {
         super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, PLAYER_W, PLAYER_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
     }
@@ -252,7 +258,6 @@ public class PlayerModel extends EntityModel {
             immune = true;
             immuneTimer = IMMUNE_TIME_AFTER_RESPAWN;
             respawning = true;
-            playDeathSound = true;
             resetMovements();
             resetInAir();
         }
@@ -305,8 +310,6 @@ public class PlayerModel extends EntityModel {
         airSpeed = 0.0f;
         flipX = 0;
         flipW = 1;
-
-        playDeathSound = false;
 
         if (resetLives)
             lives = 3;

@@ -15,12 +15,12 @@ public class BubbleRewardModel extends ItemModel {
     }
 
     @Override
-    public void addPoints(PlayerModel playerModel) {
-        RewardPointsManagerModel.getInstance(playerModel).addSmallPoints(GetPoints(bubbleRewardType));
+    public void addPoints() {
+        RewardPointsManagerModel.getInstance().addSmallPoints(GetPoints(bubbleRewardType));
     }
 
     @Override
-    public void applyEffect(PlayerModel playerModel) {
+    public void applyEffect() {
         // Bubble Rewards do not apply effects to the player
     }
 

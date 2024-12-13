@@ -119,7 +119,8 @@ public class GameController implements Runnable {
         playingController = new PlayingController(playingModel, gamePausedOverlayController, gameCompletedOverlayController, gameOverOverlayController);
         playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView, playingController);
 
-        levelTransitionModel = new LevelTransitionModel(this);
+        levelTransitionModel = LevelTransitionModel.getInstance();
+        levelTransitionModel.initPlayingModel(playingModel);
         levelTransitionView = new LevelTransitionView(levelTransitionModel);
 
         playingModel.addObserver(playingView);

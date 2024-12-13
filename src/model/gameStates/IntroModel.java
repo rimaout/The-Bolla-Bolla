@@ -29,7 +29,7 @@ public class IntroModel {
         this.playingModel = playingModel;
         this.playerModel = playingModel.getPlayerOneModel();
 
-        level = LevelManagerModel.getInstance().getCurrentLevel();
+        level = LevelManagerModel.getInstance(playingModel).getCurrentLevel();
     }
 
     public void update() {

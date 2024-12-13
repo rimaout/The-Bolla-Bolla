@@ -38,17 +38,13 @@ public class PowerUpManagerModel {
     private int redCandyCounter = 0;
 
 
-    private PowerUpManagerModel(PlayerModel playerModel){
-        this.playerModel = playerModel;
-    }
-
-    public static PowerUpManagerModel getInstance(PlayerModel playerModel){
-        if (instance == null)
-            instance = new PowerUpManagerModel(playerModel);
-        return instance;
+    private PowerUpManagerModel(){
+        this.playerModel = PlayerModel.getInstance();
     }
 
     public static PowerUpManagerModel getInstance(){
+        if (instance == null)
+            instance = new PowerUpManagerModel();
         return instance;
     }
 

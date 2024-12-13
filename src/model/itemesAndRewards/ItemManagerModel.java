@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import model.utilz.PlayingTimer;
 import model.entities.PlayerModel;
-import model.gameStates.PlayingModel;
 import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.Items.*;
@@ -13,7 +12,7 @@ import static model.entities.HelpMethods.GetRandomPosition;
 
 public class ItemManagerModel {
     private static ItemManagerModel instance;
-    private final PlayingModel playingModel;
+    private final PlayerModel playerModel;
     private final PlayingTimer timer = PlayingTimer.getInstance();
 
     private int spawnPowerUpTimer = SPAWN_POWER_UP_TIMER;
@@ -21,18 +20,14 @@ public class ItemManagerModel {
 
     private final ArrayList<ItemModel> itemsModels;
 
-    private ItemManagerModel(PlayingModel playingModel) {
+    private ItemManagerModel() {
         itemsModels = new ArrayList<>();
-        this.playingModel = playingModel;
-    }
-
-    public static ItemManagerModel getInstance(PlayingModel playingModel) {
-        if (instance == null)
-            instance = new ItemManagerModel(playingModel);
-        return instance;
+        this.playerModel = PlayerModel.getInstance();
     }
 
     public static ItemManagerModel getInstance() {
+        if (instance == null)
+            instance = new ItemManagerModel();
         return instance;
     }
 
@@ -69,15 +64,14 @@ public class ItemManagerModel {
     }
 
     private void checkCollisionWithPlayer(ItemModel itemModel) {
-        PlayerModel playerModel = playingModel.getPlayerOneModel();
 
         if (!playerModel.isActive())
             return;
 
         if(itemModel.getHitbox().intersects(playerModel.getHitbox())){
             itemModel.deactivateItem();
-            itemModel.addPoints(playerModel);
-            itemModel.applyEffect(playerModel);
+            itemModel.addPoints();
+            itemModel.applyEffect();
             itemModel.setCollected(true);
             PowerUpManagerModel.getInstance().increaseItemCollectCounter();
         }

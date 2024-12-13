@@ -17,19 +17,14 @@ public class ProjectileManagerModel {
     private float playerProjectileDistanceMultiplier = 1;
     private float playerProjectileActiveTimeMultiplier = 1;
 
-    private ProjectileManagerModel(PlayerModel playerModel) {
-
-        this.playerModel = playerModel;
-    }
-
-    public static ProjectileManagerModel getInstance(PlayerModel playerModel) {
-        if (instance == null) {
-            instance = new ProjectileManagerModel(playerModel);
-        }
-        return instance;
+    private ProjectileManagerModel() {
+        this.playerModel = PlayerModel.getInstance();
     }
 
     public static ProjectileManagerModel getInstance() {
+        if (instance == null) {
+            instance = new ProjectileManagerModel();
+        }
         return instance;
     }
 

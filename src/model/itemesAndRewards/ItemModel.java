@@ -27,8 +27,8 @@ public abstract class ItemModel {
         initHitbox();
     }
 
-    public abstract void addPoints(PlayerModel playerModel);
-    public abstract void applyEffect(PlayerModel playerModel);
+    public abstract void addPoints();
+    public abstract void applyEffect();
 
     protected void update(){
         updateTimers();

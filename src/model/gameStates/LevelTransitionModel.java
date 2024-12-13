@@ -1,6 +1,5 @@
 package model.gameStates;
 
-import controller.GameController;
 import model.levels.Level;
 import model.utilz.Constants;
 import model.entities.PlayerModel;
@@ -12,24 +11,31 @@ import static model.utilz.Constants.LevelTransition.TransitionState.*;
 import static model.utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
 public class LevelTransitionModel{
+    private static LevelTransitionModel instance;
+
     private PlayingModel playingModel;
-    private GameController game;
+    private PlayerModel playerModel;
 
     private Level oldLevel, newLevel;
     private float oldLevelY;
     private float newLevelY;
+    private float playerStartX, playerStartY;
 
     private TransitionState transitionState;
     private boolean firstUpdate = true;
 
-    private PlayerModel playerModel;
-    private float playerStartX, playerStartY;
+    private LevelTransitionModel() {
+        playerModel = PlayerModel.getInstance();
+    }
 
-    public LevelTransitionModel(GameController game) {
-        this.game = game;
-        this.playingModel = game.getPlaying();
+    public static LevelTransitionModel getInstance() {
+        if (instance == null)
+            instance = new LevelTransitionModel();
+        return instance;
+    }
 
-        playerModel = game.getPlaying().getPlayerOneModel();
+    public void initPlayingModel(PlayingModel playingModel) {
+        this.playingModel = playingModel;
     }
 
     public void update() {
