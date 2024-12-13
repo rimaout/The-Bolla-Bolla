@@ -1,15 +1,19 @@
 package controller.classes;
 
 import model.gameStates.MenuModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.overlays.MenuUserCreationOverlayModel;
 import view.overlays.MenuUserCreationOverlayView;
+import view.users.UsersManagerView;
 
 import java.awt.event.KeyEvent;
 
 public class MenuUserCreationOverlayController {
     private final MenuModel menuModel;
-    private final UsersManager usersManager = UsersManager.getInstance();
+
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
+    private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
+
     private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
     private final MenuUserCreationOverlayView menuUserCreationOverlayView;
 
@@ -25,14 +29,14 @@ public class MenuUserCreationOverlayController {
             menuModel.setUserCreationOverlayActive(false);
         }
         else if (e.getKeyCode() == KeyEvent.VK_ENTER && !menuUserCreationOverlayModel.isEnterKeyDeactivated()) {
-            usersManager.createUser(menuUserCreationOverlayModel.getNewUserName(), menuUserCreationOverlayModel.getNewUserPictureIndex());
+            usersManagerModel.createUser(menuUserCreationOverlayModel.getNewUserName(), menuUserCreationOverlayModel.getNewUserPictureIndex());
             menuModel.setUserSelectionOverlayActive(false);
             menuModel.setUserCreationOverlayActive(false);
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
             menuUserCreationOverlayView.setUpArrowIndex(1); // animate the arrow
 
-            if (menuUserCreationOverlayModel.getNewUserPictureIndex() + 1 == usersManager.getUserPicturesCount())
+            if (menuUserCreationOverlayModel.getNewUserPictureIndex() + 1 == usersManagerView.getUserPicturesCount())
                 menuUserCreationOverlayModel.setNewUserPictureIndex(0);
             else
                 menuUserCreationOverlayModel.increaseNewUserPictureIndex();
@@ -41,7 +45,7 @@ public class MenuUserCreationOverlayController {
             menuUserCreationOverlayView.setDownArrowIndex(1); // animate the arrow
 
             if (menuUserCreationOverlayModel.getNewUserPictureIndex() - 1 == -1 || menuUserCreationOverlayModel.getNewUserPictureIndex() - 1 == -2)
-                menuUserCreationOverlayModel.setNewUserPictureIndex(usersManager.getUserPicturesCount() - 1);
+                menuUserCreationOverlayModel.setNewUserPictureIndex(usersManagerView.getUserPicturesCount() - 1);
             else
                 menuUserCreationOverlayModel.decreaseNewUserPictureIndex();
         } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {

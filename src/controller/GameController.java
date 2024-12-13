@@ -4,11 +4,10 @@ import controller.classes.*;
 import model.entities.HurryUpManagerModel;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
-import model.levels.LevelManagerModel;
 import view.GamePanel;
 import view.GameWindow;
 import view.audio.AudioPlayer;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import view.entities.HurryUpManagerView;
 import view.gameStates.HomeView;
 import view.gameStates.LevelTransitionView;
@@ -30,7 +29,7 @@ public class GameController implements Runnable {
     private Thread gameThread;
 
     private AudioPlayer audioPlayer;
-    private UsersManager usersManager;
+    private UsersManagerModel usersManagerModel;
 
     private HomeView homeView;
     private HomeController homeController;
@@ -84,7 +83,7 @@ public class GameController implements Runnable {
     }
 
     private void initClasses() {
-        usersManager = UsersManager.getInstance(this);
+        usersManagerModel = UsersManagerModel.getInstance();
         audioPlayer = AudioPlayer.getInstance();
 
         homeView = new HomeView(this);

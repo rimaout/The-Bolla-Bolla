@@ -1,13 +1,13 @@
 package model.overlays;
 
 import model.users.User;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.gameStates.MenuModel;
 
 import java.util.ArrayList;
 
 public class MenuUserSelectionOverlayModel extends MenuOverlayModel {
-    private final UsersManager usersManager = UsersManager.getInstance();
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
     private User selectedUser;
     private ArrayList<User> users;
 
@@ -22,7 +22,7 @@ public class MenuUserSelectionOverlayModel extends MenuOverlayModel {
     }
 
     public void updateUserList(){
-        users = usersManager.getUsers();
+        users = usersManagerModel.getUsers();
         selectedUser = users.getFirst();
     }
 

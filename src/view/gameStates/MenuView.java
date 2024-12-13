@@ -3,7 +3,7 @@ package view.gameStates;
 import view.overlays.MenuTwinkleBubbleManager;
 import model.gameStates.MenuModel;
 import controller.GameController;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.utilz.Constants;
 import view.utilz.LoadSave;
 
@@ -18,7 +18,7 @@ public class MenuView {
     private final GameController gameController;
 
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
-    private final UsersManager usersManager = UsersManager.getInstance();
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
 
     private Font nesFont;
     private Font retroFont;
@@ -117,8 +117,8 @@ public class MenuView {
         String text2 = dotAnimations[dotAnimationIndex];
         int textWidth2 = fm.stringWidth("...");
 
-        if (usersManager.getCurrentUser() != null) {
-            text2 = usersManager.getCurrentUser().getName().toUpperCase() + "!";
+        if (usersManagerModel.getCurrentUser() != null) {
+            text2 = usersManagerModel.getCurrentUser().getName().toUpperCase() + "!";
             textWidth2 = fm.stringWidth(text2);
         }
 

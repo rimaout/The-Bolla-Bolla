@@ -1,8 +1,9 @@
 package view.overlays;
 
 import model.overlays.MenuUserCreationOverlayModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.utilz.Constants;
+import view.users.UsersManagerView;
 import view.utilz.LoadSave;
 
 import javax.swing.*;
@@ -12,8 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class MenuUserCreationOverlayView extends MenuOverlayView {
+
+    private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
+
     private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
-    private final UsersManager usersManager = UsersManager.getInstance();
     private boolean blink = true;
 
     private BufferedImage questionMark;
@@ -100,7 +103,7 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
     }
 
     private void drawUserName(Graphics g) {
-        g.setColor(usersManager.getUserColor1(menuUserCreationOverlayModel.getNewUserPictureIndex()));
+        g.setColor(usersManagerView.getUserColor1(menuUserCreationOverlayModel.getNewUserPictureIndex()));
         g.setFont(retroFont.deriveFont(50f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
@@ -136,7 +139,7 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
 
         else
             // draw the picture
-            g.drawImage(usersManager.getUserPicture(menuUserCreationOverlayModel.getNewUserPictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
+            g.drawImage(usersManagerView.getUserPicture(menuUserCreationOverlayModel.getNewUserPictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
     }
 
     private void drawControls(Graphics g) {
@@ -165,7 +168,7 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
             g.drawString(text1Part1, x, y);
             int width1 = fm.stringWidth(text1Part1);
 
-            g.setColor(usersManager.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
+            g.setColor(usersManagerView.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
             g.drawString(text1Part2, x + width1, y);
             int width2 = fm.stringWidth(text1Part2);
 
@@ -178,7 +181,7 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         g.drawString(text2Part1, x, y + fm.getHeight());
         int width3 = fm.stringWidth(text2Part1);
 
-        g.setColor(usersManager.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
+        g.setColor(usersManagerView.getUserColor2(menuUserCreationOverlayModel.getNewUserPictureIndex()));
         g.drawString(text2Part2, x + width3, y + fm.getHeight());
         int width4 = fm.stringWidth(text2Part2);
 

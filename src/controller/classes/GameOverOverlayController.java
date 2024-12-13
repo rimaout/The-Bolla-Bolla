@@ -2,7 +2,7 @@ package controller.classes;
 
 import model.gameStates.GameState;
 import model.gameStates.PlayingModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import view.overlays.GameOverOverlayView;
 
 import java.awt.event.KeyEvent;
@@ -18,7 +18,7 @@ public class GameOverOverlayController {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            UsersManager.getInstance().updateCurrentUserInfo(false);
+            UsersManagerModel.getInstance().updateCurrentUserInfo(false);
             playingModel.newPlayReset();
             playingModel.restartGame();
             GameState.state = GameState.MENU;
@@ -27,7 +27,7 @@ public class GameOverOverlayController {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_R) {
-            UsersManager.getInstance().updateCurrentUserInfo(false);
+            UsersManagerModel.getInstance().updateCurrentUserInfo(false);
             playingModel.newPlayReset();
             playingModel.restartGame();
             GameState.state = GameState.PLAYING;

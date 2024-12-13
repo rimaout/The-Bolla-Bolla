@@ -1,16 +1,20 @@
 package view.overlays;
 
 import model.overlays.MenuScoreBoardOverlayModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.utilz.Constants;
+import view.users.UsersManagerView;
 import view.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class MenuScoreBoardOverlayView extends MenuOverlayView {
+
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
+    private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
+
     private final MenuScoreBoardOverlayModel menuSoreBoardOverlayModel;
-    private final UsersManager usersManager = UsersManager.getInstance();
     private BufferedImage questionMark;
 
     public MenuScoreBoardOverlayView(MenuScoreBoardOverlayModel menuScoreBoardOverlayModel) {
@@ -66,7 +70,7 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         g.setColor(Color.WHITE);
         g.drawString(textPart1, x, y);
 
-        g.setColor(usersManager.getUserColor2(-1));
+        g.setColor(usersManagerView.getUserColor2(-1));
         g.drawString(textPart2, x + width1, y);
 
         g.setColor(Color.WHITE);
@@ -109,7 +113,7 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         if (positionIndex >= menuSoreBoardOverlayModel.getOrderedUsers().size())
             g.drawImage(questionMark, x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
         else
-            g.drawImage(usersManager.getUserPicture(menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
+            g.drawImage(usersManagerView.getUserPicture(menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
     }
 
     private void drawUserName(Graphics g, int positionIndex, int startingY) {

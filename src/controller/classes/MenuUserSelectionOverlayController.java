@@ -1,7 +1,7 @@
 package controller.classes;
 
 import model.gameStates.MenuModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 import model.overlays.MenuUserSelectionOverlayModel;
 import view.overlays.MenuUserSelectionOverlayView;
 
@@ -11,7 +11,7 @@ public class MenuUserSelectionOverlayController {
     private final MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
     private final MenuUserSelectionOverlayView menuUserSelectionOverlayView;
     private final MenuModel menuModel;
-    private final UsersManager usersManager = UsersManager.getInstance();
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
 
     public MenuUserSelectionOverlayController(MenuModel menuModel, MenuUserSelectionOverlayModel menuUserSelectionOverlayModel, MenuUserSelectionOverlayView menuUserSelectionOverlayView) {
         this.menuModel = menuModel;
@@ -21,12 +21,12 @@ public class MenuUserSelectionOverlayController {
 
     public void keyPressed(KeyEvent e) {
 
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE && usersManager.getCurrentUser() != null) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE && usersManagerModel.getCurrentUser() != null) {
             menuModel.setUserSelectionOverlayActive(false);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            usersManager.setCurrentUser(menuUserSelectionOverlayModel.getSelectedUser());
+            usersManagerModel.setCurrentUser(menuUserSelectionOverlayModel.getSelectedUser());
             menuModel.setUserSelectionOverlayActive(false);
         }
 

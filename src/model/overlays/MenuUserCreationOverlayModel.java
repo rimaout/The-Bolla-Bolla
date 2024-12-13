@@ -1,10 +1,10 @@
 package model.overlays;
 
 import model.gameStates.MenuModel;
-import model.users.UsersManager;
+import model.users.UsersManagerModel;
 
 public class MenuUserCreationOverlayModel extends MenuOverlayModel {
-    private final UsersManager usersManager = UsersManager.getInstance();
+    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
 
     private String newUserName = "";
     private int newUserPictureIndex = -1;
@@ -20,7 +20,7 @@ public class MenuUserCreationOverlayModel extends MenuOverlayModel {
     public void update() {
 
         // Check if the username already exists
-        userNameAlreadyExists = usersManager.doesUserAlreadyExist(newUserName);
+        userNameAlreadyExists = usersManagerModel.doesUserAlreadyExist(newUserName);
 
         // update enterKeyStatus
         if (newUserName.isEmpty() || newUserPictureIndex == -1 || userNameAlreadyExists)
