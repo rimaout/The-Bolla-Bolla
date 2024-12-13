@@ -5,17 +5,16 @@ import model.entities.EnemyModel;
 import model.entities.MaitaModel;
 import model.entities.ZenChanModel;
 import model.utilz.Constants;
-import view.utilz.LoadSave;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;         // used for level map data
+import java.awt.*;                    // used for level map data
+import java.awt.image.BufferedImage;  // used for level map data
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import static model.utilz.Constants.BubbleGenerator.GeneratorPosition.BOTTOM;
@@ -30,7 +29,7 @@ import static model.utilz.Constants.EnemyConstants.MAITA_RIGHT;
 public interface LevelImportMethods {
 
     static BufferedImage[] GetAllLevels() {
-        URL url = LoadSave.class.getResource("/levelMaps");
+        URL url = LevelImportMethods.class.getResource("/levelMaps");
         File file = null;
 
         try {

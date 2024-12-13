@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
+import static view.utilz.LoadSave.GAME_ICON;
+
 public class GameWindow extends JFrame {
 
     public GameWindow(GamePanel gamePanel){
@@ -13,14 +15,7 @@ public class GameWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the window and exit the application when the window is closed// }
         add(gamePanel);
 
-        Image icon = new ImageIcon("res/images/game-icon.png").getImage();
-
-        setIconImage(icon); // Set the icon of the window
-        try {
-            Taskbar.getTaskbar().setIconImage(icon);
-        } catch (UnsupportedOperationException e) {
-            System.out.println("TaskBar non supportata su Windows!");
-        }
+        setIconInTaskBar();
 
         setResizable(false);
         pack(); // Adjust the size of the window to fit the preferred size of the panel (set in the setPanelSize() method of the GamePanel class)
@@ -38,5 +33,16 @@ public class GameWindow extends JFrame {
                 gamePanel.getGame().windowFocusLost();
             }
         });
+    }
+
+    private void setIconInTaskBar(){
+        Image icon = new ImageIcon(GAME_ICON).getImage();
+
+        setIconImage(icon); // Set the icon of the window
+        try {
+            Taskbar.getTaskbar().setIconImage(icon);
+        } catch (UnsupportedOperationException e) {
+            System.out.println("TaskBar not supported on Windows!");
+        }
     }
 }

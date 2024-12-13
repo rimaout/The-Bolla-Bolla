@@ -1,6 +1,6 @@
 package controller.classes;
 
-import controller.Game;
+import controller.GameController;
 import controller.inputs.InputMethods;
 import model.gameStates.GameState;
 import model.gameStates.MenuModel;
@@ -9,11 +9,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class MenuController implements InputMethods {
-    private final Game game;
+    private final GameController gameController;
     private final MenuModel menuModel;
 
-    public MenuController(Game game, MenuModel menuModel) {
-        this.game = game;
+    public MenuController(GameController gameController, MenuModel menuModel) {
+        this.gameController = gameController;
         this.menuModel = menuModel;
     }
 
@@ -46,17 +46,17 @@ public class MenuController implements InputMethods {
     public void keyPressed(KeyEvent e) {
 
         if (menuModel.isUserSelectionOverlayActive()) {
-            game.getMenuUserSelectionOverlayController().keyPressed(e);
+            gameController.getMenuUserSelectionOverlayController().keyPressed(e);
             return;
         }
 
         if (menuModel.isUserCreationOverlayActive()) {
-            game.getMenuUserCreationOverlayController().keyPressed(e);
+            gameController.getMenuUserCreationOverlayController().keyPressed(e);
             return;
         }
 
         if (menuModel.isScoreBoardOverlayActive()) {
-            game.getMenuScoreBoardOverlayController().keyPressed(e);
+            gameController.getMenuScoreBoardOverlayController().keyPressed(e);
             return;
         }
 
@@ -81,13 +81,13 @@ public class MenuController implements InputMethods {
                         break;
                     case 1:
                         // Change User
-                        game.getMenuUserSelectionOverlayModel().updateUserList();
+                        gameController.getMenuUserSelectionOverlayModel().updateUserList();
                         menuModel.setUserSelectionOverlayActive(true);
                         menuModel.setScoreBoardOverlayActive(false);
                         break;
                     case 2:
                         // Score Board
-                        game.getMenuScoreBoardOverlayModel().updateUserScores();
+                        gameController.getMenuScoreBoardOverlayModel().updateUserScores();
                         menuModel.setUserSelectionOverlayActive(false);
                         menuModel.setScoreBoardOverlayActive(true);
                         break;
@@ -103,10 +103,10 @@ public class MenuController implements InputMethods {
     @Override
     public void keyReleased(KeyEvent e) {
         if (menuModel.isUserSelectionOverlayActive())
-            game.getMenuUserSelectionOverlayController().keyReleased(e);
+            gameController.getMenuUserSelectionOverlayController().keyReleased(e);
         else if (menuModel.isUserCreationOverlayActive())
-            game.getMenuUserCreationOverlayController().keyReleased(e);
+            gameController.getMenuUserCreationOverlayController().keyReleased(e);
         else if (menuModel.isScoreBoardOverlayActive())
-            game.getMenuScoreBoardOverlayController().keyReleased(e);
+            gameController.getMenuScoreBoardOverlayController().keyReleased(e);
     }
 }

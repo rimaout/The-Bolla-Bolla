@@ -36,7 +36,7 @@ public class LoadSave {
     public static final String GAME_LOGO = "/images/logo.png";
     public static final String HURRY_IMAGE = "/images/hurry_image.png";
     public static final String QUESTION_MARK_IMAGE = "/images/question-mark.png";
-    public static final String GAME_ICON = "/images/game-icon.png";
+    public static final String GAME_ICON = "res/images/game-icon.png";
 
     // FONTS
     public static final String NES_FONT = "/fonts/nintendo-nes-font.ttf";

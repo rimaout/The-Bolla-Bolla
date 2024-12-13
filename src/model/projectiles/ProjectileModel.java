@@ -1,11 +1,11 @@
 package model.projectiles;
 
+import model.utilz.PlayingTimer;
 import model.entities.EnemyModel;
 import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileState;
-import model.utilz.PlayingTimer;
 
 import static model.utilz.Constants.Projectiles.*;
 import static model.utilz.Constants.Projectiles.ProjectileState.IMPACT;

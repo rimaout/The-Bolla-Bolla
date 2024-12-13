@@ -3,7 +3,6 @@ package model.gameStates;
 import model.levels.Level;
 import model.utilz.Constants;
 import model.entities.PlayerModel;
-import view.audio.AudioPlayer;
 import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.INTRO.IntroState.*;
@@ -51,7 +50,6 @@ public class IntroModel {
     }
 
     private void firstUpdate(){
-        AudioPlayer.getInstance().playIntroSong();
         playerModel.getHitbox().x = PLAYER_START_X;
         playerModel.getHitbox().y = PLAYER_START_Y;
 

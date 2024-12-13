@@ -33,7 +33,7 @@ public class MenuUserCreationOverlayModel extends MenuOverlayModel {
         newUserPictureIndex = index;
     }
 
-    public void increasNewUserPictureIndex(){
+    public void increaseNewUserPictureIndex(){
         newUserPictureIndex++;
     }
 

@@ -2,7 +2,7 @@ package view.gameStates;
 
 import view.overlays.MenuTwinkleBubbleManager;
 import model.gameStates.MenuModel;
-import controller.Game;
+import controller.GameController;
 import model.users.UsersManager;
 import model.utilz.Constants;
 import view.utilz.LoadSave;
@@ -15,7 +15,7 @@ import static view.utilz.Constants.MenuConstants.SPACE_WIDTH;
 
 public class MenuView {
     private final MenuModel menuModel;
-    private final Game game;
+    private final GameController gameController;
 
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
     private final UsersManager usersManager = UsersManager.getInstance();
@@ -30,9 +30,9 @@ public class MenuView {
     private String suggestions;
     private int suggestionsWidth;
 
-    public MenuView(MenuModel menuModel, Game game) {
+    public MenuView(MenuModel menuModel, GameController gameController) {
         this.menuModel = menuModel;
-        this.game = game;
+        this.gameController = gameController;
         this.nesFont = new Font("NesFont", Font.PLAIN, 20);
         this.retroFont = new Font("RetroFont", Font.PLAIN, 20);
 
@@ -55,16 +55,16 @@ public class MenuView {
         g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         if (menuModel.isScoreBoardOverlayActive()) {
-            game.getMenuScoreBoardOverlayView().draw(g);
+            gameController.getMenuScoreBoardOverlayView().draw(g);
             return;
         }
 
         drawGratings(g);
 
         if (menuModel.isUserSelectionOverlayActive())
-            game.getMenuUserSelectionOverlayView().draw(g);
+            gameController.getMenuUserSelectionOverlayView().draw(g);
         else if (menuModel.isUserCreationOverlayActive())
-            game.getMenuUserCreationOverlayView().draw(g);
+            gameController.getMenuUserCreationOverlayView().draw(g);
         else {
             drawTittle(g);
             drawSelections(g);

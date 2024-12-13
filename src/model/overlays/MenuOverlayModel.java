@@ -2,7 +2,6 @@ package model.overlays;
 
 import model.gameStates.MenuModel;
 
-
 public abstract class MenuOverlayModel {
     protected MenuModel menuModel;
 

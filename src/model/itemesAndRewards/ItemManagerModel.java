@@ -3,9 +3,9 @@ package model.itemesAndRewards;
 import java.awt.*;
 import java.util.ArrayList;
 
+import model.utilz.PlayingTimer;
 import model.entities.PlayerModel;
 import model.gameStates.PlayingModel;
-import model.utilz.PlayingTimer;
 import model.levels.LevelManagerModel;
 
 import static model.utilz.Constants.Items.*;
@@ -101,5 +101,4 @@ public class ItemManagerModel {
     public ArrayList<ItemModel> getItemsModels() {
         return itemsModels;
     }
-
 }

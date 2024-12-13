@@ -9,16 +9,17 @@ import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
-import controller.Game;
+import controller.GameController;
 import model.projectiles.ProjectileManagerModel;
 import model.utilz.PlayingTimer;
 
 import java.util.Observable;
 
-public class PlayingModel extends Observable implements State {
-    private Game game;
+public class PlayingModel extends Observable {
     private PlayerModel playerModelOne;
     private PlayerModel playerModelTwo = null;
+
+    private GameController gameController;
 
     private PlayingTimer playingTimer;
     private LevelManagerModel levelManagerModel;
@@ -42,8 +43,9 @@ public class PlayingModel extends Observable implements State {
     private boolean newLevelReset;
     private boolean newPlayReset;
 
-    public PlayingModel(Game game) {
-        this.game = game;
+    public PlayingModel(GameController gameController) {
+        this.gameController = gameController;
+
         initClasses();
         loadFirstLevel();
     }
@@ -227,16 +229,15 @@ public class PlayingModel extends Observable implements State {
         return introModel;
     }
 
-    @Override
-    public Game getGame() {
-        return game;
-    }
-
     public boolean isNewLevelReset() {
         return newLevelReset;
     }
 
     public boolean isNewPlayReset() {
         return newPlayReset;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

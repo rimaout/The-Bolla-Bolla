@@ -1,17 +1,18 @@
 package model.projectiles;
 
-import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants.Direction;
+import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 
-import static model.utilz.Constants.Direction.LEFT;
+
 import static model.utilz.Constants.Projectiles.*;
+import static model.utilz.Constants.Direction.LEFT;
 import static model.entities.HelpMethods.CanMoveHere;
 import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectileModel extends ProjectileModel {
-    private float activeTimer = 290;
+    private float activeTimer = 290;    // time until the projectile transforms in a "floating" bubble
 
     public PlayerBubbleProjectileModel(float x, float y, Direction direction) {
         super(x, y, direction, PLAYER_BUBBLE);

@@ -1,7 +1,6 @@
 package view.gameStates;
 
-import model.gameStates.State;
-import controller.Game;
+import controller.GameController;
 import model.utilz.Constants;
 import view.utilz.LoadSave;
 import view.overlays.MenuTwinkleBubbleManager;
@@ -10,10 +9,10 @@ import static view.utilz.Constants.Home.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HomeView implements State {
+public class HomeView {
 
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance(this);
-    private final Game game;
+    private final GameController gameController;
 
     private BufferedImage logoImg;
     private float logoX, logoY, logoW, logoH;
@@ -21,8 +20,8 @@ public class HomeView implements State {
     private boolean isLogoInPosition = false;
     private final Font nesFont;
 
-    public HomeView(Game game) {
-        this.game = game;
+    public HomeView(GameController gameController) {
+        this.gameController = gameController;
         loadLogo();
 
         nesFont = LoadSave.GetNesFont();
@@ -73,7 +72,7 @@ public class HomeView implements State {
         return isLogoInPosition;
     }
 
-    public Game getGame() {
-        return game;
+    public GameController getGame() {
+        return gameController;
     }
 }

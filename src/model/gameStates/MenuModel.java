@@ -1,9 +1,9 @@
 package model.gameStates;
 
-import controller.Game;
+import controller.GameController;
 
-public class MenuModel implements State {
-    private final Game game;
+public class MenuModel {
+    private final GameController game;
 
     private int selectionIndex = 0;
 
@@ -12,7 +12,7 @@ public class MenuModel implements State {
     private boolean userCreationOverlayActive = false;
     private boolean scoreBoardOverlayActive = false;
 
-    public MenuModel(Game game) {
+    public MenuModel(GameController game) {
 
         this.game = game;
     }
@@ -68,10 +68,5 @@ public class MenuModel implements State {
 
     public void decreaseSelectionIndex() {
         selectionIndex--;
-    }
-
-    @Override
-    public Game getGame() {
-        return game;
     }
 }

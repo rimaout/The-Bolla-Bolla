@@ -1,8 +1,7 @@
 package model.levels;
 
-
-import model.gameStates.PlayingModel;
 import model.gameStates.GameState;
+import model.gameStates.PlayingModel;
 import model.utilz.Constants.Direction;
 
 import java.util.ArrayList;
@@ -43,8 +42,8 @@ public class LevelManagerModel {
             return;
         }
 
-        playingModel.getGame().getLevelTransition().setOldLevel(getCurrentLevel());
-        playingModel.getGame().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
+        playingModel.getGameController().getLevelTransition().setOldLevel(getCurrentLevel());
+        playingModel.getGameController().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
         GameState.state = GameState.LEVEL_TRANSITION;
     }
 
@@ -96,4 +95,3 @@ public class LevelManagerModel {
         return levelIndex;
     }
 }
-

@@ -2,6 +2,7 @@ package model.utilz;
 
 public class Constants {
 
+    // Base Game Constants
     public final static int FPS_SET = 60;
     public final static int UPS_SET = 180;
 
@@ -17,30 +18,10 @@ public class Constants {
     public enum Direction {
         LEFT, RIGHT, UP, DOWN, NONE;
 
-        public static Direction GetRandomDirection() {
-            return switch ((int) (Math.random() * 4)) {
-                case 0 -> LEFT;
-                case 1 -> RIGHT;
-                case 2 -> UP;
-                case 3 -> DOWN;
-                default -> NONE;
-            };
-        }
-
         public static Direction GetRandomHorizontalDirection() {
             return switch ((int) (Math.random() * 2)) {
                 case 0 -> LEFT;
                 case 1 -> RIGHT;
-                default -> NONE;
-            };
-        }
-
-        public static Direction GetOppositeDirection(Direction direction) {
-            return switch (direction) {
-                case LEFT -> RIGHT;
-                case RIGHT -> LEFT;
-                case UP -> DOWN;
-                case DOWN -> UP;
                 default -> NONE;
             };
         }
@@ -227,16 +208,19 @@ public class Constants {
 
     public static class Items {
 
+        // Size
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
         public static final int W = DEFAULT_W * SCALE;
         public static final int H = DEFAULT_H * SCALE;
 
+        // Hitbox Constants
         public static final int HITBOX_W = 6 * SCALE;
         public static final int HITBOX_H = 6 * SCALE;
         public static final int OFFSET_X = 6 * SCALE;
         public static final int OFFSET_Y = 7 * SCALE;
 
+        // Timers
         public static final int DE_SPAWN_TIMER = 8000;
         public static final int SPAWN_POWER_UP_TIMER = 12000;
 
@@ -296,16 +280,19 @@ public class Constants {
 
     public static class PointsManager {
 
+        // Size Small
         public static final int SMALL_DEFAULT_W = 18;
         public static final int SMALL_DEFAULT_H = 10;
         public static final int SMALL_W = (int) (SMALL_DEFAULT_W / 1.1 * SCALE);
         public static final int SMALL_H = (int) (SMALL_DEFAULT_H / 1.1 * SCALE);
 
+        // Size Big
         public static final int BIG_DEFAULT_W = 28;
         public static final int BIG_DEFAULT_H = 13;
         public static final int BIG_W = (int) (SMALL_DEFAULT_W * 1.35 * SCALE);
         public static final int BIG_H = (int) (SMALL_DEFAULT_H * 1.35 * SCALE);
 
+        // Timers
         public static final int CONSECUTIVE_POP_DELAY = 200;
 
         public enum PointsType {
@@ -315,16 +302,19 @@ public class Constants {
 
     public static class Projectiles {
 
+        // Size
         public static final int DEFAULT_W = 18;
         public static final int DEFAULT_H = 18;
         public static final int W = DEFAULT_W * SCALE;
         public static final int H = DEFAULT_H * SCALE;
 
+        // Hitbox Constants
         public static final int HITBOX_W = 9 * SCALE;
         public static final int HITBOX_H = 9 * SCALE;
         public static final int OFFSET_X = -5 * SCALE;
         public static final int OFFSET_Y = -4 * SCALE;
 
+        // Movement Constants
         public static final float PLAYER_BUBBLE_SPEED = 1.2f * SCALE;
         public static final float MAITA_FIREBALL_SPEED = 0.53f * SCALE;
         public static final float LIGHTNING_SPEED = 1f * SCALE;
@@ -339,16 +329,19 @@ public class Constants {
     }
 
     public static class HurryUpManager {
+        // Timers
         public static final int START_HURRY_UP_TIMER = 17000;
         public static final int ACTIVATE_SKEL_MONSTA_TIMER = 20000;
     }
 
     public static class BubbleGenerator {
 
+        // Timers
         public static final int BUBBLE_GENERATION_INTERVAL = 4000;
         public static final int INITIAL_BUBBLE_GENERATOR_INTERVAL = 2000;
         public static final int MAX_SPECIAL_BUBBLES = 7;
 
+        // Position Constants
         public static final int LEFT_GENERATOR_X = 10 * TILES_SIZE;
         public static final int RIGHT_GENERATOR_X = 20 * TILES_SIZE;
         public static final int TOP_GENERATOR_Y = -2 * TILES_SIZE;

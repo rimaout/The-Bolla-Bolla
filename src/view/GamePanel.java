@@ -6,14 +6,14 @@ import javax.swing.JPanel;
 import controller.inputs.KeyBoardInputs;
 import controller.inputs.MouseKeyInputs;
 import controller.inputs.MouseMotionInputs;
-import controller.Game;
+import controller.GameController;
 import model.utilz.Constants;
 
 public class GamePanel extends JPanel {
-    private final Game game;
+    private final GameController gameController;
 
-    public GamePanel(Game game) {
-        this.game = game;
+    public GamePanel(GameController gameController) {
+        this.gameController = gameController;
         setBackground(Color.BLACK);
         setPanelSize();
 
@@ -34,10 +34,10 @@ public class GamePanel extends JPanel {
         Toolkit.getDefaultToolkit().sync();     // Synchronize the graphics state
         super.paintComponent(g);                // Use the paintComponent method of the JPanel (super) class to paint the panel
 
-        game.render(g);
+        gameController.render(g);
     }
 
-    public Game getGame() {
-        return game;
+    public GameController getGame() {
+        return gameController;
     }
 }

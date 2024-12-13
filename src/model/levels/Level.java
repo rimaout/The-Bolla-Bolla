@@ -4,8 +4,8 @@ import model.entities.EnemyModel;
 import model.utilz.Constants.Direction;
 import model.bubbles.specialBubbles.BubbleGenerator;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;    // used for level map data
 
 public class Level {
 

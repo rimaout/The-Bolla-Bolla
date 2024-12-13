@@ -51,5 +51,4 @@ public class HomeController implements InputMethods {
     public void keyReleased(KeyEvent e) {
         // Not used
     }
-
 }

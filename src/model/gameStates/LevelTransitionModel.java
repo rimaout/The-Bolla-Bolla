@@ -1,6 +1,6 @@
 package model.gameStates;
 
-import controller.Game;
+import controller.GameController;
 import model.levels.Level;
 import model.utilz.Constants;
 import model.entities.PlayerModel;
@@ -11,9 +11,9 @@ import static model.utilz.Constants.LevelTransition.TransitionState;
 import static model.utilz.Constants.LevelTransition.TransitionState.*;
 import static model.utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 
-public class LevelTransitionModel implements State {
+public class LevelTransitionModel{
     private PlayingModel playingModel;
-    private Game game;
+    private GameController game;
 
     private Level oldLevel, newLevel;
     private float oldLevelY;
@@ -25,7 +25,7 @@ public class LevelTransitionModel implements State {
     private PlayerModel playerModel;
     private float playerStartX, playerStartY;
 
-    public LevelTransitionModel(Game game) {
+    public LevelTransitionModel(GameController game) {
         this.game = game;
         this.playingModel = game.getPlaying();
 
@@ -121,9 +121,5 @@ public class LevelTransitionModel implements State {
 
     public PlayerModel getPlayer() {
         return playerModel;
-    }
-
-    public Game getGame() {
-        return game;
     }
 }

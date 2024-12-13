@@ -4,6 +4,7 @@ import controller.classes.*;
 import model.entities.HurryUpManagerModel;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
+import model.levels.LevelManagerModel;
 import view.GamePanel;
 import view.GameWindow;
 import view.audio.AudioPlayer;
@@ -22,7 +23,7 @@ import view.overlays.*;
 
 import java.awt.*;
 
-public class Game implements Runnable {
+public class GameController implements Runnable {
 
     private final GameWindow gameWindow;
     private final GamePanel gamePanel;
@@ -66,7 +67,7 @@ public class Game implements Runnable {
     private LevelTransitionModel levelTransitionModel;
     private LevelTransitionView levelTransitionView;
 
-    public Game() {
+    public GameController() {
         initClasses();
 
         gamePanel = new GamePanel(this);

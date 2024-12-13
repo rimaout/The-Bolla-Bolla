@@ -1,6 +1,6 @@
 package model.users;
 
-import controller.Game;
+import controller.GameController;
 import view.utilz.LoadSave;
 
 import java.awt.*;
@@ -13,23 +13,23 @@ import java.awt.image.BufferedImage;
 
 public class UsersManager {
     private static UsersManager instance;
-    private final Game game;
+    private final GameController gameController;
 
     private final HashMap<String, User> users;
     private User currentUser;
 
     BufferedImage[] userPictures;
 
-    private UsersManager(Game game) {
+    private UsersManager(GameController gameController) {
         this.users = new HashMap<>();
-        this.game = game;
+        this.gameController = gameController;
         loadUsers();
         loadUserPictures();
     }
 
-    public static UsersManager getInstance(Game game) {
+    public static UsersManager getInstance(GameController gameController) {
         if (instance == null) {
-            instance = new UsersManager(game);
+            instance = new UsersManager(gameController);
         }
         return instance;
     }
@@ -80,7 +80,7 @@ public class UsersManager {
     }
 
     public void updateCurrentUserInfo(boolean victory) {
-        currentUser.setScore(game.getPlaying().getPlayerOneModel().getPoints());
+        currentUser.setScore(gameController.getPlaying().getPlayerOneModel().getPoints());
 
         if (victory)
             currentUser.increaseWins();

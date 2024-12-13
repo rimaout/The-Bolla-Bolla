@@ -3,6 +3,7 @@ package view.gameStates;
 import model.gameStates.IntroModel;
 import model.levels.Level;
 import model.utilz.Constants;
+import view.audio.AudioPlayer;
 import view.utilz.LoadSave;
 import view.levels.LevelManagerView;
 
@@ -20,6 +21,7 @@ public class IntroView {
     private BufferedImage[] playerTransitionSprites;
     private Font customFont;
 
+    private boolean firstDraw = true;
     private int playerAnimationTick, playerAnimationIndex;
 
     public IntroView(IntroModel introModel) {
@@ -45,11 +47,20 @@ public class IntroView {
     }
 
     public void draw(Graphics g) {
+
         if (introModel.getIntroState() == LEVEL_TRANSITION)
             drawLevel(g, introModel.getLevel(), (int) introModel.getLevelY());
 
+        playSound();
         drawText(g);
         drawPlayer(g);
+    }
+
+    private void playSound() {
+        if (firstDraw) {
+            AudioPlayer.getInstance().playIntroSong();
+            firstDraw = false;
+        }
     }
 
     private void drawPlayer(Graphics g) {

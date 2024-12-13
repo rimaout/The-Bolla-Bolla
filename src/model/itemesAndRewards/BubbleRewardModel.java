@@ -27,5 +27,4 @@ public class BubbleRewardModel extends ItemModel {
     public BubbleRewardType getBubbleRewardType() {
         return bubbleRewardType;
     }
-
 }

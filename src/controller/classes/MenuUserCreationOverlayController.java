@@ -35,7 +35,7 @@ public class MenuUserCreationOverlayController {
             if (menuUserCreationOverlayModel.getNewUserPictureIndex() + 1 == usersManager.getUserPicturesCount())
                 menuUserCreationOverlayModel.setNewUserPictureIndex(0);
             else
-                menuUserCreationOverlayModel.increasNewUserPictureIndex();
+                menuUserCreationOverlayModel.increaseNewUserPictureIndex();
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             menuUserCreationOverlayView.setDownArrowIndex(1); // animate the arrow
