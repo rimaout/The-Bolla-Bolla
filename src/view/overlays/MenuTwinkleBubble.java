@@ -4,7 +4,6 @@ import model.entities.EntityModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import static model.utilz.Constants.Direction.*;
-
 import static view.utilz.Constants.Home.*;
 import static view.utilz.Constants.ANIMATION_SPEED;
 

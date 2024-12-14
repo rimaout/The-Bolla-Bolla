@@ -3,11 +3,11 @@ package model.bubbles.playerBubbles;
 import java.awt.*;
 import java.util.LinkedList;
 
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import model.bubbles.BubbleModel;
 import model.entities.EnemyModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants;
-import model.utilz.PlayingTimer;
 
 import static model.utilz.Constants.Bubble.*;
 

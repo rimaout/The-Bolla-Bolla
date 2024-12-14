@@ -1,7 +1,7 @@
 package view.itemsAndRewards;
 
-import model.itemesAndRewards.RewardPointsManagerModel;
 import view.utilz.LoadSave;
+import model.itemesAndRewards.RewardPointsManagerModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

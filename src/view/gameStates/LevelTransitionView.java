@@ -1,8 +1,8 @@
 package view.gameStates;
 
-import model.gameStates.LevelTransitionModel;
 import model.levels.Level;
 import model.utilz.Constants;
+import model.gameStates.LevelTransitionModel;
 import view.utilz.LoadSave;
 import view.levels.LevelManagerView;
 

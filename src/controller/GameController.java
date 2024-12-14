@@ -105,7 +105,7 @@ public class GameController implements Runnable {
         menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
         menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
 
-        playingModel = new PlayingModel(this);
+        playingModel = new PlayingModel();
 
         gamePausedOverlayView = new GamePausedOverlayView(playingModel);
         gamePausedOverlayController = new GamePausedOverlayController(playingModel);

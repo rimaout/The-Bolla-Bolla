@@ -5,6 +5,7 @@ import model.entities.PlayerModel;
 import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
 import model.utilz.Constants.Direction;
+
 import java.util.Random;
 
 import static model.utilz.Constants.Bubble.*;

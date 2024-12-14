@@ -1,10 +1,10 @@
 package model.projectiles;
 
-import model.entities.EnemyModel;
-import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
 import model.utilz.Constants.Projectiles.ProjectileType;
+import model.entities.EnemyModel;
+import model.entities.PlayerModel;
 
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Projectiles.*;

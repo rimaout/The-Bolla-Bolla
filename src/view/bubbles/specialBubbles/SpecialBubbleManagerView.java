@@ -1,8 +1,8 @@
 package view.bubbles.specialBubbles;
 
 import model.bubbles.BubbleModel;
-import model.bubbles.specialBubbles.SpecialBubbleManagerModel;
 import model.bubbles.specialBubbles.WaterFlowModel;
+import model.bubbles.specialBubbles.SpecialBubbleManagerModel;
 import view.utilz.LoadSave;
 import view.bubbles.BubbleView;
 
@@ -16,14 +16,13 @@ import static model.utilz.Constants.PlayerConstants.DEFAULT_W;
 public class SpecialBubbleManagerView {
     private static SpecialBubbleManagerView instance;
 
-    private final SpecialBubbleManagerModel bubblesManagerModel = SpecialBubbleManagerModel.getInstance();
     private final LinkedList<BubbleView> bubblesViews;
     private final LinkedList<WaterFlowView> waterFlowsViews;
+    private final SpecialBubbleManagerModel bubblesManagerModel = SpecialBubbleManagerModel.getInstance();
 
     private BufferedImage[][] waterBubbleSprites;
     private BufferedImage[][] lightningBubbleSprites;
     private BufferedImage[][] playerSprites;
-
 
     private SpecialBubbleManagerView() {
         bubblesViews = new LinkedList<>();
@@ -119,7 +118,7 @@ public class SpecialBubbleManagerView {
         return lightningBubbleSprites;
     }
 
-    public Image[][] getPlayerSprites() {
+    public BufferedImage[][] getPlayerSprites() {
         return playerSprites;
     }
 }

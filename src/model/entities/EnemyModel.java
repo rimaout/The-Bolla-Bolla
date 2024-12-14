@@ -1,9 +1,8 @@
 package model.entities;
 
-import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
-import model.bubbles.playerBubbles.EnemyBubbleModel;
-import model.levels.LevelManagerModel;
 import model.utilz.Constants;
+import model.bubbles.playerBubbles.EnemyBubbleModel;
+import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 
 import static model.utilz.Constants.Direction;
 import static model.utilz.Constants.Direction.*;
@@ -51,14 +50,6 @@ public abstract class EnemyModel extends EntityModel {
     }
 
     public abstract void update(PlayerModel playerModel);
-
-    protected void loadLevelManager() {
-        // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
-        // use this method at the beginning of the update method for each enemy class
-
-        if (levelManagerModel == null)
-            levelManagerModel = LevelManagerModel.getInstance();
-    }
 
     protected void updateSpawning() {
 

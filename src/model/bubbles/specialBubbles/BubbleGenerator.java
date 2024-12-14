@@ -1,12 +1,12 @@
 package model.bubbles.specialBubbles;
 
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
+import model.utilz.Constants.Direction;
+
 import java.util.Random;
 
-import model.utilz.Constants;
-
 import static model.utilz.Constants.BubbleGenerator.*;
-import model.utilz.Constants.Direction;
-import model.utilz.PlayingTimer;
 
 public class BubbleGenerator {
     private final Random random = new Random();

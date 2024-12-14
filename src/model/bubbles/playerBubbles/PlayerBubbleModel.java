@@ -1,8 +1,8 @@
 package model.bubbles.playerBubbles;
 
+import model.utilz.Constants;
 import model.bubbles.BubbleModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.*;
 
@@ -20,6 +20,7 @@ public abstract class PlayerBubbleModel extends BubbleModel {
 
     @Override
     public void update() {
+        initLevelManager();
         updateTimers();
         setState();
 

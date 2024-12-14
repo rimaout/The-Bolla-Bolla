@@ -12,7 +12,6 @@ public class MenuScoreBoardOverlayModel extends MenuOverlayModel {
     private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
     private ArrayList<User> orderedUsers;
 
-
     public MenuScoreBoardOverlayModel(MenuModel menuModel) {
         super(menuModel);
         updateUserScores();

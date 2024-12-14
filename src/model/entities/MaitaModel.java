@@ -38,7 +38,7 @@ public class MaitaModel extends EnemyModel {
 
     @Override
     public void update(PlayerModel playerModel) {
-        loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
+        initLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         if (!EnemyManagerModel.getInstance().didAllEnemiesReachedSpawn()) {
             if (!reachedSpawn)
@@ -250,29 +250,6 @@ public class MaitaModel extends EnemyModel {
             hitbox.y = GetEntityYPosAboveFloor(hitbox, fallSpeed, levelManagerModel.getLevelData());
             goDown = false;
         }
-    }
-
-    private boolean isNextPosFloorSolid() {
-        // This method checks if the next two tiles in front of the enemy are solid or not
-        // It's used to check if the enemy can jump/fall or not
-
-        int yTile = 0, xTile1 = 0, xTile2 = 0;
-
-        //check if there are 2 solid tiles in front of the enemy
-        if (walkingDir == LEFT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
-            xTile1 = (int) hitbox.x / Constants.TILES_SIZE;
-            xTile2 = xTile1 - 1;
-        }
-
-        else if (walkingDir == RIGHT) {
-            yTile = (int) (hitbox.y + hitbox.height + 1) / Constants.TILES_SIZE;
-            xTile1 = (int) (hitbox.x + hitbox.width) / Constants.TILES_SIZE;
-            xTile2 = xTile1 + 1;
-        }
-
-        return IsTileSolid(xTile1, yTile, levelManagerModel.getLevelData())
-                || IsTileSolid(xTile2, yTile, levelManagerModel.getLevelData());
     }
 
     private boolean canJump(int jumpDistance) {

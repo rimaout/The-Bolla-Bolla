@@ -8,6 +8,7 @@ import static view.utilz.Constants.Bubble.getPlayerBubbleSpriteAmount;
 
 public abstract class BubbleView{
     protected BubbleModel bubbleModel;
+
     protected int animationIndex, animationTick;
     protected boolean animationReset;   // used to reset animation index and tick after bubble is popped
     protected boolean soundPlayed;

@@ -31,7 +31,7 @@ public class SkelMonstaModel extends EnemyModel {
 
     @Override
     public void update(PlayerModel playerModel) {
-        loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
+        initLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         updateState();
         updateTimer();
@@ -206,5 +206,4 @@ public class SkelMonstaModel extends EnemyModel {
     public boolean isMoving() {
         return moving;
     }
-
 }

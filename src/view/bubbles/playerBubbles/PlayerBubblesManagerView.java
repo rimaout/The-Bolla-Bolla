@@ -1,8 +1,8 @@
 package view.bubbles.playerBubbles;
 
+import view.utilz.LoadSave;
 import model.bubbles.BubbleModel;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
-import view.utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -74,7 +74,6 @@ public class PlayerBubblesManagerView {
 
     public void newPlayReset() {
         newLevelReset();
-
     }
 
     public BufferedImage[][] getPlayerBubbleSprites() {

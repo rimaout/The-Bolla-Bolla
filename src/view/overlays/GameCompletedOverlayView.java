@@ -1,11 +1,10 @@
 package view.overlays;
 
-
 import view.audio.AudioPlayer;
 import view.utilz.Constants.AudioConstants;
 
-import model.gameStates.PlayingModel;
 import model.utilz.Constants;
+import model.gameStates.PlayingModel;
 
 import java.awt.*;
 

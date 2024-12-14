@@ -4,11 +4,11 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import model.utilz.Constants;
+import model.utilz.PlayingTimer;
 import model.entities.EntityModel;
 import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
-import model.utilz.Constants;
-import model.utilz.PlayingTimer;
 
 import static java.lang.Math.abs;
 import static model.utilz.Constants.Bubble.*;

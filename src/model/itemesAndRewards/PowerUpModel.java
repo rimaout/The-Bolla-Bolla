@@ -1,7 +1,5 @@
 package model.itemesAndRewards;
 
-import model.entities.PlayerModel;
-
 import static model.utilz.Constants.Items.*;
 import static model.utilz.Constants.Items.PowerUpType.*;
 

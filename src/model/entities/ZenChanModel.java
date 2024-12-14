@@ -33,7 +33,7 @@ public class ZenChanModel extends EnemyModel {
 
     @Override
     public void update(PlayerModel playerModel) {
-        loadLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
+        initLevelManager(); // Load the level manager if it's not loaded (enemies are created before the level manager use this method to avoid null pointer exceptions)
 
         if (!EnemyManagerModel.getInstance().didAllEnemiesReachedSpawn()) {
             if (!reachedSpawn)
@@ -82,7 +82,6 @@ public class ZenChanModel extends EnemyModel {
         // enemy stuck in a wall
         if(IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData()))
             hitbox.y += 1;
-
 
         moveOnGround();
 

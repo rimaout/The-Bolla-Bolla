@@ -1,7 +1,7 @@
 package model.itemesAndRewards;
 
-import model.entities.PlayerModel;
 import model.utilz.PlayingTimer;
+import model.entities.PlayerModel;
 
 import java.util.ArrayList;
 

@@ -1,14 +1,14 @@
 package view.entities;
 
-import model.entities.HurryUpManagerModel;
-import view.utilz.Constants;
 import view.utilz.LoadSave;
+import view.utilz.Constants;
 import view.audio.AudioPlayer;
+import model.entities.HurryUpManagerModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Observable;
 import java.util.Observer;
+import java.util.Observable;
 
 import static model.utilz.Constants.GAME_HEIGHT;
 import static view.utilz.Constants.HurryUpManager.*;

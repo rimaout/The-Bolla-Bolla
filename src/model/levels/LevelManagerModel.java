@@ -1,7 +1,7 @@
 package model.levels;
 
 import model.gameStates.GameState;
-import model.gameStates.PlayingModel;
+import model.gameStates.LevelTransitionModel;
 import model.utilz.Constants.Direction;
 
 import java.util.ArrayList;
@@ -10,28 +10,19 @@ import java.awt.image.BufferedImage;
 public class LevelManagerModel {
     private static LevelManagerModel instance;
 
-    private final PlayingModel playingModel;
-
     private final ArrayList<Level> levels;
     private int levelIndex = 0;
     private boolean allLevelsCompleted = false;
 
-    private LevelManagerModel(PlayingModel playingModel) {
-        this.playingModel = playingModel;
-
+    private LevelManagerModel() {
 
         levels = new ArrayList<>();
         buildAllLevels();
     }
 
-    public static LevelManagerModel getInstance(PlayingModel playingModel) {
-        if (instance == null) {
-            instance = new LevelManagerModel(playingModel);
-        }
-        return instance;
-    }
-
     public static LevelManagerModel getInstance() {
+        if (instance == null)
+            instance = new LevelManagerModel();
         return instance;
     }
 
@@ -42,8 +33,8 @@ public class LevelManagerModel {
             return;
         }
 
-        playingModel.getGameController().getLevelTransition().setOldLevel(getCurrentLevel());
-        playingModel.getGameController().getLevelTransition().setNewLevel(getLevelWithIndex(levelIndex+1));
+        LevelTransitionModel.getInstance().setOldLevel(getCurrentLevel());
+        LevelTransitionModel.getInstance().setNewLevel(getLevelWithIndex(levelIndex+1));
         GameState.state = GameState.LEVEL_TRANSITION;
     }
 

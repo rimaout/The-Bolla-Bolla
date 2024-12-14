@@ -9,29 +9,28 @@ import static model.utilz.Constants.Bubble.BLINKING;
 import static model.utilz.Constants.Bubble.POP_NORMAL;
 import static model.utilz.Constants.Bubble.POP_RED;
 
-public class Constants {
+public interface Constants {
 
-    public static final int ANIMATION_SPEED = 55;
+    int ANIMATION_SPEED = 55;
 
-    public static class Home {
+    interface Home {
 
         // Logo Constants
-        public static final int LOGO_END_Y = 15 * SCALE;
-        public static final float LOGO_SPEED = 0.85f * 3;
+        int LOGO_END_Y = 15 * SCALE;
+        float LOGO_SPEED = 0.85f * 3;
 
-        // Twinkle Bubble Constants
-        public static final int BUBBLE_DEFAULT_W = 8;
-        public static final int BUBBLE_DEFAULT_H = 8;
-        public static final int BUBBLE_W = BUBBLE_DEFAULT_W * SCALE;
-        public static final int BUBBLE_H = BUBBLE_DEFAULT_H * SCALE;
-
-        public static final float BUBBLE_SPEED = 0.0664f * 3 * SCALE;
+        // Twinkle Bubble Constants (background animation)
+        int BUBBLE_DEFAULT_W = 8;
+        int BUBBLE_DEFAULT_H = 8;
+        int BUBBLE_W = BUBBLE_DEFAULT_W * SCALE;
+        int BUBBLE_H = BUBBLE_DEFAULT_H * SCALE;
+        float BUBBLE_SPEED = 0.0664f * 3 * SCALE;
     }
 
-    public static class Bubble {
-        public static final int BUBBLE_ANIMATION_SPEED = 25;
+    interface Bubble {
+        int BUBBLE_ANIMATION_SPEED = 25;
 
-        public static int getPlayerBubbleSpriteAmount(int bubbleState) {
+        static int getPlayerBubbleSpriteAmount(int bubbleState) {
             return switch (bubbleState) {
                 case NORMAL -> 2;
                 case RED -> 2;
@@ -42,17 +41,17 @@ public class Constants {
         }
     }
 
-    public static class PlayerConstants {
+    interface PlayerConstants {
 
         // Animation Constants
-        public static final int IDLE_ANIMATION = 0;
-        public static final int RUNNING_ANIMATION = 1;
-        public static final int JUMPING_ANIMATION = 2;
-        public static final int FALLING_ANIMATION = 3;
-        public static final int ATTACK_ANIMATION = 4;
-        public static final int DEAD_ANIMATION = 5;
+        int IDLE_ANIMATION = 0;
+        int RUNNING_ANIMATION = 1;
+        int JUMPING_ANIMATION = 2;
+        int FALLING_ANIMATION = 3;
+        int ATTACK_ANIMATION = 4;
+        int DEAD_ANIMATION = 5;
 
-        public static int getSpriteAmount(int playerAnimation) {
+        static int getSpriteAmount(int playerAnimation) {
             return switch (playerAnimation) {
                 case IDLE_ANIMATION -> 2;
                 case RUNNING_ANIMATION -> 2;
@@ -65,20 +64,20 @@ public class Constants {
         }
     }
 
-    public static class EnemyConstants {
+    interface EnemyConstants {
 
         // General Animation Constants
-        public static final int WALKING_ANIMATION_NORMAL = 0;
-        public static final int WALKING_ANIMATION_HUNGRY = 1;
-        public static final int BOBBLE_GREEN_ANIMATION = 3;
-        public static final int BOBBLE_RED_ANIMATION = 5;
-        public static final int DEAD_ANIMATION = 6;
-        public static final int BOBBLE_GREEN_POP_ANIMATION = 7;
-        public static final int BOBBLE_RED_POP_ANIMATION = 8;
-        public static final float NORMAL_ANIMATION_SPEED_MULTIPLIER = 1.0f;
-        public static final float HUNGRY_ANIMATION_SPEED_MULTIPLIER = 0.53f;
+        int WALKING_ANIMATION_NORMAL = 0;
+        int WALKING_ANIMATION_HUNGRY = 1;
+        int BOBBLE_GREEN_ANIMATION = 3;
+        int BOBBLE_RED_ANIMATION = 5;
+        int DEAD_ANIMATION = 6;
+        int BOBBLE_GREEN_POP_ANIMATION = 7;
+        int BOBBLE_RED_POP_ANIMATION = 8;
+        float NORMAL_ANIMATION_SPEED_MULTIPLIER = 1.0f;
+        float HUNGRY_ANIMATION_SPEED_MULTIPLIER = 0.53f;
 
-        public static int getSpriteAmount(model.utilz.Constants.EnemyConstants.EnemyType enemyType, int enemyState) {
+        static int getSpriteAmount(model.utilz.Constants.EnemyConstants.EnemyType enemyType, int enemyState) {
             if (enemyType == model.utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN || enemyType == model.utilz.Constants.EnemyConstants.EnemyType.MAITA) {
                 return switch (enemyState) {
                     case WALKING_ANIMATION_NORMAL -> 2;
@@ -97,9 +96,9 @@ public class Constants {
         }
     }
 
-    public static class Items {
+    interface Items {
 
-        public static int GetRewardImageIndex(model.utilz.Constants.Items.BubbleRewardType bubbleRewardType) {
+        static int GetRewardImageIndex(model.utilz.Constants.Items.BubbleRewardType bubbleRewardType) {
             return switch (bubbleRewardType) {
                 case APPLE -> 0;
                 case PEPPER -> 1;
@@ -112,7 +111,7 @@ public class Constants {
             };
         }
 
-        public static int GetPowerUpImageIndex(model.utilz.Constants.Items.PowerUpType powerUpType) {
+        static int GetPowerUpImageIndex(model.utilz.Constants.Items.PowerUpType powerUpType) {
             return switch (powerUpType) {
                 case GREEN_CANDY -> 0;
                 case BLUE_CANDY -> 1;
@@ -128,49 +127,50 @@ public class Constants {
         }
     }
 
-    public static class Projectiles {
-        public static final int PROJECTILE_ANIMATION_SPEED = 25;
+    interface Projectiles {
+        int PROJECTILE_ANIMATION_SPEED = 25;
     }
 
-    public static class HurryUpManager {
-        public static final int HURRY_IMG_W = (int) (40 * SCALE * 1.3);
-        public static final int HURRY_IMG_H = (int) (11 * SCALE * 1.3);
-        public static final int STARTING_HURRY_IMG_X = (int) (GAME_WIDTH / 2 - 40 * SCALE * 1.3 / 2);
-        public static final int STARTING_HURRY_IMG_Y = GAME_HEIGHT - 5 * SCALE;
-        public static final float HURRY_IMG_SPEED = 0.3f * SCALE;
+    interface HurryUpManager {
+        int HURRY_IMG_W = (int) (40 * SCALE * 1.3);
+        int HURRY_IMG_H = (int) (11 * SCALE * 1.3);
+        int STARTING_HURRY_IMG_X = (int) (GAME_WIDTH / 2 - 40 * SCALE * 1.3 / 2);
+        int STARTING_HURRY_IMG_Y = GAME_HEIGHT - 5 * SCALE;
+        float HURRY_IMG_SPEED = 0.3f * SCALE;
     }
 
-    public static class AudioConstants {
-        public static final float DEFAULT_VOLUME = 0.6f;
+    interface AudioConstants {
+        float DEFAULT_VOLUME = 0.6f;
 
         // Songs
-        public static final int INTO_AND_PLAYING_SONG = 0;
-        public static final int PLAYING_SONG = 1;
+        int INTO_AND_PLAYING_SONG = 0;
+        int PLAYING_SONG = 1;
 
         // Sound effects
-        public static final int HOME = 0;
-        public static final int JUMP = 1;
-        public static final int PLAYER_DEATH = 2;
-        public static final int BUBBLE_SHOOT = 3;
-        public static final int ENEMY_BUBBLE_POP = 4;
-        public static final int WATER_FLOW = 5;
-        public static final int LIGHTNING = 6;
-        public static final int REWARD_COLLECTED = 7;
-        public static final int POWER_UP_COLLECTED = 8;
-        public static final int GAME_OVER = 9;
-        public static final int GAME_COMPLETED = 10;
-        public static final int HURRY_UP = 11;
+        int HOME = 0;
+        int JUMP = 1;
+        int PLAYER_DEATH = 2;
+        int BUBBLE_SHOOT = 3;
+        int ENEMY_BUBBLE_POP = 4;
+        int WATER_FLOW = 5;
+        int LIGHTNING = 6;
+        int REWARD_COLLECTED = 7;
+        int POWER_UP_COLLECTED = 8;
+        int GAME_OVER = 9;
+        int GAME_COMPLETED = 10;
+        int HURRY_UP = 11;
     }
 
-    public static class Overlays {
-        public static final Color BUD_GREEN_COLOR = new Color(0x5ce634);
-        public static final Color BUD_RED_COLOR = new Color(0xfc8274);
+    interface Overlays {
+        Color BUD_GREEN_COLOR = new Color(0x5ce634);
+        Color BUD_RED_COLOR = new Color(0xfc8274);
     }
 
-    public static class MenuConstants {
+    interface MenuConstants {
 
-        public static final float SUGGESTION_SPEED = 0.7f; // Adjust the speed as needed
-        public static final String[] SUGGESTIONS = {
+        float SUGGESTION_SPEED = 0.7f; // Adjust the speed as needed
+
+        String[] SUGGESTIONS = {
                 "Use Arrows or WASD Keys to move in the menu.",                          // Index 0
                 "Press ENTER to select an option in the menu.",                          // Index 1
                 "Press ESC to pause the game while playing.",                            // Index 2
@@ -179,9 +179,10 @@ public class Constants {
                 "Press ENTER to shoot a magic bubble.",                                  // Index 5
                 "If you like VIM try the HJKL keys to move, Z to jump and X to shoot.",  // Index 6
         };
-        public static final int[] SUGGESTIONS_WIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
 
-        public static final String SPACE = "            ";
-        public static final int SPACE_WIDTH = 108;
+        int[] SUGGESTIONS_WIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
+
+        String SPACE = "            ";
+        int SPACE_WIDTH = 108;
     }
 }

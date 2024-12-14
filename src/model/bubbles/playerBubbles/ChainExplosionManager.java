@@ -1,12 +1,12 @@
 package model.bubbles.playerBubbles;
 
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.LinkedList;
 
+import model.utilz.Constants;
 import model.entities.PlayerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
-import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.DEAD;
 

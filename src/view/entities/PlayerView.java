@@ -1,15 +1,15 @@
 package view.entities;
 
-import model.entities.PlayerModel;
 import view.utilz.LoadSave;
 import view.audio.AudioPlayer;
+import model.entities.PlayerModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static view.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.PlayerConstants.*;
 import static model.utilz.Constants.PlayerConstants.DEFAULT_H;
+import static view.utilz.Constants.ANIMATION_SPEED;
 import static view.utilz.Constants.PlayerConstants.*;
 import static view.utilz.Constants.AudioConstants.JUMP;
 import static view.utilz.Constants.AudioConstants.PLAYER_DEATH;
@@ -58,7 +58,6 @@ public class PlayerView{
         }
         if (!playerModel.getIsJumping())
             jumpSoundAlreadyPlayed = false;
-
 
         // Death sound Logic
         if (playerModel.isRespawning() && !deathSoundAlreadyPlayed) {

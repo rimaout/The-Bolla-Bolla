@@ -5,8 +5,8 @@ import model.utilz.Constants;
 import model.entities.PlayerModel;
 import model.levels.LevelManagerModel;
 
-import static model.utilz.Constants.INTRO.IntroState.*;
 import static model.utilz.Constants.INTRO.*;
+import static model.utilz.Constants.INTRO.IntroState.*;
 import static model.utilz.Constants.PlayerConstants.SPAWN_X;
 import static model.utilz.Constants.PlayerConstants.SPAWN_Y;
 
@@ -29,7 +29,7 @@ public class IntroModel {
         this.playingModel = playingModel;
         this.playerModel = playingModel.getPlayerOneModel();
 
-        level = LevelManagerModel.getInstance(playingModel).getCurrentLevel();
+        level = LevelManagerModel.getInstance().getCurrentLevel();
     }
 
     public void update() {

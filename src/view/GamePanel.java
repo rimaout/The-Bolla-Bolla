@@ -3,11 +3,11 @@ package view;
 import java.awt.*;
 import javax.swing.JPanel;
 
+import model.utilz.Constants;
+import controller.GameController;
 import controller.inputs.KeyBoardInputs;
 import controller.inputs.MouseKeyInputs;
 import controller.inputs.MouseMotionInputs;
-import controller.GameController;
-import model.utilz.Constants;
 
 public class GamePanel extends JPanel {
     private final GameController gameController;

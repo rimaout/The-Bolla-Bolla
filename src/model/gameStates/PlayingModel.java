@@ -9,7 +9,6 @@ import model.itemesAndRewards.ItemManagerModel;
 import model.itemesAndRewards.PowerUpManagerModel;
 import model.itemesAndRewards.RewardPointsManagerModel;
 import model.levels.LevelManagerModel;
-import controller.GameController;
 import model.projectiles.ProjectileManagerModel;
 import model.utilz.PlayingTimer;
 
@@ -18,8 +17,6 @@ import java.util.Observable;
 public class PlayingModel extends Observable {
     private PlayerModel playerModelOne;
     private PlayerModel playerModelTwo = null;
-
-    private GameController gameController;
 
     private PlayingTimer playingTimer;
     private LevelManagerModel levelManagerModel;
@@ -43,19 +40,15 @@ public class PlayingModel extends Observable {
     private boolean newLevelReset;
     private boolean newPlayReset;
 
-    public PlayingModel(GameController gameController) {
-        this.gameController = gameController;
-
+    public PlayingModel() {
         initClasses();
         loadFirstLevel();
     }
 
     public void initClasses() {
         playingTimer = PlayingTimer.getInstance();
-        levelManagerModel = LevelManagerModel.getInstance(this);
-
+        levelManagerModel = LevelManagerModel.getInstance();
         playerModelOne = PlayerModel.getInstance();
-
         enemyManagerModel = EnemyManagerModel.getInstance();
         hurryUpManagerModel = HurryUpManagerModel.getInstance();
         playerBubblesManagerModel = PlayerBubblesManagerModel.getInstance();
@@ -235,9 +228,5 @@ public class PlayingModel extends Observable {
 
     public boolean isNewPlayReset() {
         return newPlayReset;
-    }
-
-    public GameController getGameController() {
-        return gameController;
     }
 }

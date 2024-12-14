@@ -3,12 +3,11 @@ package view.entities;
 import model.entities.EnemyModel;
 
 import static view.utilz.Constants.ANIMATION_SPEED;
-import static model.utilz.Constants.EnemyConstants.*;
 import static view.utilz.Constants.EnemyConstants.*;
+import static model.utilz.Constants.EnemyConstants.*;
 
 public class EnemyView {
     protected final EnemyModel enemyModel;
-    protected final EnemyManagerView enemyManagerView = EnemyManagerView.getInstance();
 
     protected int animationIndex, animationTick;
     protected int animationAction = WALKING_ANIMATION_NORMAL;
@@ -62,12 +61,7 @@ public class EnemyView {
         return enemyModel.isActive();
     }
 
-    public boolean isAlive() {
-        return enemyModel.isAlive();
-    }
-
     public int getAnimationIndex() {
         return animationIndex;
     }
 }
-

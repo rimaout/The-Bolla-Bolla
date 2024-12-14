@@ -59,5 +59,3 @@ public class PointsModel {
         return y;
     }
 }
-
-

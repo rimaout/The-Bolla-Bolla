@@ -1,7 +1,7 @@
 package view.entities;
 
-import model.entities.SkelMonstaModel;
 import model.entities.EnemyModel;
+import model.entities.SkelMonstaModel;
 
 import java.awt.*;
 

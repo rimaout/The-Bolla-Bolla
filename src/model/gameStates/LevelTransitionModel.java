@@ -13,12 +13,12 @@ import static model.utilz.Constants.LevelTransition.LEVEL_TRANSITION_SPEED;
 public class LevelTransitionModel{
     private static LevelTransitionModel instance;
 
-    private PlayingModel playingModel;
     private PlayerModel playerModel;
+    private PlayingModel playingModel;
 
-    private Level oldLevel, newLevel;
     private float oldLevelY;
     private float newLevelY;
+    private Level oldLevel, newLevel;
     private float playerStartX, playerStartY;
 
     private TransitionState transitionState;

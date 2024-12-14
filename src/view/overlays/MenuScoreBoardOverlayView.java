@@ -1,17 +1,15 @@
 package view.overlays;
 
-import model.overlays.MenuScoreBoardOverlayModel;
-import model.users.UsersManagerModel;
 import model.utilz.Constants;
-import view.users.UsersManagerView;
+import model.overlays.MenuScoreBoardOverlayModel;
 import view.utilz.LoadSave;
+import view.users.UsersManagerView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class MenuScoreBoardOverlayView extends MenuOverlayView {
 
-    private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
     private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
 
     private final MenuScoreBoardOverlayModel menuSoreBoardOverlayModel;

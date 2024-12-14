@@ -1,9 +1,9 @@
 package view.itemsAndRewards;
 
-import model.itemesAndRewards.BubbleRewardModel;
 import model.itemesAndRewards.ItemModel;
-import view.utilz.Constants.AudioConstants;
+import model.itemesAndRewards.BubbleRewardModel;
 import view.audio.AudioPlayer;
+import view.utilz.Constants.AudioConstants;
 
 import java.awt.*;
 

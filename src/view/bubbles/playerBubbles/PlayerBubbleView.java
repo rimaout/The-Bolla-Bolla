@@ -1,7 +1,7 @@
 package view.bubbles.playerBubbles;
 
-import model.bubbles.BubbleModel;
 import view.bubbles.BubbleView;
+import model.bubbles.BubbleModel;
 
 import java.awt.*;
 

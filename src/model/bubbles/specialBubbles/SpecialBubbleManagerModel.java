@@ -78,7 +78,6 @@ public class SpecialBubbleManagerModel {
         return count;
     }
 
-
     public LinkedList<SpecialBubbleModel> getBubblesModels() {
         return bubblesModels;
     }

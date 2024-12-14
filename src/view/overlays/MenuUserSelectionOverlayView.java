@@ -1,7 +1,6 @@
 package view.overlays;
 
 import model.overlays.MenuUserSelectionOverlayModel;
-import model.users.UsersManagerModel;
 import model.utilz.Constants;
 import view.users.UsersManagerView;
 import view.utilz.LoadSave;

@@ -11,7 +11,7 @@ import static model.entities.HelpMethods.*;
 
 public abstract class EntityModel {
     protected final PlayingTimer timer = PlayingTimer.getInstance();
-    protected LevelManagerModel levelManagerModel = LevelManagerModel.getInstance();
+    protected LevelManagerModel levelManagerModel;
 
     protected float x, y;
     protected int width, height;
@@ -25,6 +25,11 @@ public abstract class EntityModel {
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    protected void initLevelManager() {
+        if (levelManagerModel == null)
+            levelManagerModel = LevelManagerModel.getInstance();
     }
 
     protected void initHitbox(float width, float height) {

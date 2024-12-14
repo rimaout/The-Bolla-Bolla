@@ -53,10 +53,10 @@ public class PlayerModel extends EntityModel {
     private PlayerModel() {
         super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, PLAYER_W, PLAYER_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
+        initLevelManager();
     }
 
     public void update() {
-
         updateTimers();
         updatePosition();
 

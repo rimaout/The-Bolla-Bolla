@@ -1,8 +1,8 @@
 package view.gameStates;
 
-import model.gameStates.IntroModel;
 import model.levels.Level;
 import model.utilz.Constants;
+import model.gameStates.IntroModel;
 import view.audio.AudioPlayer;
 import view.utilz.LoadSave;
 import view.levels.LevelManagerView;

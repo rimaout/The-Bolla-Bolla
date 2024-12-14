@@ -1,8 +1,8 @@
 package view.overlays;
 
-import model.gameStates.PlayingModel;
-import model.entities.PlayerModel;
 import model.utilz.Constants;
+import model.entities.PlayerModel;
+import model.gameStates.PlayingModel;
 import view.utilz.LoadSave;
 
 import java.awt.*;

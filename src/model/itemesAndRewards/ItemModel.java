@@ -1,6 +1,5 @@
 package model.itemesAndRewards;
 
-import model.entities.PlayerModel;
 import model.utilz.PlayingTimer;
 
 import static model.utilz.Constants.Items.*;

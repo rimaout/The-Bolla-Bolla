@@ -6,7 +6,6 @@ import model.levels.LevelManagerModel;
 import model.utilz.Constants.Direction;
 import model.bubbles.playerBubbles.PlayerBubblesManagerModel;
 
-
 import static model.utilz.Constants.Projectiles.*;
 import static model.utilz.Constants.Direction.LEFT;
 import static model.entities.HelpMethods.CanMoveHere;

@@ -8,7 +8,6 @@ import java.awt.*;
 import static view.utilz.Constants.PlayerConstants.IDLE_ANIMATION;
 import static model.utilz.Constants.WaterFLow.*;
 
-
 public class WaterFlowView {
 
     private final WaterFlowModel waterFlowModel;

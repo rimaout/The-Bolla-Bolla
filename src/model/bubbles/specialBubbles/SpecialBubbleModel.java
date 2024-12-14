@@ -1,13 +1,12 @@
 package model.bubbles.specialBubbles;
 
+import model.utilz.Constants;
 import model.bubbles.BubbleModel;
 import model.entities.PlayerModel;
-import model.utilz.Constants;
 
 import static model.utilz.Constants.Bubble.*;
 
 public abstract class SpecialBubbleModel extends BubbleModel {
-    protected final SpecialBubbleManagerModel bubbleManager = SpecialBubbleManagerModel.getInstance();
 
     public SpecialBubbleModel(float x, float y, Constants.Direction direction) {
         super(x, y, direction);

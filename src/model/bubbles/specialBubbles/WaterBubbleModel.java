@@ -1,9 +1,9 @@
 package model.bubbles.specialBubbles;
 
-import model.itemesAndRewards.PowerUpManagerModel;
 import model.entities.PlayerModel;
 import model.utilz.Constants;
 import model.utilz.Constants.Direction;
+import model.itemesAndRewards.PowerUpManagerModel;
 
 import static model.utilz.Constants.Bubble.BubbleType.WATER_BUBBLE;
 

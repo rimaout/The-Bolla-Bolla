@@ -27,6 +27,7 @@ public class MenuUserSelectionOverlayModel extends MenuOverlayModel {
     }
 
     // -------------- Getters and Setters --------------
+
     public User getSelectedUser() {
         return selectedUser;
     }
