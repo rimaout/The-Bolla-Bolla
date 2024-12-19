@@ -12,7 +12,7 @@ import static model.entities.HelpMethods.CanMoveHere;
 import static model.utilz.Constants.Projectiles.ProjectileType.PLAYER_BUBBLE;
 
 public class PlayerBubbleProjectileModel extends ProjectileModel {
-    private float activeTimer = 290;    // time until the projectile transforms in a "floating" bubble
+    private float activeTimer = 290 * ProjectileManagerModel.getInstance().getPlayerProjectileActiveMultiplier();    // time until the projectile transforms in a "floating" bubble
 
     public PlayerBubbleProjectileModel(float x, float y, Direction direction) {
         super(x, y, direction, PLAYER_BUBBLE);

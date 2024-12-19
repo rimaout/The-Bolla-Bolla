@@ -33,8 +33,6 @@ public class PlayerBubbleProjectileView extends ProjectileView {
         float projectileDistanceMultiplier = ProjectileManagerModel.getInstance().getPlayerProjectileDistanceMultiplier();
 
         animationTick += projectileSpeedMultiplier / projectileDistanceMultiplier;
-
-        animationTick++;
         if (animationTick > PROJECTILE_ANIMATION_SPEED) {
             animationTick = 0;
             animationIndex++;

@@ -17,7 +17,7 @@ public class PowerUpManagerModel {
     // PowerUp Flags
     private boolean greenCandy = false;
     private boolean blueCandy = false;
-    private boolean redCandy = true;
+    private boolean redCandy = false;
     private boolean shoe = false;
     private boolean orangeParasol = false;
     private boolean blueParasol = false;
@@ -59,18 +59,25 @@ public class PowerUpManagerModel {
         else
             playerModel.setBubbleCadenceMultiplier(1);
 
-        if (blueCandy)
-            ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1.65f);
-        else
-            ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1f);
 
-        if (redCandy) {
-            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.50f);
-            ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(2f);
+        if (blueCandy && redCandy) {
+            ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1.6f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.6f);
+            ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(1.6f);
         }
         else {
-            ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1f);
-            ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(1f);
+            if (blueCandy)
+                ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1.6f);
+            else
+                ProjectileManagerModel.getInstance().setPlayerProjectileSpeedMultiplier(1f);
+
+            if (redCandy) {
+                ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1.5f);
+                ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(1.5f);
+            } else {
+                ProjectileManagerModel.getInstance().setPlayerProjectileDistanceMultiplier(1f);
+                ProjectileManagerModel.getInstance().setPlayerProjectileActiveMultiplier(1f);
+            }
         }
 
         if (shoe)
