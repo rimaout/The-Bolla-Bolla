@@ -20,22 +20,22 @@ public class MenuTwinkleBubbleManager {
     private BufferedImage[] twinkleBubbleSprite;
     private List<MenuTwinkleBubble> bubbles;
 
-    private MenuTwinkleBubbleManager(HomeView homeView) {
-        this.homeView = homeView;
-
+    private MenuTwinkleBubbleManager() {
         loadTwinkleBubble();
         initializeBubbles();
     }
 
-    public static MenuTwinkleBubbleManager getInstance(HomeView homeView) {
+    public static MenuTwinkleBubbleManager getInstance() {
         if (instance == null) {
-            instance = new MenuTwinkleBubbleManager(homeView);
+            instance = new MenuTwinkleBubbleManager();
         }
         return instance;
     }
 
     public static MenuTwinkleBubbleManager getInstance() {
         return instance;
+    public void setHomeView(HomeView homeView) {
+        this.homeView = homeView;
     }
 
     public void update() {

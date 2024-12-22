@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 public class HomeView {
 
-    private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance(this);
+    private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
     private final GameController gameController;
 
     private BufferedImage logoImg;
@@ -26,6 +26,8 @@ public class HomeView {
         loadLogo();
 
         nesFont = LoadSave.GetNesFont();
+
+        menuTwinkleBubbleManager.setHomeView(this);
     }
 
     private void loadLogo() {
