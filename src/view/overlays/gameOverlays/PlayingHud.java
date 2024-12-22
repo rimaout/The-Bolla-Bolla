@@ -16,17 +16,21 @@ public class PlayingHud {
     private PlayerModel playerModelTwo;
     private BufferedImage[] numbersTiles;
 
-    private PlayingHud(PlayingModel playingModel) {
-        this.playerModelOne = playingModel.getPlayerOneModel();
-        this.playerModelTwo = playingModel.getPlayerTwoModel();
+    private PlayingHud() {
         loadNumberTiles();
     }
 
-    public static PlayingHud getInstance(PlayingModel playingModel) {
+    public static PlayingHud getInstance() {
         if (instance == null) {
-            instance = new PlayingHud(playingModel);
+            instance = new PlayingHud();
         }
         return instance;
+    }
+
+
+    public void setPlayers(PlayingModel playingModel) {
+        this.playerModelOne = playingModel.getPlayerOneModel();
+        this.playerModelTwo = playingModel.getPlayerTwoModel();
     }
 
     public void draw(Graphics g) {

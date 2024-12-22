@@ -40,7 +40,7 @@ public class PlayingView implements Observer {
         this.gameOverOverlayView = gameOverOverlayView;
         this.gameCompletedOverlayView = gameCompletedOverlayView;
 
-        initClasses(playingController.getPlayerController());
+        initClasses();
     }
 
     public void update() {
@@ -60,7 +60,7 @@ public class PlayingView implements Observer {
         else {
             LevelManagerView.getInstance().draw(g);
             ItemManagerView.getInstance().draw(g);
-            PlayingHud.getInstance(playingModel).draw(g);
+            PlayingHud.getInstance().draw(g);
             EnemyManagerView.getInstance().draw(g);
             HurryUpManagerView.getInstance().draw(g);
             PlayerBubblesManagerView.getInstance().draw(g);
@@ -103,9 +103,10 @@ public class PlayingView implements Observer {
         SpecialBubbleManagerView.getInstance().newPlayReset();
     }
      
-    public void initClasses(PlayerController playerController) {
+    public void initClasses() {
         playerOneView = new PlayerView(playingModel.getPlayerOneModel());
         introView = new IntroView(playingModel.getIntroModel());
+        PlayingHud.getInstance().setPlayers(playingModel);
     }
 
     @Override
