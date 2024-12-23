@@ -1,13 +1,17 @@
-package view.overlays;
+package view.overlays.menuOverlays;
 
 import model.overlays.MenuUserSelectionOverlayModel;
 import model.utilz.Constants;
 import view.users.UsersManagerView;
-import view.utilz.LoadSave;
+import view.utilz.Load;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The MenuUserSelectionOverlayView class represents the overlay view for the {@link MenuUserSelectionOverlayModel} class.
+ * It handles drawing the user selection interface, including the user picture, name, and controls.
+ */
 public class MenuUserSelectionOverlayView extends MenuOverlayView {
     private final MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
     private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
@@ -16,12 +20,23 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
     private int leftArrowIndex = 0;
     private int rightArrowIndex = 0;
 
+    /**
+     * Constructs a MenuUserSelectionOverlayView with the specified MenuUserSelectionOverlayModel.
+     * Initializes the arrows images.
+     *
+     * @param menuUserSelectionOverlayModel the model of the user selection overlay
+     */
     public MenuUserSelectionOverlayView(MenuUserSelectionOverlayModel menuUserSelectionOverlayModel) {
         this.menuUserSelectionOverlayModel = menuUserSelectionOverlayModel;
 
         loadArrows();
     }
 
+    /**
+     * Draws the user selection overlay on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     public void draw(Graphics g) {
         drawBox(g);
@@ -33,6 +48,11 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         drawControls(g);
     }
 
+    /**
+     * Draws the box for the user selection overlay.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawBox(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int rectWidth = (int) (Constants.GAME_WIDTH * 0.7);
@@ -53,8 +73,12 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g2d.fillRect(x + borderThickness, y + borderThickness, rectWidth - 2 * borderThickness, rectHeight - 2 * borderThickness);
     }
 
+    /**
+     * Draws the arrows for selecting the user.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawArrows(Graphics g){
-
         int y = 93 * Constants.SCALE;
         int size = 18 * Constants.SCALE;
 
@@ -67,6 +91,11 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawImage(arrows[1][rightArrowIndex], xRight, y, size, size, null);
     }
 
+    /**
+     * Draws the title "USER SELECTION" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawTitle(Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(nesFont.deriveFont(40f));
@@ -85,6 +114,11 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the user name on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawUserName(Graphics g){
         g.setColor(usersManagerView.getUserColor1(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()));
         g.setFont(retroFont.deriveFont(50f));
@@ -97,8 +131,12 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawString(text, x, y);
     }
 
+    /**
+     * Draws the user picture on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawUserPicture(Graphics g){
-
         int x = 45 * Constants.SCALE;
         int y = 67 * Constants.SCALE;
         int rectSize = (int) ((18 * 2.8 + 1) * Constants.SCALE);
@@ -111,8 +149,12 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawImage(usersManagerView.getUserPicture(menuUserSelectionOverlayModel.getSelectedUser().getProfilePictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
     }
 
+    /**
+     * Draws the user details on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawUserDetails(Graphics g){
-
         g.setColor(Color.WHITE);
         g.setFont(retroFont.deriveFont(22f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -128,6 +170,11 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawString(text3, x, y + 2 * fm.getHeight());
     }
 
+    /**
+     * Draws the controls instructions on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawControls(Graphics g) {
         g.setFont(retroFont.deriveFont(22f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -167,9 +214,12 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
         g.drawString(text2Part3, x + width3 + width4, y + fm.getHeight());
     }
 
+    /**
+     * Loads the arrows images.
+     */
     private void loadArrows(){
         arrows = new BufferedImage[2][2];
-        BufferedImage img = LoadSave.GetSprite(LoadSave.ARROWS_LEFT_RIGHT);
+        BufferedImage img = Load.GetSprite(Load.ARROWS_LEFT_RIGHT);
 
         arrows[0][0] = img.getSubimage(0, 0, 10, 10);
         arrows[0][1] = img.getSubimage(10, 0, 10, 10);
@@ -178,10 +228,21 @@ public class MenuUserSelectionOverlayView extends MenuOverlayView {
     }
 
     // ----------- Getters and Setters -----------
+
+    /**
+     * Sets the index of the left arrow image.
+     *
+     * @param leftArrowIndex the index of the left arrow image
+     */
     public void setLeftArrowIndex(int leftArrowIndex) {
         this.leftArrowIndex = leftArrowIndex;
     }
 
+    /**
+     * Sets the index of the right arrow image.
+     *
+     * @param rightArrowIndex the index of the right arrow image
+     */
     public void setRightArrowIndex(int rightArrowIndex) {
         this.rightArrowIndex = rightArrowIndex;
     }

@@ -9,10 +9,16 @@ import static model.utilz.Constants.Bubble.BLINKING;
 import static model.utilz.Constants.Bubble.POP_NORMAL;
 import static model.utilz.Constants.Bubble.POP_RED;
 
+/**
+ * Interface containing various constants used throughout the game View.
+ */
 public interface Constants {
 
-    int ANIMATION_SPEED = 55;
+    int ANIMATION_SPEED = 55; // how many animation ticks are needed to change the sprite (lower is faster)
 
+    /**
+     * Interface containing constants related to the home screen.
+     */
     interface Home {
 
         // Logo Constants
@@ -27,6 +33,9 @@ public interface Constants {
         float BUBBLE_SPEED = 0.0664f * 3 * SCALE;
     }
 
+    /**
+     * Interface containing constants related to bubbles view.
+     */
     interface Bubble {
         int BUBBLE_ANIMATION_SPEED = 25;
 
@@ -41,6 +50,9 @@ public interface Constants {
         }
     }
 
+    /**
+     * Interface containing constants related to the player view.
+     */
     interface PlayerConstants {
 
         // Animation Constants
@@ -51,6 +63,12 @@ public interface Constants {
         int ATTACK_ANIMATION = 4;
         int DEAD_ANIMATION = 5;
 
+        /**
+         * Returns the number of sprites for the given player animation.
+         *
+         * @param playerAnimation the animation of the player
+         * @return the number of sprites
+         */
         static int getSpriteAmount(int playerAnimation) {
             return switch (playerAnimation) {
                 case IDLE_ANIMATION -> 2;
@@ -64,6 +82,9 @@ public interface Constants {
         }
     }
 
+    /**
+     * Interface containing constants related to enemies views.
+     */
     interface EnemyConstants {
 
         // General Animation Constants
@@ -77,6 +98,13 @@ public interface Constants {
         float NORMAL_ANIMATION_SPEED_MULTIPLIER = 1.0f;
         float HUNGRY_ANIMATION_SPEED_MULTIPLIER = 0.53f;
 
+        /**
+         * Returns the number of sprites for the given enemy type and state.
+         *
+         * @param enemyType the type of the enemy
+         * @param enemyState the state of the enemy
+         * @return the number of sprites
+         */
         static int getSpriteAmount(model.utilz.Constants.EnemyConstants.EnemyType enemyType, int enemyState) {
             if (enemyType == model.utilz.Constants.EnemyConstants.EnemyType.ZEN_CHAN || enemyType == model.utilz.Constants.EnemyConstants.EnemyType.MAITA) {
                 return switch (enemyState) {
@@ -96,8 +124,17 @@ public interface Constants {
         }
     }
 
+    /**
+     * Interface containing constants related to items views.
+     */
     interface Items {
 
+        /**
+         * Returns the image index for the given bubble reward type.
+         *
+         * @param bubbleRewardType the type of the bubble reward
+         * @return the image index
+         */
         static int GetRewardImageIndex(model.utilz.Constants.Items.BubbleRewardType bubbleRewardType) {
             return switch (bubbleRewardType) {
                 case APPLE -> 0;
@@ -111,6 +148,12 @@ public interface Constants {
             };
         }
 
+        /**
+         * Returns the image index for the given power-up type.
+         *
+         * @param powerUpType the type of the power-up
+         * @return the image index
+         */
         static int GetPowerUpImageIndex(model.utilz.Constants.Items.PowerUpType powerUpType) {
             return switch (powerUpType) {
                 case GREEN_CANDY -> 0;
@@ -127,10 +170,16 @@ public interface Constants {
         }
     }
 
+    /**
+     * Interface containing constants related to projectiles.
+     */
     interface Projectiles {
         int PROJECTILE_ANIMATION_SPEED = 25;
     }
 
+    /**
+     * Interface containing constants related to the hurry-up manager view.
+     */
     interface HurryUpManager {
         int HURRY_IMG_W = (int) (40 * SCALE * 1.3);
         int HURRY_IMG_H = (int) (11 * SCALE * 1.3);
@@ -139,6 +188,9 @@ public interface Constants {
         float HURRY_IMG_SPEED = 0.3f * SCALE;
     }
 
+    /**
+     * Interface containing constants related to audio.
+     */
     interface AudioConstants {
         float DEFAULT_VOLUME = 0.6f;
 
@@ -161,11 +213,17 @@ public interface Constants {
         int HURRY_UP = 11;
     }
 
+    /**
+     * Interface containing constants related to overlays.
+     */
     interface Overlays {
         Color BUD_GREEN_COLOR = new Color(0x5ce634);
         Color BUD_RED_COLOR = new Color(0xfc8274);
     }
 
+    /**
+     * Interface containing constants related to the menu.
+     */
     interface MenuConstants {
 
         float SUGGESTION_SPEED = 0.7f; // Adjust the speed as needed
@@ -180,8 +238,8 @@ public interface Constants {
                 "If you like VIM try the HJKL keys to move, Z to jump and X to shoot.",  // Index 6
         };
 
-        int[] SUGGESTIONS_WIDTHS = { 677, 662, 633, 625, 313, 555, 998 };
-
+        int[] SUGGESTIONS_WIDTHS = { 677, 662, 633, 625, 313, 555, 998 }; // Widths of the suggestions (teh first width in this the list is associated with the first suggestion in the SUGGESTIONS list)
+                                                                          // I have pre-calculated the widths of the suggestions to center them in the screen
         String SPACE = "            ";
         int SPACE_WIDTH = 108;
     }

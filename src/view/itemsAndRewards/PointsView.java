@@ -8,17 +8,30 @@ import static model.utilz.Constants.PointsManager.*;
 import static model.utilz.Constants.PointsManager.BIG_H;
 import static model.utilz.Constants.PointsManager.PointsType.SMALL;
 
+/**
+ * The PointsView class represents the view for the {@link PointsModel} class.
+ * It handles drawing the points with a fading effect.
+ */
 public class PointsView {
     private final RewardPointsManagerView rewardPointsManager = RewardPointsManagerView.getInstance();
     private final PointsModel pointsModel;
 
-    private float alpha = 1.0f; // Initial alpha value (for transparency)
+    private float alpha = 1.0f; // Initial alpha value (used for transparency)
 
-
+    /**
+     * Constructs a PointsView with the specified PointsModel.
+     *
+     * @param pointsModel the model of the points item
+     */
     public PointsView(PointsModel pointsModel) {
         this.pointsModel = pointsModel;
     }
 
+    /**
+     * Draws the points on the screen with a fading effect.
+     *
+     * @param g the Graphics2D object to draw with
+     */
     public void draw(Graphics2D g) {
         fade();
 
@@ -32,14 +45,29 @@ public class PointsView {
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)); // Reset transparency
     }
 
+    /**
+     * Reduces the alpha value to create a fading effect.
+     */
     private void fade() {
         alpha -= 0.009f;
     }
 
+    // ----------- Getters Methods ----------- //
+
+    /**
+     * Checks if the points item is active.
+     *
+     * @return true if the points item is active, false otherwise
+     */
     protected boolean isActive() {
         return pointsModel.isActive();
     }
 
+    /**
+     * Returns the PointsModel associated with this view.
+     *
+     * @return the PointsModel
+     */
     protected PointsModel getPointsModel() {
         return pointsModel;
     }

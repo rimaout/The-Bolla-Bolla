@@ -1,4 +1,4 @@
-package view.overlays;
+package view.overlays.gameOverlays;
 
 import view.audio.AudioPlayer;
 import view.utilz.Constants.AudioConstants;
@@ -11,12 +11,26 @@ import java.awt.*;
 import static view.utilz.Constants.Overlays.BUD_RED_COLOR;
 import static view.utilz.Constants.Overlays.BUD_GREEN_COLOR;
 
+/**
+ * The GameCompletedOverlayView class represents the overlay view displayed when the game is completed.
+ * It handles drawing the title and control instructions on the screen.
+ */
 public class GameCompletedOverlayView extends GameOverlayView {
 
+    /**
+     * Constructs a GameCompletedOverlayView with the specified PlayingModel.
+     *
+     * @param playingModel the model of the playing state
+     */
     public GameCompletedOverlayView(PlayingModel playingModel) {
         super(playingModel);
     }
 
+    /**
+     * Draws the title "GAME COMPLETED" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     protected void drawTitle(Graphics g) {
         g.setColor(Color.WHITE);
@@ -35,6 +49,11 @@ public class GameCompletedOverlayView extends GameOverlayView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the control instructions on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     protected void drawControls(Graphics g) {
         FontMetrics fm = g.getFontMetrics(retroFont.deriveFont(22f));
@@ -90,6 +109,10 @@ public class GameCompletedOverlayView extends GameOverlayView {
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
+    /**
+     * Sets the audio for the game completed overlay.
+     * Stops the current song and plays the game completed sound effect.
+     */
     @Override
     protected void setAudio() {
         AudioPlayer.getInstance().stopSong();

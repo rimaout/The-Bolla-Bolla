@@ -12,19 +12,36 @@ import static model.utilz.Constants.Bubble.*;
 import static model.utilz.Constants.EnemyConstants.*;
 import static view.utilz.Constants.EnemyConstants.*;
 
+/**
+ * The EnemyBubbleView class represents the view for an {@link EnemyBubbleModel}.
+ * It handles updating the bubble's animation, drawing the bubble on the screen, and playing sound effects.
+ */
 public class EnemyBubbleView extends EmptyBubbleView {
     private final EnemyManagerView enemyManagerView = EnemyManagerView.getInstance();
 
+    /**
+     * Constructs an EnemyBubbleView with the specified BubbleModel.
+     *
+     * @param bubbleModel the model for the bubble entity
+     */
     public EnemyBubbleView(BubbleModel bubbleModel) {
         super(bubbleModel);
     }
 
+    /**
+     * Updates the bubble's state and animation.
+     */
     @Override
     public void update() {
         updateAnimationTick();
         checkAnimationResetAfterPop();
     }
 
+    /**
+     * Draws the enemy bubble on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     public void draw(Graphics g) {
         EnemyBubbleModel enemyBubbleModel = (EnemyBubbleModel) bubbleModel;
@@ -51,6 +68,9 @@ public class EnemyBubbleView extends EmptyBubbleView {
         }
     }
 
+    /**
+     * Checks and resets the animation after the bubble is popped.
+     */
     private void checkAnimationResetAfterPop() {
         if (animationReset)
             return;

@@ -26,8 +26,22 @@ import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.EnemyConstants.*;
 import static model.utilz.Constants.EnemyConstants.MAITA_RIGHT;
 
+/**
+ * Provides methods to import level data from images.
+ *
+ * <p>The LevelImportMethods interface includes static methods to read level data, enemy data, wind direction data,
+ * and bubble generator data from images. These methods are used to initialize the game levels.
+ */
 public interface LevelImportMethods {
 
+    /**
+     * Returns an array of BufferedImages representing all levels.
+     *
+     * <p>This method reads all level map images from the `/levelMaps` directory,
+     * sorts them by file name, and loads them into an array of BufferedImages.
+     *
+     * @return an array of BufferedImages representing all levels
+     */
     static BufferedImage[] GetAllLevels() {
         URL url = LevelImportMethods.class.getResource("/levelMaps");
         File file = null;
@@ -56,7 +70,22 @@ public interface LevelImportMethods {
         return levelImages;
     }
 
-    static int[][] GetLevelData(BufferedImage img) {
+    /**
+     * Returns the level tiles data from the given image.
+     *
+     * <p>This method reads the level map from the provided image, where each pixel represents a tile.
+     * The red component of each pixel determines the tile type.
+     * <ul>
+     *   <li>0: Empty tile</li>
+     *   <li>1: Level 1 tile type</li>
+     *   <li>2: Level 2 tile type</li>
+     *   <li>...</li>
+     * </ul>
+     *
+     * @param img the image representing the level
+     * @return a 2D array of integers representing the level tiles data
+     */
+    static int[][] GetLevelTilesData(BufferedImage img) {
 
         // level are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the red component of the pixel that determines the tile)
 
@@ -75,16 +104,23 @@ public interface LevelImportMethods {
         return levelData;
     }
 
+    /**
+     * Returns a list of enemies from the given level image.
+     *
+     * <p>This method reads the enemy data from the provided image, where each pixel represents a tile.
+     * The green component of each pixel determines the type and direction of the enemy.
+     * <ul>
+     *   <li>0: No enemy</li>
+     *   <li>1: Zen-Chan facing left</li>
+     *   <li>2: Zen-Chan facing right</li>
+     *   <li>3: Maita facing left</li>
+     *   <li>4: Maita facing right</li>
+     * </ul>
+     *
+     * @param img the image representing the level
+     * @return a list of EnemyModel objects representing the enemies
+     */
     static ArrayList<EnemyModel> GetEnemies(BufferedImage img) {
-
-        //enemies type and position and direction are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile info
-        // the green component of the pixel determines the type of enemy and facing direction
-        // if the green component is:
-        //      0 -> no enemy
-        //      1 -> Zen-Chan facing left
-        //      2 -> Zen-Chan facing right
-        //      3 -> Maita facing left
-        //      4 -> Maita facing right
 
         ArrayList<EnemyModel> list = new ArrayList<>();
 
@@ -106,15 +142,23 @@ public interface LevelImportMethods {
         return list;
     }
 
+    /**
+     * Returns the wind directions data from the given image.
+     *
+     * <p>This method reads the wind currents data from the provided image, where each pixel represents a tile.
+     * The blue component of each pixel determines the wind direction.
+     * <ul>
+     *   <li>0 or 100: No wind (don't move)</li>
+     *   <li>1 or 101: Wind to the left</li>
+     *   <li>2 or 102: Wind to the right</li>
+     *   <li>3 or 103: Wind up</li>
+     *   <li>4 or 104: Wind down</li>
+     * </ul>
+     *
+     * @param img the image representing the level
+     * @return a 2D array of Direction enums representing the wind directions data
+     */
     static Constants.Direction[][] GetWindsDirectionsData(BufferedImage img) {
-
-        // wind currents are stored in an image, where each pixel represents a tile, the color of the pixel determines the tile (is the blue component of the pixel that determines the tile)
-        // if the blu component is:
-        //      0 or 100 -> no wind (don't move)
-        //      1 or 101 -> wind to the left
-        //      2 or 102 -> wind to the right
-        //      3 or 103 -> wind up
-        //      4 or 104 -> wind down
 
         Constants.Direction[][] windDirectionData = new Constants.Direction[Constants.TILES_IN_HEIGHT][Constants.TILES_IN_WIDTH];
 
@@ -143,15 +187,23 @@ public interface LevelImportMethods {
         return windDirectionData;
     }
 
+    /**
+     * Returns the bubble generator data from the given image.
+     *
+     * <p>This method reads the bubble generator data from the top left corner pixel of the provided image.
+     * The green component of the pixel determines the type and position of the bubble generator.
+     * <ul>
+     *   <li>101: Water bubble generator on top of the level</li>
+     *   <li>102: Water bubble generator on the bottom of the level</li>
+     *   <li>103: Lightning bubble generator on top of the level</li>
+     *   <li>104: Lightning bubble generator on the bottom of the level</li>
+     *   <li>Any other value: No bubble generators</li>
+     * </ul>
+     *
+     * @param img the image representing the level
+     * @return a BubbleGenerator object representing the bubble generator data
+     */
     static BubbleGenerator GetBubbleGenerator(BufferedImage img) {
-
-        // bubble generators info are stored in the top left corner pixel of the image
-        // if the green component is:
-        //      101 -> water bubble generator on top of the level
-        //      102 -> water bubble generator on the bottom of the level
-        //      103 -> lightning bubble generator on top of the level
-        //      104 -> lightning bubble generator on the bottom of the level
-        //      any other value -> no bubble generators
 
         Color color = new Color(img.getRGB(0, 0));
         int green = color.getGreen();

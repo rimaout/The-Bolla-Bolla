@@ -1,25 +1,38 @@
-package view.overlays;
+package view.overlays.menuOverlays;
 
 import model.utilz.Constants;
 import model.overlays.MenuScoreBoardOverlayModel;
-import view.utilz.LoadSave;
+import view.utilz.Load;
 import view.users.UsersManagerView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The MenuScoreBoardOverlayView class represents the overlay view of the {@link MenuScoreBoardOverlayModel} class.
+ * It handles drawing the title, command, and user information on the screen.
+ */
 public class MenuScoreBoardOverlayView extends MenuOverlayView {
-
     private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
 
     private final MenuScoreBoardOverlayModel menuSoreBoardOverlayModel;
     private BufferedImage questionMark;
 
+    /**
+     * Constructs a MenuScoreBoardOverlayView with the specified MenuScoreBoardOverlayModel.
+     *
+     * @param menuScoreBoardOverlayModel the model of the scoreboard overlay
+     */
     public MenuScoreBoardOverlayView(MenuScoreBoardOverlayModel menuScoreBoardOverlayModel) {
         this.menuSoreBoardOverlayModel = menuScoreBoardOverlayModel;
-        questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
+        questionMark = Load.GetSprite(Load.QUESTION_MARK_IMAGE);
     }
 
+    /**
+     * Draws the scoreboard overlay on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     public void draw(Graphics g) {
         drawTitle(g);
@@ -31,6 +44,11 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         }
     }
 
+    /**
+     * Draws the title "SCORE BOARD" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawTitle(Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(nesFont.deriveFont(40f));
@@ -49,6 +67,11 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the command "Press ESC to go back" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawCommand(Graphics g) {
         String textPart1 = "Press ";
         String textPart2 = "ESC";
@@ -75,6 +98,13 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         g.drawString(textPart3, x + width1 + width2, y);
     }
 
+    /**
+     * Draws the user information on the screen.
+     *
+     * @param g the Graphics object to draw with
+     * @param positionIndex the index of the user position
+     * @param startingY the starting Y position to draw the user information
+     */
     private void drawUser(Graphics g, int positionIndex, int startingY) {
         drawUserBox(g, positionIndex, startingY);
         drawUserPicture(g, positionIndex, startingY);
@@ -82,6 +112,15 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         drawUserScore(g, positionIndex, startingY);
     }
 
+    /**
+     * Draws the user box on the screen.
+     *
+     * <p> The user box is a rectangle that contains the user picture, name, and score.
+     *
+     * @param g the Graphics object to draw with
+     * @param positionIndex the index of the user position
+     * @param startingY the starting Y position to draw the user box
+     */
     private void drawUserBox(Graphics g, int positionIndex, int startingY) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -102,6 +141,13 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         g.fillRect(x + borderThickness, y + borderThickness, rectWidth - 2 * borderThickness, rectHeight - 2 * borderThickness);
     }
 
+    /**
+     * Draws the user picture on the screen.
+     *
+     * @param g the Graphics object to draw with
+     * @param positionIndex the index of the user position
+     * @param startingY the starting Y position to draw the user picture
+     */
     private void drawUserPicture(Graphics g, int positionIndex, int startingY) {
         int rectWidth = (int) (Constants.GAME_WIDTH * 0.6);
         int rectHeight = 30 * Constants.SCALE;
@@ -114,6 +160,13 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
             g.drawImage(usersManagerView.getUserPicture(menuSoreBoardOverlayModel.getOrderedUsers().get(positionIndex).getProfilePictureIndex()), x + 10 * Constants.SCALE, y + 5 * Constants.SCALE, 20 * Constants.SCALE, 20 * Constants.SCALE, null);
     }
 
+    /**
+     * Draws the user name on the screen.
+     *
+     * @param g the Graphics object to draw with
+     * @param positionIndex the index of the user position
+     * @param startingY the starting Y position to draw the user name
+     */
     private void drawUserName(Graphics g, int positionIndex, int startingY) {
 
         String text = "________"; // Empty User
@@ -138,6 +191,13 @@ public class MenuScoreBoardOverlayView extends MenuOverlayView {
         g.drawString(text, textX, textY);
     }
 
+    /**
+     * Draws the user score on the screen.
+     *
+     * @param g the Graphics object to draw with
+     * @param positionIndex the index of the user position
+     * @param startingY the starting Y position to draw the user score
+     */
     private void drawUserScore(Graphics g, int positionIndex, int startingY) {
         String text = "0"; // Empty User
         if (positionIndex < menuSoreBoardOverlayModel.getOrderedUsers().size())

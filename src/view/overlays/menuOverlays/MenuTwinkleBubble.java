@@ -1,4 +1,4 @@
-package view.overlays;
+package view.overlays.menuOverlays;
 
 import model.entities.EntityModel;
 import model.utilz.Constants;
@@ -10,6 +10,13 @@ import static view.utilz.Constants.ANIMATION_SPEED;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The MenuTwinkleBubble class represents a twinkling bubble in the menu.
+ *
+ * <p> Many twinkling bubbles are used as a background effect in the menus.
+ *
+ * <p>Thi class handles the animation and movement of the bubble.
+ */
 public class MenuTwinkleBubble extends EntityModel {
     private final MenuTwinkleBubbleManager manager;
 
@@ -17,6 +24,15 @@ public class MenuTwinkleBubble extends EntityModel {
     private Direction direction;
     int animationIndex, animationTick;
 
+    /**
+     * Constructs a MenuTwinkleBubble with the specified sprite, starting position, and manager.
+     * Randomizes the initial animation index and direction.
+     *
+     * @param sprite the array of images for the bubble animation
+     * @param startX the starting x-coordinate of the bubble
+     * @param startY the starting y-coordinate of the bubble
+     * @param manager the manager that handles the bubble
+     */
     public MenuTwinkleBubble(BufferedImage[] sprite, int startX, int startY, MenuTwinkleBubbleManager manager) {
         super(startX, startY, BUBBLE_W, BUBBLE_H);
         this.sprite = sprite;
@@ -29,11 +45,18 @@ public class MenuTwinkleBubble extends EntityModel {
         direction = (Math.random() > 0.5) ? RIGHT : LEFT;
     }
 
+    /**
+     * Updates the bubble's animation and position.
+     */
     public void update() {
         updateAnimation();
         updatePosition();
     }
 
+    /**
+     * Updates the bubble's animation by incrementing the animation tick and index.
+     * Resets the animation index if it exceeds the length of the sprite array.
+     */
     private void updateAnimation() {
         animationTick++;
         if (animationTick > ANIMATION_SPEED) {
@@ -45,8 +68,11 @@ public class MenuTwinkleBubble extends EntityModel {
         }
     }
 
+    /**
+     * Updates the bubble's position based on its direction and speed.
+     * Implements a "Pacman effect" where the bubble teleports around the screen edges to the opposite edge.
+     */
     private void updatePosition() {
-
         y -= BUBBLE_SPEED;
 
         if (manager.IsHomeLogoInPosition()) {
@@ -68,6 +94,11 @@ public class MenuTwinkleBubble extends EntityModel {
             y = 0;
     }
 
+    /**
+     * Draws the bubble on the screen at its current position and animation frame.
+     *
+     * @param g the Graphics2D object to draw with
+     */
     public void draw(Graphics2D g) {
         g.drawImage(sprite[animationIndex], (int) x, (int) y, BUBBLE_W , BUBBLE_H ,  null);
     }

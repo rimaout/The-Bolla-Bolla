@@ -8,17 +8,29 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+/**
+ * Manages user profiles in the game, including creating, selecting, saving, and loading users.
+ */
 public class UsersManagerModel {
     private static UsersManagerModel instance;
 
     private final HashMap<String, User> users;
     private User currentUser;
 
+    /**
+     * Private constructor to used for singleton pattern.
+     * Initializes the users map and loads existing users from disk.
+     */
     private UsersManagerModel() {
         this.users = new HashMap<>();
         loadUsers();
     }
 
+    /**
+     * Returns the singleton instance of the UsersManagerModel.
+     *
+     * @return the singleton instance
+     */
     public static UsersManagerModel getInstance() {
         if (instance == null) {
             instance = new UsersManagerModel();
@@ -26,6 +38,15 @@ public class UsersManagerModel {
         return instance;
     }
 
+    /**
+     * Creates a new user with the specified name and profile picture index.
+     * <p>Saves the new user to disk and selects the profile.
+     * <p>If a user with the same name already exists, the new user is not created.
+     * <p>When created the user is selected as the current user.
+     *
+     * @param name the name of the new user
+     * @param profilePictureIndex the index of the profile picture for the new user
+     */
     public void createUser(String name, int profilePictureIndex) {
         if (!users.containsKey(name)) {
             User newUser = new User(name, profilePictureIndex);
@@ -35,6 +56,12 @@ public class UsersManagerModel {
         }
     }
 
+    /**
+     * Selects the user profile with the specified name.
+     * Updates the last selected time and saves the users to disk.
+     *
+     * @param name the name of the user to select
+     */
     public void selectProfile(String name) {
         if (users.containsKey(name)) {
             currentUser = users.get(name);
@@ -43,12 +70,19 @@ public class UsersManagerModel {
         }
     }
 
+    /**
+     * Saves all user profiles to disk.
+     */
     public void saveUsers() {
         for (User user : users.values()) {
             user.save( user.getName() + ".dat");
         }
     }
 
+    /**
+     * Loads user profiles from disk.
+     * If no users are found, creates a default user.
+     */
     public void loadUsers() {
         File directory = new File("res/users-data");
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".dat"));
@@ -63,21 +97,41 @@ public class UsersManagerModel {
         }
 
         if (users.isEmpty()) {
-            createUser("default", 0);
+            createUser("bob", 0); // default user
         }
     }
 
+    /**
+     * Updates the current user's information based on the game result.
+     * Increases the number of games played and increases the number of wins if the player won.
+     *
+     * @param victory true if the player won the game, false otherwise
+     */
     public void updateCurrentUserInfo(boolean victory) {
         currentUser.setScore(PlayerModel.getInstance().getPoints());
 
         if (victory)
             currentUser.increaseWins();
-        else
-            currentUser.increaseGames();
+
+        currentUser.increaseGames();
 
         saveUsers();
     }
 
+    /**
+     * Sets the current user.
+     *
+     * @param currentUser the user to set as the current user
+     */
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    /**
+     * Returns a list of all users, sorted by last selected time in descending order.
+     *
+     * @return the list of users
+     */
     public ArrayList<User> getUsers() {
 
         // sort users by last selected time (used stream because of exam requirement)
@@ -86,14 +140,21 @@ public class UsersManagerModel {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Returns the current user.
+     *
+     * @return the current user
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
+    /**
+     * Checks if a user with the specified name already exists.
+     *
+     * @param name the name to check
+     * @return true if the user already exists, false otherwise
+     */
     public boolean doesUserAlreadyExist(String name) {
         return users.containsKey(name);
     }

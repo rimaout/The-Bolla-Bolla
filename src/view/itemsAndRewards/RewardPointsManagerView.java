@@ -1,6 +1,6 @@
 package view.itemsAndRewards;
 
-import view.utilz.LoadSave;
+import view.utilz.Load;
 import model.itemesAndRewards.RewardPointsManagerModel;
 
 import java.awt.*;
@@ -9,25 +9,47 @@ import java.util.ArrayList;
 
 import static model.utilz.Constants.PointsManager.*;
 
+/**
+ * The RewardPointsManagerView class manages the rendering of reward points in the game.
+ * It handles loading the sprites for the points, synchronizing the view with the model, and drawing the points on the screen.
+ */
 public class RewardPointsManagerView {
     private static RewardPointsManagerView instance;
 
     private BufferedImage[][] smallPointsSprites;
     private BufferedImage[] bigPointsSprites;
 
+    /**
+     * Private constructor to prevent instantiation.
+     * Loads the points sprites.
+     */
     private final ArrayList<PointsView> pointsViewArray = new ArrayList<>();
 
+    /**
+     * Private constructor for singleton design patter implementation.
+     * Loads the points sprites.
+     */
     private RewardPointsManagerView() {
         loadPointsSprites();
     }
 
+    /**
+     * Returns the singleton instance of RewardPointsManagerView, creating it if necessary.
+     *
+     * @return the singleton instance of RewardPointsManagerView
+     */
     public static RewardPointsManagerView getInstance() {
         if (instance == null) {
             instance = new RewardPointsManagerView();
         }
         return instance;
-    }
 
+    }
+    /**
+     * Draws all active points on the screen.
+     *
+     * @param g the Graphics2D object to draw with
+     */
     public void draw(Graphics2D g) {
         syncPointsViewsWithModel();
 
@@ -37,12 +59,22 @@ public class RewardPointsManagerView {
         }
     }
 
+    /**
+     * Synchronizes the points views with the model.
+     * Adds new PointsView instances for any PointsModel instances that do not already have a corresponding view.
+     */
     private void syncPointsViewsWithModel() {
         for (var p : RewardPointsManagerModel.getInstance().getPointsModelModelArray())
             if (pointsViewArray.stream().noneMatch(pv -> pv.getPointsModel().equals(p)))
                 pointsViewArray.add(new PointsView(p));
     }
 
+    /**
+     * Returns the sprite image for small points based on the value.
+     *
+     * @param value the value of the points
+     * @return the BufferedImage for the small points
+     */
     public BufferedImage getSmallPointsImage(int value) {
         return switch (value) {
             case 100 -> smallPointsSprites[0][0];
@@ -67,6 +99,12 @@ public class RewardPointsManagerView {
         };
     }
 
+    /**
+     * Returns the sprite image for big points based on the value.
+     *
+     * @param value the value of the points
+     * @return the BufferedImage for the big points
+     */
     public BufferedImage getBigPointsImage(int value) {
         return switch (value) {
             case 1000 -> bigPointsSprites[0];
@@ -83,9 +121,12 @@ public class RewardPointsManagerView {
         };
     }
 
+    /**
+     * Loads the sprites for small and big points from the sprite sheets.
+     */
     private void loadPointsSprites() {
         // load small points sprites
-        BufferedImage imgSmall = LoadSave.GetSprite(LoadSave.BUD_SMALL_POINTS_SPRITE);
+        BufferedImage imgSmall = Load.GetSprite(Load.BUD_SMALL_POINTS_SPRITE);
 
         smallPointsSprites = new BufferedImage[2][9];
         for (int j = 0; j < smallPointsSprites.length; j++)
@@ -93,17 +134,23 @@ public class RewardPointsManagerView {
                 smallPointsSprites[j][i] = imgSmall.getSubimage(i * SMALL_DEFAULT_W, j * SMALL_DEFAULT_H, SMALL_DEFAULT_W, SMALL_DEFAULT_H);
 
         // load big points sprites
-        BufferedImage imgBig = LoadSave.GetSprite(LoadSave.BUD_BIG_POINTS_SPRITE);
+        BufferedImage imgBig = Load.GetSprite(Load.BUD_BIG_POINTS_SPRITE);
 
         bigPointsSprites = new BufferedImage[10];
         for (int i = 0; i < bigPointsSprites.length; i++)
             bigPointsSprites[i] = imgBig.getSubimage(i * BIG_DEFAULT_W, 0, BIG_DEFAULT_W, BIG_DEFAULT_H);
     }
 
+    /**
+     * Resets the points view array for a new play session.
+     */
     public void newPlayReset() {
         pointsViewArray.clear();
     }
 
+    /**
+     * Resets the points view array for a new level.
+     */
     public void newLevelReset() {
         pointsViewArray.clear();
     }

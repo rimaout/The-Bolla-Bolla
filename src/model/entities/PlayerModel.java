@@ -8,11 +8,17 @@ import model.itemesAndRewards.PowerUpManagerModel;
 import model.projectiles.PlayerBubbleProjectileModel;
 
 import static model.utilz.Constants.*;
-import static model.entities.HelpMethods.*;
+import static model.utilz.HelpMethods.*;
 import static model.utilz.Constants.Direction.LEFT;
 import static model.utilz.Constants.Direction.RIGHT;
 import static model.utilz.Constants.PlayerConstants.*;
 
+/**
+ * Represents the player character in the game.
+ *
+ * <p>This class manages the player's state, movement, actions, and interactions with the game world.
+ * It follows the singleton pattern to ensure only one instance of the player exists.
+ */
 public class PlayerModel extends EntityModel {
     private static PlayerModel instance;
 
@@ -43,19 +49,32 @@ public class PlayerModel extends EntityModel {
     private int walkPoints = 0;                // crystalRing
     private int bubbleShotPoints = 0;          // rubyRing
 
-
+    /**
+     * Returns the singleton instance of the PlayerModel.
+     *
+     * <p>This method ensures that only one instance of the PlayerModel is created (singleton pattern).
+     * If the instance is null, it creates a new PlayerModel object and returns it.
+     *
+     * @return the singleton instance of the PlayerModel
+     */
     public static PlayerModel getInstance() {
         if (instance == null)
             instance = new PlayerModel();
         return instance;
     }
 
+    /**
+     * Private constructor to prevent instantiation, without using {@link #getInstance()} method.
+     */
     private PlayerModel() {
         super(-3 * Constants.TILES_SIZE, -3 * Constants.TILES_SIZE, PLAYER_W, PLAYER_H); // Set the player outside the map (so it doesn't get drawn)
         initHitbox(HITBOX_W, HITBOX_H);
         initLevelManager();
     }
 
+    /**
+     * Updates the player's state, including timers and position.
+     */
     public void update() {
         updateTimers();
         updatePosition();
@@ -64,10 +83,25 @@ public class PlayerModel extends EntityModel {
             attack();
     }
 
+    /**
+     * Checks if the player can attack.
+     *
+     * <p>This method determines if the player is able to perform an attack action. The player can attack if they are not respawning,
+     * are inside the map boundaries, and are not under a tile roof.
+     *
+     * @return true if the player can attack, false otherwise
+     */
     public boolean canAttack() {
         return !respawning && IsEntityInsideMap(hitbox) && !IsTileRoof((int) hitbox.y / Constants.TILES_SIZE);
     }
 
+    /**
+     * Performs the player's attack action, creating a new bubble projectile.
+     *
+     * <p>This method determines the direction of the attack based on the player's current facing direction.
+     * It then creates a new bubble projectile at the appropriate position and resets the attack timer.
+     * Additionally, it increases the bubble shoot counter and adds points based if the player has collected the rubyRing power-up.
+     */
     private void attack() {
         Direction direction;
 
@@ -90,6 +124,9 @@ public class PlayerModel extends EntityModel {
         addPoints(bubbleShotPoints);     // rubyRing powerUp
     }
 
+    /**
+    * Updates the player's timers, including immune, attack, and respawn timers.
+    */
     private void updateTimers() {
 
         if (immune) {
@@ -113,6 +150,9 @@ public class PlayerModel extends EntityModel {
         }
     }
 
+    /**
+     * Updates the player's position based on the current movement state.
+     */
     private void updatePosition() {
 
         if (respawning) {
@@ -129,7 +169,7 @@ public class PlayerModel extends EntityModel {
             pacManEffect();
 
         // MOVE
-        if (IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData()))
+        if (IsEntityInsideSolid(hitbox, levelManagerModel.getLevelTileData()))
             handleMovementInsideSolid();
 
         else if (inAir)
@@ -138,6 +178,9 @@ public class PlayerModel extends EntityModel {
             handleOnFloorMovement();
     }
 
+    /**
+     * Updates the player's movement values based on the current input state.
+     */
     private void updateMovementValues() {
         moving = false;
 
@@ -145,7 +188,7 @@ public class PlayerModel extends EntityModel {
             inAir = true;
             isJumping = true;
 
-            if (!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelData())) {  // can't jump if is inside solid
+            if (!IsEntityInsideSolid(hitbox, levelManagerModel.getLevelTileData())) {  // can't jump if is inside solid
                 airSpeed = JUMP_SPEED;
                 PowerUpManagerModel.getInstance().increaseJumpCounter();
                 addPoints(jumpPoints);  //emeraldRing powerUp
@@ -169,10 +212,13 @@ public class PlayerModel extends EntityModel {
         }
 
         if (!inAir)
-            if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
+            if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelTileData()))
                 inAir = true;
     }
 
+    /**
+     * Handles the player's movement while in the air.
+     */
     private void handleInAirMovement() {
         if (isJumping)
             jumping();
@@ -180,12 +226,18 @@ public class PlayerModel extends EntityModel {
             falling();
     }
 
+    /**
+     * Handles the player's movement while on the floor.
+     */
     private void handleOnFloorMovement() {
         updateXPos(xSpeed);
         addPoints(walkPoints);  // crystalRing powerUp
         moving = true;          // Activate running animation
     }
 
+    /**
+     * Handles the player's movement while inside a solid tile.
+     */
     private void handleMovementInsideSolid() {
         // JUMPING
         if (airSpeed < 0) {
@@ -202,6 +254,9 @@ public class PlayerModel extends EntityModel {
         }
     }
 
+    /**
+     * Makes the player jump on a bubble.
+     */
     public void jumpOnBubble() {
         airSpeed = JUMP_SPEED;
         inAir = true;
@@ -209,6 +264,13 @@ public class PlayerModel extends EntityModel {
         PowerUpManagerModel.getInstance().increaseJumpCounter();
     }
 
+    /**
+     * Handles the player's jumping movement.
+     *
+     * <p>This method updates the player's vertical position and speed while jumping.
+     * It checks if the player is going up or down and updates the position accordingly.
+     * If the player is going down and cannot move further, it resets the in-air state.
+     */
     private void jumping() {
 
         // Going up
@@ -220,12 +282,12 @@ public class PlayerModel extends EntityModel {
 
         // Going down
         else if (airSpeed <= -JUMP_SPEED) {
-            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelTileData())) {
                 hitbox.y += airSpeed;
                 airSpeed += GRAVITY;
                 updateXPos(xSpeed);
             } else {
-                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelData());
+                hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelTileData());
                 resetInAir();
                 updateXPos(xSpeed);
             }
@@ -235,23 +297,39 @@ public class PlayerModel extends EntityModel {
         }
     }
 
+    /**
+     * Handles the player's falling movement.
+     *
+     * <p>This method updates the player's vertical position and speed while falling.
+     * It checks if the player can move further down and updates the position accordingly.
+     * If the player cannot move further down, it resets the in-air state.
+     */
     private void falling() {
-        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelData())) {
+        if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, levelManagerModel.getLevelTileData())) {
             hitbox.y += airSpeed;
             airSpeed = FALL_SPEED;
             updateXPos(xSpeed / 3);
         } else {
-            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelData());
+            hitbox.y = GetEntityYPosAboveFloor(hitbox, airSpeed, levelManagerModel.getLevelTileData());
             updateXPos(xSpeed / 3);
             resetInAir();
         }
     }
 
+    /**
+     * Applies the Pac-Man effect to the player's position.
+     *
+     * <p>This method checks if the player's vertical position is beyond the bottom boundary of the map.
+     * If so, it wraps the player's position to the top of the map, creating a Pac-Man effect.
+     */
     private void pacManEffect() {
         if (hitbox.y > Constants.TILES_SIZE * Constants.TILES_IN_HEIGHT)
             hitbox.y = -2 * Constants.TILES_SIZE;
     }
 
+    /**
+     * Handles the player's death state.
+     */
     public void death() {
 
         if (!immune) {
@@ -263,6 +341,9 @@ public class PlayerModel extends EntityModel {
         }
     }
 
+    /**
+     * Respawns the player after death.
+     */
     private void respawn() {
 
         if (canRespawn) { // Last frame of the dying animation
@@ -276,12 +357,18 @@ public class PlayerModel extends EntityModel {
         }
     }
 
+    /**
+     * Resets the player's in-air state and movement values.
+     */
     private void resetInAir() {
         inAir = false;
         isJumping = false;
         airSpeed = 0;
     }
 
+    /**
+     * Resets the player's movement values.
+     */
     public void resetMovements() {
         left = false;
         right = false;
@@ -289,6 +376,9 @@ public class PlayerModel extends EntityModel {
         attacking = false;
     }
 
+    /**
+     * Resets the player's power-up values.
+     */
     private void resetPowerUps() {
         speedMultiplier = 1;
         bubbleCadenceMultiplier = 1;
@@ -297,6 +387,12 @@ public class PlayerModel extends EntityModel {
         bubbleShotPoints = 0;
     }
 
+    /**
+     * Resets the player's state to the default, including lives and points.
+     *
+     * @param resetLives  true to reset the player's lives, false otherwise
+     * @param resetPoints true to reset the player's points, false otherwise
+     */
     public void reset(Boolean resetLives, Boolean resetPoints) {
         resetMovements();
         resetInAir();
@@ -317,9 +413,11 @@ public class PlayerModel extends EntityModel {
         if (resetPoints)
             points = 0;
 
-        if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelData()))
+        if (!IsEntityOnFloor(hitbox, levelManagerModel.getLevelTileData()))
             inAir = true;
     }
+
+    // ------ Getters and Setters -------
 
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;

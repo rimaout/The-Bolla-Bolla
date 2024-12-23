@@ -1,9 +1,9 @@
-package view.overlays;
+package view.overlays.menuOverlays;
 
 import model.overlays.MenuUserCreationOverlayModel;
 import model.utilz.Constants;
 import view.users.UsersManagerView;
-import view.utilz.LoadSave;
+import view.utilz.Load;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+/**
+ * The MenuUserCreationOverlayView class represents the overlay view for the {@link MenuUserCreationOverlayModel} class.
+ * It handles drawing the user creation interface, including the user picture, name, and controls.
+ */
 public class MenuUserCreationOverlayView extends MenuOverlayView {
-
     private final UsersManagerView usersManagerView = UsersManagerView.getInstance();
 
     private final MenuUserCreationOverlayModel menuUserCreationOverlayModel;
@@ -23,6 +26,12 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
     private int upArrowIndex = 0;
     private int downArrowIndex = 0;
 
+    /**
+     * Constructs a MenuUserCreationOverlayView with the specified MenuUserCreationOverlayModel.
+     * Initializes the images and starts the blinking animation timer.
+     *
+     * @param menuUserCreationOverlayModel the model of the user creation overlay
+     */
     public MenuUserCreationOverlayView(MenuUserCreationOverlayModel menuUserCreationOverlayModel) {
         this.menuUserCreationOverlayModel = menuUserCreationOverlayModel;
         loadImages();
@@ -37,6 +46,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         timer.start();
     }
 
+    /**
+     * Draws the user creation overlay on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     public void draw(Graphics g) {
         drawBox(g);
@@ -48,6 +62,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         drawSuggestions(g);
     }
 
+    /**
+     * Draws the box for the user creation overlay.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawBox(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -69,6 +88,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         g2d.fillRect(x + borderThickness, y + borderThickness, rectWidth - 2 * borderThickness, rectHeight - 2 * borderThickness);
     }
 
+    /**
+     * Draws the arrows for selecting the user picture.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawArrows(Graphics g){
 
         int x = 61 * Constants.SCALE;
@@ -83,6 +107,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         g.drawImage(arrows[1][downArrowIndex], x, yDown, size, size, null);
     }
 
+    /**
+     * Draws the title "USER CREATION" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawTitle(Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(nesFont.deriveFont(40f));
@@ -101,6 +130,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the user name on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawUserName(Graphics g) {
         g.setColor(usersManagerView.getUserColor1(menuUserCreationOverlayModel.getNewUserPictureIndex()));
         g.setFont(retroFont.deriveFont(50f));
@@ -121,13 +155,16 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         }
     }
 
+    /**
+     * Draws the user picture on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawUserPicture(Graphics g){
-
         //draw border for the picture
         int x = 45 * Constants.SCALE;
         int y = 73 * Constants.SCALE;
         int rectSize = (int) ((18 * 2.8 + 1) * Constants.SCALE);
-
 
         g.setColor(Color.WHITE);
         g.drawRect(x, y, rectSize, rectSize);
@@ -141,6 +178,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
             g.drawImage(usersManagerView.getUserPicture(menuUserCreationOverlayModel.getNewUserPictureIndex()), x + 1, y + 1, rectSize - 1, rectSize - 1, null);
     }
 
+    /**
+     * Draws the controls instructions on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawControls(Graphics g) {
         g.setFont(retroFont.deriveFont(22f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -155,13 +197,13 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         int x = 40 * Constants.SCALE + fm.getHeight();
         int y = 108  * Constants.SCALE + 4 * fm.getHeight();
 
-        if (menuUserCreationOverlayModel.isEnterKeyDeactivated()) {
+        if (menuUserCreationOverlayModel.isEnterNameDeactivated()) {
             // Draw first suggestion light grey (inactive)
             g.setColor(new Color(0x888888));
             g.drawString("Press ENTER to confirm", x, y);
         }
 
-        if (!menuUserCreationOverlayModel.isEnterKeyDeactivated()) {
+        if (!menuUserCreationOverlayModel.isEnterNameDeactivated()) {
             // Draw first suggestion (active)
             g.setColor(Color.WHITE);
             g.drawString(text1Part1, x, y);
@@ -188,6 +230,11 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         g.drawString(text2Part3, x + width3 + width4, y + fm.getHeight());
     }
 
+    /**
+     * Draws the suggestions on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawSuggestions(Graphics g) {
 
         if (blink) return;
@@ -216,10 +263,13 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         }
     }
 
+    /**
+     * Loads the images for the arrows and question mark.
+     */
     private void loadImages(){
         // Arrow images
         arrows = new BufferedImage[2][2];
-        BufferedImage img = LoadSave.GetSprite(LoadSave.ARROWS_UP_DOWN);
+        BufferedImage img = Load.GetSprite(Load.ARROWS_UP_DOWN);
 
         arrows[0][0] = img.getSubimage(0, 0, 10, 10);
         arrows[0][1] = img.getSubimage(10, 0, 10, 10);
@@ -227,14 +277,25 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         arrows[1][1] = img.getSubimage(10, 10, 10, 10);
 
         // Question mark image
-        questionMark = LoadSave.GetSprite(LoadSave.QUESTION_MARK_IMAGE);
+        questionMark = Load.GetSprite(Load.QUESTION_MARK_IMAGE);
     }
 
-    // -------- Getters and Setters --------
+    // -------- Setters --------
+
+    /**
+     * Sets the index of the up arrow image.
+     *
+     * @param upArrowIndex the index of the up arrow image
+     */
     public void setUpArrowIndex(int upArrowIndex) {
         this.upArrowIndex = upArrowIndex;
     }
 
+    /**
+     * Sets the index of the down arrow image.
+     *
+     * @param downArrowIndex the index of the down arrow image
+     */
     public void setDownArrowIndex(int downArrowIndex) {
         this.downArrowIndex = downArrowIndex;
     }

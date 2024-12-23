@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-public interface LoadSave {
-    // Sprites
+/**
+ * Interface for loading and saving various game resources such as images, fonts, and audio files.
+ */
+public interface Load {
+    // Sprite file paths
     String PLAYER_SPRITE = "/sprites/Bud.png";
     String PLAYER_TRANSITION_SPRITE = "/sprites/Bud_level_transition.png";
     String ZEN_CHAN_ENEMY_SPRITE = "/sprites/Zen-Chan.png";
@@ -32,19 +35,27 @@ public interface LoadSave {
     String ARROWS_LEFT_RIGHT = "/sprites/arrows-left-right.png";
     String ARROWS_UP_DOWN = "/sprites/arrows-up-down.png";
 
+    // Image file paths
     String GAME_LOGO = "/images/logo.png";
     String HURRY_IMAGE = "/images/hurry_image.png";
     String QUESTION_MARK_IMAGE = "/images/question-mark.png";
     String GAME_ICON = "res/images/game-icon.png";
 
+    // Font file paths
     String NES_FONT = "/fonts/nintendo-nes-font.ttf";
     String RETRO_GAMING_FONT = "/fonts/retro-gaming.ttf";
 
+    /**
+     * Loads a sprite image from the specified file path.
+     *
+     * @param spriteFile the path to the sprite file
+     * @return the loaded BufferedImage
+     */
     static BufferedImage GetSprite(String spriteFile) {
-        InputStream is = LoadSave.class.getResourceAsStream(spriteFile);
+        InputStream is = Load.class.getResourceAsStream(spriteFile);
         BufferedImage img = null;
 
-        // it's a good practice ti use try-catch when using ImageIO.read to avoid runtime exceptions particularly when the image is not found
+        // good practice to use try-catch when using ImageIO.read to avoid runtime exceptions particularly when the image is not found
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
@@ -60,10 +71,16 @@ public interface LoadSave {
         return img;
     }
 
+    /**
+     * Loads a font from the specified file path.
+     *
+     * @param fontFile the path to the font file
+     * @return the loaded Font
+     */
     private static Font LoadFont(String fontFile) {
         Font font = null;
         try {
-            InputStream is = LoadSave.class.getResourceAsStream(fontFile);
+            InputStream is = Load.class.getResourceAsStream(fontFile);
             font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
@@ -73,16 +90,32 @@ public interface LoadSave {
         return font;
     }
 
+    /**
+     * Loads and returns the NES font.
+     *
+     * @return the loaded NES font
+     */
     static Font GetNesFont() {
         return LoadFont(NES_FONT);
     }
 
+    /**
+     * Loads and returns the Retro Gaming font.
+     *
+     * @return the loaded Retro Gaming font
+     */
     static Font GetRetroGamingFont() {
         return LoadFont(RETRO_GAMING_FONT);
     }
 
+    /**
+     * Loads an audio clip from the specified file name.
+     *
+     * @param audioName the name of the audio file (without extension)
+     * @return the loaded Clip
+     */
     static Clip GetAudio(String audioName) {
-        URL url = LoadSave.class.getResource("/audioFiles/" + audioName + ".wav");
+        URL url = Load.class.getResource("/audioFiles/" + audioName + ".wav");
         AudioInputStream audio;
 
         try {

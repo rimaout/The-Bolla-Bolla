@@ -1,6 +1,6 @@
 package view.entities;
 
-import view.utilz.LoadSave;
+import view.utilz.Load;
 import view.audio.AudioPlayer;
 import model.entities.PlayerModel;
 
@@ -14,6 +14,10 @@ import static view.utilz.Constants.PlayerConstants.*;
 import static view.utilz.Constants.AudioConstants.JUMP;
 import static view.utilz.Constants.AudioConstants.PLAYER_DEATH;
 
+/**
+ * The PlayerView class represents the view for a {@link PlayerModel}.
+ * It handles updating the player's animation, drawing the player, and playing sound effects.
+ */
 public class PlayerView{
     private final PlayerModel playerModel;
 
@@ -23,20 +27,32 @@ public class PlayerView{
     private boolean activateAttackingAnimation;
     private boolean jumpSoundAlreadyPlayed, deathSoundAlreadyPlayed;
 
+    /**
+     * Constructs a PlayerView with the specified PlayerModel.
+     *
+     * @param playerModel the model for the player entity
+     */
     public PlayerView(PlayerModel playerModel) {
         this.playerModel = playerModel;
 
         loadAnimation();
     }
 
+    /**
+     * Updates the player's animation and sound effects.
+     */
     public void update() {
         updateAnimationTick();
         setAnimation();
         updateSound();
     }
 
+    /**
+     * Draws the player on the screen.
+     *
+     * @param g the Graphics2D object to draw with
+     */
     public void draw(Graphics2D g) {
-
         if (playerModel.isImmune() && !playerModel.isRespawning()) {
             if (playerModel.getImmuneTimer() % 100 < 40) { // Transparency blink effect
                 g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55F)); // Set transparency
@@ -45,10 +61,12 @@ public class PlayerView{
                 return;
             }
         }
-
         g.drawImage(sprites[playerAnimation][animationIndex],  (int) (playerModel.getHitbox().x - OFFSET_X) + playerModel.getFlipX(), (int) (playerModel.getHitbox().y - OFFSET_Y), playerModel.getWidth() * playerModel.getFlipW(), playerModel.getHeight(), null);
     }
 
+    /**
+     * Updates the sound effects for the player.
+     */
     private void updateSound() {
 
         // Jump sound Logic
@@ -68,6 +86,9 @@ public class PlayerView{
             deathSoundAlreadyPlayed = false;
     }
 
+    /**
+     * Updates the animation tick and index based on the animation speed.
+     */
     private void updateAnimationTick() {
         animationTick++;
         if (animationTick > ANIMATION_SPEED) {
@@ -80,6 +101,9 @@ public class PlayerView{
         }
     }
 
+    /**
+     * Sets the current animation for the player based on its state.
+     */
     private void setAnimation() {
         int startAnimation = playerAnimation;
 
@@ -110,8 +134,11 @@ public class PlayerView{
         }
     }
 
+    /**
+     * Loads the animation sprites for the player.
+     */
     private void loadAnimation() {
-        BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_SPRITE);
+        BufferedImage img = Load.GetSprite(Load.PLAYER_SPRITE);
 
         sprites = new BufferedImage[6][7];
         for (int j = 0; j < sprites.length; j++)

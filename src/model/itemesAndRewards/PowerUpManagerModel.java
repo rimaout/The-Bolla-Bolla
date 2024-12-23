@@ -10,6 +10,13 @@ import model.projectiles.ProjectileManagerModel;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the power-ups in the game.
+ *
+ * <p>The PowerUpManagerModel class is responsible for handling the activation and effects of power-ups
+ * collected by the player. It tracks various power-up states and counters, applies power-up effects to the player,
+ * and determines which power-up to spawn based on game events.
+ */
 public class PowerUpManagerModel {
     private static PowerUpManagerModel instance;
     private final PlayerModel playerModel;
@@ -37,7 +44,9 @@ public class PowerUpManagerModel {
     private int blueCandyCounter = 0;
     private int redCandyCounter = 0;
 
-
+    /**
+     * Constructs a new PowerUpManagerModel and initializes the player model.
+     */
     private PowerUpManagerModel(){
         this.playerModel = PlayerModel.getInstance();
     }
@@ -48,10 +57,16 @@ public class PowerUpManagerModel {
         return instance;
     }
 
+    /**
+     * Updates the state of the power-ups and applies their effects to the player.
+     */
     public void update() {
         applyPowerUp();
     }
 
+    /**
+     * Applies the effects of the active power-ups to the player.
+     */
     public void applyPowerUp() {
 
         if (greenCandy)
@@ -117,8 +132,12 @@ public class PowerUpManagerModel {
             playerModel.setBubbleShotPoints(0);
     }
 
+    /**
+     * Determines which power-up to spawn based on game events and counters.
+     *
+     * @return the type of power-up to spawn, or null if no power-up should be spawned
+     */
     public PowerUpType getPowerUpToSpawn() {
-
         ArrayList<PowerUpType> powerUps = new ArrayList<>();
 
         if (bubbleShootCounter >= 20 ) powerUps.add(PowerUpType.GREEN_CANDY);       // Working // Original game value = 35
@@ -137,10 +156,16 @@ public class PowerUpManagerModel {
         return powerUps.get((int) (Math.random() * powerUps.size()));
     }
 
+    /**
+     * Resets the state of the power-up manager for a new play session.
+     */
     public void newPlayReset() {
         reset();
     }
 
+    /**
+     * Resets all power-up states and counters.
+     */
     public void reset() {
         greenCandy = false;
         blueCandy = false;
@@ -164,30 +189,53 @@ public class PowerUpManagerModel {
         redCandyCounter = 0;
     }
 
+    /**
+     * Increases the bubble shoot counter.
+     */
     public void increaseBubbleShootCounter() {
         bubbleShootCounter++;
     }
 
+    /**
+     * Increases the bubble pop counter.
+     */
     public void increaseBubblePopCounter() {
         bubblePopCounter++;
     }
 
+    /**
+     * Increases the jump counter.
+     */
     public void increaseJumpCounter() {
         jumpCounter++;
     }
 
+    /**
+     * Adds the specified distance to the walked distance counter.
+     *
+     * @param distance the distance to add
+     */
     public void addDistance(float distance) {
         walkedDistance += abs(distance);
     }
 
+    /**
+     * Increases the water bubble pop counter.
+     */
     public void increaseWaterBubblePopCounter() {
         waterBubblePopCounter++;
     }
 
+    /**
+     * Increases the item collect counter.
+     */
     public void increaseItemCollectCounter() {
         itemCollectCounter++;
     }
 
+    /**
+     * Marks the green candy as collected and resets the bubble shoot counter.
+     */
     public void collectedGreenCandy() {
         greenCandyCounter++;
         greenCandy = true;
@@ -196,6 +244,9 @@ public class PowerUpManagerModel {
         bubbleShootCounter = 0;
     }
 
+    /**
+     * Marks the blue candy as collected and resets the bubble pop counter.
+     */
     public void collectedBlueCandy() {
         blueCandyCounter++;
         blueCandy = true;
@@ -204,6 +255,9 @@ public class PowerUpManagerModel {
         bubblePopCounter = 0;
     }
 
+    /**
+     * Marks the red candy as collected and resets the jump counter.
+     */
     public void collectedRedCandyCounter() {
         redCandyCounter++;
         redCandy = true;
@@ -212,6 +266,9 @@ public class PowerUpManagerModel {
         jumpCounter = 0;
     }
 
+    /**
+     * Marks the shoe as collected and resets the walked distance counter.
+     */
     public void collectedShoe() {
         shoe = true;
 
@@ -219,6 +276,9 @@ public class PowerUpManagerModel {
         walkedDistance = 0;
     }
 
+    /**
+     * Marks the orange parasol as collected and resets the water bubble pop counter.
+     */
     public void collectedOrangeParasol() {
         orangeParasol = true;
 
@@ -226,6 +286,9 @@ public class PowerUpManagerModel {
         waterBubblePopCounter = 0;
     }
 
+    /**
+     * Marks the blue parasol as collected and resets the water bubble pop counter.
+     */
     public void collectedBlueParasol() {
         blueParasol = true;
 
@@ -233,6 +296,9 @@ public class PowerUpManagerModel {
         waterBubblePopCounter = 0;
     }
 
+    /**
+     * Marks the Chack'n Heart as collected and resets the item collect counter.
+     */
     public void collectedChacknHeart() {
         chacknHeart = true;
 
@@ -240,6 +306,9 @@ public class PowerUpManagerModel {
         itemCollectCounter = 0;
     }
 
+    /**
+     * Marks the crystal ring as collected and resets the blue candy counter.
+     */
     public void collectedCrystalRing() {
         crystalRing = true;
 
@@ -247,6 +316,9 @@ public class PowerUpManagerModel {
         blueCandyCounter = 0;
     }
 
+    /**
+     * Marks the emerald ring as collected and resets the green candy counter.
+     */
     public void collectedEmeraldRing() {
         emeraldRing = true;
 
@@ -254,6 +326,9 @@ public class PowerUpManagerModel {
         greenCandyCounter = 0;
     }
 
+    /**
+     * Marks the ruby ring as collected and resets the red candy counter.
+     */
     public void collectedRubyRing() {
         rubyRing = true;
 

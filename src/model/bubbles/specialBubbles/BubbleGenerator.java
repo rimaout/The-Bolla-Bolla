@@ -8,6 +8,12 @@ import java.util.Random;
 
 import static model.utilz.Constants.BubbleGenerator.*;
 
+/**
+ * Generates special bubbles at specified intervals.
+ *
+ * <p>This class is responsible for generating special bubbles (e.g., water bubbles, lightning bubbles) at regular intervals.
+ * It uses a timer to control the spawn rate and determines the position and direction of the bubbles based on the generator type and position.
+ */
 public class BubbleGenerator {
     private final Random random = new Random();
     private final PlayingTimer timer = PlayingTimer.getInstance();
@@ -17,20 +23,41 @@ public class BubbleGenerator {
 
     private int spawnTimer = INITIAL_BUBBLE_GENERATOR_INTERVAL;
 
+    /**
+     * Constructs a new BubbleGenerator.
+     *
+     * @param generatorType the type of bubbles to generate
+     * @param generatorPosition the position of the generator (top or bottom)
+     */
     public BubbleGenerator(GeneratorType generatorType, GeneratorPosition generatorPosition) {
         this.generatorType = generatorType;
         this.generatorPosition = generatorPosition;
     }
 
+    /**
+     * Updates the state of the bubble generator.
+     *
+     * <p>This method updates the timers and checks if a new bubble should be spawned.
+     */
     public void update() {
         updateTimers();
         checkBubbleSpawn();
     }
 
+    /**
+     * Updates the spawn timer.
+     *
+     * <p>This method decreases the spawn timer based on the elapsed time.
+     */
     public void updateTimers() {
         spawnTimer -= (int) timer.getTimeDelta();
     }
 
+    /**
+     * Checks if a new bubble should be spawned.
+     *
+     * <p>If the spawn timer has elapsed and the number of active special bubbles is below the maximum limit, a new bubble is spawned.
+     */
     public void checkBubbleSpawn() {
         if (spawnTimer <= 0) {
             spawnTimer = BUBBLE_GENERATION_INTERVAL;
@@ -40,6 +67,11 @@ public class BubbleGenerator {
         }
     }
 
+    /**
+     * Spawns a new bubble.
+     *
+     * <p>This method calculates the position and direction of the new bubble and adds it to the special bubble manager.
+     */
     public void spawnBubble() {
         SpecialBubbleManagerModel bubbleManager = SpecialBubbleManagerModel.getInstance();
 

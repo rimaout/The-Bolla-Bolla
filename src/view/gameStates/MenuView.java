@@ -1,7 +1,7 @@
 package view.gameStates;
 
-import view.utilz.LoadSave;
-import view.overlays.MenuTwinkleBubbleManager;
+import view.utilz.Load;
+import view.overlays.menuOverlays.MenuTwinkleBubbleManager;
 import controller.GameController;
 import model.utilz.Constants;
 import model.gameStates.MenuModel;
@@ -13,6 +13,10 @@ import static view.utilz.Constants.ANIMATION_SPEED;
 import static view.utilz.Constants.MenuConstants.*;
 import static view.utilz.Constants.MenuConstants.SPACE_WIDTH;
 
+/**
+ * The MenuView class represents the view for the {@link MenuModel}.
+ * It handles drawing the menu elements, updating animations, and managing user interactions.
+ */
 public class MenuView {
     private final MenuModel menuModel;
     private final GameController gameController;
@@ -30,23 +34,36 @@ public class MenuView {
     private String suggestions;
     private int suggestionsWidth;
 
+    /**
+     * Constructs a MenuView with the specified MenuModel and GameController.
+     *
+     * @param menuModel the model for the menu screen
+     * @param gameController the controller for the game
+     */
     public MenuView(MenuModel menuModel, GameController gameController) {
         this.menuModel = menuModel;
         this.gameController = gameController;
         this.nesFont = new Font("NesFont", Font.PLAIN, 20);
         this.retroFont = new Font("RetroFont", Font.PLAIN, 20);
 
-        this.nesFont = LoadSave.GetNesFont();
-        this.retroFont = LoadSave.GetRetroGamingFont();
+        this.nesFont = Load.GetNesFont();
+        this.retroFont = Load.GetRetroGamingFont();
         generateSuggestions();
     }
 
+    /**
+     * Updates the menu view, including animations and user interactions.
+     */
     public void update() {
-
         if (!menuModel.isUserSelectionOverlayActive() && !menuModel.isUserCreationOverlayActive() && !menuModel.isScoreBoardOverlayActive())
             updateAnimationTick();
     }
 
+    /**
+     * Draws the menu screen elements, including the title, selections, and suggestions.
+     *
+     * @param g the Graphics object to draw with
+     */
     public void draw(Graphics g) {
         menuTwinkleBubbleManager.update();
         menuTwinkleBubbleManager.draw(g);
@@ -72,6 +89,9 @@ public class MenuView {
         }
     }
 
+    /**
+     * Updates the animation tick for the dot animations and moving text.
+     */
     private void updateAnimationTick() {
         animationTick++;
         if (animationTick >= ANIMATION_SPEED) {
@@ -88,6 +108,11 @@ public class MenuView {
             suggestionX = Constants.GAME_WIDTH + 10 * Constants.SCALE;
     }
 
+    /**
+     * Draws the title of the game on the menu screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawTittle(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(nesFont.deriveFont(45f));
@@ -106,6 +131,11 @@ public class MenuView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the greeting message on the menu screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawGratings(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(retroFont.deriveFont(26f));
@@ -131,6 +161,11 @@ public class MenuView {
         g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the selection options on the menu screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawSelections(Graphics g) {
 
         String text0 = "Play!";           // selectionIndex = 0
@@ -149,6 +184,14 @@ public class MenuView {
         drawSelectionText(g, text3, text4Y, menuModel.getSelectionIndex() == 3);
     }
 
+    /**
+     * Draws a single selection option on the menu screen.
+     *
+     * @param g the Graphics object to draw with
+     * @param text the text of the selection option
+     * @param lineY the y-coordinate of the selection option
+     * @param selected whether the selection option is currently selected
+     */
     private void drawSelectionText(Graphics g, String text, int lineY, boolean selected) {
 
         if (selected) {
@@ -166,12 +209,20 @@ public class MenuView {
         g.drawString(text, textX, textY);
     }
 
+    /**
+     * Draws the suggestions text on the menu screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawSuggestions(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(retroFont.deriveFont(24f));
         g.drawString(suggestions, (int) suggestionX, Constants.GAME_HEIGHT - 4 * Constants.SCALE);
     }
 
+    /**
+     * Generates the suggestions text from the predefined suggestions array.
+     */
     private void generateSuggestions() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < SUGGESTIONS.length; i++) {
@@ -181,4 +232,3 @@ public class MenuView {
         suggestions = sb.toString();
     }
 }
-

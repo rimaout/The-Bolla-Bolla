@@ -3,20 +3,39 @@ package model.itemesAndRewards;
 import static model.utilz.Constants.Items.*;
 import static model.utilz.Constants.Items.PowerUpType.*;
 
+/**
+ * Contains the logic a power-up item in the game.
+ *
+ * <p>The PowerUpModel class extends the {@link ItemModel} class and handles the behavior of power-up items,
+ * including their effects on the player and the points they add when collected.
+ */
 public class PowerUpModel extends ItemModel {
     private final PowerUpManagerModel powerUpManagerModel = PowerUpManagerModel.getInstance();
     private final PowerUpType powerUpType;
 
+    /**
+     * Constructs a new PowerUpModel with the specified position and power-up type.
+     *
+     * @param x the x-coordinate of the power-up item
+     * @param y the y-coordinate of the power-up item
+     * @param powerUpType the type of the power-up item
+     */
     public PowerUpModel(int x, int y, PowerUpType powerUpType) {
         super(x, y, ItemType.POWER_UP);
         this.powerUpType = powerUpType;
     }
 
+    /**
+     * Adds points to the player's score based on the power-up type.
+     */
     @Override
     public void addPoints() {
         RewardPointsManagerModel.getInstance().addSmallPoints(GetPoints(powerUpType));
     }
 
+    /**
+     * Applies the effect of the power-up to the player.
+     */
     @Override
     public void applyEffect() {
         switch (powerUpType) {
@@ -33,6 +52,11 @@ public class PowerUpModel extends ItemModel {
         }
     }
 
+    /**
+     * Returns the type of the power-up item.
+     *
+     * @return the type of the power-up item
+     */
     public PowerUpType getPowerUpType() {
         return powerUpType;
     }

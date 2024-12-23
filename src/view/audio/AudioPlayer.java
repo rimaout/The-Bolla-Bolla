@@ -2,23 +2,36 @@ package view.audio;
 
 import javax.sound.sampled.*;
 
-import static view.utilz.LoadSave.GetAudio;
+import static view.utilz.Load.GetAudio;
 import static view.utilz.Constants.AudioConstants.*;
 
+/**
+ * Manages audio playback for the game, including songs and sound effects.
+ * Implements the singleton pattern to ensure a single instance.
+ */
 public class AudioPlayer {
     private static AudioPlayer instance;
 
     private Clip[] songs, soundEffects;
     private int currentSongID;
 
-    private float volume = DEFAULT_VOLUME;
+    private float volume = DEFAULT_VOLUME; // value between 0.0 and 1.0
     private boolean songMuted, soundEffectMuted;
 
+    /**
+     * Private constructor to implement singleton pattern.
+     * Loads audio files and plays the home sound effect.
+     */
     private AudioPlayer() {
         loadAudios();
         playSoundEffect(HOME);
     }
 
+    /**
+     * Returns the singleton instance of the AudioPlayer.
+     *
+     * @return the singleton instance
+     */
     public static AudioPlayer getInstance() {
         if (instance == null) {
             instance = new AudioPlayer();
@@ -26,6 +39,9 @@ public class AudioPlayer {
         return instance;
     }
 
+    /**
+     * Loads audio files for songs and sound effects.
+     */
     private void loadAudios() {
         // Load songs
         String[] songNames = {"song-intro-and-playing", "song-playing"};
@@ -42,12 +58,20 @@ public class AudioPlayer {
         setSoundEffectVolume();
     }
 
+    /**
+     * Sets the volume for both songs and sound effects.
+     *
+     * @param volume the volume level to set
+     */
     public void setVolume(float volume) {
         this.volume = volume;
         setSongVolume();
         setSoundEffectVolume();
     }
 
+    /**
+     * Sets the volume for the songs.
+     */
     private void setSongVolume() {
         FloatControl gainControl = (FloatControl) songs[currentSongID].getControl(FloatControl.Type.MASTER_GAIN);
 
@@ -57,6 +81,9 @@ public class AudioPlayer {
         gainControl.setValue(gain);
     }
 
+    /**
+     * Sets the volume for all sound effects.
+     */
     private void setSoundEffectVolume() {
 
         for (Clip c : soundEffects) {
@@ -69,15 +96,24 @@ public class AudioPlayer {
         }
     }
 
+    /**
+     * Stops the current song.
+     */
     public void stopSong() {
         songs[currentSongID].stop();
     }
 
+    /**
+     * Starts the current song if it's not already playing.
+     */
     public void startSong() {
         if (!songs[currentSongID].isActive())
             songs[currentSongID].start();
     }
 
+    /**
+     * Plays the intro song and sets up a listener to play the main song after the intro ends.
+     */
     public void playIntroSong() {
         currentSongID = INTO_AND_PLAYING_SONG;
         setSongVolume();
@@ -101,6 +137,9 @@ public class AudioPlayer {
         songs[currentSongID].start();
     }
 
+    /**
+     * Plays the main playing song in a loop.
+     */
     public void playPlayingSong() {
         stopSong();
         currentSongID = PLAYING_SONG;
@@ -109,26 +148,13 @@ public class AudioPlayer {
         songs[currentSongID].loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Plays the specified sound effect.
+     *
+     * @param soundEffectID the ID of the sound effect to play
+     */
     public void playSoundEffect(int soundEffectID) {
         soundEffects[soundEffectID].start();
         soundEffects[soundEffectID].setFramePosition(0);
-    }
-
-    public void toggleSongMute() {
-        this.songMuted = !songMuted;
-
-        for (Clip c : songs) {
-            BooleanControl muteControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
-            muteControl.setValue(songMuted);
-        }
-    }
-
-    public void toggleSoundEffectMute() {
-        soundEffectMuted = !soundEffectMuted;
-
-        for (Clip c : soundEffects) {
-            BooleanControl muteControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
-            muteControl.setValue(soundEffectMuted);
-        }
     }
 }

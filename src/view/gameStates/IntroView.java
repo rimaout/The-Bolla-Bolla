@@ -4,7 +4,7 @@ import model.levels.Level;
 import model.utilz.Constants;
 import model.gameStates.IntroModel;
 import view.audio.AudioPlayer;
-import view.utilz.LoadSave;
+import view.utilz.Load;
 import view.levels.LevelManagerView;
 
 import java.awt.*;
@@ -13,6 +13,10 @@ import java.awt.image.BufferedImage;
 import static view.utilz.Constants.ANIMATION_SPEED;
 import static model.utilz.Constants.INTRO.IntroState.LEVEL_TRANSITION;
 
+/**
+ * The IntroView class represents the view for the {@link IntroModel} class.
+ * It handles drawing the level transition, player animation, and introduction story text.
+ */
 public class IntroView {
     private final IntroModel introModel;
 
@@ -24,16 +28,24 @@ public class IntroView {
     private boolean firstDraw = true;
     private int playerAnimationTick, playerAnimationIndex;
 
+    /**
+     * Constructs an IntroView with the specified IntroModel.
+     *
+     * @param introModel the model for the introduction screen
+     */
     public IntroView(IntroModel introModel) {
         this.introModel = introModel;
 
         levelTiles = LevelManagerView.getInstance().getLevelTiles();
         numbersTiles = LevelManagerView.getInstance().getNumbersTiles();
-        customFont = LoadSave.GetNesFont();
+        customFont = Load.GetNesFont();
 
         loadPlayerTransitionSprites();
     }
 
+    /**
+     * Updates the player animation by incrementing the animation tick and index.
+     */
     public void updatePlayerAnimation(){
         // update player animation
         playerAnimationTick++;
@@ -46,6 +58,11 @@ public class IntroView {
         }
     }
 
+    /**
+     * Draws the introduction screen elements, including the level, text, and player animation.
+     *
+     * @param g the Graphics object to draw with
+     */
     public void draw(Graphics g) {
 
         if (introModel.getIntroState() == LEVEL_TRANSITION)
@@ -56,6 +73,9 @@ public class IntroView {
         drawPlayer(g);
     }
 
+    /**
+     * Plays the introductory sound if it is the first draw.
+     */
     private void playSound() {
         if (firstDraw) {
             AudioPlayer.getInstance().playIntroSong();
@@ -63,6 +83,11 @@ public class IntroView {
         }
     }
 
+    /**
+     * Draws the player animation on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawPlayer(Graphics g) {
 
         float xOffSet = 5 * Constants.SCALE;
@@ -71,6 +96,11 @@ public class IntroView {
         g.drawImage(playerTransitionSprites[playerAnimationIndex], (int) ( introModel.getPlayer().getHitbox().x - xOffSet ), (int) ( introModel.getPlayer().getHitbox().y - yOffSet ) , 31 * Constants.SCALE, 34 * Constants.SCALE, null);
     }
 
+    /**
+     * Draws the introductory text on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     private void drawText(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(customFont);
@@ -103,6 +133,13 @@ public class IntroView {
         g.drawString(lastLine, x, y + extraExtraSpace);
     }
 
+    /**
+     * Draws the level tiles on the screen during the level transition.
+     *
+     * @param g the Graphics object to draw with
+     * @param level the level to draw
+     * @param yOffSet the vertical offset for drawing the level
+     */
     private void drawLevel(Graphics g, Level level, int yOffSet) {
 
         int index;
@@ -111,7 +148,7 @@ public class IntroView {
         for (int y = 0; y < Constants.TILES_IN_HEIGHT; y++) {
             for (int x = 0; x < Constants.TILES_IN_WIDTH; x++) {
 
-                index = level.getSpriteIndex(x, y);
+                index = level.getTileSpriteIndex(x, y);
 
                 if (index >= 120)
                     tile = numbersTiles[index - 120];
@@ -123,10 +160,13 @@ public class IntroView {
         }
     }
 
+    /**
+     * Loads the player transition sprites from the sprite sheet.
+     */
     private void loadPlayerTransitionSprites() {
         playerTransitionSprites = new BufferedImage[2];
 
-        BufferedImage img = LoadSave.GetSprite(LoadSave.PLAYER_TRANSITION_SPRITE);
+        BufferedImage img = Load.GetSprite(Load.PLAYER_TRANSITION_SPRITE);
         playerTransitionSprites[0] = img.getSubimage(0, 0, 31, 34);
         playerTransitionSprites[1] = img.getSubimage(31, 0, 31, 34);
     }

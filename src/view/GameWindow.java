@@ -5,10 +5,20 @@ import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
-import static view.utilz.LoadSave.GAME_ICON;
+import static view.utilz.Load.GAME_ICON;
 
+/**
+ * The GameWindow class represents the main window of the game.
+ * It extends JFrame and sets up the window properties, including the title, icon, and focus listeners.
+ */
 public class GameWindow extends JFrame {
 
+    /**
+     * Constructs a GameWindow with the specified GamePanel.
+     * Sets the window properties and adds the game panel to the window.
+     *
+     * @param gamePanel the GamePanel to be added to the window
+     */
     public GameWindow(GamePanel gamePanel){
 
         setTitle("BubbleBubble"); // Set the title of the window
@@ -30,11 +40,15 @@ public class GameWindow extends JFrame {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                gamePanel.getGame().windowFocusLost();
+                gamePanel.getGameController().windowFocusLost();
             }
         });
     }
 
+    /**
+     * Sets the icon of the window in the taskbar.
+     * Attempts to set the icon in the taskbar, and prints a message if the taskbar is not supported.
+     */
     private void setIconInTaskBar(){
         Image icon = new ImageIcon(GAME_ICON).getImage();
 

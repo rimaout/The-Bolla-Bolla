@@ -18,10 +18,20 @@ import model.overlays.MenuUserCreationOverlayModel;
 import model.overlays.MenuUserSelectionOverlayModel;
 
 import model.utilz.Constants;
-import view.overlays.*;
+import view.overlays.gameOverlays.GameCompletedOverlayView;
+import view.overlays.gameOverlays.GameOverOverlayView;
+import view.overlays.gameOverlays.GamePausedOverlayView;
+import view.overlays.menuOverlays.MenuScoreBoardOverlayView;
+import view.overlays.menuOverlays.MenuUserCreationOverlayView;
+import view.overlays.menuOverlays.MenuUserSelectionOverlayView;
 
 import java.awt.*;
 
+/**
+ * Controller for the game, handles:
+ * - the creation of the GameStates
+ * - the FPS and UPS re-fresh rate (game loop, updates, and rendering).
+ */
 public class GameController implements Runnable {
 
     private final GameWindow gameWindow;
@@ -66,6 +76,9 @@ public class GameController implements Runnable {
     private LevelTransitionModel levelTransitionModel;
     private LevelTransitionView levelTransitionView;
 
+    /**
+     * Constructs a new GameController.
+     */
     public GameController() {
         initClasses();
 
@@ -77,11 +90,17 @@ public class GameController implements Runnable {
         startGameLoop();
     }
 
+    /**
+     * Starts the game loop.
+     */
     public void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     * Initializes the classes of the GameStates.
+     */
     private void initClasses() {
         usersManagerModel = UsersManagerModel.getInstance();
         audioPlayer = AudioPlayer.getInstance();
@@ -127,6 +146,9 @@ public class GameController implements Runnable {
         HurryUpManagerModel.getInstance().addObserver(HurryUpManagerView.getInstance());
     }
 
+    /**
+     * Updates the game (UPS) calling the update method in the right class based in the game state.
+     */
     public void update() {
 
         switch (GameState.state) {
@@ -149,6 +171,11 @@ public class GameController implements Runnable {
         }
     }
 
+    /**
+     * Renders the game (FPS) calling the draw method in the right class based in the game state.
+     *
+     * @param g the graphics object
+     */
     public void render(Graphics g) {
 
         switch (GameState.state) {
@@ -167,6 +194,11 @@ public class GameController implements Runnable {
         }
     }
 
+    /**
+     * {@inheritDoc} Overrides run method from {@link Runnable} interface.
+     *
+     * Used to ensure that the game runs at a constant frame rate.
+     */
     @Override
     public void run() {
 
@@ -211,6 +243,9 @@ public class GameController implements Runnable {
         }
     }
 
+    /**
+     * Handles the window focus lost event.
+     */
     public void windowFocusLost() {
         // If the game is in the playing state, call the windowFocusLost method in the playing class.
         // If in the menu state, do nothing.
@@ -220,14 +255,6 @@ public class GameController implements Runnable {
     }
 
     // ----------------- Getters -----------------
-
-    public HomeView getHome() {
-        return homeView;
-    }
-
-    public MenuModel getMenu() {
-        return menuModel;
-    }
 
     public MenuController getMenuController() {
         return menuController;
@@ -239,10 +266,6 @@ public class GameController implements Runnable {
 
     public PlayingController getPlayingController() {
         return playingController;
-    }
-
-    public LevelTransitionModel getLevelTransition() {
-        return levelTransitionModel;
     }
 
     public HomeController getHomeController() {
@@ -283,9 +306,5 @@ public class GameController implements Runnable {
 
     public MenuScoreBoardOverlayView getMenuScoreBoardOverlayView() {
         return menuScoreBoardOverlayView;
-    }
-
-    public PlayingView getPlayingView() {
-        return playingView;
     }
 }

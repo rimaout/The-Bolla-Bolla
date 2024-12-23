@@ -1,5 +1,8 @@
 package model.utilz;
 
+/**
+ * Interface containing various constants used in the game.
+ */
 public interface Constants {
 
     // Base Game Constants
@@ -17,9 +20,17 @@ public interface Constants {
     int GAME_HEIGHT = TILES_IN_HEIGHT * TILES_SIZE;
 
 
+    /**
+     * Enum representing the possible directions.
+     */
     enum Direction {
         LEFT, RIGHT, UP, DOWN, NONE;
 
+        /**
+         * Returns a random horizontal direction (LEFT or RIGHT).
+         *
+         * @return a random horizontal direction
+         */
         public static Direction GetRandomHorizontalDirection() {
             return switch ((int) (Math.random() * 2)) {
                 case 0 -> LEFT;
@@ -29,8 +40,14 @@ public interface Constants {
         }
     }
 
+    /**
+     * Class containing constants and enums related to level transitions.
+     */
     class LevelTransition {
 
+        /**
+         * Enum representing the possible states of a level transition.
+         */
         public enum TransitionState {
             LEVEL_TRANSITION, LOADING_NEW_LEVEL, START_NEW_LEVEL
         }
@@ -38,6 +55,9 @@ public interface Constants {
         public static final float LEVEL_TRANSITION_SPEED = 0.58f * SCALE;
     }
 
+    /**
+     * Interface containing constants related to bubbles.
+     */
     interface Bubble {
 
         // Bubble Dimensions
@@ -86,11 +106,17 @@ public interface Constants {
         float DEAD_X_SPEED = 0.6f * SCALE;
         float DEAD_Y_SPEED = 1.2f * SCALE;
 
+        /**
+         * Enum representing the different types of bubbles.
+         */
         enum BubbleType {
             ENEMY_BUBBLE, EMPTY_BUBBLE, WATER_BUBBLE, LIGHTNING_BUBBLE
         }
     }
 
+    /**
+     * Interface containing constants related to water flow.
+     */
     interface WaterFLow {
         // Dimensions
         int DEFAULT_W = 18;
@@ -109,6 +135,9 @@ public interface Constants {
         int ADD_WATER_DROP_INTERVAL = 60;
     }
 
+    /**
+     * Interface containing constants related to the game intro.
+     */
     interface INTRO {
 
         float TRANSITION_SPEED = 0.53f * SCALE;
@@ -119,11 +148,17 @@ public interface Constants {
         int TOTAL_LAPS = 3;
         float ANGLE_INCREMENT = 0.02f;
 
+        /**
+         * Enum representing the different states of the intro.
+         */
         enum IntroState {
             INTRO, LEVEL_TRANSITION, START_NEW_LEVEL
         }
     }
 
+    /**
+     * Interface containing constants related to the player.
+     */
     interface PlayerConstants {
 
         //Spawning Position
@@ -151,9 +186,14 @@ public interface Constants {
         int RESPAWN_TIME = 2000;
     }
 
+    /**
+     * Interface containing constants related to enemies.
+     */
     interface EnemyConstants {
 
-        // Enemy Types
+        /**
+         * Enum representing the different types of enemies.
+         */
         enum EnemyType {
             ZEN_CHAN, MAITA, SKEL_MONSTA
         }
@@ -210,6 +250,9 @@ public interface Constants {
         float VIEWING_RANGE = TILES_SIZE * 15;
     }
 
+    /**
+     * Interface containing constants related to items.
+     */
     interface Items {
 
         // Size
@@ -228,13 +271,25 @@ public interface Constants {
         int DE_SPAWN_TIMER = 8000;
         int SPAWN_POWER_UP_TIMER = 12000;
 
+        /**
+         * Enum representing the different types of items.
+         */
         enum ItemType {
             BUBBLE_REWARD, POWER_UP
         }
 
+        /**
+         * Enum representing the different types of bubble rewards.
+         */
         enum BubbleRewardType {
             APPLE, PEPPER, GRAPE, PERSIMMON, CHERRY, MUSHROOM, BANANA, WATER_CRISTAL;
 
+            /**
+             * Returns the bubble reward type based on the consecutive pops counter.
+             *
+             * @param consecutivePopsCounter the number of consecutive pops
+             * @return the corresponding bubble reward type
+             */
             public static BubbleRewardType GetBubbleRewardType(int consecutivePopsCounter) {
                 return switch (consecutivePopsCounter) {
                     case 1 -> APPLE;
@@ -248,6 +303,12 @@ public interface Constants {
                 };
             }
 
+            /**
+             * Returns the points associated with the given bubble reward type.
+             *
+             * @param bubbleRewardType the bubble reward type
+             * @return the points associated with the bubble reward type
+             */
             public static int GetPoints(BubbleRewardType bubbleRewardType) {
                 return switch (bubbleRewardType) {
                     case APPLE -> 1000;
@@ -262,9 +323,18 @@ public interface Constants {
             }
         }
 
+        /**
+         * Enum representing the different types of power-ups.
+         */
         enum PowerUpType {
             GREEN_CANDY, BLUE_CANDY, RED_CANDY, SHOE, ORANGE_PARASOL, BLUE_PARASOL, CHACKN_HEART, CRYSTAL_RING, EMERALD_RING, RUBY_RING;
 
+            /**
+             * Returns the points associated with the given power-up type.
+             *
+             * @param powerUpType the power-up type
+             * @return the points associated with the power-up type
+             */
             public static int GetPoints (PowerUpType powerUpType) {
                 return switch (powerUpType) {
                     case GREEN_CANDY -> 100;
@@ -282,6 +352,9 @@ public interface Constants {
         }
     }
 
+    /**
+     * Interface containing constants related to the points manager.
+     */
     interface PointsManager {
 
         // Size Small
@@ -299,11 +372,17 @@ public interface Constants {
         // Timers
         int CONSECUTIVE_POP_DELAY = 200;
 
+        /**
+         * Enum representing the different types of points.
+         */
         enum PointsType {
             SMALL, BIG
         }
     }
 
+    /**
+     * Interface containing constants related to projectiles.
+     */
     interface Projectiles {
 
         // Size
@@ -323,21 +402,33 @@ public interface Constants {
         float MAITA_FIREBALL_SPEED = 0.53f * SCALE;
         float LIGHTNING_SPEED = 1f * SCALE;
 
+        /**
+         * Enum representing the different states of a projectile.
+         */
         enum ProjectileState {
             MOVING, IMPACT
         }
 
+        /**
+         * Enum representing the different types of projectiles.
+         */
         enum ProjectileType {
             PLAYER_BUBBLE, MAITA_FIREBALL, LIGHTNING
         }
     }
 
+    /**
+     * Interface containing constants related to the hurry-up manager.
+     */
     interface HurryUpManager {
         // Timers
         int START_HURRY_UP_TIMER = 17000;
         int ACTIVATE_SKEL_MONSTA_TIMER = 20000;
     }
 
+    /**
+     * Interface containing constants related to the bubble generator.
+     */
     interface BubbleGenerator {
 
         // Timers
@@ -351,10 +442,16 @@ public interface Constants {
         int TOP_GENERATOR_Y = -2 * TILES_SIZE;
         int BOTTOM_GENERATOR_Y = TILES_IN_HEIGHT + 2 * TILES_SIZE;
 
+        /**
+         * Enum representing the different positions of the bubble generator.
+         */
         enum GeneratorPosition {
             NONE, TOP, BOTTOM
         }
 
+        /**
+         * Enum representing the different types of bubble generators.
+         */
         enum GeneratorType {
             NONE, WATER_BUBBLE, LIGHTNING_BUBBLE
         }

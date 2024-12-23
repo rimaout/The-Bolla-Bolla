@@ -1,33 +1,59 @@
-package view.overlays;
+package view.overlays.gameOverlays;
+
+import java.awt.*;
 
 import view.audio.AudioPlayer;
 import model.utilz.Constants;
 import model.gameStates.PlayingModel;
 
-import java.awt.*;
+import static view.utilz.Constants.AudioConstants.GAME_OVER;
+import static view.utilz.Constants.Overlays.BUD_GREEN_COLOR;
+import static view.utilz.Constants.Overlays.BUD_RED_COLOR;
 
-import static view.utilz.Constants.Overlays.*;
+/**
+ * The GameOverOverlayView class represents the overlay view displayed when the game is over.
+ * It handles drawing the title and control instructions on the screen.
+ */
+public class GameOverOverlayView extends GameOverlayView {
 
-public class GamePausedOverlayView extends GameOverlayView {
-
-    public GamePausedOverlayView(PlayingModel playingModel) {
+    /**
+     * Constructs a GameOverOverlayView with the specified PlayingModel.
+     *
+     * @param playingModel the model of the playing state
+     */
+    public GameOverOverlayView(PlayingModel playingModel) {
         super(playingModel);
     }
 
+    /**
+     * Draws the title "GAME OVER" on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     protected void drawTitle(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(nesFont.deriveFont(50f));
+        g.setFont(nesFont.deriveFont(42f));
         FontMetrics fm = g.getFontMetrics(g.getFont());
 
-        String text = "PAUSE";
-        int textWidth = fm.stringWidth(text);
-        int x = (Constants.GAME_WIDTH - textWidth) / 2;
+        String text1 = "GAME";
+        String text2 = "OVER";
+        int textWidth1 = fm.stringWidth(text1);
+        int textWidth2 = fm.stringWidth(text2);
+        int totalWidth = textWidth1 + textWidth2;
+        int spacing = 4 * Constants.SCALE; // Adjust this value to change the spacing between the words
+        int x = (Constants.GAME_WIDTH - (totalWidth + spacing)) / 2;
         int y = (Constants.GAME_HEIGHT / 10) * 4;
 
-        g.drawString(text, x, y);
+        g.drawString(text1, x, y);
+        g.drawString(text2, x + textWidth1 + spacing, y);
     }
 
+    /**
+     * Draws the control instructions on the screen.
+     *
+     * @param g the Graphics object to draw with
+     */
     @Override
     protected void drawControls(Graphics g) {
         FontMetrics fm = g.getFontMetrics(retroFont.deriveFont(22f));
@@ -44,11 +70,11 @@ public class GamePausedOverlayView extends GameOverlayView {
         int x1 = (Constants.GAME_WIDTH - (text1WidthPart1 + text1WidthPart2 + text1WidthPart3 + text1WidthPart4)) / 2;
         int y1 = Constants.GAME_HEIGHT / 2 - 3 * Constants.SCALE;
 
-        // Text for RESUME
+        // Text for RESTART
         String text2Part1 = "Press ";
-        String text2Part2 = "ESC";
+        String text2Part2 = "R";
         String text2Part3 = " to ";
-        String text2Part4 = "RESUME!";
+        String text2Part4 = "RESTART!";
         int text2WidthPart1 = fm.stringWidth(text2Part1);
         int text2WidthPart2 = fm.stringWidth(text2Part2);
         int text2WidthPart3 = fm.stringWidth(text2Part3);
@@ -83,8 +109,17 @@ public class GamePausedOverlayView extends GameOverlayView {
         g.drawString(text2Part4, x2 + text2WidthPart1 + text2WidthPart2 + text2WidthPart3, y2);
     }
 
+    /**
+     * Sets the audio for the game over overlay.
+     * Stops the current song and plays the game over sound effect.
+     */
     @Override
     protected void setAudio() {
         AudioPlayer.getInstance().stopSong();
+
+        if (firstUpdate) {
+            AudioPlayer.getInstance().playSoundEffect(GAME_OVER);
+            firstUpdate = false;
+        }
     }
 }

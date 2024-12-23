@@ -8,40 +8,81 @@ import model.gameStates.MenuModel;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Controller for handling the user interaction with the main menu.
+ */
 public class MenuController implements InputMethods {
     private final GameController gameController;
     private final MenuModel menuModel;
 
+    /**
+     * Constructs a new MenuController.
+     *
+     * @param gameController the game controller
+     * @param menuModel the model for the menu
+     */
     public MenuController(GameController gameController, MenuModel menuModel) {
         this.gameController = gameController;
         this.menuModel = menuModel;
     }
 
+    /**
+     * {@inheritDoc} Overrides mouseClicked method from {@link InputMethods} interface.
+     *
+     * @param e the MouseEvent to handle
+     *
+     *
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc} Overrides mousePressed method from {@link InputMethods} interface.
+     *
+     * @param e the MouseEvent to handle
+     */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc} Overrides mouseReleased method from {@link InputMethods} interface.
+     *
+     * @param e the MouseEvent to handle
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc} Overrides mouseMoved method from {@link InputMethods} interface.
+     *
+     * @param e the MouseEvent to handle
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc} Overrides mouseDragged method from {@link InputMethods} interface.
+     *
+     * @param e the MouseEvent to handle
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc} Overrides keyPressed method from {@link InputMethods} interface.
+     *
+     * @param e the KeyEvent to handle
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -100,6 +141,11 @@ public class MenuController implements InputMethods {
         }
     }
 
+    /**
+     * {@inheritDoc} Overrides keyReleased method from {@link InputMethods} interface.
+     *
+     * @param e the KeyEvent to handle
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if (menuModel.isUserSelectionOverlayActive())
