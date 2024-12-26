@@ -4,6 +4,7 @@ import model.gameStates.MenuModel;
 import model.users.UsersManagerModel;
 import model.overlays.MenuUserCreationOverlayModel;
 import controller.inputs.InputMethods;
+import view.gameStates.MenuView;
 import view.overlays.menuOverlays.MenuUserCreationOverlayView;
 import view.users.UsersManagerView;
 
@@ -25,13 +26,12 @@ public class MenuUserCreationOverlayController implements InputMethods {
      * Constructs a new MenuUserCreationOverlayController.
      *
      * @param menuModel the model for the menu
-     * @param menuUserCreationOverlayModel the model for the user creation overlay
-     * @param menuUserCreationOverlayView the view for the user creation overlay
+     * @param menuView the view for the menu
      */
-    public MenuUserCreationOverlayController(MenuModel menuModel, MenuUserCreationOverlayModel menuUserCreationOverlayModel, MenuUserCreationOverlayView menuUserCreationOverlayView) {
+    public MenuUserCreationOverlayController(MenuModel menuModel, MenuView menuView) {
         this.menuModel = menuModel;
-        this.menuUserCreationOverlayModel = menuUserCreationOverlayModel;
-        this.menuUserCreationOverlayView = menuUserCreationOverlayView;
+        this.menuUserCreationOverlayModel = menuModel.getMenuUserCreationOverlayModel();
+        this.menuUserCreationOverlayView = menuView.getMenuUserCreationOverlayView();
     }
 
     /**

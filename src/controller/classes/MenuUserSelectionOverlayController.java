@@ -4,6 +4,7 @@ import model.gameStates.MenuModel;
 import model.users.UsersManagerModel;
 import controller.inputs.InputMethods;
 import model.overlays.MenuUserSelectionOverlayModel;
+import view.gameStates.MenuView;
 import view.overlays.menuOverlays.MenuUserSelectionOverlayView;
 
 import java.awt.event.KeyEvent;
@@ -22,13 +23,12 @@ public class MenuUserSelectionOverlayController implements InputMethods {
      * Constructs a new MenuUserSelectionOverlayController.
      *
      * @param menuModel the model for the menu
-     * @param menuUserSelectionOverlayModel the model for the user selection overlay
-     * @param menuUserSelectionOverlayView the view for the user selection overlay
+     * @param menuView the view for the menu
      */
-    public MenuUserSelectionOverlayController(MenuModel menuModel, MenuUserSelectionOverlayModel menuUserSelectionOverlayModel, MenuUserSelectionOverlayView menuUserSelectionOverlayView) {
+    public MenuUserSelectionOverlayController(MenuModel menuModel, MenuView menuView) {
         this.menuModel = menuModel;
-        this.menuUserSelectionOverlayModel = menuUserSelectionOverlayModel;
-        this.menuUserSelectionOverlayView = menuUserSelectionOverlayView;
+        this.menuUserSelectionOverlayModel = menuModel.getMenuUserSelectionOverlayModel();
+        this.menuUserSelectionOverlayView = menuView.getMenuUserSelectionOverlayView();
     }
 
     /**

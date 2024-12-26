@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.inputs.InputMethods;
 import model.gameStates.GameState;
 import model.gameStates.MenuModel;
+import view.gameStates.MenuView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,18 +13,24 @@ import java.awt.event.MouseEvent;
  * Controller for handling the user interaction with the main menu.
  */
 public class MenuController implements InputMethods {
-    private final GameController gameController;
     private final MenuModel menuModel;
+
+    private MenuUserCreationOverlayController menuUserCreationOverlayController;
+    private MenuUserSelectionOverlayController menuUserSelectionOverlayController;
+    private MenuScoreBoardOverlayController menuScoreBoardOverlayController;
+
 
     /**
      * Constructs a new MenuController.
      *
-     * @param gameController the game controller
      * @param menuModel the model for the menu
      */
-    public MenuController(GameController gameController, MenuModel menuModel) {
-        this.gameController = gameController;
+    public MenuController(MenuModel menuModel, MenuView menuView) {
         this.menuModel = menuModel;
+
+        menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuView);
+        menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuView);
+        menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
     }
 
     /**
@@ -87,17 +94,17 @@ public class MenuController implements InputMethods {
     public void keyPressed(KeyEvent e) {
 
         if (menuModel.isUserSelectionOverlayActive()) {
-            gameController.getMenuUserSelectionOverlayController().keyPressed(e);
+            menuUserSelectionOverlayController.keyPressed(e);
             return;
         }
 
         if (menuModel.isUserCreationOverlayActive()) {
-            gameController.getMenuUserCreationOverlayController().keyPressed(e);
+            menuUserCreationOverlayController.keyPressed(e);
             return;
         }
 
         if (menuModel.isScoreBoardOverlayActive()) {
-            gameController.getMenuScoreBoardOverlayController().keyPressed(e);
+            menuScoreBoardOverlayController.keyPressed(e);
             return;
         }
 
@@ -122,13 +129,13 @@ public class MenuController implements InputMethods {
                         break;
                     case 1:
                         // Change User
-                        gameController.getMenuUserSelectionOverlayModel().updateUserList();
+                        menuModel.getMenuUserSelectionOverlayModel().updateUserList();
                         menuModel.setUserSelectionOverlayActive(true);
                         menuModel.setScoreBoardOverlayActive(false);
                         break;
                     case 2:
                         // Score Board
-                        gameController.getMenuScoreBoardOverlayModel().updateUserScores();
+                        menuModel.getMenuScoreBoardOverlayModel().updateUserScores();
                         menuModel.setUserSelectionOverlayActive(false);
                         menuModel.setScoreBoardOverlayActive(true);
                         break;
@@ -149,10 +156,10 @@ public class MenuController implements InputMethods {
     @Override
     public void keyReleased(KeyEvent e) {
         if (menuModel.isUserSelectionOverlayActive())
-            gameController.getMenuUserSelectionOverlayController().keyReleased(e);
+            menuUserSelectionOverlayController.keyReleased(e);
         else if (menuModel.isUserCreationOverlayActive())
-            gameController.getMenuUserCreationOverlayController().keyReleased(e);
+            menuUserCreationOverlayController.keyReleased(e);
         else if (menuModel.isScoreBoardOverlayActive())
-            gameController.getMenuScoreBoardOverlayController().keyReleased(e);
+            menuScoreBoardOverlayController.keyReleased(e);
     }
 }

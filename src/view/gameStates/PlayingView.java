@@ -1,6 +1,5 @@
 package view.gameStates;
 
-import controller.classes.PlayingController;
 import model.gameStates.PlayingModel;
 import view.bubbles.playerBubbles.PlayerBubblesManagerView;
 import view.entities.EnemyManagerView;
@@ -30,7 +29,7 @@ public class PlayingView implements Observer {
     private PlayerView playerOneView;
     private PlayerView playerTwoView = null;
 
-    private GamePausedOverlayView gamePauseOverlayView;
+    private GamePausedOverlayView gamePausedOverlayView;
     private GameOverOverlayView gameOverOverlayView;
     private GameCompletedOverlayView gameCompletedOverlayView;
     private IntroView introView;
@@ -39,18 +38,13 @@ public class PlayingView implements Observer {
      * Constructs a PlayingView with the specified models and controllers.
      *
      * @param playingModel the model for the playing state
-     * @param gamePausedOverlayView the view for the game paused overlay
-     * @param gameOverOverlayView the view for the game over overlay
-     * @param gameCompletedOverlayView the view for the game completed overlay
-     * @param playingController the controller for the playing state
      */
-    public PlayingView(PlayingModel playingModel, GamePausedOverlayView gamePausedOverlayView,
-                       GameOverOverlayView gameOverOverlayView, GameCompletedOverlayView gameCompletedOverlayView, PlayingController playingController) {
-
+    public PlayingView(PlayingModel playingModel) {
         this.playingModel = playingModel;
-        this.gamePauseOverlayView = gamePausedOverlayView;
-        this.gameOverOverlayView = gameOverOverlayView;
-        this.gameCompletedOverlayView = gameCompletedOverlayView;
+
+        gamePausedOverlayView = new GamePausedOverlayView(playingModel);
+        gameCompletedOverlayView = new GameCompletedOverlayView(playingModel);
+        gameOverOverlayView = new GameOverOverlayView(playingModel);
 
         initClasses();
     }
@@ -93,7 +87,7 @@ public class PlayingView implements Observer {
         }
 
         if (playingModel.isPaused())
-            gamePauseOverlayView.draw(g);
+            gamePausedOverlayView.draw(g);
 
         else if (playingModel.isGameOver())
             gameOverOverlayView.draw(g);
@@ -119,7 +113,7 @@ public class PlayingView implements Observer {
      * Resets the state of all game elements for a new play session.
      */
     public void newPlayReset() {
-        gamePauseOverlayView.reset();
+        gamePausedOverlayView.reset();
         ProjectileManagerView.getInstance().newPlayReset();
         RewardPointsManagerView.getInstance().newPlayReset();
         ItemManagerView.getInstance().newPlayReset();
@@ -153,5 +147,25 @@ public class PlayingView implements Observer {
 
         if (playingModel.isNewLevelReset())
             newLevelReset();
+    }
+
+    // ------------------- Getters  Methods -------------------
+
+    /**
+     * Returns the player one view.
+     *
+     * @return the player one view
+     */
+    public GameCompletedOverlayView getGameCompletedOverlayView() {
+        return gameCompletedOverlayView;
+    }
+
+    /**
+     * Returns the player one view.
+     *
+     * @return the player one view
+     */
+    public GameOverOverlayView getGameOverOverlayView() {
+        return gameOverOverlayView;
     }
 }

@@ -13,17 +13,8 @@ import view.gameStates.HomeView;
 import view.gameStates.LevelTransitionView;
 import view.gameStates.MenuView;
 import view.gameStates.PlayingView;
-import model.overlays.MenuScoreBoardOverlayModel;
-import model.overlays.MenuUserCreationOverlayModel;
-import model.overlays.MenuUserSelectionOverlayModel;
 
 import model.utilz.Constants;
-import view.overlays.gameOverlays.GameCompletedOverlayView;
-import view.overlays.gameOverlays.GameOverOverlayView;
-import view.overlays.gameOverlays.GamePausedOverlayView;
-import view.overlays.menuOverlays.MenuScoreBoardOverlayView;
-import view.overlays.menuOverlays.MenuUserCreationOverlayView;
-import view.overlays.menuOverlays.MenuUserSelectionOverlayView;
 
 import java.awt.*;
 
@@ -47,27 +38,6 @@ public class GameController implements Runnable {
     private MenuModel menuModel;
     private MenuView menuView;
     private MenuController menuController;
-
-    private MenuUserCreationOverlayModel menuUserCreationOverlayModel;
-    private MenuUserCreationOverlayView menuUserCreationOverlayView;
-    private MenuUserCreationOverlayController menuUserCreationOverlayController;
-
-    private MenuUserSelectionOverlayModel menuUserSelectionOverlayModel;
-    private MenuUserSelectionOverlayView menuUserSelectionOverlayView;
-    private MenuUserSelectionOverlayController menuUserSelectionOverlayController;
-
-    private MenuScoreBoardOverlayModel menuScoreBoardOverlayModel;
-    private MenuScoreBoardOverlayView menuScoreBoardOverlayView;
-    private MenuScoreBoardOverlayController menuScoreBoardOverlayController;
-
-    private GamePausedOverlayView gamePausedOverlayView;
-    private GamePausedOverlayController gamePausedOverlayController;
-
-    private GameOverOverlayView gameOverOverlayView;
-    private GameOverOverlayController gameOverOverlayController;
-
-    private GameCompletedOverlayView gameCompletedOverlayView;
-    private GameCompletedOverlayController gameCompletedOverlayController;
 
     private PlayingModel playingModel;
     private PlayingView playingView;
@@ -108,35 +78,13 @@ public class GameController implements Runnable {
         homeView = new HomeView(this);
         homeController = new HomeController(homeView);
 
-        menuModel = new MenuModel(this);
-        menuView = new MenuView(menuModel, this);
-        menuController = new MenuController(this, menuModel);
-
-        menuUserCreationOverlayModel = new MenuUserCreationOverlayModel(menuModel);
-        menuUserCreationOverlayView = new MenuUserCreationOverlayView(menuUserCreationOverlayModel);
-        menuUserCreationOverlayController = new MenuUserCreationOverlayController(menuModel, menuUserCreationOverlayModel, menuUserCreationOverlayView);
-
-        menuUserSelectionOverlayModel = new MenuUserSelectionOverlayModel(menuModel);
-        menuUserSelectionOverlayView = new MenuUserSelectionOverlayView(menuUserSelectionOverlayModel);
-        menuUserSelectionOverlayController = new MenuUserSelectionOverlayController(menuModel, menuUserSelectionOverlayModel, menuUserSelectionOverlayView);
-
-        menuScoreBoardOverlayModel = new MenuScoreBoardOverlayModel(menuModel);
-        menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuScoreBoardOverlayModel);
-        menuScoreBoardOverlayController = new MenuScoreBoardOverlayController(menuModel);
+        menuModel = new MenuModel();
+        menuView = new MenuView(menuModel);
+        menuController = new MenuController(menuModel, menuView);
 
         playingModel = new PlayingModel();
-
-        gamePausedOverlayView = new GamePausedOverlayView(playingModel);
-        gamePausedOverlayController = new GamePausedOverlayController(playingModel);
-
-        gameCompletedOverlayView = new GameCompletedOverlayView(playingModel);
-        gameCompletedOverlayController = new GameCompletedOverlayController(gameCompletedOverlayView, playingModel);
-
-        gameOverOverlayView = new GameOverOverlayView(playingModel);
-        gameOverOverlayController = new GameOverOverlayController(gameOverOverlayView, playingModel);
-
-        playingController = new PlayingController(playingModel, gamePausedOverlayController, gameCompletedOverlayController, gameOverOverlayController);
-        playingView = new PlayingView(playingModel, gamePausedOverlayView, gameOverOverlayView, gameCompletedOverlayView, playingController);
+        playingView = new PlayingView(playingModel);
+        playingController = new PlayingController(playingModel, playingView);
 
         levelTransitionModel = LevelTransitionModel.getInstance();
         levelTransitionModel.initPlayingModel(playingModel);
@@ -196,7 +144,7 @@ public class GameController implements Runnable {
 
     /**
      * {@inheritDoc} Overrides run method from {@link Runnable} interface.
-     *
+     * <p>
      * Used to ensure that the game runs at a constant frame rate.
      */
     @Override
@@ -256,55 +204,39 @@ public class GameController implements Runnable {
 
     // ----------------- Getters -----------------
 
+    /**
+     * Returns the MenuController instance.
+     *
+     * @return the MenuController instance
+     */
     public MenuController getMenuController() {
         return menuController;
     }
 
+    /**
+     * Returns the PlayingModel instance.
+     *
+     * @return the PlayingModel instance
+     */
     public PlayingModel getPlaying() {
         return playingModel;
     }
 
+    /**
+     * Returns the PlayingController instance.
+     *
+     * @return the PlayingController instance
+     */
     public PlayingController getPlayingController() {
         return playingController;
     }
 
+    /**
+     * Returns the HomeController instance.
+     *
+     * @return the HomeController instance
+     */
     public HomeController getHomeController() {
         return homeController;
-    }
-
-    public MenuUserCreationOverlayModel getMenuUserCreationOverlayModel() {
-        return menuUserCreationOverlayModel;
-    }
-
-    public MenuUserCreationOverlayController getMenuUserCreationOverlayController() {
-        return menuUserCreationOverlayController;
-    }
-
-    public MenuUserSelectionOverlayModel getMenuUserSelectionOverlayModel() {
-        return menuUserSelectionOverlayModel;
-    }
-
-    public MenuUserSelectionOverlayController getMenuUserSelectionOverlayController() {
-        return menuUserSelectionOverlayController;
-    }
-
-    public MenuScoreBoardOverlayModel getMenuScoreBoardOverlayModel() {
-        return menuScoreBoardOverlayModel;
-    }
-
-    public MenuScoreBoardOverlayController getMenuScoreBoardOverlayController() {
-        return menuScoreBoardOverlayController;
-    }
-
-    public MenuUserSelectionOverlayView getMenuUserSelectionOverlayView() {
-        return menuUserSelectionOverlayView;
-    }
-
-    public MenuUserCreationOverlayView getMenuUserCreationOverlayView() {
-        return menuUserCreationOverlayView;
-    }
-
-    public MenuScoreBoardOverlayView getMenuScoreBoardOverlayView() {
-        return menuScoreBoardOverlayView;
     }
 }

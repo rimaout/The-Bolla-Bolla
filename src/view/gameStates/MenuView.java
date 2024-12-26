@@ -1,8 +1,10 @@
 package view.gameStates;
 
+import view.overlays.menuOverlays.MenuScoreBoardOverlayView;
+import view.overlays.menuOverlays.MenuUserCreationOverlayView;
+import view.overlays.menuOverlays.MenuUserSelectionOverlayView;
 import view.utilz.Load;
 import view.overlays.menuOverlays.MenuTwinkleBubbleManager;
-import controller.GameController;
 import model.utilz.Constants;
 import model.gameStates.MenuModel;
 import model.users.UsersManagerModel;
@@ -19,10 +21,13 @@ import static view.utilz.Constants.MenuConstants.SPACE_WIDTH;
  */
 public class MenuView {
     private final MenuModel menuModel;
-    private final GameController gameController;
 
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
     private final UsersManagerModel usersManagerModel = UsersManagerModel.getInstance();
+
+    private MenuUserCreationOverlayView menuUserCreationOverlayView;
+    private MenuUserSelectionOverlayView menuUserSelectionOverlayView;
+    private MenuScoreBoardOverlayView menuScoreBoardOverlayView;
 
     private Font nesFont;
     private Font retroFont;
@@ -38,17 +43,18 @@ public class MenuView {
      * Constructs a MenuView with the specified MenuModel and GameController.
      *
      * @param menuModel the model for the menu screen
-     * @param gameController the controller for the game
      */
-    public MenuView(MenuModel menuModel, GameController gameController) {
+    public MenuView(MenuModel menuModel) {
         this.menuModel = menuModel;
-        this.gameController = gameController;
         this.nesFont = new Font("NesFont", Font.PLAIN, 20);
         this.retroFont = new Font("RetroFont", Font.PLAIN, 20);
-
         this.nesFont = Load.GetNesFont();
         this.retroFont = Load.GetRetroGamingFont();
         generateSuggestions();
+
+        menuUserCreationOverlayView = new MenuUserCreationOverlayView(menuModel.getMenuUserCreationOverlayModel());
+        menuUserSelectionOverlayView = new MenuUserSelectionOverlayView(menuModel.getMenuUserSelectionOverlayModel());
+        menuScoreBoardOverlayView = new MenuScoreBoardOverlayView(menuModel.getMenuScoreBoardOverlayModel());
     }
 
     /**
@@ -72,16 +78,16 @@ public class MenuView {
         g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         if (menuModel.isScoreBoardOverlayActive()) {
-            gameController.getMenuScoreBoardOverlayView().draw(g);
+            menuScoreBoardOverlayView.draw(g);
             return;
         }
 
         drawGratings(g);
 
         if (menuModel.isUserSelectionOverlayActive())
-            gameController.getMenuUserSelectionOverlayView().draw(g);
+            menuUserSelectionOverlayView.draw(g);
         else if (menuModel.isUserCreationOverlayActive())
-            gameController.getMenuUserCreationOverlayView().draw(g);
+            menuUserCreationOverlayView.draw(g);
         else {
             drawTittle(g);
             drawSelections(g);
@@ -230,5 +236,25 @@ public class MenuView {
             suggestionsWidth += SUGGESTIONS_WIDTHS[i] + SPACE_WIDTH;
         }
         suggestions = sb.toString();
+    }
+
+    // ------------- Getters Methods -------------
+
+    /**
+     * Gets the MenuUserCreationOverlayView for the menu screen.
+     *
+     * @return the MenuUserCreationOverlayView
+     */
+    public MenuUserCreationOverlayView getMenuUserCreationOverlayView() {
+        return menuUserCreationOverlayView;
+    }
+
+    /**
+     * Gets the MenuUserSelectionOverlayView for the menu screen.
+     *
+     * @return the MenuUserSelectionOverlayView
+     */
+    public MenuUserSelectionOverlayView getMenuUserSelectionOverlayView() {
+        return menuUserSelectionOverlayView;
     }
 }

@@ -2,6 +2,7 @@ package controller.classes;
 
 import controller.inputs.InputMethods;
 import model.gameStates.PlayingModel;
+import view.gameStates.PlayingView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -22,17 +23,13 @@ public class PlayingController implements InputMethods {
      * Constructs a new PlayingController.
      *
      * @param playingModel the model for the playing state
-     * @param gamePausedOverlayController the controller for the game paused overlay
-     * @param gameCompletedOverlayController the controller for the game completed overlay
-     * @param gameOverOverlayController the controller for the game over overlay
      */
-    public PlayingController(PlayingModel playingModel, GamePausedOverlayController gamePausedOverlayController,
-                             GameCompletedOverlayController gameCompletedOverlayController,
-                             GameOverOverlayController gameOverOverlayController) {
+    public PlayingController(PlayingModel playingModel, PlayingView playingView) {
         this.playingModel = playingModel;
-        this.gamePausedOverlayController = gamePausedOverlayController;
-        this.gameCompletedOverlayController = gameCompletedOverlayController;
-        this.gameOverOverlayController = gameOverOverlayController;
+
+        gamePausedOverlayController = new GamePausedOverlayController(playingModel);
+        gameCompletedOverlayController = new GameCompletedOverlayController(playingView.getGameCompletedOverlayView(), playingModel);
+        gameOverOverlayController = new GameOverOverlayController(playingView.getGameOverOverlayView(), playingModel);
 
         playerController = new PlayerController(playingModel.getPlayerOneModel());
     }
@@ -122,14 +119,5 @@ public class PlayingController implements InputMethods {
         if (!playingModel.isPaused() || !playingModel.isGameOver() || !playingModel.isGameCompleted()) {
             playerController.keyReleased(e);
         }
-    }
-
-    /**
-     * Gets the player controller.
-     *
-     * @return the player controller
-     */
-    public PlayerController getPlayerController() {
-        return playerController;
     }
 }
