@@ -91,6 +91,8 @@ public class ZenChanModel extends EnemyModel {
      * and moving on the ground. It also checks if the ZenChan is stuck in a wall and adjusts its position accordingly.
      */
     private void updateMove() {
+        if (!IsEntityInsideMap(hitbox))
+            pacManEffect();
 
         if(!IsEntityOnFloor(hitbox, levelManagerModel.getLevelTileData()) && !isJumping && !goUp && !goDown)
             goOnFloor();

@@ -83,15 +83,15 @@ public class MenuTwinkleBubble extends EntityModel {
         }
 
         // Pacman effect
-        if (x < 0)
-            x = Constants.GAME_WIDTH - BUBBLE_W;
-        else if (x > Constants.GAME_WIDTH - BUBBLE_W)
-            x = 0;
+        if (x < -BUBBLE_W)
+            x = Constants.GAME_WIDTH;
+        else if (x > Constants.GAME_WIDTH)
+            x = -BUBBLE_W;
 
-        if (y < 0)
-            y = Constants.GAME_HEIGHT - BUBBLE_H;
-        else if (y > Constants.GAME_HEIGHT - BUBBLE_H)
-            y = 0;
+        if (y < -BUBBLE_H)
+            y = Constants.GAME_HEIGHT;
+        else if (y > Constants.GAME_HEIGHT)
+            y = -BUBBLE_H;
     }
 
     /**

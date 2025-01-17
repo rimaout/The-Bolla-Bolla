@@ -110,6 +110,9 @@ public class MaitaModel extends EnemyModel {
      */
     private void updateMove() {
 
+        if (!IsEntityInsideMap(hitbox))
+            pacManEffect();
+
         if(!IsEntityOnFloor(hitbox, levelManagerModel.getLevelTileData()) && !isJumping && !goUp && !goDown)
             goOnFloor();
 

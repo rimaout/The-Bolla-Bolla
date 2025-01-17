@@ -102,6 +102,17 @@ public abstract class EntityModel {
         }
     }
 
+    /**
+     * Applies the Pac-Man effect to the entity.
+     *
+     * <p>This method checks if the entity vertical position is beyond the bottom boundary of the map.
+     * If so, it wraps the entity's position to the top of the map, creating a Pac-Man effect.
+     */
+    protected void pacManEffect() {
+        if (hitbox.y > Constants.TILES_SIZE * Constants.TILES_IN_HEIGHT)
+            hitbox.y = -2 * Constants.TILES_SIZE;
+    }
+
     // ------ Getters -------
 
     /**

@@ -49,7 +49,8 @@ public class PointsView {
      * Reduces the alpha value to create a fading effect.
      */
     private void fade() {
-        alpha -= 0.009f;
+        if (alpha - 0.009 > 0.0f)
+            alpha -= 0.009f;
     }
 
     // ----------- Getters Methods ----------- //

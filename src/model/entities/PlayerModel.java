@@ -317,17 +317,6 @@ public class PlayerModel extends EntityModel {
     }
 
     /**
-     * Applies the Pac-Man effect to the player's position.
-     *
-     * <p>This method checks if the player's vertical position is beyond the bottom boundary of the map.
-     * If so, it wraps the player's position to the top of the map, creating a Pac-Man effect.
-     */
-    private void pacManEffect() {
-        if (hitbox.y > Constants.TILES_SIZE * Constants.TILES_IN_HEIGHT)
-            hitbox.y = -2 * Constants.TILES_SIZE;
-    }
-
-    /**
      * Handles the player's death state.
      */
     public void death() {

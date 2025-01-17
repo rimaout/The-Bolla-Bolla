@@ -72,11 +72,17 @@ public class PlayerBubbleProjectileModel extends ProjectileModel {
      */
     @Override
     protected void checkEnemyHit(EnemyModel enemyModel, PlayerModel playerModel) {
+
         if (!enemyModel.isActive() || enemyModel.isImmune())
             return;
 
+
+
         if (hitbox.intersects(enemyModel.getHitbox())) {
             if (hitbox.intersects(enemyModel.getHitbox())) {
+
+                if (!active) return;
+
                 enemyModel.bubbleCapture(direction);
                 active = false;
             }
