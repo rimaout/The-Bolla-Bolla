@@ -26,7 +26,7 @@ public class GameWindow extends JFrame {
         add(gamePanel);
 
         setIconInTaskBar();
-
+        macosTitleBarCustomizations();
         setResizable(false);
         pack(); // Adjust the size of the window to fit the preferred size of the panel (set in the setPanelSize() method of the GamePanel class)
         setLocationRelativeTo(null); // Center the window on the screen
@@ -57,6 +57,21 @@ public class GameWindow extends JFrame {
             Taskbar.getTaskbar().setIconImage(icon);
         } catch (UnsupportedOperationException e) {
             System.out.println("TaskBar not supported on Windows!");
+        }
+    }
+
+    /**
+     * Customizes the title bar of the window for macOS.
+     * Sets the window content to be full, the title bar to be transparent, and the window title to be invisible.
+     */
+    private void macosTitleBarCustomizations() {
+        // Check if the current operating system is macOS
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            getRootPane().putClientProperty("apple.awt.fullWindowContent", true);
+            getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
+            getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
+        } else {
+            System.out.println("macOS customizations are not applied as the current OS is not macOS.");
         }
     }
 }
