@@ -82,8 +82,8 @@ public class HurryUpManagerModel extends Observable {
         skelMonsta.activateDespawn();
 
         // notify observers
-        notifyObservers();
         setChanged();
+        notifyObservers();
     }
 
     /**
@@ -97,8 +97,8 @@ public class HurryUpManagerModel extends Observable {
         skelMonsta.reset();
 
         // notify observers
-        notifyObservers();
         setChanged();
+        notifyObservers();
     }
 
     /**
