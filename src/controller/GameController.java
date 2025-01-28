@@ -5,7 +5,7 @@ import model.entities.HurryUpManagerModel;
 import model.gameStates.*;
 import model.gameStates.MenuModel;
 import view.GamePanel;
-import view.GameWindow;
+import view.GameFrame;
 import view.audio.AudioPlayer;
 import model.users.UsersManagerModel;
 import view.entities.HurryUpManagerView;
@@ -25,7 +25,7 @@ import java.awt.*;
  */
 public class GameController implements Runnable {
 
-    private final GameWindow gameWindow;
+    private final GameFrame gameFrame;
     private final GamePanel gamePanel;
     private Thread gameThread;
 
@@ -53,7 +53,7 @@ public class GameController implements Runnable {
         initClasses();
 
         gamePanel = new GamePanel(this);
-        gameWindow = new GameWindow(gamePanel);
+        gameFrame = new GameFrame(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();  // Requests focus for the game panel, This ensures that the game panel is the component that receives keyboard input.
 

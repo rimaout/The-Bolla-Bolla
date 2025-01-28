@@ -58,6 +58,7 @@ public class EnemyBubbleView extends EmptyBubbleView {
 
         else if (bubbleModel.getState() == POP_RED)
             g.drawImage(enemyManagerView.getEnemySprite(enemyType)[BOBBLE_RED_POP_ANIMATION][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
+
         else if (bubbleModel.getState() == DEAD)
             g.drawImage(enemyManagerView.getEnemySprite(enemyType)[DEAD_ANIMATION][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
 

@@ -59,13 +59,14 @@ public class RewardPointsManagerView {
         }
     }
 
+
     /**
      * Synchronizes the points views with the model.
      * Adds new PointsView instances for any PointsModel instances that do not already have a corresponding view.
      */
     private void syncPointsViewsWithModel() {
         for (var p : RewardPointsManagerModel.getInstance().getPointsModelModelArray())
-            if (pointsViewArray.stream().noneMatch(pv -> pv.getPointsModel().equals(p)))
+            if (pointsViewArray.stream().noneMatch(pv -> pv.getPointsModel().equals(p))) //STREAM USED
                 pointsViewArray.add(new PointsView(p));
     }
 

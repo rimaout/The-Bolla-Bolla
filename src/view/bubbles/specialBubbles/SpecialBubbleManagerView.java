@@ -89,7 +89,7 @@ public class SpecialBubbleManagerView {
     private void syncBubblesViewsWithModel() {
         for (BubbleModel bm : bubblesManagerModel.getBubblesModels()) {
             // if a projectile is not in the view, add it
-            if (bubblesViews.stream().noneMatch(bv -> bv.getBubbleModel().equals(bm))) {    //todo: use hashmap instead of list to increase performance
+            if (bubblesViews.stream().noneMatch(bv -> bv.getBubbleModel().equals(bm))) { //todo: use hashmap instead of list to increase performance
 
                 switch (bm.getBubbleType()) {
                     case WATER_BUBBLE -> bubblesViews.add(new WaterBubbleView(bm));

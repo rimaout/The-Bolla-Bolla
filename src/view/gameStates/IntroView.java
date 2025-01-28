@@ -170,4 +170,11 @@ public class IntroView {
         playerTransitionSprites[0] = img.getSubimage(0, 0, 31, 34);
         playerTransitionSprites[1] = img.getSubimage(31, 0, 31, 34);
     }
+
+    /**
+     * Resets the first draw flag to true.
+     */
+    public void reset() {
+        firstDraw = true;
+    }
 }

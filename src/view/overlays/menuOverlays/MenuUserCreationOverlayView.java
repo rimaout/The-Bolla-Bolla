@@ -257,7 +257,7 @@ public class MenuUserCreationOverlayView extends MenuOverlayView {
         }
 
         else if (menuUserCreationOverlayModel.getNewUserName().isEmpty()) {
-            String text = "Username cannot be empty!";
+            String text = "Username can not be empty!";
             int x = (Constants.GAME_WIDTH - fm.stringWidth(text)) / 2;
             g.drawString(text, x, y);
         }

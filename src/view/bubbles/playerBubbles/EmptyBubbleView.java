@@ -13,6 +13,7 @@ import static model.utilz.Constants.Bubble.H;
  * It handles drawing the empty bubble on the screen.
  */
 public class EmptyBubbleView extends PlayerBubbleView{
+    private PlayerBubblesManagerView playerBubblesManagerView = PlayerBubblesManagerView.getInstance();
 
     /**
      * Constructs an EmptyBubbleView with the specified BubbleModel.
@@ -30,6 +31,6 @@ public class EmptyBubbleView extends PlayerBubbleView{
      */
     @Override
     public void draw(Graphics g) {
-        g.drawImage(PlayerBubblesManagerView.getInstance().getPlayerBubbleSprites()[bubbleModel.getState()][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
+        g.drawImage(playerBubblesManagerView.getPlayerBubbleSprites()[bubbleModel.getState()][animationIndex], (int) (bubbleModel.getHitbox().x - HITBOX_OFFSET_X), (int) (bubbleModel.getHitbox().y - HITBOX_OFFSET_Y), W, H, null);
     }
 }

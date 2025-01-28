@@ -114,6 +114,7 @@ public class PlayingView implements Observer {
      */
     public void newPlayReset() {
         gamePausedOverlayView.reset();
+        introView.reset();
         ProjectileManagerView.getInstance().newPlayReset();
         RewardPointsManagerView.getInstance().newPlayReset();
         ItemManagerView.getInstance().newPlayReset();
