@@ -19,9 +19,7 @@ This project marked a significant milestone for me, as it is the largest and mos
 
 ### How to Run and Play
 
-<div align="center">
-  <img width="560" height="315" src="https://github.com/user-attachments/assets/1145273f-07bd-4c0a-91e2-df467fba263e">
-</div>
+<video width=200 src='https://github.com/user-attachments/assets/1145273f-07bd-4c0a-91e2-df467fba263e'>
 
 ---
 
