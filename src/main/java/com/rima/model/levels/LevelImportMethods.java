@@ -42,25 +42,14 @@ public interface LevelImportMethods {
      * @return an array of BufferedImages representing all levels
      */
     static BufferedImage[] GetAllLevels() {
-        URL url = LevelImportMethods.class.getResource("/levelMaps");
-        File file = null;
+        String[] levelNames = {"level1", "level2", "level3", "level4", "level5", "level6", "level7"};
+        BufferedImage[] levelImages = new BufferedImage[levelNames.length];
 
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        File[] files = file.listFiles();
-        File[] filesSorted = new File[files.length];
-
-        Arrays.stream(files).sorted(Comparator.comparing(File::getName)).toList().toArray(filesSorted);
-
-        BufferedImage[] levelImages = new BufferedImage[filesSorted.length];
-
-        for (int i = 0; i < levelImages.length; i++) {
-            try {
-                levelImages[i] = ImageIO.read(filesSorted[i]);
+        for (int i = 0; i < levelNames.length; i++) {
+            try (InputStream is = LevelImportMethods.class.getResourceAsStream("/levelMaps/" + levelNames[i] + ".png")){
+                if (is == null)
+                    throw new FileNotFoundException("File not found: " + levelNames[i] + ".png");
+                levelImages[i] = (ImageIO.read(is));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -40,7 +40,7 @@ public interface Load {
     String GAME_LOGO = "/images/logo.png";
     String HURRY_IMAGE = "/images/hurry_image.png";
     String QUESTION_MARK_IMAGE = "/images/question-mark.png";
-    String GAME_ICON = "res/images/game-icon.png";
+    String GAME_ICON = "/images/game-icon.png";
 
     // Font file paths
     String NES_FONT = "/fonts/nintendo-nes-font.ttf";
@@ -129,5 +129,17 @@ public interface Load {
         }
 
         return null;
+    }
+
+    static Image GetImage(String imageFileName) {
+        Image img = null;
+        try (InputStream is = Load.class.getResourceAsStream(imageFileName)) {
+            if (is == null)
+                throw new FileNotFoundException("File not found: " + imageFileName);
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
     }
 }
