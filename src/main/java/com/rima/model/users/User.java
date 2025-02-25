@@ -34,8 +34,8 @@ public class User implements Serializable {
      *
      * @param fileName the name of the file to save the user data to
      */
-    public void save(String fileName) {
-        File directory = new File("res/users-data");
+    public void save(String fileName, String directoryPath) {
+        File directory = new File(directoryPath);
         if (!directory.exists()) {
             directory.mkdirs();
         }

@@ -18,6 +18,11 @@ public class UsersManagerModel {
     private User currentUser;
 
     /**
+     * The directory where user profiles are saved.
+     */
+    private static final String PROFILE_DIR = System.getProperty("user.home") + File.separator + "The-Bolla-Bolla-Game-data" + File.separator + "users-data";
+
+    /**
      * Private constructor to used for singleton pattern.
      * Initializes the users map and loads existing users from disk.
      */
@@ -75,7 +80,7 @@ public class UsersManagerModel {
      */
     public void saveUsers() {
         for (User user : users.values()) {
-            user.save( user.getName() + ".dat");
+            user.save( user.getName() + ".dat", PROFILE_DIR);
         }
     }
 
@@ -84,7 +89,7 @@ public class UsersManagerModel {
      * If no users are found, creates a default user.
      */
     public void loadUsers() {
-        File directory = new File("res/users-data");
+        File directory = new File(PROFILE_DIR);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".dat"));
 
         if (files != null) {
