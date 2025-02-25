@@ -108,13 +108,13 @@ public class MenuController implements InputMethods {
         }
 
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP, KeyEvent.VK_W:
+            case KeyEvent.VK_UP, KeyEvent.VK_W, KeyEvent.VK_K:
                 menuModel.decreaseSelectionIndex();
                 if (menuModel.getSelectionIndex() < 0) {
                     menuModel.setSelectionIndex(3);
                 }
                 break;
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S, KeyEvent.VK_J:
                 menuModel.increaseSelectionIndex();
                 if (menuModel.getSelectionIndex() > 3) {
                     menuModel.setSelectionIndex(0);

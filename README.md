@@ -15,9 +15,9 @@ This project was made for the course of "Metodologie di Programmazione" (Program
 
 The assignment also consisted in the creation of a [UML diagram](docs/UML.pdf), [Project Thesis](docs/relazione.pdf) (it's in italian) and [Java Doc](https://rimaout.github.io/The-Bolla-Bolla/).
 
-This project marked a significant milestone for me, as it is the largest and most complex project I have undertaken so far. Notably, it was my first experience managing a project composed by multiple classes and packages, and implementing the MVC pattern was a new concept for me. Moreover, this was the first time I had to work on a project with predefined guidelines and constraints, rather than having the freedom to choose my own approach. However, I learned a lot from this experience and I am really proud of how it turned out.
+This project marked a significant milestone for me, as it is the largest and most complex project I have undertaken so far. Notably, it was my first experience managing a project composed by multiple classes and packages, and implementing the MVC pattern was a new concept for me. Also, this was the first time I had to work on a project with predefined guidelines and constraints, rather than having the freedom to choose my own approach. However, I learned a lot from this experience and I am really proud of how it turned out.
 
-> **Exam Version**
+> [!NOTE] Exam Version
 > To see the original version submitted for the exam, check the `uni-project-version` branch. I have made some changes to the game after the exam, including a significant restructuring of the project to use Maven for building the JAR file.
 
 ### How to Run
@@ -32,7 +32,7 @@ This game is played using only the keyboard. The controls are:
 - To shoot bubbles, press the `enter key` or `Z key`.
 - The game can be paused by pressing the `esc key`.
 
-The menus can be navigated using the `arrow keys`, `WASD keys`, or `HJKL keys`. Use the `enter key` or `Z key` to select.
+The menus can be navigated using the `arrow keys`, `WASD keys`, or `HJKL keys`. Use the `enter key` to select.
 
 <video src='https://github.com/user-attachments/assets/1145273f-07bd-4c0a-91e2-df467fba263e'> </video>
 

@@ -79,16 +79,16 @@ public class PlayerController implements InputMethods {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_A, KeyEvent.VK_LEFT, KeyEvent.VK_H:
                 playerModel.setLeft(true);
                 break;
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_D, KeyEvent.VK_RIGHT, KeyEvent.VK_L:
                 playerModel.setRight(true);
                 break;
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_SPACE, KeyEvent.VK_X:
                 playerModel.setJump(true);
                 break;
-            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_ENTER, KeyEvent.VK_Z:
                 playerModel.setAttacking(true);
                 break;
         }
@@ -102,16 +102,16 @@ public class PlayerController implements InputMethods {
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_A, KeyEvent.VK_LEFT, KeyEvent.VK_H:
                 playerModel.setLeft(false);
                 break;
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_D, KeyEvent.VK_RIGHT, KeyEvent.VK_L:
                 playerModel.setRight(false);
                 break;
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_SPACE, KeyEvent.VK_X:
                 playerModel.setJump(false);
                 break;
-            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_ENTER, KeyEvent.VK_Z:
                 playerModel.setAttacking(false);
                 break;
         }

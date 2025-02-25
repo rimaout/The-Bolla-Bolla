@@ -103,7 +103,7 @@ public class MenuUserSelectionOverlayController implements InputMethods {
             menuModel.setUserCreationOverlayActive(true);
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A  || e.getKeyCode() == KeyEvent.VK_H) {
             menuUserSelectionOverlayView.setLeftArrowIndex(1); // animate the arrow
             int index = menuUserSelectionOverlayModel.getUsers().indexOf(menuUserSelectionOverlayModel.getSelectedUser());
             if (index == 0) {
@@ -113,7 +113,7 @@ public class MenuUserSelectionOverlayController implements InputMethods {
             }
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_L) {
             menuUserSelectionOverlayView.setRightArrowIndex(1); // animate the arrow
             int index = menuUserSelectionOverlayModel.getUsers().indexOf(menuUserSelectionOverlayModel.getSelectedUser());
             if (index == menuUserSelectionOverlayModel.getUsers().size() - 1) {
@@ -131,10 +131,10 @@ public class MenuUserSelectionOverlayController implements InputMethods {
      */
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT)
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_H)
             menuUserSelectionOverlayView.setLeftArrowIndex(0); // stop animating the arrow
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_L)
             menuUserSelectionOverlayView.setRightArrowIndex(0); // stop animating the arrow
     }
 }
