@@ -24,7 +24,6 @@ public class AudioPlayer {
      */
     private AudioPlayer() {
         loadAudios();
-        playSoundEffect(HOME);
     }
 
     /**

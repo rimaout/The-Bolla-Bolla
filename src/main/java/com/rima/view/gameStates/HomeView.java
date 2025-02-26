@@ -2,10 +2,13 @@ package com.rima.view.gameStates;
 
 import com.rima.model.utilz.Constants;
 import com.rima.controller.GameController;
+import com.rima.view.audio.AudioPlayer;
 import com.rima.view.utilz.Load;
 import com.rima.view.overlays.menuOverlays.MenuTwinkleBubbleManager;
 
-import static com.rima.view.utilz.Constants.Home.*;
+import static com.rima.view.utilz.Constants.AudioConstants.HOME;
+import static com.rima.view.utilz.Constants.Home.LOGO_END_Y;
+import static com.rima.view.utilz.Constants.Home.LOGO_SPEED;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,12 +20,18 @@ import java.awt.image.BufferedImage;
 public class HomeView {
     private final MenuTwinkleBubbleManager menuTwinkleBubbleManager = MenuTwinkleBubbleManager.getInstance();
     private final GameController gameController;
+    private boolean firstUpdate = true;
+    private boolean audioAlreadyPlayed = false;
 
     private BufferedImage logoImg;
     private float logoX, logoY, logoW, logoH;
 
     private boolean isLogoInPosition = false;
     private final Font nesFont;
+
+    private long lastTimerUpdate;
+    private long drawTimer = 1000;
+    private boolean canDraw = false;
 
     /**
      * Constructs a HomeView with the specified GameController.
@@ -57,6 +66,8 @@ public class HomeView {
         // Update Bubbles
         menuTwinkleBubbleManager.update();
 
+        if (!canDraw) return;
+
         // Update Logo Position
         if (logoY < LOGO_END_Y)
             logoY += LOGO_SPEED;
@@ -71,11 +82,13 @@ public class HomeView {
      * @param g the Graphics object to draw with
      */
     public void draw(Graphics g) {
-        // update entities positions
-        updatePositions();
+        timerUpdate();
 
-        // Draw Bubbles
         menuTwinkleBubbleManager.draw(g);
+        updatePositions();
+        playAudio();
+
+        if (!canDraw) return;
 
         g.drawImage(logoImg, (int) logoX, (int) logoY, (int) logoW, (int) logoH, null);
 
@@ -87,6 +100,27 @@ public class HomeView {
             g.setFont(nesFont.deriveFont(15f));
             g.drawString("© 2025 RIMA CORPORATION", Constants.GAME_WIDTH / 2 - 55 * Constants.SCALE, Constants.GAME_HEIGHT / 2 + 100 * Constants.SCALE);
         }
+    }
+
+    private void playAudio(){
+        if (!audioAlreadyPlayed) {
+            AudioPlayer.getInstance().playSoundEffect(HOME);
+            audioAlreadyPlayed = true;
+        }
+    }
+
+    private void timerUpdate(){
+        if (firstUpdate) {
+            lastTimerUpdate = System.currentTimeMillis();
+            firstUpdate = false;
+        }
+
+        long timeDelta = System.currentTimeMillis() - lastTimerUpdate;
+        drawTimer -= timeDelta;
+        lastTimerUpdate = System.currentTimeMillis();
+
+        if (drawTimer <= 0)
+            canDraw = true;
     }
 
     // ----------- Getters ------------ //
